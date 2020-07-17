@@ -1,25 +1,79 @@
 import React from 'react';
 import logo from './logo.svg';
-import './App.css';
+// import './App.css';
+import './myapp.css';
+import ProfileSection from './ProfileSection';
+import Header from './Header';
+import Wishlist from './Wishlist';
+import AppBar from './AppBar';
 
-function App() {
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+// import './Styles/App.css';
+
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: [
+      'Nunito',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif'
+    ].join(','),
+  }
+});
+
+
+
+
+
+function App(props) {
+  const user = {
+    bannerPicUrl: "images/banner_pic.png",
+    profilePicUrl: "images/profile_pic.png",
+    displayName: "Brittany K.",
+    name: {first: "Brittany", last: "Kochover"},
+    profileMessage: "Love you guys <3",
+    wishlistItems: [
+      {
+          itemName: "YSL Stilettos",
+          price: "1000.00",
+          imageUrl: "images/heels.png"
+      },
+      {
+          itemName: "Reformation Dress",
+          price: "300.00",
+          imageUrl: "images/dress.png"
+      },
+      {
+          itemName: "Night Pallette",
+          price: "37.00",
+          imageUrl: "images/makeup.png"
+      },
+  
+  ]
+
+  }
   return (
+    <ThemeProvider theme={theme}>
+
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {/* <Header /> */}
+      <AppBar position="fixed"/>
+
+      <ProfileSection 
+        bannerPicUrl = {user.bannerPicUrl}
+        profilePicUrl= {user.profilePicUrl}
+        displayName = {user.displayName}
+        profileMessage = {user.profileMessage}
+        firstName = {user.name.first}
+
+      /> 
+
+      <Wishlist items = {user.wishlistItems}/>
+
     </div>
+    </ThemeProvider>
   );
 }
 

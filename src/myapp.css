@@ -1,0 +1,237 @@
+html > *{
+    box-sizing: border-box;
+}
+body{
+    font-family: Nunito,Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+
+html, body, #root, .App {
+    height: 100%;
+
+}
+
+@font-face {
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local('Nunito Regular'), local('Nunito-Regular'), 
+     url(https://fonts.gstatic.com/s/nunito/v11/XRXV3I6Li01BKofINeaBTMnFcQ.woff2) 
+     format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, 
+      U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, 
+      U+2215, U+FEFF, U+FFFD;
+  }
+
+/* Header.js */
+header.custom {
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header.custom .container{
+    margin: auto;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+}
+
+header.custom img{
+    vertical-align: center;
+}
+.logo{
+    width:100%;
+}
+
+.menu_button{
+    font-size: xx-large;
+}
+.container{
+    /* color:#0dc4f3; */
+}
+
+header .container >*{
+}
+
+/* AppBar */
+
+header.MuiAppBar-colorPrimary {
+    color: #000;
+    background-color: #fff;
+}
+
+.logo.container{
+    flex-grow: 1;
+}
+
+.MuiToolbar-root .logo {
+    width: inherit;
+    vertical-align: middle;
+}
+
+/* AppBar BackToTop */
+
+.back_to_top .MuiFab-secondary {
+    color: #fff;
+    background-color: #02bff2;
+}
+
+.back_to_top .MuiFab-secondary:hover {
+    background-color: #03b0e0;
+}
+
+/* ProfileSection.js  */
+
+.profile_section{
+}
+
+.profile_section .banner_image {
+    height: 30vw;
+    width: 100%;
+    background-size: cover;
+    overflow: hidden;
+    position: absolute;
+    background: #000;
+}
+.profile_section .banner_image img {
+    width: 100%;
+    opacity: .78;
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+}
+
+.profile_section .info{
+    position: relative;
+    border-bottom: 1px solid rgb(224, 224, 224);
+    padding: 4%;
+    padding-top: 20vw;
+}
+
+.profile_section .profile_picture.container{
+    width: 25%;
+}
+.profile_section .profile_picture .picture{
+    background-size: cover;
+    position: relative;
+    -webkit-box-shadow: 0 0 0 5px #fff;
+    border-radius: 50%;
+    width: 100%;
+    padding-bottom: 100%;
+    
+}
+.profile_section .wishlist_name{
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+.profile_section .user_name{
+    font-size: .9rem;
+    color: gray;
+    padding-bottom: 2%;;
+    
+}
+.profile_section .profile_message{
+    font-size: .9rem;
+    font-style: italic;
+    
+}
+
+@media only screen and (min-width: 600px) {
+    .profile_section .info .container.flex {
+        display:flex;
+        align-items: flex-end;
+    }
+    
+    .profile_section .profile_picture.container{
+        width: 20%;
+        transform: translateY(50%);
+        
+    }
+
+    .profile_section .container.name{
+        flex-grow: 1;;
+    }
+    
+    .profile_section .info{
+        padding-top: 10vw;
+    }
+    
+    .profile_section .wishlist_name{
+        font-size: 3rem;
+        font-weight: 700;
+    }
+    
+    .profile_section .profile_message {
+        margin-left: 25%;
+        font-size: 1.3rem;
+    }
+    
+    .profile_section .user_name, .profile_section .wishlist_name{
+        padding-left: 8%;
+        color: white;
+        width: 100%;
+    }
+    .profile_section .user_name{
+        font-size: 1.3rem;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+    
+    .profile_section .profile_message{
+        padding-top: 3%;
+    }
+    
+    
+}
+
+@media only screen and (min-width: 960px) {
+        
+    .profile_section .profile_picture.container{
+        width: 15%;
+        transform: translateY(40%);
+    }
+
+    .profile_section .banner_image {
+        height: 25vw;
+    }
+    .profile_section .profile_message {
+        margin-left: 18%;
+    }
+    .profile_section .info {
+        padding-bottom: 2%;
+    }
+}
+
+/* Wishlist */
+
+.wishlist {
+    background-color: #f7f7f7;
+    height: 100%;
+}
+.wishlist .MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-2 {
+    /* padding: 0 2%; */
+    width: 100%;
+}
+/* override margin: -8px;  */
+.wishlist .MuiGrid-spacing-xs-2{  
+    margin: 0;
+    /* margin-top: 0; */
+}
+.wish_item img{
+    width: inherit;
+    border-bottom: 1px solid #e8e8e8 ;
+}
+.wish_item .price{
+    font-weight: 600;
+
+}
+
+/* borders */
+/* .container.name, .profile_picture.container{
+    border: 1px solid black;
+}
+.container.flex{
+    border: 1px solid red;
+} */
