@@ -82,6 +82,15 @@ header.MuiAppBar-colorPrimary {
     background-color: #03b0e0;
 }
 
+
+/* Home Page------------------ */
+.wishtender_4point_explanation .title{
+    text-align: center;
+    font-size: 2rem;
+}
+
+/* Profile Page------------------ */
+
 /* ProfileSection.js  */
 
 .profile_section{
@@ -228,10 +237,155 @@ header.MuiAppBar-colorPrimary {
 
 }
 
-/* borders */
-/* .container.name, .profile_picture.container{
-    border: 1px solid black;
+/* 4 point explanation */
+
+
+.wishtender_4point_explanation{
+    background: #fafafa;
+    position: relative;
+    padding: 3%;
 }
-.container.flex{
-    border: 1px solid red;
-} */
+.wishtender_4point_explanation .point{
+    margin: 0 2%;
+    /* height: 100%; */
+    padding: 4% 6%;
+    text-align: center;
+    border-bottom: 30px solid #ffe366 ;
+}
+
+.wishtender_4point_explanation .point .icon img{
+    width: 50%;
+}
+.wishtender_4point_explanation .point h3{
+    font-size: 1.3rem;
+}
+.wishtender_4point_explanation .point{
+    font-size: .9rem;
+}
+
+.wishtender_4point_explanation.MuiGrid-spacing-xs-3 {
+margin:0;
+width: 100%;
+}
+
+@media only screen and (min-width: 450px) {
+    .wishtender_4point_explanation .point .icon img {
+        width: 35%;
+    }
+}
+
+
+@media only screen and (min-width: 600px) {
+    
+    .wishtender_4point_explanation .point{
+        margin: 0 2%;
+        height: 100%;
+        text-align: center;
+        border-bottom: 20px solid #ffe366 ;
+    }
+    
+    .wishtender_4point_explanation .point .icon img{
+        width: 35%;
+    } 
+}
+@media only screen and (min-width: 960px) {
+    .wishtender_4point_explanation .point .icon img{
+        width: 65%;
+    } 
+}
+
+/* hero item */
+.hero_section_container{
+    background: rgb(189, 201, 194);
+}
+.hero_section{
+    z-index: 900;
+    height: 130vw;
+    background: url('/images/happy-woman-holding-package_2.jpg') bottom center no-repeat;
+    background-size: 170%;
+    background-position-x: -12vw;
+
+}
+
+.hero_section button{
+    color: #fff;
+    background-color: #02bff2;
+    font-size: 01.2rem;
+    font-weight: bolder;
+}
+
+.hero_section button:hover {
+    background-color: #03b0e0;
+}
+.hero_section .text{
+    position: relative;
+    padding: 6%;    
+    /* text-align: center; */
+    /* background: #afefffd6; */
+}
+.hero_section .text h2{
+    font-size: 9.8vw;  
+    font-weight: lighter;
+    margin-top: 0;
+
+}
+.hero_section .text h3{
+    font-size: 5vw;  
+}
+
+.hero_section .triangle{
+    /* display: none; */
+    display: block;
+    top: 0;
+    position: absolute;
+    left: 0;
+    border-top: 130vw solid;
+    border-right: 130vw solid #38c7ad00;
+    border-top-color: #afefff;
+
+
+}
+
+@media only screen and (min-width: 600px) {
+
+    .hero_section{
+        z-index: 900;
+        height: 100%;
+        background: url('/images/happy-woman-holding-package_2.jpg');
+        background-size: cover;
+        background-position-x: 15vw;
+ }
+
+    .hero_section button{
+        color: #fff;
+        background-color: #02bff2;
+    }
+
+    .hero_section button:hover {
+        background-color: #03b0e0;
+    }
+    .hero_section .text{
+        position: relative;
+        padding: 8% 6% 6% 6%;
+        background: none;   
+        text-align: left; 
+    }
+    .hero_section .text h2{
+        font-size: 3.3rem;  
+
+    }
+    .hero_section .text h3{
+        font-size: 1rem;  
+    }
+
+    .hero_section .triangle{
+        display: block;
+        top: 0;
+        position: absolute;
+        left: 0;
+        border-top: 80vw solid;
+        border-right: 60vw solid #38c7ad00;
+        border-top-color: #afefff;
+
+    }
+}

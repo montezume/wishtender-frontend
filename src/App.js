@@ -6,9 +6,11 @@ import ProfileSection from './ProfileSection';
 import Header from './Header';
 import Wishlist from './Wishlist';
 import AppBar from './AppBar';
+import HomePage from './HomePage';
 
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import WishlistPage from './WishlistPage';
 // import './Styles/App.css';
 
 const theme = createMuiTheme({
@@ -61,17 +63,8 @@ function App(props) {
       {/* <Header /> */}
       <AppBar position="fixed"/>
 
-      <ProfileSection 
-        bannerPicUrl = {user.bannerPicUrl}
-        profilePicUrl= {user.profilePicUrl}
-        displayName = {user.displayName}
-        profileMessage = {user.profileMessage}
-        firstName = {user.name.first}
-
-      /> 
-
-      <Wishlist items = {user.wishlistItems}/>
-
+      {/* <WishlistPage user= {user}/> */}
+      <HomePage />
     </div>
     </ThemeProvider>
   );
