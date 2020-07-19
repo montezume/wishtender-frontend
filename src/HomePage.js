@@ -89,7 +89,7 @@ function fourPointExplanation(){
 function HomePage(){
     return(
     <div>
-
+            
             {heroSection()}
             {fourPointExplanation()}
     </div>

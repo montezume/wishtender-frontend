@@ -58,13 +58,17 @@ function App(props) {
   }
   return (
     <ThemeProvider theme={theme}>
+        
+        
 
     <div className="App">
       {/* <Header /> */}
       <AppBar position="fixed"/>
 
-      {/* <WishlistPage user= {user}/> */}
       <HomePage />
+      <hr></hr>
+      example profile
+      <WishlistPage user= {user}/>
     </div>
     </ThemeProvider>
   );
