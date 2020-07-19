@@ -2,6 +2,7 @@ import React from 'react';
 
 
  function ProfileSection(props) {
+
     return (
   <div className="profile_section">
         <div className="banner_image">

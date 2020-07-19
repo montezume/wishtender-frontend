@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper'
 
@@ -14,7 +14,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function heroSection(){
-    return(<div className="hero_section_container">
+
+    return(
+    
+    <div className="hero_section_container">
 
     <div className="hero_section">
         <div className="triangle"></div>
@@ -87,6 +90,7 @@ function fourPointExplanation(){
 }
 
 function HomePage(){
+
     return(
     <div>
             

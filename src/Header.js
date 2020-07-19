@@ -6,7 +6,8 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 
 function Header() {
-    return (<header className= "custom">
+  
+  return (<header className= "custom">
 <div className="container">
     <IconButton edge="start"  color="inherit" aria-label="menu">
         < MenuIcon style = {{fontSize:"2.5rem"}}/>

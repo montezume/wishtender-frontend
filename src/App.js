@@ -1,4 +1,5 @@
-import React from 'react';
+import React,{ useState} from 'react';
+// import React from 'react';
 import logo from './logo.svg';
 // import './App.css';
 import './myapp.css';
@@ -25,11 +26,8 @@ const theme = createMuiTheme({
   }
 });
 
-
-
-
-
 function App(props) {
+
   const user = {
     bannerPicUrl: "images/banner_pic.png",
     profilePicUrl: "images/profile_pic.png",
@@ -59,13 +57,12 @@ function App(props) {
   return (
     <ThemeProvider theme={theme}>
         
-        
 
     <div className="App">
       {/* <Header /> */}
       <AppBar position="fixed"/>
 
-      <HomePage />
+      <HomePage/>
       <hr></hr>
       example profile
       <WishlistPage user= {user}/>

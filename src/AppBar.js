@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -36,6 +36,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ScrollTop(props) {
+
+
   const { children, window } = props;
   const classes = useStyles();
   // Note that you normally won't need to set the window ref as useScrollTrigger
@@ -74,13 +76,29 @@ ScrollTop.propTypes = {
 };
 
 export default function BackToTop(props) {
+  const [scrolledStyle, setscrolledStyle] = useState(0);
+  
+  const listenScrollEvent = event => {
+    if (window.scrollY < 70 ){
+      return setscrolledStyle('noShadow');
+    } else if (window.scrollY >=70) {
+      return setscrolledStyle("shadow");
+    }
+  };
+  
+  useEffect(() => {
+    window.addEventListener("scroll", listenScrollEvent);
+  
+    return () => window.removeEventListener("scroll", listenScrollEvent);
+  }, []);
     const classes = useStyles();
 
   return (
     <React.Fragment>
+
       <CssBaseline />
       {/* app bar */}
-      <AppBar>
+      <AppBar className={scrolledStyle}>
         <Toolbar>
             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                 <MenuIcon />
