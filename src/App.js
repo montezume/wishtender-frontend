@@ -77,7 +77,7 @@ function App(props) {
       {/* <AppBar position="fixed"/> */}
       <Router>
       <Route path="/" exact component={HomePage}/>
-      <Route path="/wishlist" exact render= {()=><WishlistPage user= {user}/>}/>
+      <Route path="/wishlist" render= {()=><WishlistPage user= {user}/>}/>
       </Router>
     </div>
     </ThemeProvider>
