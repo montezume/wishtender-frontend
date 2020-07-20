@@ -8,6 +8,7 @@ import Fab from '@material-ui/core/Fab';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Zoom from '@material-ui/core/Zoom';
 
+
 // app bar
 import Toolbar from '@material-ui/core/Toolbar';
 import AppBar from '@material-ui/core/AppBar';
@@ -24,9 +25,7 @@ const useStyles = makeStyles((theme) => ({
     right: theme.spacing(2),
     zIndex:900,
   },
-//   root: {  for appbar
-//     flexGrow: 1,
-//   },
+
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -44,7 +43,7 @@ function ScrollTop(props) {
   // will default to window.
   // This is only being set here because the demo is in an iframe.
   const trigger = useScrollTrigger({
-    target: window ? window() : undefined,
+    // target: window ? window() : undefined, //dashie commented this out because of the above comment
     disableHysteresis: true,
     threshold: 100,
   });
@@ -66,14 +65,6 @@ function ScrollTop(props) {
   );
 }
 
-ScrollTop.propTypes = {
-  children: PropTypes.element.isRequired,
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window: PropTypes.func,
-};
 
 export default function BackToTop(props) {
   const [scrolledStyle, setscrolledStyle] = useState(0);
@@ -100,16 +91,18 @@ export default function BackToTop(props) {
       {/* app bar */}
       <AppBar className={scrolledStyle}>
         <Toolbar>
-            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <IconButton onClick={props.openMenu} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                 <MenuIcon />
             </IconButton>
             {/* <Typography variant="h6" className={classes.title}>
               </Typography> */}
               <div className="logo container">
 
-              <img className= "logo" src = "images/logo.png"/>
+              <a href="/">
+                <img className= "logo" src = "images/logo.png"/>
+              </a>
               </div>
-            <Button color="inherit">Login</Button>
+            <Button color="inherit" href="/wishlist">Login</Button>
         </Toolbar>
       </AppBar>
 

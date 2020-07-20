@@ -1,17 +1,22 @@
 import React,{ useState} from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
 // import React from 'react';
 import logo from './logo.svg';
 // import './App.css';
 import './myapp.css';
-import ProfileSection from './ProfileSection';
-import Header from './Header';
-import Wishlist from './Wishlist';
-import AppBar from './AppBar';
-import HomePage from './HomePage';
+import ProfileSection from './components/wishlistpage/ProfileSection';
+import Header from './components/nav/Header';
+import Wishlist from './components/wishlistpage/Wishlist';
+import AppBar from './components/nav/AppBar';
+import HomePage from './components/HomePage';
+import CustomizedMenus from './components/menu.js';
 
 import { createMuiTheme } from '@material-ui/core/styles';
+import purple from '@material-ui/core/colors/purple';
+import green from '@material-ui/core/colors/green';
 import { ThemeProvider } from '@material-ui/styles';
-import WishlistPage from './WishlistPage';
+import WishlistPage from './components/wishlistpage/WishlistPage';
 // import './Styles/App.css';
 
 const theme = createMuiTheme({
@@ -23,7 +28,15 @@ const theme = createMuiTheme({
       'Arial',
       'sans-serif'
     ].join(','),
-  }
+  },   
+  palette: {
+    primary: {
+      main: '#02bff2',
+    },
+    secondary: {
+      main: green[500],
+    },
+  },
 });
 
 function App(props) {
@@ -59,13 +72,13 @@ function App(props) {
         
 
     <div className="App">
+      <CustomizedMenus />
       {/* <Header /> */}
-      <AppBar position="fixed"/>
-
-      <HomePage/>
-      <hr></hr>
-      example profile
-      <WishlistPage user= {user}/>
+      {/* <AppBar position="fixed"/> */}
+      <Router>
+      <Route path="/" exact component={HomePage}/>
+      <Route path="/wishlist" exact render= {()=><WishlistPage user= {user}/>}/>
+      </Router>
     </div>
     </ThemeProvider>
   );
