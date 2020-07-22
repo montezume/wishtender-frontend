@@ -1,6 +1,7 @@
 import React from 'react';
 import ProfileSection from './ProfileSection';
 import Wishlist from './Wishlist';
+import { Button } from '@material-ui/core';
 
 function WishlistPage(props) {
 
@@ -15,7 +16,7 @@ function WishlistPage(props) {
                 profileMessage = {props.user.profileMessage}
                 firstName = {props.user.name.first}
             /> 
-    
+            <Button href="/addwish">Add A Wish</Button>
             <Wishlist items = {props.user.wishlistItems}/>
         </div>
 
