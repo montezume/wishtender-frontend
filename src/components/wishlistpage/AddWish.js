@@ -16,8 +16,10 @@ function AddWish(){
         axios.get('http://localhost:4000/wishes')
         .then(res=>{
             setWishes(res.data)
-        }, [])
-      });
+        })
+
+        // setWishes([{wish_name:"stoppy", _id: 9898989898}]);
+      }, []);
 
     function wishesElement(wishes){
             let listItems = wishes.map(x=>{
@@ -50,7 +52,7 @@ function AddWish(){
         e.preventDefault();
         const id = e.target.parentElement.getAttribute("data-id");
         const updatedWish = {wish_name: e.target.previousSibling.value}
-        
+
 
         axios.post('http://localhost:4000/wishes/update/'+id, updatedWish)
             .then(()=>axios.get('http://localhost:4000/wishes'))
