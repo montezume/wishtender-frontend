@@ -11,13 +11,13 @@ import Wishlist from './components/wishlistpage/Wishlist';
 import AppBar from './components/nav/AppBar';
 import HomePage from './components/HomePage';
 import CustomizedMenus from './components/menu.js';
-import AddWish from './components/wishlistpage/AddWish.js';
 
 import { createMuiTheme } from '@material-ui/core/styles';
 import purple from '@material-ui/core/colors/purple';
 import green from '@material-ui/core/colors/green';
 import { ThemeProvider } from '@material-ui/styles';
 import WishlistPage from './components/wishlistpage/WishlistPage';
+import AddWish_Practice from './components/wishlistpage/AddWish_Practice.js';
 // import './Styles/App.css';
 
 const theme = createMuiTheme({
@@ -79,7 +79,7 @@ function App(props) {
       <Router>
       <Route path="/" exact component={HomePage}/>
       <Route path="/wishlist" render= {()=><WishlistPage user= {user}/>}/>
-      <Route path="/addwish" component={AddWish}/>
+      <Route path="/addwish" component={AddWish_Practice}/>
       </Router>
     </div>
     </ThemeProvider>

@@ -4,7 +4,7 @@ import axios from 'axios';
 // const wishes= "lots of wishes";
 
 
-function AddWish(){
+function AddWish_Practice(){
     
 
 
@@ -18,7 +18,6 @@ function AddWish(){
             setWishes(res.data)
         })
 
-        // setWishes([{wish_name:"stoppy", _id: 9898989898}]);
       }, []);
 
     function wishesElement(wishes){
@@ -75,7 +74,6 @@ function AddWish(){
             .then(res=>{
             console.log("onSubmit")
 
-            // let wishesList = res.data.map(x=>x.wish_name).join(" ");
             setWishes(res.data);
         })
     }
@@ -91,4 +89,4 @@ function AddWish(){
     )
 }
 
-export default AddWish;
+export default AddWish_Practice;
