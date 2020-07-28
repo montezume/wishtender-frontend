@@ -4,6 +4,7 @@ import axios from 'axios';
 // const wishes= "lots of wishes";
 
 
+
 function AddWish_Practice(){
     
 
@@ -11,6 +12,7 @@ function AddWish_Practice(){
     
     const [wishes, setWishes]= useState(null);
     const [newWish, setNewWish]= useState(null);
+
 
     useEffect(() => {
         axios.get('http://localhost:4000/wishes')
@@ -77,8 +79,10 @@ function AddWish_Practice(){
             setWishes(res.data);
         })
     }
+
     return(
         <div  style={{position:'relative', top: 100}}>
+ 
         <form  onSubmit={(e)=>onSubmitWish(e)}>
           Add Wish:
           <input type="text" onChange={(e)=>onChangeWish(e)} />

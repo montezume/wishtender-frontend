@@ -235,13 +235,15 @@ header.MuiPaper-elevation4.shadow{
     height: 100%;
 }
 .wishlist .MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-2 {
-    /* padding: 0 2%; */
     width: 100%;
 }
 /* override margin: -8px;  */
 .wishlist .MuiGrid-spacing-xs-2{  
     margin: 0;
-    /* margin-top: 0; */
+}
+
+.wishlist  .MuiGrid-spacing-xs-2 >.MuiGrid-item {
+    padding: 2%;
 }
 .wish_item img{
     width: inherit;
@@ -249,6 +251,42 @@ header.MuiPaper-elevation4.shadow{
 }
 .wish_item .price{
     font-weight: 600;
+
+}
+
+/* add a wish button */
+
+.wrapper.add_a_wish{
+    padding: 2%;
+}
+.button.add_a_wish{
+    font-weight: 900;
+    border-radius: 0;
+    border: 4px solid #02bff2;
+    width: 100%;
+    transition: none;
+    color: white;
+    background-color: #02bff2;
+
+}
+
+
+@media only screen and (min-width: 450px) {
+    .wrapper.add_a_wish{
+        padding: 2%;
+    }
+
+    .button.add_a_wish{
+        color: #02bff2;
+        background-color: #ffffff00;
+        transition: none;
+    }
+
+    .button.add_a_wish:hover{
+        color: white;
+        background-color: #02bff2;
+    
+    }
 
 }
 
@@ -525,4 +563,13 @@ margin-left: 0;
     width: auto;
     height: auto;
 }
- 
+
+
+/* ProductInfo----- */
+
+/* ProductImages----- */
+#product_image{
+    width: 70vw;
+    height: 70vw;
+    object-fit: cover;
+}

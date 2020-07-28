@@ -17,7 +17,8 @@ import purple from '@material-ui/core/colors/purple';
 import green from '@material-ui/core/colors/green';
 import { ThemeProvider } from '@material-ui/styles';
 import WishlistPage from './components/wishlistpage/WishlistPage';
-import AddWish_Practice from './components/wishlistpage/AddWish_Practice.js';
+import AddWish from './components/wishlistpage/AddWish.js';
+import EditWishes from './components/wishlistpage/EditWishes.js';
 // import './Styles/App.css';
 
 const theme = createMuiTheme({
@@ -74,12 +75,15 @@ function App(props) {
 
     <div className="App">
       <CustomizedMenus />
-      {/* <Header /> */}
-      {/* <AppBar position="fixed"/> */}
+      
+      {/* this div pushes all the divs under the header out from under if. But in the future we need to change this to be dynamic and accurate. Here I just guessed '12px' */}
+      <div style={{paddingBottom:"20px"}}></div> 
+      
       <Router>
       <Route path="/" exact component={HomePage}/>
       <Route path="/wishlist" render= {()=><WishlistPage user= {user}/>}/>
-      <Route path="/addwish" component={AddWish_Practice}/>
+      <Route path="/editwishes" component={EditWishes}/>
+      <Route path="/addwish" component={AddWish}/>
       </Router>
     </div>
     </ThemeProvider>
