@@ -79,7 +79,7 @@ function ScrollTop(props) {
 }
 
 export default function BackToTop(props) {
-  const [scrolledStyle, setscrolledStyle] = useState(0);
+  const [scrolledStyle, setscrolledStyle] = useState("noShadow");
 
   const listenScrollEvent = (event) => {
     if (window.scrollY < 70) {
