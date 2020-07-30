@@ -3,6 +3,7 @@ import axios from "axios";
 import GetProductInfoButton from "./GetProductInfoButton.js";
 import ProductInputs from "./ProductInputs.js";
 import ProductImages from "./ProductImages";
+import Button from "@material-ui/core/Button";
 
 //----Move to scripts??---
 async function getDisplayImages(images, dim) {
@@ -68,6 +69,9 @@ function AddWish() {
           currency={productInfo.currency}
         />
         <ProductImages displayImages={filteredImages} />
+        <Button id="add_wish_button" variant="contained" color="primary">
+          + Add Wish
+        </Button>
       </div>
     </div>
   );

@@ -25,24 +25,25 @@ function ProductImages(props) {
   }
 
   return (
-    <div className="product_images">
-      <div>
+    <div className="product_images outerContainer">
+      <h2>Choose Image</h2>
+      <div className="product_images container">
         <img
           id="product_image"
           src={props.displayImages ? props.displayImages[displayImage] : null}
         />
-      </div>
-      <div className="navigation">
-        <button className="navigation" onClick={() => move(-1)}>
-          <IconButton>
-            <NavigateBeforeIcon />
-          </IconButton>
-        </button>
-        <button className="navigation" onClick={() => move(1)}>
-          <IconButton>
-            <NavigateNextIcon />
-          </IconButton>
-        </button>
+        <div className="navigation container">
+          <button className="navigation" onClick={() => move(-1)}>
+            <IconButton>
+              <NavigateBeforeIcon />
+            </IconButton>
+          </button>
+          <button className="navigation" onClick={() => move(1)}>
+            <IconButton>
+              <NavigateNextIcon />
+            </IconButton>
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -50,9 +50,6 @@ header.custom img {
 .menu_button {
   font-size: xx-large;
 }
-.container {
-  /* color:#0dc4f3; */
-}
 
 header .container > * {
 }
@@ -554,7 +551,6 @@ header.MuiPaper-elevation4.shadow {
 }
 .container.product_info {
   display: grid;
-  padding: 4%;
   background-color: #fff;
 }
 #product_inputs {
@@ -597,8 +593,46 @@ header.MuiPaper-elevation4.shadow {
   object-fit: cover;
 }
 
+.product_images.outerContainer {
+  display: grid;
+  justify-content: center;
+}
+.product_images.outerContainer h2 {
+  text-align: center;
+}
+.product_images.container {
+  display: grid;
+  justify-content: center;
+  margin: auto;
+  position: relative;
+  width: fit-content;
+}
 .product_images .navigation.container {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  position: absolute;
+  bottom: 3%;
+  transform: translateX(-50%);
+  left: 50%;
+  background-color: #ffffff44;
 }
 .product_images button.navigation {
   border: none;
+  background-color: #ffde56;
+}
+.product_images button.navigation .MuiButtonBase-root.MuiIconButton-root {
+  color: #fff;
+}
+
+#add_wish_button {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  border-radius: 0;
+  font-weight: 900;
+  color: white;
+  height: 13vw;
 }
