@@ -83,8 +83,6 @@ function App(props) {
     <ThemeProvider theme={theme}>
       <div className="App">
         <CustomizedMenus />
-        <div id="startPadding" style={{ height: 0 }}></div>
-        {/* <PaddingUnderMenu /> */}
 
         <Router>
           <Route path="/" exact component={HomePage} />

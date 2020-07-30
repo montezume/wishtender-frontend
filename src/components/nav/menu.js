@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
@@ -14,6 +14,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
+import PaddingUnderMenu from "../PaddingUnderMenu";
 
 const StyledMenuItem = withStyles((theme) => ({
   root: {
@@ -90,7 +91,8 @@ export default function CustomizedMenus() {
           </div>
         </div>
       </div>
-      {/* this div pushes all the divs under the header out from under if. But in the future we need to change this to be dynamic and accurate. Here I just guessed '12px' */}
+      {/* this div pushes all the divs under the header out from under dynamicalled*/}
+      <PaddingUnderMenu />
     </div>
   );
 }
