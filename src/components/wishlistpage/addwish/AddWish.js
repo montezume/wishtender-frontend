@@ -60,7 +60,7 @@ function AddWish() {
   }
 
   return (
-    <div className=" wrapper product_info">
+    <div className="wrapper product_info">
       <div className="container product_info">
         <GetProductInfoButton submit={(e) => getProductInfo(e)} />
         <ProductImages displayImages={filteredImages} />

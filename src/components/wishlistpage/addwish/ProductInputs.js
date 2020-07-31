@@ -26,16 +26,18 @@ function CurrencyWarning(props) {
 export default function ProductInputs(props) {
   const [name, setName] = useState(props.name);
   const [price, setPrice] = useState(props.price);
+  const [loadedClassName, setLoadedClassName] = useState("not_loaded");
   const classes = useStyles();
 
   useEffect(() => {
     setName(props.name);
     setPrice(props.price);
+    if (props.name) setLoadedClassName("loaded"); //wat if there is noname?
     console.log("use effect", name, "<---name");
   }, [props]);
 
   return (
-    <div id="product_inputs">
+    <div className={loadedClassName} id="product_inputs">
       <TextField
         className="input name"
         variant="outlined"

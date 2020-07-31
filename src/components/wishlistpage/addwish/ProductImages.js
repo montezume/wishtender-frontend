@@ -5,11 +5,12 @@ import IconButton from "@material-ui/core/IconButton";
 
 function ProductImages(props) {
   let [displayImage, setDisplayImage] = useState(null);
+  const [loadedClassName, setLoadedClassName] = useState("not_loaded");
 
   useEffect(() => {
     setDisplayImage(0);
-  }, []);
-  console.log("displayImages----------: ", props.displayImages);
+    if (props.displayImages.length > 0) setLoadedClassName("loaded");
+  }, [props]);
 
   function move(num) {
     let newDisplayImage = displayImage + num;
@@ -25,7 +26,7 @@ function ProductImages(props) {
   }
 
   return (
-    <div className="product_images outerContainer">
+    <div className={`product_images outerContainer ${loadedClassName}`}>
       <h2>Choose Image</h2>
       <div className="product_images container">
         <img
