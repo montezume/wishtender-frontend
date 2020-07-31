@@ -14,7 +14,6 @@ import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
-import PaddingUnderMenu from "../PaddingUnderMenu";
 
 const StyledMenuItem = withStyles((theme) => ({
   root: {
@@ -92,7 +91,6 @@ export default function CustomizedMenus() {
         </div>
       </div>
       {/* this div pushes all the divs under the header out from under dynamicalled*/}
-      <PaddingUnderMenu />
     </div>
   );
 }

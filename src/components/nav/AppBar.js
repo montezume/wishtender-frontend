@@ -32,17 +32,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function fillPadding() {
-  const paddingStartElem = document.getElementById("start_padding");
-  const paddingElem = document.getElementById("padding_under_menu");
-  const headerElem = document.getElementsByTagName("header")[0];
-  const bottomOfMenu = headerElem.offsetHeight + headerElem.offsetTop;
-  const topOfPadding = paddingStartElem.offsetTop;
-  const paddingToAdd = bottomOfMenu - topOfPadding;
-  paddingElem.style.paddingBottom = paddingToAdd + "px";
-  // paddingToAdd;
-}
-
 function ScrollTop(props) {
   const { children, window } = props;
   const classes = useStyles();
@@ -101,7 +90,7 @@ export default function BackToTop(props) {
       <CssBaseline />
       {/* app bar */}
       <AppBar className={scrolledStyle}>
-        <Toolbar>
+        <Toolbar style={{ width: "100%", height: "100%" }}>
           <IconButton
             onClick={props.openMenu}
             edge="start"
@@ -111,17 +100,10 @@ export default function BackToTop(props) {
           >
             <MenuIcon />
           </IconButton>
-          {/* <Typography variant="h6" className={classes.title}>
-              </Typography> */}
+
           <div className="logo container">
             <a href="/">
-              <img
-                onLoad={() => {
-                  fillPadding();
-                }}
-                className="logo"
-                src="images/logo.png"
-              />
+              <img className="logo" src="images/logo.png" />
             </a>
           </div>
           <Button color="inherit" href="/wishlist">
@@ -130,9 +112,8 @@ export default function BackToTop(props) {
         </Toolbar>
       </AppBar>
 
-      <Toolbar id="back-to-top-anchor" />
+      <div id="back-to-top-anchor" />
       {/* appbar end */}
-      <Container></Container>
       <ScrollTop {...props}>
         <Fab color="secondary" size="small" aria-label="scroll back to top">
           <KeyboardArrowUpIcon />

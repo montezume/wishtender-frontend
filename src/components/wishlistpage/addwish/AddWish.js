@@ -63,16 +63,16 @@ function AddWish() {
     <div className=" wrapper product_info">
       <div className="container product_info">
         <GetProductInfoButton submit={(e) => getProductInfo(e)} />
+        <ProductImages displayImages={filteredImages} />
         <ProductInputs
           name={productInfo.title}
           price={productInfo.price}
           currency={productInfo.currency}
         />
-        <ProductImages displayImages={filteredImages} />
-        <Button id="add_wish_button" variant="contained" color="primary">
-          + Add Wish
-        </Button>
       </div>
+      <Button id="add_wish_button" variant="contained" color="primary">
+        + Add Wish
+      </Button>
     </div>
   );
 }

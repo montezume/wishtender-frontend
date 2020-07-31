@@ -69,7 +69,10 @@ function App(props) {
   };
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
+      <div
+        className="App"
+        // style={{ display: "flex", flexDirection: "column" }}
+      >
         <CustomizedMenus />
 
         <Router>
