@@ -13,13 +13,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function CurrencyWarning(props) {
-  if (props.currency !== "USD" && props.currency.length !== 0) {
-    return (
+  let currencyWarning;
+  if (props.currency !== "USD" && props.price !== "" && props.price !== null) {
+    currencyWarning = (
       <div>
         Price populated from {props.currency}. Please make sure to convert to
         USD.
       </div>
     );
+
+    return currencyWarning;
   }
 }
 
@@ -28,39 +31,40 @@ export default function ProductInputs(props) {
   const [price, setPrice] = useState(props.price);
   const [loadedClassName, setLoadedClassName] = useState("not_loaded");
   const classes = useStyles();
-
+  console.log(props);
   useEffect(() => {
     setName(props.name);
     setPrice(props.price);
-    if (props.name) setLoadedClassName("loaded"); //wat if there is noname?
-    console.log("use effect", name, "<---name");
+    if (props.retrieved) setLoadedClassName("loaded"); //wat if there is noname? NULL BUT RETRIEVED NOT WORIKING
   }, [props]);
 
   return (
-    <div className={loadedClassName} id="product_inputs">
-      <TextField
-        className="input name"
-        variant="outlined"
-        id="name_of_product"
-        value={name}
-        label="Product Name"
-        onChange={(e) => {
-          setName(e.target.value);
-        }}
-      />
+    <div className={loadedClassName}>
+      {/* should only appear after recieved */}
+      {props.retrieved ? CurrencyWarning(props) : null}
+      <div id="product_inputs">
+        <TextField
+          className="input name"
+          variant="outlined"
+          id="name_of_product"
+          value={name}
+          label="Product Name"
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
+        />
 
-      <TextField
-        className="input price"
-        variant="outlined"
-        id="price_of_product"
-        value={"$" + price}
-        label="Price"
-        onChange={(e) => {
-          setPrice(e.target.value.slice(1));
-        }}
-      />
-
-      {CurrencyWarning(props)}
+        <TextField
+          className="input price"
+          variant="outlined"
+          id="price_of_product"
+          value={"$" + (price || "")}
+          label="Price"
+          onChange={(e) => {
+            setPrice(e.target.value.slice(1));
+          }}
+        />
+      </div>
     </div>
   );
 }

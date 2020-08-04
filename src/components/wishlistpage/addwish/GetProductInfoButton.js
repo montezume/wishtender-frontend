@@ -19,7 +19,6 @@ export default function GetProductInfoButton(props) {
     e.preventDefault();
     props.submit(url);
   }
-  console.log(props.submit);
   return (
     <div>
       <form
