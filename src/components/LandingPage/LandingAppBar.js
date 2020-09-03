@@ -91,24 +91,11 @@ export default function BackToTop(props) {
       {/* app bar */}
       <AppBar className={scrolledStyle}>
         <Toolbar style={{ width: "100%", height: "100%" }}>
-          <IconButton
-            onClick={props.openMenu}
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
-
           <div className="logo container">
             <a href="/">
-              <img className="logo" src="/images/logo.png" />
+              <img className="logo" src="images/logo.png" />
             </a>
           </div>
-          <Button color="inherit" href="/wishlist">
-            Login
-          </Button>
         </Toolbar>
       </AppBar>
 

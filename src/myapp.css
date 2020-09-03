@@ -106,6 +106,40 @@ header.MuiPaper-elevation4.shadow {
   font-size: 2rem;
 }
 
+/* Landing Page------------------ */
+.large_explanation {
+  background: no-repeat url("/images/app_demo_banner_small.jpg");
+  text-align: center;
+  background-size: contain;
+  background-position-y: top;
+  padding: 70vw 5% 5% 5%;
+}
+.large_explanation h2 {
+  font-size: 5vw;
+}
+.large_explanation p {
+  font-size: 2.7vw;
+}
+@media only screen and (min-width: 600px) {
+  .large_explanation p,
+  .large_explanation h2 {
+    width: 60%;
+  }
+  .large_explanation h2 {
+    font-size: 3vw;
+  }
+  .large_explanation p {
+    font-size: 2vw;
+  }
+  .large_explanation {
+    padding: 5%;
+    text-align: left;
+    background: no-repeat url(/images/app_demo_banner.jpg);
+    background-size: cover;
+    background-position-y: bottom;
+  }
+}
+
 /* Profile Page------------------ */
 
 /* ProfileSection.js  */

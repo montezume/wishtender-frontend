@@ -31,7 +31,7 @@ function AddWish() {
       .then((res) => {
         const info = res.data;
         setProductInfo(info);
-        const images = info.ogImageSrcs.concat(info.imageSrcs);
+        const images = info.imageSrcs;
         if (res.data) setRetrieved("true");
 
         const uniqueImages = [...new Set(images)];

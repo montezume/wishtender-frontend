@@ -14,11 +14,11 @@ const useStyles = makeStyles((theme) => ({
 
 function CurrencyWarning(props) {
   let currencyWarning;
-  if (props.currency !== "USD" && props.price !== "" && props.price !== null) {
+  if (props.currency !== "USD" && props.price !== "" && props.price != null) {
     currencyWarning = (
       <div>
-        Price populated from {props.currency}. Please make sure to convert to
-        USD.
+        Price populated from {props.currency || "an unknown currency"}. Please
+        make sure to convert to USD.
       </div>
     );
 

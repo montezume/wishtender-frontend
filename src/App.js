@@ -10,7 +10,9 @@ import Header from "./components/nav/Header";
 import Wishlist from "./components/wishlistpage/Wishlist";
 import AppBar from "./components/nav/AppBar";
 import HomePage from "./components/HomePage";
+import LandingPage from "./components/LandingPage/LandingPage";
 import CustomizedMenus from "./components/nav/menu.js";
+import LandingPageMenu from "./components/LandingPage/LandingPageMenu.js";
 
 import { createMuiTheme } from "@material-ui/core/styles";
 import purple from "@material-ui/core/colors/purple";
@@ -44,8 +46,8 @@ const theme = createMuiTheme({
 
 function App(props) {
   const user = {
-    bannerPicUrl: "images/banner_pic.png",
-    profilePicUrl: "images/profile_pic.png",
+    bannerPicUrl: "/images/banner_pic.png",
+    profilePicUrl: "/images/profile_pic.png",
     displayName: "Brittany K.",
     name: { first: "Brittany", last: "Kochover" },
     profileMessage: "Love you guys <3",
@@ -53,17 +55,17 @@ function App(props) {
       {
         itemName: "YSL Stilettos",
         price: "1000.00",
-        imageUrl: "images/heels.png",
+        imageUrl: "/images/heels.png",
       },
       {
         itemName: "Reformation Dress",
         price: "300.00",
-        imageUrl: "images/dress.png",
+        imageUrl: "/images/dress.png",
       },
       {
         itemName: "Night Pallette",
         price: "37.00",
-        imageUrl: "images/makeup.png",
+        imageUrl: "/images/makeup.png",
       },
     ],
   };
@@ -73,13 +75,55 @@ function App(props) {
         className="App"
         // style={{ display: "flex", flexDirection: "column" }}
       >
-        <CustomizedMenus />
-
         <Router>
-          <Route path="/" exact component={HomePage} />
-          <Route path="/wishlist" render={() => <WishlistPage user={user} />} />
-          <Route path="/editwishes" component={EditWishes} />
-          <Route path="/addwish" component={AddWish} />
+          <Route
+            path="/"
+            exact
+            render={(props) => {
+              return (
+                <div>
+                  <LandingPageMenu />
+                  <LandingPage />
+                </div>
+              );
+            }}
+          />
+
+          <Route
+            path="/demo"
+            exact
+            render={(props) => {
+              return (
+                <div>
+                  <CustomizedMenus />
+                  <HomePage />
+                </div>
+              );
+            }}
+          />
+          <Route
+            path="/demo/wishlist"
+            render={(props) => {
+              return (
+                <div>
+                  <CustomizedMenus />
+                  <WishlistPage user={user} />
+                </div>
+              );
+            }}
+          />
+          <Route
+            path="/demo/addwish"
+            render={(props) => {
+              return (
+                <div>
+                  <CustomizedMenus />
+                  <AddWish />
+                </div>
+              );
+            }}
+          />
+          <Route path="/demo/editwishes" component={EditWishes} />
         </Router>
       </div>
     </ThemeProvider>
