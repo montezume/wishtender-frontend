@@ -23,6 +23,7 @@ function heroSection() {
           <h2>
             What you love. <br /> From your fans.
           </h2>
+          <h3>Coming Soon</h3>
           Contact{" "}
           <a href="https://www.twitter.com/DashBarkHuss">@DashBarkHuss</a> on
           twitter for more information.
