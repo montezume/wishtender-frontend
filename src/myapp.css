@@ -120,6 +120,11 @@ header.MuiPaper-elevation4.shadow {
 .large_explanation p {
   font-size: 2.7vw;
 }
+
+.large_explanation.MuiGrid-spacing-xs-3 {
+  width: auto;
+  margin: 0;
+}
 @media only screen and (min-width: 600px) {
   .large_explanation p,
   .large_explanation h2 {
@@ -134,7 +139,7 @@ header.MuiPaper-elevation4.shadow {
   .large_explanation {
     padding: 5%;
     text-align: left;
-    background: no-repeat url(/images/app_demo_banner.jpg);
+    background: no-repeat url(/images/app_demo_banner_1.jpg);
     background-size: cover;
     background-position-y: bottom;
   }
@@ -410,8 +415,8 @@ header.MuiPaper-elevation4.shadow {
   letter-spacing: 0.45vw;
 }
 .hero_section .text h3 {
-  font-size: 3.7vw;
-  letter-spacing: 0.7vw;
+  font-size: 4vw;
+  letter-spacing: 0.4vw;
 }
 
 .hero_section .triangle {

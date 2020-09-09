@@ -93,7 +93,11 @@ export default function BackToTop(props) {
         <Toolbar style={{ width: "100%", height: "100%" }}>
           <div className="logo container">
             <a href="/">
-              <img className="logo" src="images/logo.png" />
+              <img
+                className="logo"
+                src="images/logo.png"
+                style={{ height: "68px", top: "-3px", position: "relative" }}
+              />
             </a>
           </div>
         </Toolbar>

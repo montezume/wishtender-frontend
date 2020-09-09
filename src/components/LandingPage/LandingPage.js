@@ -43,7 +43,7 @@ function fourPointExplanation() {
       <Grid item xs={12} sm={6} md={3}>
         <Paper className="point">
           <div className="icon">
-            <img src="images/icon_blue.png" />
+            <img src="images/icon_wishlist.png" />
           </div>
           <h3>One Stop Wishlist</h3>
           <p>
@@ -55,7 +55,7 @@ function fourPointExplanation() {
       <Grid item xs={12} sm={6} md={3}>
         <Paper className="point">
           <div className="icon">
-            <img src="images/icon_blue.png" />
+            <img src="images/icon_secure_address.png" />
           </div>
           <h3>Secure Shipping</h3>
           <p>
@@ -67,19 +67,18 @@ function fourPointExplanation() {
       <Grid item xs={12} sm={6} md={3}>
         <Paper className="point">
           <div className="icon">
-            <img src="images/icon_blue.png" />
+            <img src="images/icon_control_orders.png" />
           </div>
           <h3>Control Orders</h3>
           <p>
-            Have full control of your gifts. Receive funds directly so you can
-            control your orders.
+            Decide when your orders get placed, add to orders, or keep the cash.
           </p>
         </Paper>
       </Grid>
       <Grid item xs={12} sm={6} md={3}>
         <Paper className="point">
           <div className="icon">
-            <img src="images/icon_blue.png" />
+            <img src="images/icon_integration.png" />
           </div>
           <h3>Easy Integration</h3>
           <p>
