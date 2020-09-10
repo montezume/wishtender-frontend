@@ -57,7 +57,7 @@ function fourPointExplanation() {
           <div className="icon">
             <img src="images/icon_secure_address.png" />
           </div>
-          <h3>Secure Shipping</h3>
+          <h3>Hide Shipping Address</h3>
           <p>
             Keep your mailing address and legal name private so you can receive
             gifts safely.
