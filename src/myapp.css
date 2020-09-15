@@ -26,6 +26,11 @@ body,
     U+FEFF, U+FFFD;
 }
 
+a {
+  text-decoration: none;
+  color: #02bff2;
+}
+
 /* Header.js */
 header.custom {
   min-height: 70px;
@@ -142,6 +147,39 @@ header.MuiPaper-elevation4.shadow {
     background: no-repeat url(/images/app_demo_banner_1.jpg);
     background-size: cover;
     background-position-y: bottom;
+  }
+}
+
+/* Thank You------------------ */
+
+.thank_you {
+  font-size: 3.6vw;
+  padding: 5vw;
+  text-align: center;
+  margin: auto;
+}
+.thank_you h2 {
+  font-size: 4.6vw;
+}
+
+@media only screen and (min-width: 600px) {
+  .thank_you {
+    font-size: 2.6vw;
+    width: 90%;
+  }
+  .thank_you h2 {
+    font-size: 3.5vw;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .thank_you {
+    font-size: 2vw;
+    padding: 5vw;
+    width: 80%;
+  }
+  .thank_you h2 {
+    font-size: revert;
   }
 }
 
@@ -390,7 +428,8 @@ header.MuiPaper-elevation4.shadow {
   background-position-x: -16vw;
 }
 
-.hero_section button {
+.hero_section button,
+.hero_section .button {
   color: #fff;
   background-color: #02bff2;
   font-size: 4vw;
@@ -399,7 +438,8 @@ header.MuiPaper-elevation4.shadow {
   border-radius: 0;
 }
 
-.hero_section button:hover {
+.hero_section button:hover,
+.hero_section .button:hover {
   background-color: #03b0e0;
 }
 .hero_section .text {
@@ -431,7 +471,8 @@ header.MuiPaper-elevation4.shadow {
   border-top-color: #afefff;
 }
 @media only screen and (min-width: 450px) {
-  .hero_section button {
+  .hero_section button,
+  .hero_section .button {
     font-size: 1.3rem;
   }
 }
@@ -444,13 +485,15 @@ header.MuiPaper-elevation4.shadow {
     background-position-x: 15vw;
   }
 
-  .hero_section button {
+  .hero_section button,
+  .hero_section .button {
     font-size: 2vw;
     color: #fff;
     background-color: #02bff2;
   }
 
-  .hero_section button:hover {
+  .hero_section button:hover,
+  .hero_section .button:hover {
     background-color: #03b0e0;
   }
   .hero_section .text {
@@ -483,7 +526,8 @@ header.MuiPaper-elevation4.shadow {
   .hero_section {
     height: 38vw;
   }
-  .hero_section button {
+  .hero_section button,
+  .hero_section .button {
     font-size: 1.3rem;
   }
   .hero_section .text h2 {

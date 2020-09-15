@@ -23,11 +23,17 @@ function heroSection() {
           <h2>
             What you love. <br /> From your fans.
           </h2>
-          <h3>Coming Soon</h3>
-          Contact{" "}
+          <h3>Coming Soon!</h3>
+          {/*Contact{" "}
           <a href="https://www.twitter.com/DashBarkHuss">@DashBarkHuss</a> on
-          twitter for more information.
-          {/* <Button variant="contained">Get Early Access</Button> */}
+          twitter for more information. */}
+          <Button
+            className="button"
+            href="https://landing.mailerlite.com/webforms/landing/k3y1m6"
+            variant="contained"
+          >
+            Get Early Access
+          </Button>
         </div>
       </div>
     </div>
@@ -82,8 +88,8 @@ function fourPointExplanation() {
           </div>
           <h3>Easy Integration</h3>
           <p>
-            Integrate with your old wishlist so you don't have to start from
-            scratch.
+            Integrate with your old wishlists from other sites so you don't have
+            to start from scratch.
           </p>
         </Paper>
       </Grid>

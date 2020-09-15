@@ -11,6 +11,7 @@ import Wishlist from "./components/wishlistpage/Wishlist";
 import AppBar from "./components/nav/AppBar";
 import HomePage from "./components/HomePage";
 import LandingPage from "./components/LandingPage/LandingPage";
+import ThankYou from "./components/LandingPage/ThankYou";
 import CustomizedMenus from "./components/nav/menu.js";
 import LandingPageMenu from "./components/LandingPage/LandingPageMenu.js";
 
@@ -84,6 +85,18 @@ function App(props) {
                 <div>
                   <LandingPageMenu />
                   <LandingPage />
+                </div>
+              );
+            }}
+          />
+          <Route
+            path="/betathankyou"
+            exact
+            render={(props) => {
+              return (
+                <div>
+                  <LandingPageMenu />
+                  <ThankYou />
                 </div>
               );
             }}
