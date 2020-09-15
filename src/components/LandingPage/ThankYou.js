@@ -19,7 +19,7 @@ function ThankYou() {
       {/* {heroSection()}
       {fourPointExplanation()} */}
 
-      <h2>Success! You've been added to the wait list</h2>
+      <h2>Success! You've been added to the waitlist</h2>
       <p>
         Thank you for signing up. Access to our beta program is limited. If you
         would like to fast-track your way into beta approval, you can enter to
