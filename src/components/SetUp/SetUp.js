@@ -1,7 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { Redirect } from "react-router-dom";
 
-export default function Form(props) {
+export default function Login() {
   const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = (data) => {
@@ -9,7 +10,7 @@ export default function Form(props) {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
     // send the country code to the server where we will also detect the browser's preferred language located in the acceptsLanguages request header
-    fetch("props.route", {
+    fetch("/users/registration", {
       method: "POST",
       body: JSON.stringify(data),
       headers,
@@ -19,27 +20,27 @@ export default function Form(props) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <input
         type="text"
-        placeholder="Email"
-        name="email"
+        placeholder="handle"
+        name="handle"
         ref={register({
-          required: "Email Required",
-          pattern: {
-            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-            message: "Enter a valid e-mail address",
-          },
+          required: "Handle required",
         })}
       />
-      {errors.email && <p>{errors.email.message}</p>}
+      {errors.handle && <p>{errors.handle.message}</p>}
       <input
-        type="password"
-        placeholder="Password"
-        name="password"
+        type="text"
+        placeholder="display name"
+        name="display name"
         ref={register({
-          required: "Password Required",
-          minLength: {
-            value: 8,
-            message: "Password must be at least 8 characters",
-          },
+          required: "Display Name Required",
+        })}
+      />
+      <input
+        type="text"
+        placeholder="Wishlist name"
+        name="display name"
+        ref={register({
+          required: "Display Name Required",
         })}
       />
       {errors.password && <p>{errors.password.message}</p>}
