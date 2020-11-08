@@ -23,6 +23,7 @@ import WishlistPage from "./components/wishlistpage/WishlistPage";
 
 import AddWish from "./components/wishlistpage/addwish/AddWish.js";
 import EditWishes from "./components/wishlistpage/EditWishes.js";
+import Form from "./components/Form/Form";
 // import './Styles/App.css';
 
 const theme = createMuiTheme({
@@ -110,6 +111,18 @@ function App(props) {
                 <div>
                   <CustomizedMenus />
                   <HomePage />
+                </div>
+              );
+            }}
+          />
+          <Route
+            path="/sign-up"
+            exact
+            render={(props) => {
+              return (
+                <div>
+                  <CustomizedMenus />
+                  <Form />
                 </div>
               );
             }}

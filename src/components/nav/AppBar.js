@@ -103,7 +103,11 @@ export default function BackToTop(props) {
 
           <div className="logo container">
             <a href="/">
-              <img className="logo" src="/images/logo.png" />
+              <img
+                className="logo"
+                src="/images/logo.png"
+                style={{ height: "68px", top: "-3px", position: "relative" }}
+              />
             </a>
           </div>
           <Button color="inherit" href="/wishlist">
