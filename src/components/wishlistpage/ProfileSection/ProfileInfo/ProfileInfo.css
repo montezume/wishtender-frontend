@@ -1,0 +1,89 @@
+/* ProfileSection.js  */
+.info {
+  position: relative;
+  border-bottom: 1px solid rgb(224, 224, 224);
+  padding: 4%;
+  padding-top: 20vw;
+}
+.wishlist_name {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+.user_name {
+  font-size: 0.9rem;
+  color: gray;
+  padding-bottom: 2%;
+}
+.profile_message {
+  font-size: 0.9rem;
+  font-style: italic;
+  height: 30px;
+}
+.profile_picture__container {
+  width: 25%;
+  /* clear border because the shadow that creates a fake round border overlaps other elements otherwise */
+  border: 5px solid #00000000;
+  padding-bottom: 1%;
+}
+@media only screen and (min-width: 600px) {
+  .info .container.flex {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .profile_picture__container {
+    width: 20%;
+    transform: translateY(50%);
+    padding-bottom: 0;
+  }
+
+  .container.name {
+    flex-grow: 1;
+  }
+
+  .info {
+    padding-top: 10vw;
+  }
+
+  .wishlist_name {
+    font-size: 3rem;
+    font-weight: 700;
+  }
+
+  .profile_message {
+    margin-left: 25%;
+    font-size: 1.3rem;
+  }
+
+  .user_name,
+  .wishlist_name {
+    padding-left: 8%;
+    color: white;
+  }
+  .user_name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-transform: lowercase;
+  }
+
+  .profile_message {
+    padding-top: 3%;
+  }
+  .info {
+    padding-bottom: 5%;
+  }
+}
+
+@media only screen and (min-width: 960px) {
+  .profile_picture__container {
+    width: 15%;
+    transform: translateY(40%);
+  }
+
+  .profile_message {
+    margin-left: 18%;
+  }
+  .info {
+    padding-bottom: 2%;
+  }
+}

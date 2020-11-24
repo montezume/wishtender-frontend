@@ -1,0 +1,42 @@
+/* optional shadow, background, and border*/
+.crop-container {
+  /* -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: white; */
+}
+.crop-container {
+  position: relative;
+  /* padding: 4% 8%; */
+  text-align: center;
+}
+.crop-container,
+.crop-container > * {
+  box-sizing: border-box;
+}
+
+.crop-preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 80px;
+  width: 100%;
+  background: black;
+
+  position: relative;
+}
+
+.crop-preview:after {
+  content: '';
+  display: block;
+  padding-bottom: 100%;
+}
+
+.crop-controls {
+  /* display: flex; */
+  margin: 5% 10%;
+  align-items: center;
+  position: relative;
+  font-size: 0.9em;
+}

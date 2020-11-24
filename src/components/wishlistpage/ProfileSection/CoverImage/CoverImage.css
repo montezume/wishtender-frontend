@@ -1,0 +1,29 @@
+/* .cover_image {
+  height: 25vw;
+} */
+.cover_image img {
+  width: 100%;
+  opacity: 0.78;
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+}
+.cover_image {
+  /* shout heigh be at 40vw? */
+  height: 30vw;
+  width: 100%;
+  background-size: cover;
+  overflow: hidden;
+  position: relative;
+  background: #000;
+}
+@media only screen and (min-width: 600px) {
+  .cover_image {
+    height: 30vw;
+  }
+}
+@media only screen and (min-width: 960px) {
+  .cover_image {
+    height: 25vw;
+  }
+}

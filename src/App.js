@@ -15,9 +15,6 @@ import ThankYou from "./components/LandingPage/ThankYou";
 import CustomizedMenus from "./components/nav/menu.js";
 import LandingPageMenu from "./components/LandingPage/LandingPageMenu.js";
 
-import { createMuiTheme } from "@material-ui/core/styles";
-import purple from "@material-ui/core/colors/purple";
-import green from "@material-ui/core/colors/green";
 import { ThemeProvider } from "@material-ui/styles";
 import WishlistPage from "./components/wishlistpage/WishlistPage";
 
@@ -26,26 +23,7 @@ import EditWishes from "./components/wishlistpage/EditWishes.js";
 import SignUp from "./components/SignUp/SignUp";
 import SetUp from "./components/SetUp/SetUp";
 // import './Styles/App.css';
-
-const theme = createMuiTheme({
-  typography: {
-    fontFamily: [
-      "Nunito",
-      "Roboto",
-      '"Helvetica Neue"',
-      "Arial",
-      "sans-serif",
-    ].join(","),
-  },
-  palette: {
-    primary: {
-      main: "#02bff2",
-    },
-    secondary: {
-      main: green[500],
-    },
-  },
-});
+import theme from "./theme";
 
 function App(props) {
   const user = {

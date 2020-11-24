@@ -1,0 +1,10 @@
+.editable_profile_picture__container {
+  position: relative;
+}
+.update_profile_picture_button__container {
+  position: absolute;
+  z-index: 100;
+  bottom: 15%;
+  right: 16%;
+  transform: translate(50%, 50%);
+}
