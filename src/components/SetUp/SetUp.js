@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Redirect } from "react-router-dom";
+// import ImageInput from "../ImageInput/ImageInput.js";
 
 export default function Login() {
   const { register, handleSubmit, errors } = useForm();
@@ -30,14 +31,6 @@ export default function Login() {
       <input
         type="text"
         placeholder="display name"
-        name="display name"
-        ref={register({
-          required: "Display Name Required",
-        })}
-      />
-      <input
-        type="text"
-        placeholder="Wishlist name"
         name="display name"
         ref={register({
           required: "Display Name Required",

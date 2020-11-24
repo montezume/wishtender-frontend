@@ -1,0 +1,117 @@
+/* Profile Page------------------ */
+
+/* ProfileSection.js  */
+
+.profile_section {
+}
+
+.profile_section .banner_image {
+  height: 30vw;
+  width: 100%;
+  background-size: cover;
+  overflow: hidden;
+  position: absolute;
+  background: #000;
+}
+.profile_section .banner_image img {
+  width: 100%;
+  opacity: 0.78;
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+}
+
+.profile_section .info {
+  position: relative;
+  border-bottom: 1px solid rgb(224, 224, 224);
+  padding: 4%;
+  padding-top: 20vw;
+}
+
+.profile_section .profile_picture.container {
+  width: 25%;
+}
+.profile_section .profile_picture .picture {
+  background-size: cover;
+  position: relative;
+  -webkit-box-shadow: 0 0 0 5px #fff;
+  border-radius: 50%;
+  width: 100%;
+  padding-bottom: 100%;
+}
+.profile_section .wishlist_name {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+.profile_section .user_name {
+  font-size: 0.9rem;
+  color: gray;
+  padding-bottom: 2%;
+}
+.profile_section .profile_message {
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+@media only screen and (min-width: 600px) {
+  .profile_section .info .container.flex {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .profile_section .profile_picture.container {
+    width: 20%;
+    transform: translateY(50%);
+  }
+
+  .profile_section .container.name {
+    flex-grow: 1;
+  }
+
+  .profile_section .info {
+    padding-top: 10vw;
+  }
+
+  .profile_section .wishlist_name {
+    font-size: 3rem;
+    font-weight: 700;
+  }
+
+  .profile_section .profile_message {
+    margin-left: 25%;
+    font-size: 1.3rem;
+  }
+
+  .profile_section .user_name,
+  .profile_section .wishlist_name {
+    padding-left: 8%;
+    color: white;
+    width: 100%;
+  }
+  .profile_section .user_name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .profile_section .profile_message {
+    padding-top: 3%;
+  }
+}
+
+@media only screen and (min-width: 960px) {
+  .profile_section .profile_picture.container {
+    width: 15%;
+    transform: translateY(40%);
+  }
+
+  .profile_section .banner_image {
+    height: 25vw;
+  }
+  .profile_section .profile_message {
+    margin-left: 18%;
+  }
+  .profile_section .info {
+    padding-bottom: 2%;
+  }
+}

@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import logo from "./logo.svg";
 // import './App.css';
 import "./myapp.css";
-import ProfileSection from "./components/wishlistpage/ProfileSection";
+import ProfileSection from "./components/wishlistpage/ProfileSection/ProfileSection";
 import Header from "./components/nav/Header";
 import Wishlist from "./components/wishlistpage/Wishlist";
 import AppBar from "./components/nav/AppBar";
@@ -136,6 +136,17 @@ function App(props) {
                 <div>
                   <CustomizedMenus />
                   <SetUp />
+                </div>
+              );
+            }}
+          />
+          <Route
+            path="/wishlist"
+            render={(props) => {
+              return (
+                <div>
+                  <CustomizedMenus />
+                  <WishlistPage user={user} />
                 </div>
               );
             }}
