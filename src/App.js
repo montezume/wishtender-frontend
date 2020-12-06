@@ -1,14 +1,9 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-
+import React, { useState, useEffect } from "react";
+import { UserContext } from "./contexts/UserContext";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 // import React from 'react';
-import logo from "./logo.svg";
 // import './App.css';
 import "./myapp.css";
-import ProfileSection from "./components/wishlistpage/ProfileSection/ProfileSection";
-import Header from "./components/nav/Header";
-import Wishlist from "./components/wishlistpage/Wishlist";
-import AppBar from "./components/nav/AppBar";
 import HomePage from "./components/HomePage";
 import LandingPage from "./components/LandingPage/LandingPage";
 import ThankYou from "./components/LandingPage/ThankYou";
@@ -24,38 +19,49 @@ import SignUp from "./components/SignUp/SignUp";
 import SetUp from "./components/SetUp/SetUp";
 // import './Styles/App.css';
 import theme from "./theme";
-
+const currentUser = () => {
+  return fetch("/users/current", {
+    credentials: "include",
+  }).then((res) => {
+    if (res.status === 204) return Promise.resolve(null);
+    return res.json();
+  });
+};
 function App(props) {
-  const user = {
-    bannerPicUrl: "/images/banner_pic.png",
-    profilePicUrl: "/images/profile_pic.png",
-    displayName: "Brittany K.",
-    name: { first: "Brittany", last: "Kochover" },
-    profileMessage: "Love you guys <3",
-    wishlistItems: [
-      {
-        itemName: "YSL Stilettos",
-        price: "1000.00",
-        imageUrl: "/images/heels.png",
-      },
-      {
-        itemName: "Reformation Dress",
-        price: "300.00",
-        imageUrl: "/images/dress.png",
-      },
-      {
-        itemName: "Night Pallette",
-        price: "37.00",
-        imageUrl: "/images/makeup.png",
-      },
-    ],
-  };
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    currentUser().then((user) => {
+      setUser(user);
+    });
+  }, []);
+  // const user = {
+  //   bannerPicUrl: "/images/banner_pic.png",
+  //   profilePicUrl: "/images/profile_pic.png",
+  //   displayName: "Brittany K.",
+  //   name: { first: "Brittany", last: "Kochover" },
+  //   profileMessage: "Love you guys <3",
+  //   wishlistItems: [
+  //     {
+  //       itemName: "YSL Stilettos",
+  //       price: "1000.00",
+  //       imageUrl: "/images/heels.png",
+  //     },
+  //     {
+  //       itemName: "Reformation Dress",
+  //       price: "300.00",
+  //       imageUrl: "/images/dress.png",
+  //     },
+  //     {
+  //       itemName: "Night Pallette",
+  //       price: "37.00",
+  //       imageUrl: "/images/makeup.png",
+  //     },
+  //   ],
+  // };
   return (
     <ThemeProvider theme={theme}>
-      <div
-        className="App"
-        // style={{ display: "flex", flexDirection: "column" }}
-      >
+      <div className="App">
         <Router>
           <Route
             path="/"
@@ -118,17 +124,20 @@ function App(props) {
               );
             }}
           />
-          <Route
-            path="/wishlist"
-            render={(props) => {
-              return (
-                <div>
-                  <CustomizedMenus />
-                  <WishlistPage user={user} />
-                </div>
-              );
-            }}
-          />
+          <UserContext.Provider value={user}>
+            <Route
+              path="/:alias"
+              render={(props) => {
+                return (
+                  <div>
+                    <CustomizedMenus />
+                    <WishlistPage />
+                  </div>
+                );
+              }}
+            />
+          </UserContext.Provider>
+
           <Route
             path="/demo/wishlist"
             render={(props) => {

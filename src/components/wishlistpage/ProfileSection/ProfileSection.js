@@ -1,31 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./ProfileSection.css";
 import EditableProfileInfo from "./EditbableProfileInfo/EditableProfileInfo.js";
 import EditableCoverImage from "./EditableCoverImage/EditableCoverImage";
-//fake data for now
-import coverPicUrl from "./banner_pic.jpg";
-import profilePic from "./profilePic.jpeg";
 import UpdateProfileInfo from "./UpdateProfileInfo/UpdateProfileInfo";
-//change these to match your backend routes
-const postImageRoute = "http://localhost:4000/image";
+import { UserContext } from "../../../contexts/UserContext";
+import { useParams } from "react-router-dom";
+import {
+  fetchPostJson,
+  fetchGet,
+  fetchPostImage,
+} from "../../../scripts/fetchHelper";
+const postImageRoute = (id) => `/alias/${id}`;
+const handleRoute = "/aliases?handle=";
 
-//fake data for now
-const user = {
-  coverPicUrl: coverPicUrl,
-  profilePic: profilePic,
-  handle: "dashie",
-  // find out character limit for profile message
-  wishlistMessage: "Thanks for coming to my page!",
-  wishlistName: `Dashie's Wishlist`,
-};
 /**
  * Renders a <ProfileSection /> component
  * @param  props
- * @param  props.coverPicUrl
- * @param  props.wishlistName
- * @param  props.handle
- * @param  props.profilePic
- * @param  props.profileMessage
  */
 function ProfileSection(props) {
   const [profilePicture, setProfilePicture] = useState(null);
@@ -33,93 +23,33 @@ function ProfileSection(props) {
   const [wishlistName, setWishlistName] = useState(null);
   const [handle, setHandle] = useState(null);
   const [wishlistMessage, setWishlistMessage] = useState(null);
+  const [isAuth, setIsAuth] = useState(false);
+  const currentUser = useContext(UserContext);
+  let { alias: aliasPath } = useParams();
 
   useEffect(() => {
-    // all of these would be set through a get request in real life using fetch
-    setProfilePicture(user.profilePic);
-    setCoverImage(user.coverPicUrl);
-    setWishlistName(user.wishlistName);
-    setHandle(user.handle);
-    setWishlistMessage(user.wishlistMessage);
-  }, []);
-
-  // fetch post image
-  const fetchPostImage = (image, fileName, route, setStateCallback) => {
-    var fd = new FormData();
-    fd.append(fileName, image);
-    fetch(route, {
-      method: "POST",
-      body: fd,
-      mode: "cors",
-    })
-      .then(async (response) => {
-        if (response.status === 500) {
-          let responseText = await response.text();
-          throw new Error(responseText);
-        }
-        return response.text();
-      })
-      .then((img) => {
-        setStateCallback(URL.createObjectURL(image));
-        console.log(img + "posted to server");
-      })
-      .catch((err) => {
-        console.log(err);
-        alert(err);
-      });
-  };
-  // fetch post json
-  const fetchPostJson = async (data, route, setStateCallbacks) => {
-    const headers = new Headers();
-    headers.append("Content-Type", "application/json");
-    await fetch(route, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers,
-    })
-      .then((res) => res.json())
-      .then((response) => {
-        console.log("server response: ", response);
-        setStateCallbacks();
-      })
-      .catch((err) => {
-        console.log(err);
-        alert(err);
-      });
-  };
-  // fetch get json
-  const fetchGet = async (route) => {
-    await fetch(route)
-      .then((res) => res.text())
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
-        alert(err);
-      });
-  };
-
-  // route post /alias
-  // profilePicture
-  // handle
+    const cb = (json) => {
+      setCoverImage(`${json.wishlists[0].coverImage}`);
+      setProfilePicture(`${json.profileImage}`);
+      setWishlistName(json.wishlists[0].wishlistName);
+      setHandle(json.handle);
+      setWishlistMessage(json.wishlists[0].wishlistMessage);
+      setIsAuth(currentUser ? currentUser.aliases.includes(json._id) : false);
+    };
+    fetchGet(`${handleRoute}${aliasPath}`, cb);
+  }, [currentUser]);
 
   const handleUpdateProfilePicture = (image) => {
     fetchPostImage(image, "image", postImageRoute, setProfilePicture);
   };
+
   const handleCheckHandleAvailability = async (handle) => {
-    const available = await fetch(
-      `http://localhost:4000/users?handle=${handle}`
-    )
+    const available = await fetch(`${handleRoute}${handle}`)
       .then((res) => {
-        return res.text();
-      })
-      .then((text) => {
-        return !(text === "true");
+        return res.status === 204 ? true : false;
       })
       .catch((err) => {
-        console.log(err);
-        alert(err);
+        console.log(`couldn't check handle availability: ${err}`);
       });
     return available;
   };
@@ -129,10 +59,6 @@ function ProfileSection(props) {
     });
   };
 
-  // route post /wishlist update
-  // coverImage
-  // message
-  // wishlistName
   const handleUpdateCoverImage = (image) => {
     fetchPostImage(image, "image", postImageRoute, setCoverImage);
   };
@@ -153,7 +79,9 @@ function ProfileSection(props) {
       <EditableCoverImage
         coverPicUrl={coverImage}
         handleUpdateCoverImage={handleUpdateCoverImage}
+        isAuth={isAuth}
       ></EditableCoverImage>
+
       <EditableProfileInfo
         wishlistName={wishlistName}
         handle={handle}
@@ -161,18 +89,21 @@ function ProfileSection(props) {
         profilePic={profilePicture}
         handleUpdateProfilePicture={handleUpdateProfilePicture}
         handleUpdateWishlistMessage={handleUpdateWishlistMessage}
+        isAuth={isAuth}
       ></EditableProfileInfo>
-
-      <div className="edit_profile_button__container">
-        <UpdateProfileInfo
-          wishlistName={wishlistName}
-          handleUpdateWishlistMessage={handleUpdateWishlistMessage}
-          handle={handle}
-          handleUpdateWishlistName={handleUpdateWishlistName}
-          handleUpdateHandle={handleUpdateHandle}
-          handleCheckHandleAvailability={handleCheckHandleAvailability}
-        ></UpdateProfileInfo>
-      </div>
+      {isAuth && (
+        <div className="edit_profile_button__container">
+          <UpdateProfileInfo
+            wishlistName={wishlistName}
+            handleUpdateWishlistMessage={handleUpdateWishlistMessage}
+            handle={handle}
+            handleUpdateWishlistName={handleUpdateWishlistName}
+            handleUpdateHandle={handleUpdateHandle}
+            handleCheckHandleAvailability={handleCheckHandleAvailability}
+            isAuth={isAuth}
+          ></UpdateProfileInfo>
+        </div>
+      )}
     </div>
   );
 }

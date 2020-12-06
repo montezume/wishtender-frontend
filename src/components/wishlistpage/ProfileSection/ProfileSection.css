@@ -1,6 +1,7 @@
 /* Profile Page------------------ */
 .profile_section {
   position: relative;
+  box-sizing: content-box;
 }
 
 .edit_profile_button__container {

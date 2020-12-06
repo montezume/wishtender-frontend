@@ -1,8 +1,22 @@
-img.profile_picture {
+.profile_picture {
   display: flex;
-  background-size: cover;
   position: relative;
   -webkit-box-shadow: 0 0 0 5px #fff;
+  /* border: 5px solid white; */
   border-radius: 50%;
   width: 100%;
+  overflow: hidden;
+}
+
+.profile_picture:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+
+.profile_picture img {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }

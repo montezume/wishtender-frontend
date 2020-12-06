@@ -22,6 +22,7 @@ function EditIconButton(props) {
  * @param  props.wishlistMessage
  * @param  props.handleUpdateProfilePicture
  * @param  props.handleUpdateWishlistMessage
+ * @param  props.isAuth
  */
 export default function EditableProfileInfo(props) {
   const [editMessageVisible, setEditMessageVisible] = useState(false);
@@ -33,6 +34,7 @@ export default function EditableProfileInfo(props) {
           <EditableProfilePicture
             handleUpdateProfilePicture={props.handleUpdateProfilePicture}
             profilePic={props.profilePic}
+            isAuth={props.isAuth}
           ></EditableProfilePicture>
         </div>
         <div className="container name">
@@ -44,6 +46,7 @@ export default function EditableProfileInfo(props) {
         {/* The user is <b>{true ? props.handle : 'not'}</b> logged in. */}
         {editMessageVisible ? (
           <UpdateMessageForm
+            isAuth={props.isAuth}
             handleUpdateWishlistMessage={props.handleUpdateWishlistMessage}
             wishlistMessage={props.wishlistMessage}
             onClose={() => {
@@ -53,11 +56,13 @@ export default function EditableProfileInfo(props) {
         ) : (
           <>
             {props.wishlistMessage}
-            <EditIconButton
-              onClick={() => {
-                setEditMessageVisible(true);
-              }}
-            />
+            {props.isAuth && (
+              <EditIconButton
+                onClick={() => {
+                  setEditMessageVisible(true);
+                }}
+              />
+            )}
           </>
         )}
       </div>
