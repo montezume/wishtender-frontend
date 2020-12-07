@@ -8,9 +8,8 @@ import { useParams } from "react-router-dom";
 import {
   fetchPostJson,
   fetchGet,
-  fetchPostImage,
+  fetchPatchImage,
 } from "../../../scripts/fetchHelper";
-const postImageRoute = (id) => `/alias/${id}`;
 const handleRoute = "/aliases?handle=";
 
 /**
@@ -21,6 +20,7 @@ function ProfileSection(props) {
   const [profilePicture, setProfilePicture] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
   const [wishlistName, setWishlistName] = useState(null);
+  const [id, setId] = useState(null);
   const [handle, setHandle] = useState(null);
   const [wishlistMessage, setWishlistMessage] = useState(null);
   const [isAuth, setIsAuth] = useState(false);
@@ -34,13 +34,14 @@ function ProfileSection(props) {
       setWishlistName(json.wishlists[0].wishlistName);
       setHandle(json.handle);
       setWishlistMessage(json.wishlists[0].wishlistMessage);
+      setId(json._id);
       setIsAuth(currentUser ? currentUser.aliases.includes(json._id) : false);
     };
     fetchGet(`${handleRoute}${aliasPath}`, cb);
   }, [currentUser]);
 
   const handleUpdateProfilePicture = (image) => {
-    fetchPostImage(image, "image", postImageRoute, setProfilePicture);
+    fetchPatchImage(image, "image", `aliases/${id}`, setProfilePicture);
   };
 
   const handleCheckHandleAvailability = async (handle) => {
@@ -60,7 +61,7 @@ function ProfileSection(props) {
   };
 
   const handleUpdateCoverImage = (image) => {
-    fetchPostImage(image, "image", postImageRoute, setCoverImage);
+    fetchPatchImage(image, "image", `/users/${currentUser}`, setCoverImage);
   };
   const handleUpdateWishlistMessage = (wishlistMessage) => {
     fetchPostJson({ wishlistMessage }, "http://localhost:4000/wishlist", () => {

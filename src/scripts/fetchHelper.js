@@ -5,13 +5,13 @@
  * @param route
  * @param callback
  */
-const fetchPostImage = (image, fileName, route, callback) => {
+const fetchPatchImage = (image, fileName, route, callback) => {
   var fd = new FormData();
   fd.append(fileName, image);
   fetch(route, {
-    method: "POST",
+    method: "PATCH",
     body: fd,
-    mode: "cors",
+    // mode: "cors",
   })
     .then(async (response) => {
       if (response.status === 500) {
@@ -72,6 +72,6 @@ const fetchGet = async (route, cb) => {
 };
 module.exports = {
   fetchGet,
-  fetchPostImage,
+  fetchPatchImage,
   fetchPostJson,
 };
