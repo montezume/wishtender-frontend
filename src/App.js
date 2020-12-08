@@ -63,104 +63,106 @@ function App(props) {
     <ThemeProvider theme={theme}>
       <div className="App">
         <Router>
-          <Route
-            path="/"
-            exact
-            render={(props) => {
-              return (
-                <div>
-                  <LandingPageMenu />
-                  <LandingPage />
-                </div>
-              );
-            }}
-          />
-          <Route
-            path="/betathankyou"
-            exact
-            render={(props) => {
-              return (
-                <div>
-                  <LandingPageMenu />
-                  <ThankYou />
-                </div>
-              );
-            }}
-          />
-
-          <Route
-            path="/demo"
-            exact
-            render={(props) => {
-              return (
-                <div>
-                  <CustomizedMenus />
-                  <HomePage />
-                </div>
-              );
-            }}
-          />
-          <Route
-            path="/sign-up"
-            exact
-            render={(props) => {
-              return (
-                <div>
-                  <CustomizedMenus />
-                  <SignUp />
-                </div>
-              );
-            }}
-          />
-          <Route
-            path="/wishlist-setup"
-            exact
-            render={(props) => {
-              return (
-                <div>
-                  <CustomizedMenus />
-                  <SetUp />
-                </div>
-              );
-            }}
-          />
-          <UserContext.Provider value={user}>
+          <Switch>
+            <Route path="/" exact>
+              <LandingPageMenu />
+            </Route>
+            <Route path="/">
+              <CustomizedMenus />
+            </Route>
+          </Switch>
+          <Switch>
             <Route
-              path="/:alias"
+              path="/"
+              exact
               render={(props) => {
                 return (
                   <div>
-                    <CustomizedMenus />
-                    <WishlistPage />
+                    <LandingPage />
                   </div>
                 );
               }}
             />
-          </UserContext.Provider>
+            <Route
+              path="/betathankyou"
+              exact
+              render={(props) => {
+                return (
+                  <div>
+                    <ThankYou />
+                  </div>
+                );
+              }}
+            />
 
-          <Route
-            path="/demo/wishlist"
-            render={(props) => {
-              return (
-                <div>
-                  <CustomizedMenus />
-                  <WishlistPage user={user} />
-                </div>
-              );
-            }}
-          />
-          <Route
-            path="/demo/addwish"
-            render={(props) => {
-              return (
-                <div>
-                  <CustomizedMenus />
-                  <AddWish />
-                </div>
-              );
-            }}
-          />
-          <Route path="/demo/editwishes" component={EditWishes} />
+            <Route
+              path="/demo"
+              exact
+              render={(props) => {
+                return (
+                  <div>
+                    <HomePage />
+                  </div>
+                );
+              }}
+            />
+            <Route
+              path="/sign-up"
+              exact
+              render={(props) => {
+                return (
+                  <div>
+                    <SignUp />
+                  </div>
+                );
+              }}
+            />
+            <Route
+              path="/wishlist-setup"
+              exact
+              render={(props) => {
+                return (
+                  <div>
+                    <SetUp />
+                  </div>
+                );
+              }}
+            />
+            <UserContext.Provider value={user}>
+              <Route
+                path="/:alias"
+                render={(props) => {
+                  return (
+                    <div>
+                      <WishlistPage />
+                    </div>
+                  );
+                }}
+              />
+            </UserContext.Provider>
+
+            <Route
+              path="/addwish"
+              render={(props) => {
+                return (
+                  <div>
+                    <AddWish />
+                  </div>
+                );
+              }}
+            />
+            <Route
+              path="/demo/wishlist"
+              render={(props) => {
+                return (
+                  <div>
+                    <WishlistPage user={user} />
+                  </div>
+                );
+              }}
+            />
+            <Route path="/demo/editwishes" component={EditWishes} />
+          </Switch>
         </Router>
       </div>
     </ThemeProvider>
