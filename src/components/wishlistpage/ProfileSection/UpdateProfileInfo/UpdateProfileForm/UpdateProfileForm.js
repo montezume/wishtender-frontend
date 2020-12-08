@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Input from '@material-ui/core/Input';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import { Button, Typography } from '@material-ui/core';
-import { useForm } from 'react-hook-form';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useState, useEffect, useRef } from "react";
+import Input from "@material-ui/core/Input";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import { Button, Typography } from "@material-ui/core";
+import { useForm } from "react-hook-form";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => {
   return {
     root: {
-      '& .MuiFormControl-root': {
+      "& .MuiFormControl-root": {
         margin: theme.spacing(2),
-        width: '80%',
+        width: "80%",
       },
     },
     title: {
@@ -25,12 +25,11 @@ const useStyles = makeStyles((theme) => {
  * Renders a <UpdateProfileForm /> component
  * @param  props
  * @param  props.handleCheckHandleAvailability
- * @param  props.handleCheckHandleAvailability
  **/
 export default function UpdateProfileForm(props) {
   const { register, handleSubmit, errors, clearErrors } = useForm({
-    mode: 'onChange',
-    reValidateMode: 'onChange',
+    mode: "onChange",
+    reValidateMode: "onChange",
   });
 
   const [handle, setHandle] = useState(null);
@@ -49,11 +48,12 @@ export default function UpdateProfileForm(props) {
         }
       }, 1000);
     });
-    return available || 'This handle is unavailable';
+    return available || "This handle is unavailable";
   };
 
   const onSubmit = (data) => {
-    if (data.handle && data.handle !== props.handle) props.handleUpdateHandle(data.handle);
+    if (data.handle && data.handle !== props.handle)
+      props.handleUpdateHandle(data.handle);
     if (data.wishlistName && data.wishlistName !== props.wishlistName) {
       props.handleUpdateWishlistName(data.wishlistName);
     }
@@ -67,7 +67,11 @@ export default function UpdateProfileForm(props) {
       id="update-profile-form"
     >
       <Typography className={classes.root}>Profile Info</Typography>
-      <FormControl error={errors.handle && !(errors.handle.type === 'required') ? true : false}>
+      <FormControl
+        error={
+          errors.handle && !(errors.handle.type === "required") ? true : false
+        }
+      >
         <InputLabel htmlFor="handle-input">handle</InputLabel>
         <Input
           onFocus={(e) => {
@@ -81,14 +85,17 @@ export default function UpdateProfileForm(props) {
           onChange={(e) => {
             setHandle(e.target.value);
             if (errors.handle !== undefined) {
-              if (errors.handle.type === 'validate') {
-                clearErrors(['handle']);
+              if (errors.handle.type === "validate") {
+                clearErrors(["handle"]);
               }
             }
           }}
           inputRef={register({
             validate: async (value) => await validateHandle(value),
-            maxLength: { value: 14, message: 'handle must be less than 15 characters' },
+            maxLength: {
+              value: 14,
+              message: "handle must be less than 15 characters",
+            },
             pattern: {
               value: /^[0-9A-Za-z_-]+$/,
               message: `Your username can only contain letters, numbers, '_', or '-'`,
@@ -101,13 +108,17 @@ export default function UpdateProfileForm(props) {
         <FormHelperText id="handle-helper-text">
           {errors.handle?.message ||
             `www.wishtender.com/${
-              handle || props.handle ? (handle || props.handle).toLowerCase() : 'handle'
+              handle || props.handle ? handle || props.handle : "handle"
             }`}
         </FormHelperText>
       </FormControl>
       <br></br>
       <FormControl
-        error={errors.wishlistName && !(errors.wishlistName.type === 'required') ? true : false}
+        error={
+          errors.wishlistName && !(errors.wishlistName.type === "required")
+            ? true
+            : false
+        }
       >
         <InputLabel htmlFor="wishlist-name-input">Wishlist Name</InputLabel>
         <Input
@@ -119,14 +130,17 @@ export default function UpdateProfileForm(props) {
           }}
           name="wishlistName"
           inputRef={register({
-            maxLength: { value: 22, message: 'wishlist name must be less than 23 characters' },
+            maxLength: {
+              value: 22,
+              message: "wishlist name must be less than 23 characters",
+            },
           })}
           spellCheck="false"
           id="wishlist-name-input"
           aria-describedby="wishlist-name-helper-text"
         />
         <FormHelperText id="wishlist-name-helper-text">
-          {errors.wishlistName?.message || ' '}
+          {errors.wishlistName?.message || " "}
         </FormHelperText>
       </FormControl>
       <br></br>

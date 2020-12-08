@@ -52,7 +52,29 @@ const fetchPostJson = async (data, route, callback) => {
       console.log(`couldn't post json: ${err}`);
     });
 };
-
+/**
+ * fetch patch json
+ * @param data
+ * @param route
+ * @param callbacks
+ */
+const fetchPatchJson = async (data, route, callback) => {
+  const headers = new Headers();
+  headers.append("Content-Type", "application/json");
+  await fetch(route, {
+    method: "PATCH",
+    body: JSON.stringify(data),
+    headers,
+  })
+    .then((res) => {
+      if (res.status === 200) callback();
+      if (res.status === 500) console.log("500: couldn't patch");
+      res.json();
+    })
+    .catch((err) => {
+      console.log(`couldn't post json: ${err}`);
+    });
+};
 /**
  * fetch get json
  * @param route
@@ -74,4 +96,5 @@ module.exports = {
   fetchGet,
   fetchPatchImage,
   fetchPostJson,
+  fetchPatchJson,
 };

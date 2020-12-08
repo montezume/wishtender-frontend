@@ -6,11 +6,11 @@ import UpdateProfileInfo from "./UpdateProfileInfo/UpdateProfileInfo";
 import { UserContext } from "../../../contexts/UserContext";
 import { useParams } from "react-router-dom";
 import {
-  fetchPostJson,
+  fetchPatchJson,
   fetchGet,
   fetchPatchImage,
 } from "../../../scripts/fetchHelper";
-const handleRoute = "/aliases?handle=";
+const handleRoute = "/aliases?handle_lowercased=";
 
 /**
  * Renders a <ProfileSection /> component
@@ -20,7 +20,8 @@ function ProfileSection(props) {
   const [profilePicture, setProfilePicture] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
   const [wishlistName, setWishlistName] = useState(null);
-  const [id, setId] = useState(null);
+  const [wishlistId, setWishlistId] = useState(null);
+  const [aliasId, setAliasId] = useState(null);
   const [handle, setHandle] = useState(null);
   const [wishlistMessage, setWishlistMessage] = useState(null);
   const [isAuth, setIsAuth] = useState(false);
@@ -34,18 +35,19 @@ function ProfileSection(props) {
       setWishlistName(json.wishlists[0].wishlistName);
       setHandle(json.handle);
       setWishlistMessage(json.wishlists[0].wishlistMessage);
-      setId(json._id);
+      setAliasId(json._id);
+      setWishlistId(json.wishlists[0]._id);
       setIsAuth(currentUser ? currentUser.aliases.includes(json._id) : false);
     };
-    fetchGet(`${handleRoute}${aliasPath}`, cb);
+    fetchGet(`${handleRoute}${aliasPath.toLowerCase()}`, cb);
   }, [currentUser]);
 
   const handleUpdateProfilePicture = (image) => {
-    fetchPatchImage(image, "image", `aliases/${id}`, setProfilePicture);
+    fetchPatchImage(image, "image", `aliases/${aliasId}`, setProfilePicture);
   };
 
   const handleCheckHandleAvailability = async (handle) => {
-    const available = await fetch(`${handleRoute}${handle}`)
+    const available = await fetch(`${handleRoute}${handle.toLowerCase()}`)
       .then((res) => {
         return res.status === 204 ? true : false;
       })
@@ -55,22 +57,22 @@ function ProfileSection(props) {
     return available;
   };
   const handleUpdateHandle = (handle) => {
-    fetchPostJson({ handle }, "http://localhost:4000/alias", () => {
+    fetchPatchJson({ handle }, `aliases/${aliasId}`, () => {
       setHandle(handle);
     });
   };
 
   const handleUpdateCoverImage = (image) => {
-    fetchPatchImage(image, "image", `/users/${currentUser}`, setCoverImage);
+    fetchPatchImage(image, "image", `/wishlists/${wishlistId}`, setCoverImage);
   };
   const handleUpdateWishlistMessage = (wishlistMessage) => {
-    fetchPostJson({ wishlistMessage }, "http://localhost:4000/wishlist", () => {
+    fetchPatchJson({ wishlistMessage }, `/wishlists/${wishlistId}`, () => {
       setWishlistMessage(wishlistMessage);
     });
   };
 
   const handleUpdateWishlistName = (wishlistName) => {
-    fetchPostJson({ wishlistName }, "http://localhost:4000/wishlist", () => {
+    fetchPatchJson({ wishlistName }, `/wishlists/${wishlistId}`, () => {
       setWishlistName(wishlistName);
     });
   };
