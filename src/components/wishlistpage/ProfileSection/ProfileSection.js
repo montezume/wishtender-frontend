@@ -10,6 +10,7 @@ import {
   fetchGet,
   fetchPatchImage,
 } from "../../../scripts/fetchHelper";
+import { Redirect } from "react-router-dom";
 const handleRoute = "/aliases?handle_lowercased=";
 
 /**
@@ -79,6 +80,10 @@ function ProfileSection(props) {
 
   return (
     <div className="profile_section">
+      {handle && aliasPath.toLowerCase() !== handle.toLowerCase() && (
+        <Redirect to={`/${handle}`} />
+      )}
+
       <EditableCoverImage
         coverPicUrl={coverImage}
         handleUpdateCoverImage={handleUpdateCoverImage}

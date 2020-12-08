@@ -37,7 +37,7 @@ export default function UpdateProfileForm(props) {
   const classes = useStyles();
 
   const validateHandle = async (handle) => {
-    if (!handle || handle === props.handle) return;
+    if (!handle || handle.toLowerCase() === props.handle.toLowerCase()) return;
     const available = await new Promise((resolve) => {
       setTimeout(async function () {
         if (input.current) {
@@ -93,8 +93,8 @@ export default function UpdateProfileForm(props) {
           inputRef={register({
             validate: async (value) => await validateHandle(value),
             maxLength: {
-              value: 14,
-              message: "handle must be less than 15 characters",
+              value: 24,
+              message: "handle must be less than 25 characters",
             },
             pattern: {
               value: /^[0-9A-Za-z_-]+$/,
