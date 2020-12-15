@@ -13,12 +13,14 @@ import LandingPageMenu from "./components/LandingPage/LandingPageMenu.js";
 import { ThemeProvider } from "@material-ui/styles";
 import WishlistPage from "./components/wishlistpage/WishlistPage";
 
-import AddWish from "./components/wishlistpage/addwish/AddWish.js";
+// import AddWish from "./components/wishlistpage/addwish1/AddWish.js";
+import AddWish from "./components/wishlistpage/AddWish/AddWish.js";
 import EditWishes from "./components/wishlistpage/EditWishes.js";
 import SignUp from "./components/SignUp/SignUp";
 import SetUp from "./components/SetUp/SetUp";
 // import './Styles/App.css';
 import theme from "./theme";
+import StyledDialog from "./components/common/StyledDialog/StyledDialog";
 const currentUser = () => {
   return fetch("/users/current", {
     credentials: "include",
@@ -128,26 +130,17 @@ function App(props) {
                 );
               }}
             />
-            <UserContext.Provider value={user}>
-              <Route
-                path="/:alias"
-                render={(props) => {
-                  return (
-                    <div>
-                      <WishlistPage />
-                    </div>
-                  );
-                }}
-              />
-            </UserContext.Provider>
 
             <Route
               path="/addwish"
               render={(props) => {
                 return (
-                  <div>
-                    <AddWish />
-                  </div>
+                  <StyledDialog open={true}>
+                    <AddWish
+                      alias="5fcfc70ddd6d5626163bd201"
+                      wishlist="5fcfc70ddd6d5626163bd202"
+                    />
+                  </StyledDialog>
                 );
               }}
             />
@@ -162,6 +155,18 @@ function App(props) {
               }}
             />
             <Route path="/demo/editwishes" component={EditWishes} />
+            <UserContext.Provider value={user}>
+              <Route
+                path="/:alias"
+                render={(props) => {
+                  return (
+                    <div>
+                      <WishlistPage />
+                    </div>
+                  );
+                }}
+              />
+            </UserContext.Provider>
           </Switch>
         </Router>
       </div>

@@ -1,7 +1,7 @@
-import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import Container from "@material-ui/core/Container";
+import React from "react";
 
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
@@ -33,6 +33,7 @@ const dialogStyles = makeStyles((theme) => {
         overflow: "scroll",
       },
       "& .MuiDialog-paper": {
+        maxHeight: "80%",
         margin: "auto",
         borderRadius: "6px",
         padding: theme.spacing(5, 1),
@@ -41,6 +42,7 @@ const dialogStyles = makeStyles((theme) => {
       [theme.breakpoints.down("450")]: {
         "& .MuiDialog-paper": {
           width: "100%",
+          maxHeight: "none",
           height: "100%",
           margin: "auto",
           padding: "0px 0 0 0",
@@ -75,7 +77,7 @@ export default function StyledDialog(props) {
         className={dialogClasses.root}
       >
         <Container className={containerClasses.root}>
-          <MuiDialogTitle styles={{ padding: 0 }}>
+          <MuiDialogTitle>
             <IconButton
               aria-label="close"
               className={buttonClasses.closeButton}

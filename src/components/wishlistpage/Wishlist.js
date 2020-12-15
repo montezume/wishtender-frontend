@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 // import { makeStyles } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import WishItem from "./WishItem";
 import { Button } from "@material-ui/core";
+import AddWish from "./AddWish/AddWish";
+import StyledDialog from "../common/StyledDialog/StyledDialog";
 
 function Wishlist(props) {
   const innerGrid = props.items.map((item) => {
@@ -17,12 +19,24 @@ function Wishlist(props) {
     );
   });
 
-  console.log("array");
+  const [addWish, setAddWish] = useState(false);
 
   return (
     <div className="wishlist">
       <div className="wrapper add_a_wish">
-        <Button href="/addwish" className="button add_a_wish" color="primary">
+        <StyledDialog open={addWish} onClose={() => setAddWish(false)}>
+          <AddWish
+            alias="5fcfc70ddd6d5626163bd201"
+            wishlist="5fcfc70ddd6d5626163bd202"
+          />
+        </StyledDialog>
+        <Button
+          onClick={() => {
+            setAddWish(true);
+          }}
+          className="button add_a_wish"
+          color="primary"
+        >
           Add A Wish
         </Button>
       </div>

@@ -1,14 +1,47 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import GetProductInfoButton from "./GetProductInfoButton.js";
-import ProductInputs from "./ProductInputs.js";
-import ProductImages from "./ProductImages";
-import Button from "@material-ui/core/Button";
+import Search from "./Search.js";
 import filterOutSmallImages from "./filterImages";
-
-//----Move to scripts??---
-
-function AddWish() {
+import WishForm from "./WishForm/WishForm";
+import "./AddWish.css";
+import { ThemeProvider } from "@material-ui/core/styles";
+import { useTheme } from "@material-ui/core/styles";
+import { Container, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+// fetch post json
+const fetchPostJson = async (data, route, callback) => {
+  const headers = new Headers();
+  headers.append("Content-Type", "application/json");
+  await fetch(route, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers,
+  })
+    .then((res) => res.json())
+    .then((response) => {
+      console.log("server response: ", response);
+      if (callback) callback();
+    })
+    .catch((err) => {
+      console.log(err);
+      alert(err);
+    });
+};
+const useStyles = makeStyles((theme) => {
+  return {
+    Container: {
+      display: "grid",
+      gap: "1.6em",
+      [theme.breakpoints.down(450)]: {
+        paddingBottom: "4em",
+      },
+    },
+  };
+});
+function AddWish(props) {
+  const theme = useTheme();
+  theme.shape = { borderRadius: 4 };
+  const classes = useStyles();
   const [productInfo, setProductInfo] = useState({
     price: "",
     title: "",
@@ -17,44 +50,50 @@ function AddWish() {
     imageSrcs: [],
   });
   const [filteredImages, setFilteredImages] = useState([]);
+  const [url, setUrl] = useState(null);
   const [retrieved, setRetrieved] = useState(null);
-
   function filterAndSetImages(uniqueImages) {
     filterOutSmallImages(uniqueImages, 100).then((images) => {
       setFilteredImages(images);
     });
   }
 
-  function getProductInfo(url) {
+  function handleScrapeProduct(url) {
+    setUrl(url);
     axios
       .post("http://localhost:4000/wishes/productInfo", { url: url })
       .then((res) => {
         const info = res.data;
-        setProductInfo(info);
         const images = info.imageSrcs;
+        delete info.imageSrcs;
+        setProductInfo(info);
         if (res.data) setRetrieved("true");
 
         const uniqueImages = [...new Set(images)];
         filterAndSetImages(uniqueImages);
       });
   }
+  const postWish = (data) => {
+    const wishInfo = data;
+    wishInfo.url = url;
+    wishInfo.wishlist = props.wishlist;
+    fetchPostJson(wishInfo, "/wishlistItems");
+  };
 
   return (
-    <div className="wrapper product_info">
-      <div className="container product_info">
-        <GetProductInfoButton submit={(e) => getProductInfo(e)} />
-        <ProductImages displayImages={filteredImages} />
-        <ProductInputs
-          name={productInfo.title}
-          price={productInfo.price}
-          currency={productInfo.currency}
-          retrieved={retrieved}
+    <ThemeProvider theme={theme}>
+      <h2>Add A Wish</h2>
+
+      <Container className={classes.Container}>
+        <Search submit={(e) => handleScrapeProduct(e)} />
+        <WishForm
+          disabled={!retrieved}
+          info={productInfo}
+          images={filteredImages}
+          onSubmit={postWish}
         />
-      </div>
-      <Button id="add_wish_button" variant="contained" color="primary">
-        + Add Wish
-      </Button>
-    </div>
+      </Container>
+    </ThemeProvider>
   );
 }
 

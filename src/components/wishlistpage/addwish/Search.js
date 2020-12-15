@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import IconButton from "@material-ui/core/IconButton";
-import DirectionsIcon from "@material-ui/icons/Directions";
+import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import IconButton from '@material-ui/core/IconButton';
+import DirectionsIcon from '@material-ui/icons/Directions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
-    flexWrap: "wrap",
+    display: 'flex',
+    flexWrap: 'wrap',
   },
 }));
 
-export default function GetProductInfoButton(props) {
-  const [url, setUrl] = useState("");
+export default function Search(props) {
+  const [url, setUrl] = useState('');
   const classes = useStyles();
 
   function onSubmit(e) {
@@ -21,12 +21,7 @@ export default function GetProductInfoButton(props) {
   }
   return (
     <div>
-      <form
-        autoComplete="off"
-        className={classes.root}
-        onSubmit={onSubmit}
-        noValidate
-      >
+      <form autoComplete="off" className={classes.root} onSubmit={onSubmit} noValidate>
         <div className="container get_product_info">
           <TextField
             onChange={(e) => {
