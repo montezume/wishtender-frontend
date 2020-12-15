@@ -62,6 +62,7 @@ export default function WishForm(props) {
   const onSubmit = (data) => {
     //send data to backend post wish item
     data.imageCrop = crop;
+    data.price = data.price.slice(1);
     props.onSubmit(data);
   };
   return (

@@ -6,9 +6,10 @@ import UpdateProfileInfo from "./UpdateProfileInfo/UpdateProfileInfo";
 import { UserContext } from "../../../contexts/UserContext";
 import { useParams } from "react-router-dom";
 import {
-  fetchPatchJson,
+  fetchPatchinfo,
   fetchGet,
   fetchPatchImage,
+  fetchPatchJson,
 } from "../../../scripts/fetchHelper";
 import { Redirect } from "react-router-dom";
 const handleRoute = "/aliases?handle_lowercased=";
@@ -30,18 +31,19 @@ function ProfileSection(props) {
   let { alias: aliasPath } = useParams();
 
   useEffect(() => {
-    const cb = (json) => {
-      setCoverImage(`${json.wishlists[0].coverImage}`);
-      setProfilePicture(`${json.profileImage}`);
-      setWishlistName(json.wishlists[0].wishlistName);
-      setHandle(json.handle);
-      setWishlistMessage(json.wishlists[0].wishlistMessage);
-      setAliasId(json._id);
-      setWishlistId(json.wishlists[0]._id);
-      setIsAuth(currentUser ? currentUser.aliases.includes(json._id) : false);
-    };
-    fetchGet(`${handleRoute}${aliasPath.toLowerCase()}`, cb);
-  }, [currentUser]);
+    if (props.info) {
+      setCoverImage(`${props.info.wishlists[0].coverImage}`);
+      setProfilePicture(`${props.info.profileImage}`);
+      setWishlistName(props.info.wishlists[0].wishlistName);
+      setHandle(props.info.handle);
+      setWishlistMessage(props.info.wishlists[0].wishlistMessage);
+      setAliasId(props.info._id);
+      setWishlistId(props.info.wishlists[0]._id);
+      setIsAuth(
+        currentUser ? currentUser.aliases.includes(props.info._id) : false
+      );
+    }
+  }, [props.info, currentUser]);
 
   const handleUpdateProfilePicture = (image) => {
     fetchPatchImage(image, "image", `aliases/${aliasId}`, setProfilePicture);
@@ -58,7 +60,7 @@ function ProfileSection(props) {
     return available;
   };
   const handleUpdateHandle = (handle) => {
-    fetchPatchJson({ handle }, `aliases/${aliasId}`, () => {
+    fetchPatchinfo({ handle }, `aliases/${aliasId}`, () => {
       setHandle(handle);
     });
   };
@@ -73,7 +75,7 @@ function ProfileSection(props) {
   };
 
   const handleUpdateWishlistName = (wishlistName) => {
-    fetchPatchJson({ wishlistName }, `/wishlists/${wishlistId}`, () => {
+    fetchPatchinfo({ wishlistName }, `/wishlists/${wishlistId}`, () => {
       setWishlistName(wishlistName);
     });
   };

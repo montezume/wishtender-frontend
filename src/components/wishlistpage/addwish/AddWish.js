@@ -17,14 +17,13 @@ const fetchPostJson = async (data, route, callback) => {
     body: JSON.stringify(data),
     headers,
   })
-    .then((res) => res.json())
+    // .then((res) => res.json())
     .then((response) => {
       console.log("server response: ", response);
       if (callback) callback();
     })
     .catch((err) => {
       console.log(err);
-      alert(err);
     });
 };
 const useStyles = makeStyles((theme) => {
@@ -77,7 +76,9 @@ function AddWish(props) {
     const wishInfo = data;
     wishInfo.url = url;
     wishInfo.wishlist = props.wishlist;
-    fetchPostJson(wishInfo, "/wishlistItems");
+    fetchPostJson(wishInfo, "/wishlistItems", () =>
+      props.afterAddWish(wishInfo)
+    );
   };
 
   return (
