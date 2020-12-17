@@ -31,10 +31,8 @@ const useStyles = makeStyles((theme) => {
  * @param  props
  * @param  props.info
  * @param  props.onClose
- * @param  props.disabled
- * @param  props.images
  **/
-export default function WishForm(props) {
+export default function EditWishForm(props) {
   const classes = useStyles();
   const [price, setPrice] = useState("");
   const [name, setName] = useState("");
@@ -58,8 +56,8 @@ export default function WishForm(props) {
       className={classes.root}
       onSubmit={handleSubmit(onSubmit)}
     >
-      <ChooseImage onImageChosen={setCrop} images={props.images} />
-      <Typography>Set Wish Info</Typography>
+      {/* here put in display imag and edit - crop */}
+      <Typography>Edit Wish Info</Typography>
       <TextField
         inputRef={register()}
         name="itemName"

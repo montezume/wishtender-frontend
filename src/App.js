@@ -12,10 +12,9 @@ import LandingPageMenu from "./components/LandingPage/LandingPageMenu.js";
 
 import { ThemeProvider } from "@material-ui/styles";
 import WishlistPage from "./components/wishlistpage/WishlistPage";
+import EditWish from "./components/wishlistpage/PriceInput";
 
 // import AddWish from "./components/wishlistpage/addwish1/AddWish.js";
-import AddWish from "./components/wishlistpage/AddWish/AddWish.js";
-import EditWishes from "./components/wishlistpage/EditWishes.js";
 import SignUp from "./components/SignUp/SignUp";
 import SetUp from "./components/SetUp/SetUp";
 // import './Styles/App.css';
@@ -132,14 +131,11 @@ function App(props) {
             />
 
             <Route
-              path="/addwish"
+              path="/editwish"
               render={(props) => {
                 return (
                   <StyledDialog open={true}>
-                    <AddWish
-                      alias="5fcfc70ddd6d5626163bd201"
-                      wishlist="5fcfc70ddd6d5626163bd202"
-                    />
+                    <EditWish wishlist="5fcfc70ddd6d5626163bd202" />
                   </StyledDialog>
                 );
               }}
@@ -154,7 +150,7 @@ function App(props) {
                 );
               }}
             />
-            <Route path="/demo/editwishes" component={EditWishes} />
+
             <UserContext.Provider value={user}>
               <Route
                 path="/:alias"
