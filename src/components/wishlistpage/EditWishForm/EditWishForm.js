@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Button, TextField, Tooltip, Typography } from "@material-ui/core";
+import UpdateImage from "../ProfileSection/UpdateImage/UpdateImage";
+import PhotoSizeSelectActual from "@material-ui/icons/PhotoSizeSelectActual";
+
+import {
+  Button,
+  Container,
+  TextField,
+  Tooltip,
+  Typography,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import ChooseImage from "../ChooseImage";
-import PriceInput from "../../PriceInput";
+import PriceInput from "../PriceInput";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -35,18 +43,18 @@ const useStyles = makeStyles((theme) => {
 export default function EditWishForm(props) {
   const classes = useStyles();
   const [price, setPrice] = useState("");
-  const [name, setName] = useState("");
-  const [crop, setCrop] = useState("");
+  const [itemName, setItemName] = useState("");
+  const [image, setImage] = useState("");
 
   useEffect(() => {
-    setName(props.info && props.info.title);
+    setItemName(props.info && props.info.itemName);
     setPrice(props.info && props.info.price);
+    setImage(props.info && props.info.itemImage);
   }, [props.info]);
 
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => {
     //send data to backend post wish item
-    data.imageCrop = crop;
     data.price = data.price.slice(1);
     props.onSubmit(data);
   };
@@ -56,16 +64,35 @@ export default function EditWishForm(props) {
       className={classes.root}
       onSubmit={handleSubmit(onSubmit)}
     >
-      {/* here put in display imag and edit - crop */}
-      <Typography>Edit Wish Info</Typography>
+      <UpdateImage>
+        <p style={{ textDecoration: "underline", fontSize: ".8em" }}>
+          Upload Custom Photo
+        </p>
+      </UpdateImage>
+      <Container>
+        <img src={image} />
+        {/* crop image */}
+        <label class="file">
+          <input
+            type="file"
+            style={{ display: "none" }}
+            id="file"
+            aria-label="File browser example"
+          />
+          <p style={{ textDecoration: "underline", fontSize: ".8em" }}>
+            Upload Custom Photo
+          </p>
+        </label>
+      </Container>
+      {/* <Typography>Edit Wish Info</Typography> */}
       <TextField
         inputRef={register()}
         name="itemName"
         variant="outlined"
-        value={name}
+        value={itemName}
         label="Product Name"
         onChange={(e) => {
-          setName(e.target.value);
+          setItemName(e.target.value);
         }}
       />
 
@@ -83,7 +110,7 @@ export default function EditWishForm(props) {
         size="large"
         type="submit"
       >
-        + Add Wish
+        Update
       </Button>
     </form>
   );

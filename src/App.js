@@ -12,7 +12,7 @@ import LandingPageMenu from "./components/LandingPage/LandingPageMenu.js";
 
 import { ThemeProvider } from "@material-ui/styles";
 import WishlistPage from "./components/wishlistpage/WishlistPage";
-import EditWish from "./components/wishlistpage/PriceInput";
+import EditWishForm from "./components/wishlistpage/EditWishForm/EditWishForm";
 
 // import AddWish from "./components/wishlistpage/addwish1/AddWish.js";
 import SignUp from "./components/SignUp/SignUp";
@@ -135,7 +135,15 @@ function App(props) {
               render={(props) => {
                 return (
                   <StyledDialog open={true}>
-                    <EditWish wishlist="5fcfc70ddd6d5626163bd202" />
+                    <EditWishForm
+                      info={{
+                        price: "8000",
+                        itemName: "Cereal",
+                        itemImage:
+                          "/data/images/itemImages/6d12a7f1-0b27-46e2-b6a5-a0806e73eadb.png",
+                      }}
+                      wishlist="5fcfc70ddd6d5626163bd202"
+                    />
                   </StyledDialog>
                 );
               }}

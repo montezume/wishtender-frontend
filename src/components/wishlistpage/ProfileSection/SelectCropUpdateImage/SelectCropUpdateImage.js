@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import StyledDialog from "../../../common/StyledDialog/StyledDialog";
 import Crop from "../../../common/Crop/Crop";
-import UpdateImageButton from "./UpdateImageButton";
-
+import StyledIconButton from "../../../common/StyledIconButton/StyledIconButton";
+import PhotoSizeSelectActual from "@material-ui/icons/PhotoSizeSelectActual";
+import FileInputWrapper from "../../../common/FileInputWrapper/FileInputWrapper"
 /**
  * Renders a <UpdateImage /> component
  * @param  props
  * @param  props.handleUpdateImage
  * @param  props.aspect ex 2 or 2/1
  * @param  props.cropShape
- * @param  props.size
- * @param  props.children
- * @param  props.ariaLabel
  * @param  props.finalImageDimensions ex- {width: 300, height: 300}
+ * @param  props.children button
  **/
 export default function InputProfilePic(props) {
   const [newImageSrc, setNewImageSrc] = useState(null);
@@ -28,13 +27,9 @@ export default function InputProfilePic(props) {
 
   return (
     <>
-      <UpdateImageButton
-        size={props.size}
-        ariaLabel={props.ariaLabel}
-        handleNewImageSrc={handleNewImageSrc}
-      >
+      <FileInputWrapper handleNewImageSrc={handleNewImageSrc}>
         {props.children}
-      </UpdateImageButton>
+      </FileInputWrapper>
 
       {/* Dialog start */}
       <StyledDialog

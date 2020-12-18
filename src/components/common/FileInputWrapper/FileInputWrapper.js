@@ -1,20 +1,19 @@
 import React from "react";
-import StyledIconButton from "../../../common/StyledIconButton/StyledIconButton";
 
 /**
  * Renders a <UpdateImage /> component
  * @param  props
- * @param  props.children icon
  * @param  props.handleNewImageSrc
- * @param  props.size
- * @param  props.ariaLabel
+ * @param  props.children html element to act as a button
  **/
 export default function UpdateImageButton(props) {
   const fileInput = React.useRef();
+  const clone = React.cloneElement(props.children, {
+    onClick: () => fileInput.current.click(),
+  });
 
   return (
     <label>
-      {/* Button */}
       <input
         ref={fileInput}
         type="file"
@@ -32,13 +31,7 @@ export default function UpdateImageButton(props) {
           }
         }}
       />
-      <StyledIconButton
-        onClick={() => fileInput.current.click()}
-        size={props.size || "small"}
-        ariaLabel={props.ariaLabel}
-      >
-        {props.children}
-      </StyledIconButton>
+      {clone}
     </label>
   );
 }
