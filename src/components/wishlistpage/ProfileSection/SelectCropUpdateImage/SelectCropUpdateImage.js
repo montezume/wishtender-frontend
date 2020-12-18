@@ -11,7 +11,7 @@ import FileInputWrapper from "../../../common/FileInputWrapper/FileInputWrapper"
  * @param  props.aspect ex 2 or 2/1
  * @param  props.cropShape
  * @param  props.finalImageDimensions ex- {width: 300, height: 300}
- * @param  props.children button
+ * @param  props.children HTML to act like button
  **/
 export default function InputProfilePic(props) {
   const [newImageSrc, setNewImageSrc] = useState(null);
