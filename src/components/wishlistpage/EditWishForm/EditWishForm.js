@@ -6,12 +6,13 @@ import {
   Button,
   Container,
   TextField,
-  Tooltip,
+  Grid,
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PriceInput from "../PriceInput";
-
+import { fetchPatchMulti, fetchDelete } from "../../../scripts/fetchHelper";
+import StyledDialog from "../../common/StyledDialog/StyledDialog";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -38,12 +39,14 @@ const useStyles = makeStyles((theme) => {
  * @param  props
  * @param  props.info
  * @param  props.onClose
+ * @param  props.onClose
  **/
 export default function EditWishForm(props) {
   const classes = useStyles();
   const [price, setPrice] = useState("");
   const [itemName, setItemName] = useState("");
   const [image, setImage] = useState("");
+  const [deleteWarningVisible, setDeleteWarningVisible] = useState(false);
 
   useEffect(() => {
     setItemName(props.info && props.info.itemName);
@@ -54,11 +57,18 @@ export default function EditWishForm(props) {
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => {
     //send data to backend post wish item
+    data.image = image;
     data.price = data.price.slice(1);
-    props.onSubmit(data);
+    fetchPatchMulti(data, `/wishlistItems/${props.id}`, () => {
+      props.onClose();
+    });
   };
   const handleImageUpdate = (img) => {
-    setImage(img);
+    // should we URL.revokeObjectURL();?
+    setImage(URL.createObjectURL(img));
+  };
+  const deleteWish = () => {
+    fetchDelete(`/wishlistItems/${props.id}`, props.onClose());
   };
   return (
     <form
@@ -97,6 +107,27 @@ export default function EditWishForm(props) {
         setPrice={setPrice}
         inputRef={register()}
       ></PriceInput>
+
+      <Grid container justify="flex-end">
+        <StyledDialog
+          open={deleteWarningVisible}
+          onClose={() => setDeleteWarningVisible(false)}
+        >
+          <p>Are You Sure You want to delete this wish?</p>
+          <Button onClick={() => setDeleteWarningVisible(false)}>No</Button>
+          <Button
+            onClick={() => {
+              setDeleteWarningVisible(false);
+              deleteWish();
+            }}
+          >
+            Yes
+          </Button>
+        </StyledDialog>
+        <Button size="small" onClick={() => setDeleteWarningVisible(true)}>
+          Delete Wish
+        </Button>
+      </Grid>
 
       <Button
         disableElevation={true}

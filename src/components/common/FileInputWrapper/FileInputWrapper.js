@@ -17,7 +17,6 @@ export default function FileInputWrapper(props) {
   return (
     <div>
       <input
-        id={"popp"}
         ref={fileInput}
         type="file"
         style={{ display: "none" }}

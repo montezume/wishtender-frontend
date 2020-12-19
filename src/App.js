@@ -142,7 +142,8 @@ function App(props) {
                         itemImage:
                           "/data/images/itemImages/6d12a7f1-0b27-46e2-b6a5-a0806e73eadb.png",
                       }}
-                      wishlist="5fcfc70ddd6d5626163bd202"
+                      id="5fde866aae999a367d935820"
+                      onClose={() => console.log("done")}
                     />
                   </StyledDialog>
                 );
