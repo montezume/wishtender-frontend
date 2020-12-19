@@ -57,6 +57,9 @@ export default function EditWishForm(props) {
     data.price = data.price.slice(1);
     props.onSubmit(data);
   };
+  const handleImageUpdate = (img) => {
+    setImage(img);
+  };
   return (
     <form
       style={props.disabled ? { opacity: ".3", pointerEvents: "none" } : {}}
@@ -64,38 +67,20 @@ export default function EditWishForm(props) {
       onSubmit={handleSubmit(onSubmit)}
     >
       <Container>
-        <img src={image} />
+        <img src={image} alt="product" />
 
         <SelectCropUpdateImage
           aspect={1}
           cropShape="rect"
           finalImageDimensions={{ width: 300, height: 300 }}
-          handleUpdateImage={(x) => console.log("fart" + x)}
+          handleUpdateImage={handleImageUpdate}
         >
           <p style={{ textDecoration: "underline", fontSize: ".8em" }}>
             Upload Custom Photo
           </p>
         </SelectCropUpdateImage>
-
-        <SelectCropUpdateImage
-          handleUpdateImage={props.handleUpdateCoverImage}
-          // ariaLabel="Update Cover Image"
-          // size="medium"
-          cropShape="rect"
-          aspect={1}
-          finalImageDimensions={{
-            width: 600,
-            height: 600,
-          }}
-        >
-          <div>hi</div>
-          {/* <StyledIconButton             ariaLabel="Update Cover Image"
-            size="medium">
-            <PhotoSizeSelectActual />
-            </StyledIconButton> */}
-        </SelectCropUpdateImage>
       </Container>
-      {/* <Typography>Edit Wish Info</Typography> */}
+      <Typography>Edit Wish Info</Typography>
       <TextField
         inputRef={register()}
         name="itemName"

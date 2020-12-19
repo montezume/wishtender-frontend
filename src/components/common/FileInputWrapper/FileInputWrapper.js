@@ -1,24 +1,21 @@
 import React from "react";
 
 /**
- * Renders a <FileInputWrapper /> component
+ * Renders a <UpdateImage /> component
  * @param  props
  * @param  props.handleNewImageSrc
  * @param  props.children html element to act as a button
  **/
 export default function FileInputWrapper(props) {
   const fileInput = React.useRef();
-  const clone =
-    props.children.type === "button"
-      ? React.cloneElement(props.children, {
-          onClick: () => {
-            fileInput.current.click();
-          },
-        })
-      : null;
+  const clone = React.cloneElement(props.children, {
+    onClick: () => {
+      fileInput.current.click();
+    },
+  });
 
   return (
-    <label for={"popp"}>
+    <div>
       <input
         id={"popp"}
         ref={fileInput}
@@ -38,8 +35,7 @@ export default function FileInputWrapper(props) {
           }
         }}
       />
-
-      {clone || props.children}
-    </label>
+      {clone}
+    </div>
   );
 }
