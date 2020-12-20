@@ -5,23 +5,6 @@ import { UserContext } from "../../contexts/UserContext";
 import { fetchGet } from "../../scripts/fetchHelper";
 import { useParams } from "react-router-dom";
 
-const dummyWLItems = [
-  {
-    itemName: "YSL Stilettos",
-    price: "1000.00",
-    imageUrl: "/images/heels.png",
-  },
-  {
-    itemName: "Reformation Dress",
-    price: "300.00",
-    imageUrl: "/images/dress.png",
-  },
-  {
-    itemName: "Night Pallette",
-    price: "37.00",
-    imageUrl: "/images/makeup.png",
-  },
-];
 const handleRoute = "/aliases?handle_lowercased=";
 
 function WishlistPage(props) {
@@ -31,13 +14,17 @@ function WishlistPage(props) {
   const currentUser = useContext(UserContext);
   let { alias: aliasPath } = useParams();
 
+  const [isAuth, setIsAuth] = useState(null);
+
   useEffect(() => {
     fetchGet(`${handleRoute}${aliasPath.toLowerCase()}`, (json) => {
       console.log(json);
       setJson(json);
       setWishlist(json.wishlists[0]);
+      console.log(currentUser);
+      setIsAuth(currentUser.aliases.includes(json._id));
     });
-  }, [aliasPath]);
+  }, [aliasPath, currentUser]);
 
   useEffect(() => {
     if (refreshWishlist) {
@@ -50,9 +37,10 @@ function WishlistPage(props) {
   }, [refreshWishlist]);
   return (
     <div>
-      <ProfileSection info={json} />
+      <ProfileSection isAuth={isAuth} info={json} />
 
       <Wishlist
+        isAuth={isAuth}
         id={wishlist && wishlist._id}
         items={wishlist && wishlist.wishlistItems}
         refreshWishlist={() => {

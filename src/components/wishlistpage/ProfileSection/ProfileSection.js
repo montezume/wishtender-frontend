@@ -17,6 +17,8 @@ const handleRoute = "/aliases?handle_lowercased=";
 /**
  * Renders a <ProfileSection /> component
  * @param  props
+ * @param  props.info
+ * @param  props.isAuth
  */
 function ProfileSection(props) {
   const [profilePicture, setProfilePicture] = useState(null);

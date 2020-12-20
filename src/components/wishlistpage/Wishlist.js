@@ -22,34 +22,35 @@ function Wishlist(props) {
     });
 
   const [addWishVisible, setAddWishVisible] = useState(false);
-  const [fetchWishlist, setFetchWishlist] = useState(false);
 
   return (
     <div className="wishlist">
-      <div className="wrapper add_a_wish">
-        <StyledDialog
-          open={addWishVisible}
-          onClose={() => setAddWishVisible(false)}
-        >
-          <AddWish
-            // alias="5fcfc70ddd6d5626163bd201"
-            wishlist={props.id}
-            afterAddWish={(wish) => {
-              setAddWishVisible(false);
-              props.refreshWishlist();
+      {props.isAuth && (
+        <div className="wrapper add_a_wish">
+          <StyledDialog
+            open={addWishVisible}
+            onClose={() => setAddWishVisible(false)}
+          >
+            {/* don't show unless authorized */}
+            <AddWish
+              wishlist={props.id}
+              afterAddWish={(wish) => {
+                setAddWishVisible(false);
+                props.refreshWishlist();
+              }}
+            />
+          </StyledDialog>
+          <Button
+            onClick={() => {
+              setAddWishVisible(true);
             }}
-          />
-        </StyledDialog>
-        <Button
-          onClick={() => {
-            setAddWishVisible(true);
-          }}
-          className="button add_a_wish"
-          color="primary"
-        >
-          Add A Wish
-        </Button>
-      </div>
+            className="button add_a_wish"
+            color="primary"
+          >
+            Add A Wish
+          </Button>
+        </div>
+      )}
 
       <Grid container spacing={2}>
         {innerGrid}
