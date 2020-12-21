@@ -8,6 +8,9 @@ import {
   TextField,
   Grid,
   Typography,
+  FormControlLabel,
+  FormControl,
+  FormHelperText,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PriceInput from "../PriceInput";
@@ -85,6 +88,7 @@ export default function EditWishForm(props) {
   };
   return (
     <form
+      autocomplete="off"
       style={props.disabled ? { opacity: ".3", pointerEvents: "none" } : {}}
       className={classes.root}
       onSubmit={handleSubmit(onSubmit)}
@@ -111,16 +115,28 @@ export default function EditWishForm(props) {
         </SelectCropUpdateImage>
       </Container>
       <Typography>Edit Wish Info</Typography>
-      <TextField
-        inputRef={register()}
-        name="itemName"
-        variant="outlined"
-        value={itemName}
-        label="Product Name"
-        onChange={(e) => {
-          setItemName(e.target.value);
-        }}
-      />
+      <FormControl error={errors.itemName ? true : false}>
+        <TextField
+          inputRef={register({
+            maxLength: {
+              value: 199,
+              message: "Product name must be less than 200 characters",
+            },
+            minLength: {
+              value: 5,
+              message: "Product name must be more than 4 characters",
+            },
+          })}
+          name="itemName"
+          variant="outlined"
+          value={itemName}
+          label="Product Name"
+          onChange={(e) => {
+            setItemName(e.target.value);
+          }}
+        />
+        <FormHelperText>{errors.itemName?.message}</FormHelperText>
+      </FormControl>
 
       <PriceInput
         price={price}
@@ -140,7 +156,7 @@ export default function EditWishForm(props) {
           open={deleteWarningVisible}
           onClose={() => setDeleteWarningVisible(false)}
         >
-          <p>Are You Sure You want to delete this wish?</p>
+          <p>Are you sure you want to delete this wish?</p>
           <Button onClick={() => setDeleteWarningVisible(false)}>No</Button>
           <Button
             onClick={() => {
