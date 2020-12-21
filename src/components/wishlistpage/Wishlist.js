@@ -5,26 +5,67 @@ import WishItem from "./WishItem";
 import { Button } from "@material-ui/core";
 import AddWish from "./AddWish/AddWish";
 import StyledDialog from "../common/StyledDialog/StyledDialog";
+import EditWishForm from "./EditWishForm/EditWishForm";
 
 function Wishlist(props) {
+  const [editWish, setEditWish] = useState(null);
+  const [addWishVisible, setAddWishVisible] = useState(false);
+
   const innerGrid =
     props.items &&
     props.items.map((item) => {
       return (
-        <Grid item xs={6} sm={4} md={3} lg={2} xl={1} container spacing={2}>
-          <WishItem
-            itemName={item.itemName}
-            price={item.price}
-            imageUrl={item.itemImage}
-          />
+        <Grid
+          key={item._id}
+          item
+          xs={6}
+          sm={4}
+          md={3}
+          lg={2}
+          xl={1}
+          container
+          spacing={2}
+        >
+          <div
+            onClick={
+              props.isAuth
+                ? () => setEditWish(item)
+                : "something about buying a wish"
+            }
+          >
+            <WishItem
+              itemName={item.itemName}
+              price={item.price}
+              imageUrl={item.itemImage}
+            />
+          </div>
         </Grid>
       );
     });
 
-  const [addWishVisible, setAddWishVisible] = useState(false);
-
   return (
     <div className="wishlist">
+      {editWish && (
+        <StyledDialog
+          onClose={() => {
+            setEditWish(null);
+          }}
+          open={editWish ? true : false}
+        >
+          <EditWishForm
+            info={{
+              price: editWish.price,
+              itemName: editWish.itemName,
+              itemImage: editWish.itemImage,
+            }}
+            id={editWish._id}
+            onClose={() => {
+              setEditWish(null);
+              props.refreshWishlist();
+            }}
+          />
+        </StyledDialog>
+      )}
       {props.isAuth && (
         <div className="wrapper add_a_wish">
           <StyledDialog

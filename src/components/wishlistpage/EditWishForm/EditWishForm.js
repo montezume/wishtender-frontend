@@ -34,6 +34,14 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
+const toDecimal = (val, langaugeCode) => {
+  const array = new Intl.NumberFormat(langaugeCode).formatToParts(1000.1);
+  const [group, decimal] = [array[1].value, array[3].value];
+  let decVal = decimal !== "." ? val.replace(decimal, ".") : val;
+  decVal = decVal.replace(group, "");
+  return decVal;
+};
+
 /**
  * Renders a <WishForm /> component
  * @param  props
@@ -45,27 +53,32 @@ export default function EditWishForm(props) {
   const classes = useStyles();
   const [price, setPrice] = useState("");
   const [itemName, setItemName] = useState("");
-  const [image, setImage] = useState("");
+  const [imageFile, setImageFile] = useState(null);
   const [deleteWarningVisible, setDeleteWarningVisible] = useState(false);
 
   useEffect(() => {
     setItemName(props.info && props.info.itemName);
     setPrice(props.info && props.info.price);
-    setImage(props.info && props.info.itemImage);
   }, [props.info]);
 
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => {
-    //send data to backend post wish item
-    data.image = image;
-    data.price = data.price.slice(1);
-    fetchPatchMulti(data, `/wishlistItems/${props.id}`, () => {
-      props.onClose();
+    if (imageFile) data.image = imageFile;
+
+    Object.keys(data).forEach((value) => {
+      if (!data[value] || data[value] === props.info[value]) delete data[value];
     });
+    if (data.price) toDecimal(data.price, "en");
+    if (Object.keys(data).length) {
+      fetchPatchMulti(data, `/wishlistItems/${props.id}`, () => {
+        props.onClose();
+      });
+    } else {
+      props.onClose();
+    }
   };
   const handleImageUpdate = (img) => {
-    // should we URL.revokeObjectURL();?
-    setImage(URL.createObjectURL(img));
+    setImageFile(img);
   };
   const deleteWish = () => {
     fetchDelete(`/wishlistItems/${props.id}`, props.onClose());
@@ -77,7 +90,14 @@ export default function EditWishForm(props) {
       onSubmit={handleSubmit(onSubmit)}
     >
       <Container>
-        <img src={image} alt="product" />
+        <img
+          src={
+            // should we URL.revokeObjectURL();?
+
+            imageFile ? URL.createObjectURL(imageFile) : props.info.itemImage
+          }
+          alt="product"
+        />
 
         <SelectCropUpdateImage
           aspect={1}
@@ -105,7 +125,14 @@ export default function EditWishForm(props) {
       <PriceInput
         price={price}
         setPrice={setPrice}
-        inputRef={register()}
+        inputRef={register({
+          validate: (value) => {
+            return (
+              !isNaN(+toDecimal(value)) || `${value} is not a valid price.`
+            );
+          },
+        })}
+        error={errors.price?.message}
       ></PriceInput>
 
       <Grid container justify="flex-end">

@@ -131,7 +131,7 @@ function App(props) {
             />
 
             <Route
-              path="/editwish"
+              path="/price"
               render={(props) => {
                 return (
                   <StyledDialog open={true}>

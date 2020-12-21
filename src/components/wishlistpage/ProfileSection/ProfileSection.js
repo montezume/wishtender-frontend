@@ -5,12 +5,7 @@ import EditableCoverImage from "./EditableCoverImage/EditableCoverImage";
 import UpdateProfileInfo from "./UpdateProfileInfo/UpdateProfileInfo";
 import { UserContext } from "../../../contexts/UserContext";
 import { useParams } from "react-router-dom";
-import {
-  fetchPatchinfo,
-  fetchGet,
-  fetchPatchImage,
-  fetchPatchJson,
-} from "../../../scripts/fetchHelper";
+import { fetchPatchImage, fetchPatchJson } from "../../../scripts/fetchHelper";
 import { Redirect } from "react-router-dom";
 const handleRoute = "/aliases?handle_lowercased=";
 
@@ -62,7 +57,7 @@ function ProfileSection(props) {
     return available;
   };
   const handleUpdateHandle = (handle) => {
-    fetchPatchinfo({ handle }, `aliases/${aliasId}`, () => {
+    fetchPatchJson({ handle }, `aliases/${aliasId}`, () => {
       setHandle(handle);
     });
   };
@@ -77,7 +72,7 @@ function ProfileSection(props) {
   };
 
   const handleUpdateWishlistName = (wishlistName) => {
-    fetchPatchinfo({ wishlistName }, `/wishlists/${wishlistId}`, () => {
+    fetchPatchJson({ wishlistName }, `/wishlists/${wishlistId}`, () => {
       setWishlistName(wishlistName);
     });
   };

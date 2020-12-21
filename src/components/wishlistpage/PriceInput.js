@@ -4,6 +4,7 @@ import {
   FormControl,
   InputLabel,
   OutlinedInput,
+  FormHelperText,
   Tooltip,
   InputAdornment,
 } from "@material-ui/core";
@@ -15,21 +16,23 @@ import HelpIcon from "@material-ui/icons/Help";
  * @param  props.price
  * @param  props.setPrice
  * @param  props.inputRef
+ * @param  props.error
  **/
 
 export default function PriceInput(props) {
   return (
     <>
-      <FormControl variant="outlined">
+      <FormControl variant="outlined" error={props.error ? true : false}>
         <InputLabel htmlFor="price">Price</InputLabel>
         <OutlinedInput
           inputRef={props.inputRef}
           name="price"
           id="price"
-          value={"$" + (props.price || "")}
+          // value={formatCurrency(props.price, "en", "USD")}
+          value={props.price || ""}
           autoComplete="off"
           onChange={(e) => {
-            props.setPrice(e.target.value.slice(1));
+            props.setPrice(e.target.value);
           }}
           endAdornment={
             <InputAdornment position="end">
@@ -38,8 +41,10 @@ export default function PriceInput(props) {
               </Tooltip>
             </InputAdornment>
           }
+          startAdornment={<InputAdornment position="start">$</InputAdornment>}
           labelWidth={38}
         />
+        <FormHelperText id="price-helper-text">{props.error}</FormHelperText>
       </FormControl>
     </>
   );
