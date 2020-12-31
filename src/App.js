@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { UserContext } from "./contexts/UserContext";
-import { SessionContext } from "./contexts/SessionContext";
+import { CurrencyContext } from "./contexts/CurrencyContext";
+import { LocaleContext } from "./contexts/LocaleContext";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 // import React from 'react';
 // import './App.css';
+import {
+  clientCurrency,
+  parsedCookies,
+  chooseCurrency,
+} from "./scripts/helpers";
 import "./myapp.css";
 import HomePage from "./components/HomePage";
 import LandingPage from "./components/LandingPage/LandingPage";
@@ -31,29 +37,6 @@ const currentUser = async () => {
   return user;
 };
 
-// get country code
-const getCountryCode = async () => {
-  await fetch("https://extreme-ip-lookup.com/json/")
-    .then((res) => res.json())
-    .then((response) => {
-      return response.countryCode;
-    })
-    .catch((data, status) => {
-      console.log("Request failed");
-    });
-  return countryCode;
-};
-const postCountryCode = async () => {
-  // send the country code to the server where we will also detect the browser's preferred language located in the acceptsLanguages request header
-  const headers = new Headers();
-  headers.append("Content-Type", "application/json");
-  const response = await fetch("/session", {
-    method: "PATCH",
-    body: JSON.stringify({ countryCode }),
-    headers,
-  });
-  return response;
-};
 const currentSession = async () => {
   const session = await fetch("/sessions", {
     credentials: "include",
@@ -63,44 +46,20 @@ const currentSession = async () => {
   });
   return session;
 };
-const createSession = async () => {
-  const countryCode = await getCountryCode();
-  const session = await postCountryCode();
-  return session;
-};
 
 function App(props) {
   const [user, setUser] = useState();
 
+  const cookies = parsedCookies();
+
   useEffect(() => {
     currentUser().then((user) => {
       setUser(user);
+      if (!clientCurrency(user)) {
+        chooseCurrency(JSON.parse(parsedCookies().locale));
+      }
     });
   }, []);
-  // const user = {
-  //   bannerPicUrl: "/images/banner_pic.png",
-  //   profilePicUrl: "/images/profile_pic.png",
-  //   displayName: "Brittany K.",
-  //   name: { first: "Brittany", last: "Kochover" },
-  //   profileMessage: "Love you guys <3",
-  //   wishlistItems: [
-  //     {
-  //       itemName: "YSL Stilettos",
-  //       price: "1000.00",
-  //       imageUrl: "/images/heels.png",
-  //     },
-  //     {
-  //       itemName: "Reformation Dress",
-  //       price: "300.00",
-  //       imageUrl: "/images/dress.png",
-  //     },
-  //     {
-  //       itemName: "Night Pallette",
-  //       price: "37.00",
-  //       imageUrl: "/images/makeup.png",
-  //     },
-  //   ],
-  // };
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
@@ -200,19 +159,22 @@ function App(props) {
                 );
               }}
             />
-
-            <UserContext.Provider value={user}>
-              <Route
-                path="/:alias"
-                render={(props) => {
-                  return (
-                    <div>
-                      <WishlistPage />
-                    </div>
-                  );
-                }}
-              />
-            </UserContext.Provider>
+            <LocaleContext.Provider value={JSON.parse(cookies.locale).locale}>
+              <CurrencyContext.Provider value={clientCurrency(user)}>
+                <UserContext.Provider value={user}>
+                  <Route
+                    path="/:alias"
+                    render={(props) => {
+                      return (
+                        <div>
+                          <WishlistPage />
+                        </div>
+                      );
+                    }}
+                  />
+                </UserContext.Provider>
+              </CurrencyContext.Provider>
+            </LocaleContext.Provider>
           </Switch>
         </Router>
       </div>

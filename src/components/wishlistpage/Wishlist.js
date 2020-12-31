@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 // import { makeStyles } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import WishItem from "./WishItem";
@@ -6,10 +6,24 @@ import { Button } from "@material-ui/core";
 import AddWish from "./AddWish/AddWish";
 import StyledDialog from "../common/StyledDialog/StyledDialog";
 import EditWishForm from "./EditWishForm/EditWishForm";
+import { CurrencyContext } from "../../contexts/CurrencyContext";
+import ExchangeRateApiInterface from "../../scripts/ExchangeRatesApiInterface";
+
+const ratesApi = new ExchangeRateApiInterface();
 
 function Wishlist(props) {
   const [editWish, setEditWish] = useState(null);
+  const [convertRate, setConvertRate] = useState(null);
   const [addWishVisible, setAddWishVisible] = useState(false);
+  const clientCurrency = useContext(CurrencyContext);
+
+  useEffect(() => {
+    if (clientCurrency !== props.currency && props.currency) {
+      ratesApi
+        .getExchangeRateSync(props.currency, clientCurrency)
+        .then(setConvertRate);
+    }
+  }, [clientCurrency, props.currency]);
 
   const innerGrid =
     props.items &&
@@ -38,6 +52,7 @@ function Wishlist(props) {
               price={item.price}
               imageUrl={item.itemImage}
               currency={item.currency}
+              convertRate={convertRate}
             />
           </div>
         </Grid>
