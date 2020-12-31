@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { UserContext } from "./contexts/UserContext";
+import { SessionContext } from "./contexts/SessionContext";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 // import React from 'react';
 // import './App.css';
@@ -20,14 +21,54 @@ import SetUp from "./components/SetUp/SetUp";
 // import './Styles/App.css';
 import theme from "./theme";
 import StyledDialog from "./components/common/StyledDialog/StyledDialog";
-const currentUser = () => {
-  return fetch("/users/current", {
+const currentUser = async () => {
+  let user = await fetch("/users/current", {
     credentials: "include",
   }).then((res) => {
     if (res.status === 204) return Promise.resolve(null);
     return res.json();
   });
+  return user;
 };
+
+// get country code
+const getCountryCode = async () => {
+  await fetch("https://extreme-ip-lookup.com/json/")
+    .then((res) => res.json())
+    .then((response) => {
+      return response.countryCode;
+    })
+    .catch((data, status) => {
+      console.log("Request failed");
+    });
+  return countryCode;
+};
+const postCountryCode = async () => {
+  // send the country code to the server where we will also detect the browser's preferred language located in the acceptsLanguages request header
+  const headers = new Headers();
+  headers.append("Content-Type", "application/json");
+  const response = await fetch("/session", {
+    method: "PATCH",
+    body: JSON.stringify({ countryCode }),
+    headers,
+  });
+  return response;
+};
+const currentSession = async () => {
+  const session = await fetch("/sessions", {
+    credentials: "include",
+  }).then((res) => {
+    if (res.status === 204) return Promise.resolve(null);
+    return res.json();
+  });
+  return session;
+};
+const createSession = async () => {
+  const countryCode = await getCountryCode();
+  const session = await postCountryCode();
+  return session;
+};
+
 function App(props) {
   const [user, setUser] = useState();
 

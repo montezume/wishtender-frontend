@@ -37,6 +37,7 @@ function Wishlist(props) {
               itemName={item.itemName}
               price={item.price}
               imageUrl={item.itemImage}
+              currency={item.currency}
             />
           </div>
         </Grid>
@@ -57,6 +58,7 @@ function Wishlist(props) {
               price: editWish.price,
               itemName: editWish.itemName,
               itemImage: editWish.itemImage,
+              currency: editWish.currency,
             }}
             id={editWish._id}
             onClose={() => {

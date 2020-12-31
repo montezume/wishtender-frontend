@@ -7,7 +7,6 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
@@ -47,7 +46,13 @@ export default function MediaCard(props) {
             {props.itemName}
           </Typography>
           <Typography color="textPrimary" className="price">
-            ${props.price}
+            {/* en should actual be current user language */}
+            {/* How to get en? from browser then set in user context? */}
+            {new Intl.NumberFormat("en", {
+              style: "currency",
+              currency: props.currency,
+              // currency: "JPY",
+            }).format(props.price)}
           </Typography>
         </CardContent>
       </CardActionArea>

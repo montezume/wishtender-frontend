@@ -16,6 +16,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import PriceInput from "../PriceInput";
 import { fetchPatchMulti, fetchDelete } from "../../../scripts/fetchHelper";
 import StyledDialog from "../../common/StyledDialog/StyledDialog";
+import { AllInboxSharp } from "@material-ui/icons";
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -45,11 +46,19 @@ const toDecimal = (val, langaugeCode) => {
   return decVal;
 };
 
+const getSymbol = (currency) => {
+  return new Intl.NumberFormat("en", {
+    style: "currency",
+    currency,
+  })
+    .formatToParts("1")
+    .find((part) => (part.type = "currency")).value;
+};
+
 /**
  * Renders a <WishForm /> component
  * @param  props
  * @param  props.info
- * @param  props.onClose
  * @param  props.onClose
  **/
 export default function EditWishForm(props) {
@@ -149,6 +158,7 @@ export default function EditWishForm(props) {
           },
         })}
         error={errors.price?.message}
+        symbol={getSymbol(props.info.currency)}
       ></PriceInput>
 
       <Grid container justify="flex-end">

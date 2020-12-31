@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import React from "react";
+
 import {
   FormControl,
   InputLabel,
@@ -17,6 +17,7 @@ import HelpIcon from "@material-ui/icons/Help";
  * @param  props.setPrice
  * @param  props.inputRef
  * @param  props.error
+ * @param  props.currency
  **/
 
 export default function PriceInput(props) {
@@ -41,7 +42,9 @@ export default function PriceInput(props) {
               </Tooltip>
             </InputAdornment>
           }
-          startAdornment={<InputAdornment position="start">$</InputAdornment>}
+          startAdornment={
+            <InputAdornment position="start">{props.symbol}</InputAdornment>
+          }
           labelWidth={38}
         />
         <FormHelperText id="price-helper-text">{props.error}</FormHelperText>
