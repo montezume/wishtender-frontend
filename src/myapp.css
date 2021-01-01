@@ -113,7 +113,7 @@ header.MuiPaper-elevation4.shadow {
 
 /* Landing Page------------------ */
 .large_explanation {
-  background: no-repeat url("/images/app_demo_banner_small.jpg");
+  background: no-repeat url("./images/app_demo_banner_small.jpg");
   text-align: center;
   background-size: contain;
   background-position-y: top;
@@ -144,7 +144,7 @@ header.MuiPaper-elevation4.shadow {
   .large_explanation {
     padding: 5%;
     text-align: left;
-    background: no-repeat url(/images/app_demo_banner_1.jpg);
+    background: no-repeat url("./images/app_demo_banner_1.jpg");
     background-size: cover;
     background-position-y: bottom;
   }
@@ -421,7 +421,7 @@ header.MuiPaper-elevation4.shadow {
   overflow: hidden;
   z-index: 900;
   height: 130vw;
-  background: url("/images/happy-woman-holding-package_2.jpg") bottom center
+  background: url("./images/happy-woman-holding-package_2.jpg") bottom center
     no-repeat;
   background-size: 170%;
   background-position-y: 47vw;
@@ -480,7 +480,7 @@ header.MuiPaper-elevation4.shadow {
   .hero_section {
     /* z-index: 900; */
     height: 48vw;
-    background: url("/images/happy-woman-holding-package_2.jpg");
+    background: url("./images/happy-woman-holding-package_2.jpg");
     background-size: cover;
     background-position-x: 15vw;
   }
