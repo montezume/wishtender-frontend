@@ -95,7 +95,7 @@ export default function BackToTop(props) {
             <a href="/">
               <img
                 className="logo"
-                src="images/logo.png"
+                src="/images/logo.png"
                 style={{ height: "68px", top: "-3px", position: "relative" }}
               />
             </a>
