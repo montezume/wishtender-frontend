@@ -44,7 +44,7 @@ function Wishlist(props) {
             onClick={
               props.isAuth
                 ? () => setEditWish(item)
-                : "something about buying a wish"
+                : () => "something about buying a wish"
             }
           >
             <WishItem

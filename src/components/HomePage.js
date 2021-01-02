@@ -1,17 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 
-import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    "& > *": {
-      margin: theme.spacing(1),
-    },
-  },
-}));
 
 function heroSection() {
   return (
@@ -51,7 +42,7 @@ function fourPointExplanation() {
       <Grid item xs={12} sm={6} md={3}>
         <Paper className="point">
           <div className="icon">
-            <img src="images/icon_blue.png" />
+            <img alt="icon" src="images/icon_blue.png" />
           </div>
           <h3>Secure Shipping</h3>
           <p>
