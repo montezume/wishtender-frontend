@@ -151,22 +151,21 @@ function App(props) {
                 );
               }}
             />
-            <LocaleContext.Provider value={JSON.parse(cookies.locale).locale}>
-              <CurrencyContext.Provider value={clientCurrency(user)}>
-                <UserContext.Provider value={user}>
-                  <Route
-                    path="/:alias"
-                    render={(props) => {
-                      return (
-                        <div>
-                          <WishlistPage />
-                        </div>
-                      );
-                    }}
-                  />
-                </UserContext.Provider>
-              </CurrencyContext.Provider>
-            </LocaleContext.Provider>
+
+            {user !== undefined && (
+              <LocaleContext.Provider value={JSON.parse(cookies.locale).locale}>
+                <CurrencyContext.Provider value={clientCurrency(user)}>
+                  <UserContext.Provider value={user}>
+                    <Route
+                      path="/:alias"
+                      render={(props) => {
+                        return <WishlistPage />;
+                      }}
+                    />
+                  </UserContext.Provider>
+                </CurrencyContext.Provider>
+              </LocaleContext.Provider>
+            )}
           </Switch>
         </Router>
       </div>

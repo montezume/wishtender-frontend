@@ -26,6 +26,7 @@ function WishlistPage(props) {
   useEffect(() => {
     fetchGet(`${handleRoute}${aliasPath.toLowerCase()}`, (alias) => {
       setAlias(alias);
+      console.log(`alias set: ${alias}`);
     });
   }, [aliasPath, currentUser]);
 
@@ -37,25 +38,30 @@ function WishlistPage(props) {
       });
     }
   }, [refreshWishlist, wishlist?._id]);
+  console.log("rendering wishlist page");
   return (
     <div>
-      <ProfileSection
-        isAuth={currentUser?.aliases.includes(alias._id) || false}
-        info={alias}
-      />
+      {alias && currentUser !== undefined && (
+        <ProfileSection
+          isAuth={currentUser?.aliases.includes(alias?._id) || false}
+          info={alias}
+        />
+      )}
 
-      <Wishlist
-        isAuth={currentUser?.aliases.includes(alias._id) || false}
-        id={wishlist?._id || (alias?.wishlists[0] && alias.wishlists[0]._id)}
-        currency={alias?.currency}
-        items={
-          wishlist?.wishlistItems ||
-          (alias?.wishlists[0] && alias.wishlists[0].wishlistItems)
-        }
-        refreshWishlist={() => {
-          setRefreshWishlist(true);
-        }}
-      />
+      {alias && currentUser !== undefined && (
+        <Wishlist
+          isAuth={currentUser?.aliases.includes(alias._id) || false}
+          id={wishlist?._id || (alias?.wishlists[0] && alias.wishlists[0]._id)}
+          currency={alias?.currency}
+          items={
+            wishlist?.wishlistItems ||
+            (alias?.wishlists[0] && alias.wishlists[0].wishlistItems)
+          }
+          refreshWishlist={() => {
+            setRefreshWishlist(true);
+          }}
+        />
+      )}
     </div>
   );
 }
