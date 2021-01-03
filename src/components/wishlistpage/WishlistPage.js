@@ -26,7 +26,6 @@ function WishlistPage(props) {
   useEffect(() => {
     fetchGet(`${handleRoute}${aliasPath.toLowerCase()}`, (alias) => {
       setAlias(alias);
-      console.log(`alias set: ${alias}`);
     });
   }, [aliasPath, currentUser]);
 
@@ -38,7 +37,6 @@ function WishlistPage(props) {
       });
     }
   }, [refreshWishlist, wishlist?._id]);
-  console.log("rendering wishlist page");
   return (
     <div>
       {alias && currentUser !== undefined && (
