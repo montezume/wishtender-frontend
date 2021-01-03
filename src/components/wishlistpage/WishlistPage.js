@@ -1,61 +1,57 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import ProfileSection from "./ProfileSection/ProfileSection";
-import Wishlist from "./Wishlist";
 import { UserContext } from "../../contexts/UserContext";
 import { fetchGet } from "../../scripts/fetchHelper";
 import { useParams } from "react-router-dom";
 import useTraceUpdate from "../../scripts/useTraceUpdate";
+import Wishlist from "./Wishlist";
 
 const handleRoute = "/aliases?handle_lowercased=";
 
 function WishlistPage(props) {
-  const [json, setJson] = useState(null);
+  const [alias, setAlias] = useState(null);
   const [wishlist, setWishlist] = useState(null);
-  const [currency, setCurrency] = useState(null);
   const [refreshWishlist, setRefreshWishlist] = useState(null);
   const currentUser = useContext(UserContext);
   let { alias: aliasPath } = useParams();
 
-  const [isAuth, setIsAuth] = useState(null);
   const states = {
-    json,
+    alias,
     wishlist,
-    currency,
-    wishlist,
-    currency,
     refreshWishlist,
     currentUser,
   };
   useTraceUpdate(WishlistPage.name, props, states);
 
   useEffect(() => {
-    fetchGet(`${handleRoute}${aliasPath.toLowerCase()}`, (json) => {
-      console.log(json);
-      setJson(json);
-      setWishlist(json.wishlists[0]);
-      console.log(currentUser);
-      setIsAuth(currentUser?.aliases.includes(json._id) || false);
-      setCurrency(json.currency);
+    fetchGet(`${handleRoute}${aliasPath.toLowerCase()}`, (alias) => {
+      setAlias(alias);
     });
   }, [aliasPath, currentUser]);
 
   useEffect(() => {
     if (refreshWishlist) {
-      fetchGet(`/wishlists/${wishlist._id}`, (json) => {
-        console.log(json);
-        setWishlist(json);
+      fetchGet(`/wishlists/${wishlist._id}`, (wishlist) => {
+        setWishlist(wishlist);
         setRefreshWishlist(false);
       });
     }
-  }, [refreshWishlist]);
+  }, [refreshWishlist, wishlist?._id]);
   return (
     <div>
-      <ProfileSection isAuth={isAuth} info={json} />
+      <ProfileSection
+        isAuth={currentUser?.aliases.includes(alias._id) || false}
+        info={alias}
+      />
+
       <Wishlist
-        isAuth={isAuth}
-        id={wishlist && wishlist._id}
-        currency={currency}
-        items={wishlist && wishlist.wishlistItems}
+        isAuth={currentUser?.aliases.includes(alias._id) || false}
+        id={wishlist?._id || (alias?.wishlists[0] && alias.wishlists[0]._id)}
+        currency={alias?.currency}
+        items={
+          wishlist?.wishlistItems ||
+          (alias?.wishlists[0] && alias.wishlists[0].wishlistItems)
+        }
         refreshWishlist={() => {
           setRefreshWishlist(true);
         }}

@@ -8,7 +8,7 @@ import StyledDialog from "../common/StyledDialog/StyledDialog";
 import EditWishForm from "./EditWishForm/EditWishForm";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
 import ExchangeRateApiInterface from "../../scripts/ExchangeRatesApiInterface";
-
+import useTraceUpdate from "../../scripts/useTraceUpdate";
 const ratesApi = new ExchangeRateApiInterface();
 
 function Wishlist(props) {
@@ -16,7 +16,12 @@ function Wishlist(props) {
   const [convertRate, setConvertRate] = useState(null);
   const [addWishVisible, setAddWishVisible] = useState(false);
   const clientCurrency = useContext(CurrencyContext);
-
+  useTraceUpdate(Wishlist.name, props, {
+    editWish,
+    convertRate,
+    addWishVisible,
+    clientCurrency,
+  });
   useEffect(() => {
     if (clientCurrency !== props.currency && props.currency) {
       ratesApi

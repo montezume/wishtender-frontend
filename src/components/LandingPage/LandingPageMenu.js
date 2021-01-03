@@ -1,30 +1,5 @@
-import React, { useRef } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import React from "react";
 import LandingAppBar from "./LandingAppBar";
-import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
-import CloseIcon from "@material-ui/icons/Close";
-import IconButton from "@material-ui/core/IconButton";
-import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
-import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
-
-const StyledMenuItem = withStyles((theme) => ({
-  root: {
-    "&:focus": {
-      backgroundColor: theme.palette.primary.main,
-      "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
-        color: theme.palette.common.white,
-      },
-    },
-  },
-}))(MenuItem);
 
 export default function LandingPageMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);

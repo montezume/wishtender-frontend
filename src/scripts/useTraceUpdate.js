@@ -29,7 +29,11 @@ export default function useTraceUpdate(component, props, state) {
           typeof s[1][0] === "object" && typeof s[1][1] === "object"
             ? `${s[0]} object changed, content of object ${
                 _.isEqual(s[1][0], s[1][1]) ? "didn't" : "did"
-              } change`
+              }  change ${
+                !_.isEqual(s[1][0], s[1][1])
+                  ? `from ${s[1][0]} to ${s[1][1]}`
+                  : ""
+              }`
             : `${s[0]} changed from ${s[1][0]} \nto ${s[1][1]}`
         );
         console.log(
@@ -52,7 +56,9 @@ export default function useTraceUpdate(component, props, state) {
             ? `${s[0]} object changed, content of object ${
                 _.isEqual(s[1][0], s[1][1]) ? "didn't" : "did"
               } change ${
-                !_.isEqual(s[1][0], s[1][1]) && `from ${s[1][0]} to ${s[1][1]}`
+                !_.isEqual(s[1][0], s[1][1])
+                  ? `from ${s[1][0]} to ${s[1][1]}`
+                  : ""
               }`
             : `${s[0]} changed from ${s[1][0]} \nto ${s[1][1]}`
         );
