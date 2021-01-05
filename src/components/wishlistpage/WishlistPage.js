@@ -31,7 +31,7 @@ function WishlistPage(props) {
 
   useEffect(() => {
     if (refreshWishlist) {
-      fetchGet(`/wishlists/${wishlist._id}`, (wishlist) => {
+      fetchGet(`/wishlists/${alias.wishlists[0]._id}`, (wishlist) => {
         setWishlist(wishlist);
         setRefreshWishlist(false);
       });

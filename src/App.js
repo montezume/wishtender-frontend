@@ -4,6 +4,7 @@ import { CurrencyContext } from "./contexts/CurrencyContext";
 import { LocaleContext } from "./contexts/LocaleContext";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import useTraceUpdate from "./scripts/useTraceUpdate";
+
 // import React from 'react';
 // import './App.css';
 import {
@@ -17,6 +18,7 @@ import LandingPage from "./components/LandingPage/LandingPage";
 import ThankYou from "./components/LandingPage/ThankYou";
 import CustomizedMenus from "./components/nav/menu.js";
 import LandingPageMenu from "./components/LandingPage/LandingPageMenu.js";
+import Cart from "./components/Cart/Cart.js";
 
 import { ThemeProvider } from "@material-ui/styles";
 import WishlistPage from "./components/wishlistpage/WishlistPage";
@@ -28,6 +30,7 @@ import SetUp from "./components/SetUp/SetUp";
 // import './Styles/App.css';
 import theme from "./theme";
 import StyledDialog from "./components/common/StyledDialog/StyledDialog";
+import CheckOutSuccess from "./components/CheckOutSuccess/CheckOutSuccess";
 const currentUser = async () => {
   let user = await fetch("/users/current", {
     credentials: "include",
@@ -123,25 +126,6 @@ function App(props) {
             />
 
             <Route
-              path="/price"
-              render={(props) => {
-                return (
-                  <StyledDialog open={true}>
-                    <EditWishForm
-                      info={{
-                        price: "8000",
-                        itemName: "Cereal",
-                        itemImage:
-                          "/data/images/itemImages/6d12a7f1-0b27-46e2-b6a5-a0806e73eadb.png",
-                      }}
-                      id="5fde866aae999a367d935820"
-                      onClose={() => console.log("done")}
-                    />
-                  </StyledDialog>
-                );
-              }}
-            />
-            <Route
               path="/demo/wishlist"
               render={(props) => {
                 return (
@@ -152,16 +136,31 @@ function App(props) {
               }}
             />
 
+            {/* needs to render differently if not accessed from redirect */}
             {user !== undefined && (
               <LocaleContext.Provider value={JSON.parse(cookies.locale).locale}>
                 <CurrencyContext.Provider value={clientCurrency(user)}>
                   <UserContext.Provider value={user}>
-                    <Route
-                      path="/:alias"
-                      render={(props) => {
-                        return <WishlistPage />;
-                      }}
-                    />
+                    <Switch>
+                      <Route
+                        path="/order"
+                        render={(props) => {
+                          return <CheckOutSuccess />;
+                        }}
+                      />
+                      <Route
+                        path="/cart"
+                        render={(props) => {
+                          return <Cart cart={props?.location?.props?.cart} />;
+                        }}
+                      />
+                      <Route
+                        path="/:alias"
+                        render={(props) => {
+                          return <WishlistPage />;
+                        }}
+                      />
+                    </Switch>
                   </UserContext.Provider>
                 </CurrencyContext.Provider>
               </LocaleContext.Provider>

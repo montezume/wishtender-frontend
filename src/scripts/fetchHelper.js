@@ -97,10 +97,13 @@ const fetchPostJson = async (data, route, callback) => {
     body: JSON.stringify(data),
     headers,
   })
-    .then((res) => res.json())
+    .then(async (res) => {
+      if (res.status === 500) throw new Error(await res.text());
+      return res.json();
+    })
     .then((json) => {
       console.log("server response: ", json);
-      callback();
+      callback(json);
     })
     .catch((err) => {
       console.log(`couldn't post json: ${err}`);
@@ -126,7 +129,7 @@ const fetchPatchJson = async (data, route, callback) => {
       res.json();
     })
     .catch((err) => {
-      console.log(`couldn't post json: ${err}`);
+      console.log(`couldn't patch json: ${err}`);
     });
 };
 /**

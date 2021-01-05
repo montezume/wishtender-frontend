@@ -9,19 +9,21 @@ import EditWishForm from "./EditWishForm/EditWishForm";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
 import ExchangeRateApiInterface from "../../scripts/ExchangeRatesApiInterface";
 import useTraceUpdate from "../../scripts/useTraceUpdate";
+import AddToCart from "./AddToCart/AddToCart";
 const ratesApi = new ExchangeRateApiInterface();
 
 function Wishlist(props) {
-  const [editWish, setEditWish] = useState(null);
+  const [selectWish, setSelectWish] = useState(null);
   const [convertRate, setConvertRate] = useState(null);
   const [addWishVisible, setAddWishVisible] = useState(false);
   const clientCurrency = useContext(CurrencyContext);
   useTraceUpdate(Wishlist.name, props, {
-    editWish,
+    selectWish,
     convertRate,
     addWishVisible,
     clientCurrency,
   });
+
   useEffect(() => {
     if (clientCurrency !== props.currency && props.currency) {
       ratesApi
@@ -45,13 +47,7 @@ function Wishlist(props) {
           container
           spacing={2}
         >
-          <div
-            onClick={
-              props.isAuth
-                ? () => setEditWish(item)
-                : () => "something about buying a wish"
-            }
-          >
+          <div onClick={() => setSelectWish(item)}>
             <WishItem
               itemName={item.itemName}
               price={item.price}
@@ -66,26 +62,30 @@ function Wishlist(props) {
 
   return (
     <div className="wishlist">
-      {editWish && (
+      {selectWish && (
         <StyledDialog
           onClose={() => {
-            setEditWish(null);
+            setSelectWish(null);
           }}
-          open={editWish ? true : false}
+          open={selectWish ? true : false}
         >
-          <EditWishForm
-            info={{
-              price: editWish.price,
-              itemName: editWish.itemName,
-              itemImage: editWish.itemImage,
-              currency: editWish.currency,
-            }}
-            id={editWish._id}
-            onClose={() => {
-              setEditWish(null);
-              props.refreshWishlist();
-            }}
-          />
+          {props.isAuth ? (
+            <EditWishForm
+              info={{
+                price: selectWish.price,
+                itemName: selectWish.itemName,
+                itemImage: selectWish.itemImage,
+                currency: selectWish.currency,
+              }}
+              id={selectWish._id}
+              onClose={() => {
+                setSelectWish(null);
+                props.refreshWishlist();
+              }}
+            />
+          ) : (
+            <AddToCart onClose={() => setSelectWish(null)} item={selectWish} />
+          )}
         </StyledDialog>
       )}
       {props.isAuth && (
