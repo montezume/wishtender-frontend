@@ -75,6 +75,7 @@ function AddWish(props) {
   const postWish = (data) => {
     const wishInfo = data;
     wishInfo.url = url;
+    wishInfo.currency = props.currency;
     wishInfo.wishlist = props.wishlist;
     fetchPostJson(wishInfo, "/wishlistItems", () =>
       props.afterAddWish(wishInfo)

@@ -23,9 +23,25 @@ const parsedCookies = () => {
 };
 
 const displayCurrency = (price, currency, locale) => {
+  if (!price || !currency || !locale) console.trace(price, locale, currency);
   return new Intl.NumberFormat(locale, { style: "currency", currency }).format(
     price
   );
+};
+
+const displayConversion = (
+  price,
+  convertedPrice,
+  fromCurrency,
+  toCurrency,
+  fromLocale,
+  toLocale
+) => {
+  return `${displayCurrency(
+    convertedPrice,
+    toCurrency,
+    toLocale
+  )} estimated from ${displayCurrency(price, fromCurrency, fromLocale)}`;
 };
 const chooseCurrency = (locale) => {
   if (locale.countryCode) {
@@ -62,4 +78,5 @@ export {
   parsedCookies,
   fetchUser,
   chooseCurrency,
+  displayConversion,
 };

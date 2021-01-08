@@ -6,6 +6,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
 import { LocaleContext } from "../../contexts/LocaleContext";
+import { displayCurrency, displayConversion } from "../../scripts/helpers";
 
 const useStyles = makeStyles({
   root: {
@@ -19,8 +20,6 @@ const useStyles = makeStyles({
 export default function MediaCard(props) {
   const clientCurrency = useContext(CurrencyContext);
   const localeContext = useContext(LocaleContext);
-
-  const classes = useStyles();
 
   return (
     <Card className="wish_item">
@@ -51,17 +50,21 @@ export default function MediaCard(props) {
           <Typography color="textPrimary" className="price">
             {/* en should actual be current user language */}
             {/* How to get en? from browser then set in user context? */}
-
-            {props.convertRate &&
-              new Intl.NumberFormat(localeContext, {
-                style: "currency",
-                currency: clientCurrency,
-              }).format(props.price * (props.convertRate || 1))}
-
-            {new Intl.NumberFormat("en", {
-              style: "currency",
-              currency: props.currency,
-            }).format(props.price)}
+            {props.currency !== clientCurrency
+              ? displayConversion(
+                  props.price,
+                  props.price * (props.convertRate || 1),
+                  props.currency,
+                  clientCurrency,
+                  "en-US",
+                  localeContext
+                )
+              : displayCurrency(
+                  props.price,
+                  props.currency,
+                  clientCurrency,
+                  "en-US"
+                )}
           </Typography>
         </CardContent>
       </CardActionArea>

@@ -97,6 +97,7 @@ function Wishlist(props) {
             {/* don't show unless authorized */}
             <AddWish
               wishlist={props.id}
+              currency={props.currency}
               afterAddWish={(wish) => {
                 setAddWishVisible(false);
                 props.refreshWishlist();

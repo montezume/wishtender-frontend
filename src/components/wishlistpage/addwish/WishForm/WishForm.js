@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Button, TextField, Tooltip, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ChooseImage from "../ChooseImage";
 import PriceInput from "../../PriceInput";
+import { CurrencyContext } from "../../../../contexts/CurrencyContext";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -39,6 +40,7 @@ export default function WishForm(props) {
   const [price, setPrice] = useState("");
   const [name, setName] = useState("");
   const [crop, setCrop] = useState("");
+  const clientCurrency = useContext(CurrencyContext);
 
   useEffect(() => {
     setName(props.info && props.info.title);
@@ -75,6 +77,14 @@ export default function WishForm(props) {
         price={price}
         setPrice={setPrice}
         inputRef={register()}
+        symbol={
+          new Intl.NumberFormat("en", {
+            style: "currency",
+            currency: clientCurrency,
+          })
+            .formatToParts(1)
+            .find((part) => part.type === "currency").value
+        }
       ></PriceInput>
 
       <Button
