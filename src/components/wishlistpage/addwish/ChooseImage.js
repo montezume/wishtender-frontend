@@ -15,12 +15,12 @@ import { useTheme } from "@material-ui/core/styles";
  * @param  props.onCropComplete
  **/
 function ChooseImage(props) {
-  const [displayImage, setDisplayImage] = useState(null);
+  const [displayImage, setDisplayImage] = useState(0);
   const theme = useTheme();
 
-  useEffect(() => {
-    setDisplayImage(0);
-  }, [props]);
+  // useEffect(() => {
+  //   if (!displayImage) setDisplayImage(0);
+  // }, [props]);
 
   function move(num) {
     let newDisplayImage = displayImage + num;

@@ -23,7 +23,6 @@ const parsedCookies = () => {
 };
 
 const displayCurrency = (price, currency, locale) => {
-  if (!price || !currency || !locale) console.trace(price, locale, currency);
   return new Intl.NumberFormat(locale, { style: "currency", currency }).format(
     price
   );
@@ -71,7 +70,56 @@ const clientCurrency = (user) => {
   return user ? user?.currency : cookies.currency;
 };
 
+const toDotDecimal = (price) => {
+  return parseFloat(
+    price.replace(/(,|\.)([0-9]{3})/g, "$2").replace(/(,|\.)/, ".")
+  );
+};
+
+const toCurrencyDecimals = (val, currency) => {
+  const decimalPlaces = Intl.NumberFormat("en", {
+    style: "currency",
+    currency,
+  })
+    .formatToParts("1")
+    .find((part) => part.type === "fraction").value.length;
+
+  return val.toFixed(decimalPlaces);
+};
+
+const toSmallestUnit = (price, currency) => {
+  return new Intl.NumberFormat("en", {
+    style: "currency",
+    currency: "USD",
+  })
+    .formatToParts(price)
+    .reduce((a, c) => {
+      if (c.type === "integer" || c.type === "fraction") return a + c.value;
+      return a;
+    }, "");
+};
+
+const getSymbol = (currency) => {
+  return new Intl.NumberFormat("en", {
+    style: "currency",
+    currency,
+  })
+    .formatToParts("1")
+    .find((part) => (part.type = "currency")).value;
+};
+const isValidPrice = (value) => {
+  return (
+    /^(0|[1-9][0-9]{0,2}(?:(.[0-9]{3})*|[0-9]*))(\,[0-9]+){0,1}$/.test(value) ||
+    /^(0|[1-9][0-9]{0,2}(?:(,[0-9]{3})*|[0-9]*))(\.[0-9]+){0,1}$/.test(value)
+  );
+};
+
 export {
+  isValidPrice,
+  getSymbol,
+  toSmallestUnit,
+  toCurrencyDecimals,
+  toDotDecimal,
   clientCurrency,
   clientLocale,
   displayCurrency,

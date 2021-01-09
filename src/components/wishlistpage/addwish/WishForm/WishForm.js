@@ -4,7 +4,14 @@ import { Button, TextField, Tooltip, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ChooseImage from "../ChooseImage";
 import PriceInput from "../../PriceInput";
+import EditWishFormtest from "../../EditWishForm/EditWishFormtest";
 import { CurrencyContext } from "../../../../contexts/CurrencyContext";
+
+import {
+  getSymbol,
+  isValidPrice,
+  toCurrencyDecimals,
+} from "../../../../scripts/helpers";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -51,9 +58,9 @@ export default function WishForm(props) {
   const onSubmit = (data) => {
     //send data to backend post wish item
     data.imageCrop = crop;
-    data.price = data.price.slice(1);
     props.onSubmit(data);
   };
+  console.log("props.price, ", props.info.price);
   return (
     <form
       style={props.disabled ? { opacity: ".3", pointerEvents: "none" } : {}}
@@ -74,18 +81,39 @@ export default function WishForm(props) {
       />
 
       <PriceInput
-        price={price}
+        price={props.info.price}
+        // price={price}
         setPrice={setPrice}
-        inputRef={register()}
-        symbol={
-          new Intl.NumberFormat("en", {
-            style: "currency",
-            currency: clientCurrency,
-          })
-            .formatToParts(1)
-            .find((part) => part.type === "currency").value
-        }
+        inputRef={register({
+          validate: (value) => {
+            console.log(
+              "validation change from ",
+              price,
+              value,
+              isValidPrice(value)
+            );
+            const valid = isValidPrice(value);
+
+            return valid || `${value} is not a valid price.`;
+          },
+        })}
+        error={errors.price?.message}
+        symbol={getSymbol("USD")}
       ></PriceInput>
+      {!props.disabled && (
+        <EditWishFormtest
+          info={{
+            price: props.info.price,
+            itemName: props.info.itemName,
+            itemImage: props.info.itemImage,
+            currency: props.info.currency,
+          }}
+          id={props.info._id}
+          onClose={() => {
+            console.log("hi");
+          }}
+        />
+      )}
 
       <Button
         disableElevation={true}

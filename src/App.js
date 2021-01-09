@@ -4,7 +4,7 @@ import { CurrencyContext } from "./contexts/CurrencyContext";
 import { LocaleContext } from "./contexts/LocaleContext";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import useTraceUpdate from "./scripts/useTraceUpdate";
-
+import TestPrice from "./TestPrice";
 // import React from 'react';
 // import './App.css';
 import {
@@ -31,6 +31,7 @@ import SetUp from "./components/SetUp/SetUp";
 import theme from "./theme";
 import StyledDialog from "./components/common/StyledDialog/StyledDialog";
 import CheckOutSuccess from "./components/CheckOutSuccess/CheckOutSuccess";
+import WishForm from "./components/wishlistpage/AddWish/WishForm/WishForm";
 const currentUser = async () => {
   let user = await fetch("/users/current", {
     credentials: "include",
@@ -142,6 +143,12 @@ function App(props) {
                 <CurrencyContext.Provider value={clientCurrency(user)}>
                   <UserContext.Provider value={user}>
                     <Switch>
+                      <Route
+                        path="/test"
+                        render={(props) => {
+                          return <TestPrice></TestPrice>;
+                        }}
+                      />
                       <Route
                         path="/order"
                         render={(props) => {

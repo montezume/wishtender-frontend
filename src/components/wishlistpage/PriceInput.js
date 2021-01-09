@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import {
   FormControl,
@@ -21,6 +21,7 @@ import HelpIcon from "@material-ui/icons/Help";
  **/
 
 export default function PriceInput(props) {
+  const [price, setPrice] = useState("");
   return (
     <>
       <FormControl variant="outlined" error={props.error ? true : false}>
@@ -30,10 +31,15 @@ export default function PriceInput(props) {
           name="price"
           id="price"
           // value={formatCurrency(props.price, "en", "USD")}
-          value={props.price || ""}
+          // value={price || props.price || ""}
+          defaultValue={props.price}
+          // value={props.price}
+          // defaultValue={props.price || ""}
           autoComplete="off"
           onChange={(e) => {
-            props.setPrice(e.target.value);
+            console.log("onchanged from ", props.price, e.target.value);
+            // props.setPrice(e.target.value);
+            setPrice(e.target.value);
           }}
           endAdornment={
             <InputAdornment position="end">
