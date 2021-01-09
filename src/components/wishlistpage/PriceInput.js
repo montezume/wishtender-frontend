@@ -21,7 +21,8 @@ import HelpIcon from "@material-ui/icons/Help";
  **/
 
 export default function PriceInput(props) {
-  const [price, setPrice] = useState("");
+  // const [price, setPrice] = useState("");
+
   return (
     <>
       <FormControl variant="outlined" error={props.error ? true : false}>
@@ -39,7 +40,7 @@ export default function PriceInput(props) {
           onChange={(e) => {
             console.log("onchanged from ", props.price, e.target.value);
             // props.setPrice(e.target.value);
-            setPrice(e.target.value);
+            // setPrice(e.target.value);
           }}
           endAdornment={
             <InputAdornment position="end">
