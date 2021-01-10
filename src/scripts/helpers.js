@@ -72,7 +72,7 @@ const clientCurrency = (user) => {
 
 const toDotDecimal = (price) => {
   return parseFloat(
-    price.replace(/(,|\.)([0-9]{3})/g, "$2").replace(/(,|\.)/, ".")
+    price.replace(/(,|\.)([0-9]{3})/g, `$2`).replace(/(,|\.)/, ".")
   );
 };
 
@@ -84,7 +84,7 @@ const toCurrencyDecimals = (val, currency) => {
     .formatToParts("1")
     .find((part) => part.type === "fraction").value.length;
 
-  return val.toFixed(decimalPlaces);
+  return (+val).toFixed(decimalPlaces);
 };
 
 const toSmallestUnit = (price, currency) => {
@@ -107,14 +107,51 @@ const getSymbol = (currency) => {
     .formatToParts("1")
     .find((part) => (part.type = "currency")).value;
 };
-const isValidPrice = (value) => {
-  return (
-    /^(0|[1-9][0-9]{0,2}(?:(.[0-9]{3})*|[0-9]*))(\,[0-9]+){0,1}$/.test(value) ||
-    /^(0|[1-9][0-9]{0,2}(?:(,[0-9]{3})*|[0-9]*))(\.[0-9]+){0,1}$/.test(value)
-  );
+
+const isValidPrice = (value, decimalPlaces) => {
+  const correctDecimalPlaces =
+    value.split(/([,||.])/g).reverse()[0].length === decimalPlaces;
+  const commasNumbersPeriods =
+    /^(0|[1-9][0-9]{0,2}(?:(,[0-9]{3})*|[0-9]*))(\.[0-9]+){0,1}$/.test(value) ||
+    /^(0|[1-9][0-9]{0,2}(?:(.[0-9]{3})*|[0-9]*))(\,[0-9]+){0,1}$/.test(value);
+
+  return correctDecimalPlaces && commasNumbersPeriods;
+};
+
+const currencyInfo = (currency, locale = "en") => {
+  const parts = new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: "USD",
+  }).formatToParts("1000");
+
+  let separator;
+  let decimal;
+  let decimalPlaces;
+  let symbol;
+  parts.forEach((p) => {
+    switch (p.type) {
+      case "group":
+        separator = p.value;
+        break;
+      case "decimal":
+        decimal = p.value;
+        break;
+      case "fraction":
+        decimalPlaces = p.value.length;
+        break;
+      case "currency":
+        symbol = p.value;
+        break;
+      default:
+      // code block
+    }
+  });
+  const info = { separator, decimal, decimalPlaces, symbol };
+  return info;
 };
 
 export {
+  currencyInfo,
   isValidPrice,
   getSymbol,
   toSmallestUnit,

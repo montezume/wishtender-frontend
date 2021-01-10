@@ -31,17 +31,9 @@ export default function PriceInput(props) {
           inputRef={props.inputRef}
           name="price"
           id="price"
-          // value={formatCurrency(props.price, "en", "USD")}
-          // value={price || props.price || ""}
-          defaultValue={props.price}
-          // value={props.price}
-          // defaultValue={props.price || ""}
+          value={props.price}
           autoComplete="off"
-          onChange={(e) => {
-            console.log("onchanged from ", props.price, e.target.value);
-            // props.setPrice(e.target.value);
-            // setPrice(e.target.value);
-          }}
+          onChange={props.onChange}
           endAdornment={
             <InputAdornment position="end">
               <Tooltip title="The amount you'll receive to purchase your wish. Don't forget to add some money if you'd like to account for shipping & tax.">

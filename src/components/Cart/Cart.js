@@ -73,6 +73,7 @@ export default function Cart(props) {
       const aliasULs = aliases.map((a) => {
         const items = aliasCarts[a].items;
         const itemKeys = Object.keys(items);
+        // console.log(item[itemKeys].price);
         const itemListItems = itemKeys.map((i) => (
           <li key={i}>
             {items[i].item.itemName}{" "}
@@ -85,10 +86,12 @@ export default function Cart(props) {
               clientCurrency,
               "en-US",
               localeContext
-            )}
+            )}{" "}
+            QTY:
             {JSON.stringify(items[i].qty)}
           </li>
         ));
+        console.log(itemListItems[0].props.children[2]);
 
         return (
           <>

@@ -6,11 +6,12 @@ import ChooseImage from "../ChooseImage";
 import PriceInput from "../../PriceInput";
 import EditWishFormtest from "../../EditWishForm/EditWishFormtest";
 import { CurrencyContext } from "../../../../contexts/CurrencyContext";
-
 import {
   getSymbol,
   isValidPrice,
   toCurrencyDecimals,
+  currencyInfo,
+  toDotDecimal,
 } from "../../../../scripts/helpers";
 
 const useStyles = makeStyles((theme) => {
@@ -53,10 +54,16 @@ export default function WishForm(props) {
     setName(props.info && props.info.title);
     setPrice(props.info && props.info.price);
   }, [props.info]);
+  useEffect(() => {
+    console.log(price);
+  }, [price]);
 
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => {
     //send data to backend post wish item
+    const priceNumber = toDotDecimal(data.price);
+    data.price = toCurrencyDecimals(priceNumber, clientCurrency);
+
     data.imageCrop = crop;
     props.onSubmit(data);
   };
@@ -79,29 +86,33 @@ export default function WishForm(props) {
           setName(e.target.value);
         }}
       />
+      <PriceInput
+        price={price}
+        setPrice={setPrice}
+        onChange={(e) => {
+          setPrice(e.target.value);
+        }}
+        inputRef={register({
+          validate: async (value) => {
+            console.log(
+              "validation change from ",
+              price,
+              value,
+              isValidPrice(value)
+            );
 
-      {!props.disabled && (
-        <PriceInput
-          price={props.info.price}
-          // price={price}
-          setPrice={setPrice}
-          inputRef={register({
-            validate: (value) => {
-              console.log(
-                "validation change from ",
-                price,
-                value,
-                isValidPrice(value)
-              );
-              const valid = isValidPrice(value);
+            const currency = currencyInfo(clientCurrency);
 
-              return valid || `${value} is not a valid price.`;
-            },
-          })}
-          error={errors.price?.message}
-          symbol={getSymbol("USD")}
-        ></PriceInput>
-      )}
+            const valid = isValidPrice(value, currency.decimalPlaces);
+
+            if (errors.price || !valid) setPrice(value);
+
+            return valid || `${value} is not a valid price.`;
+          },
+        })}
+        error={errors.price?.message}
+        symbol={currencyInfo(clientCurrency).symbol}
+      ></PriceInput>
       <Button
         disableElevation={true}
         className={classes.button}

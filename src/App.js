@@ -1,91 +1,187 @@
-import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import PriceInput from "./components/wishlistpage/PriceInput";
-import { OutlinedInput } from "@material-ui/core";
-import HelpIcon from "@material-ui/icons/Help";
-import { isValidPrice } from "./scripts/helpers";
+import React, { useState, useEffect, memo } from "react";
+import { UserContext } from "./contexts/UserContext";
+import { CurrencyContext } from "./contexts/CurrencyContext";
+import { LocaleContext } from "./contexts/LocaleContext";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import useTraceUpdate from "./scripts/useTraceUpdate";
+import TestPrice from "./TestPrice";
+// import React from 'react';
+// import './App.css';
+import {
+  clientCurrency,
+  parsedCookies,
+  chooseCurrency,
+} from "./scripts/helpers";
+import "./myapp.css";
+import HomePage from "./components/HomePage";
+import LandingPage from "./components/LandingPage/LandingPage";
+import ThankYou from "./components/LandingPage/ThankYou";
+import CustomizedMenus from "./components/nav/menu.js";
+import LandingPageMenu from "./components/LandingPage/LandingPageMenu.js";
+import Cart from "./components/Cart/Cart.js";
 
-const Form = (props) => {
-  const [price, setPrice] = useState();
-  const { register, handleSubmit, errors } = useForm();
+import { ThemeProvider } from "@material-ui/styles";
+import WishlistPage from "./components/wishlistpage/WishlistPage";
+import EditWishForm from "./components/wishlistpage/EditWishForm/EditWishForm";
 
-  const onSubmit = (data) => {
-    console.log("submitted ", data);
-  };
-  const handleChange = (e) => {
-    setPrice(e.target.value);
-    // return true;
-  };
-  return (
-    <>
-      <button onClick={() => setPrice("19.99.")}>
-        Scrape site for item price
-      </button>
-      <form autoComplete="off" onSubmit={handleSubmit(props.onSubmit)}>
-        <p>Price 1</p>
-        <input
-          ref={register({
-            validate: (value) => {
-              console.log(
-                "validation change from ",
-                price,
-                value,
-                isValidPrice(value)
-              );
-              const valid = isValidPrice(value);
-
-              // setPrice(value); //because onChange will not run
-              return valid || `${value} is not a valid price.`;
-            },
-          })}
-          name="price"
-          id="price"
-          value={price || ""}
-          onChange={handleChange}
-        />
-        {errors.price?.message}
-        {/* <p>Price 2</p>
-        <input
-          ref={register({
-            validate: (value) => {
-              const valid = isValidPrice(value);
-
-              return valid || `${value} is not a valid price.`;
-            },
-          })}
-          name="price"
-          id="price"
-          // value={props.price || ""}
-          // onChange={(e) => setPrice(e.target.value)}
-          onChange={handleChange}
-        />
-        {errors.price?.message} */}
-        <button type="submit">Update</button>
-      </form>
-    </>
-  );
+// import AddWish from "./components/wishlistpage/addwish1/AddWish.js";
+import SignUp from "./components/SignUp/SignUp";
+import SetUp from "./components/SetUp/SetUp";
+// import './Styles/App.css';
+import theme from "./theme";
+import StyledDialog from "./components/common/StyledDialog/StyledDialog";
+import CheckOutSuccess from "./components/CheckOutSuccess/CheckOutSuccess";
+import WishForm from "./components/wishlistpage/AddWish/WishForm/WishForm";
+const currentUser = async () => {
+  let user = await fetch("/users/current", {
+    credentials: "include",
+  }).then((res) => {
+    if (res.status === 204) return Promise.resolve(null);
+    return res.json();
+  });
+  return user;
 };
 
-export default function App(props) {
-  const [price, setPrice] = useState("");
-  const { register, handleSubmit, errors } = useForm();
+function App(props) {
+  const [user, setUser] = useState();
 
-  const onSubmit = (data) => {
-    console.log("submitted ", data);
-  };
-  const handleChange = (e) => {
-    console.log("onchanged from ", price, e.target.value);
-    setPrice(e.target.value);
-    return true;
-  };
-  console.log(errors);
+  const cookies = parsedCookies();
+  useTraceUpdate(App.name, props, { user });
+
+  useEffect(() => {
+    currentUser().then((user) => {
+      setUser(user);
+      if (!clientCurrency(user)) {
+        chooseCurrency(JSON.parse(parsedCookies().locale));
+      }
+    });
+  }, []);
   return (
-    <>
-      <Form
-        onChange={handleChange}
-        price={price}
-        onSubmit={handleSubmit}
-      ></Form>
-    </>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <Router>
+          <Switch>
+            <Route path="/" exact>
+              <LandingPageMenu />
+            </Route>
+            <Route path="/">
+              <CustomizedMenus />
+            </Route>
+          </Switch>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={(props) => {
+                return (
+                  <div>
+                    <LandingPage />
+                  </div>
+                );
+              }}
+            />
+            <Route
+              path="/betathankyou"
+              exact
+              render={(props) => {
+                return (
+                  <div>
+                    <ThankYou />
+                  </div>
+                );
+              }}
+            />
+
+            <Route
+              path="/demo"
+              exact
+              render={(props) => {
+                return (
+                  <div>
+                    <HomePage />
+                  </div>
+                );
+              }}
+            />
+            <Route
+              path="/sign-up"
+              exact
+              render={(props) => {
+                return (
+                  <div>
+                    <SignUp />
+                  </div>
+                );
+              }}
+            />
+            <Route
+              path="/wishlist-setup"
+              exact
+              render={(props) => {
+                return (
+                  <div>
+                    <SetUp />
+                  </div>
+                );
+              }}
+            />
+
+            <Route
+              path="/demo/wishlist"
+              render={(props) => {
+                return (
+                  <div>
+                    <WishlistPage user={user} />
+                  </div>
+                );
+              }}
+            />
+
+            {/* needs to render differently if not accessed from redirect */}
+            {user !== undefined && (
+              <LocaleContext.Provider value={JSON.parse(cookies.locale).locale}>
+                <CurrencyContext.Provider value={clientCurrency(user)}>
+                  <UserContext.Provider value={user}>
+                    <Switch>
+                      <Route
+                        path="/test"
+                        render={(props) => {
+                          return <TestPrice></TestPrice>;
+                        }}
+                      />
+                      <Route
+                        path="/order"
+                        render={(props) => {
+                          return <CheckOutSuccess />;
+                        }}
+                      />
+                      <Route
+                        path="/cart"
+                        render={(props) => {
+                          return <Cart cart={props?.location?.props?.cart} />;
+                        }}
+                      />
+                      <Route
+                        path="/:alias"
+                        render={(props) => {
+                          return <WishlistPage />;
+                        }}
+                      />
+                    </Switch>
+                  </UserContext.Provider>
+                </CurrencyContext.Provider>
+              </LocaleContext.Provider>
+            )}
+          </Switch>
+        </Router>
+      </div>
+    </ThemeProvider>
   );
 }
+
+App.whyDidYouRender = true;
+
+export default memo(App, (prevProps, nextProps) => {
+  console.log("from memo: ", prevProps, nextProps);
+  return nextProps.count === prevProps.count;
+});

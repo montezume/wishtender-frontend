@@ -14,10 +14,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import PriceInput from "../PriceInput";
 import { fetchPatchMulti, fetchDelete } from "../../../scripts/fetchHelper";
 import StyledDialog from "../../common/StyledDialog/StyledDialog";
+import CurrencyContext from "../../../contexts/CurrencyContext";
 
 import {
   getSymbol,
   toCurrencyDecimals,
+  currencyInfo,
   isValidPrice,
   toDotDecimal,
 } from "../../../scripts/helpers";
@@ -137,24 +139,31 @@ export default function EditWishForm(props) {
       </FormControl>
 
       <PriceInput
-        price={toCurrencyDecimals(+props.info.price, props.info.currency)}
-        // price={price}
+        price={price}
         setPrice={setPrice}
+        onChange={(e) => {
+          setPrice(e.target.value);
+        }}
         inputRef={register({
-          validate: (value) => {
+          validate: async (value) => {
             console.log(
               "validation change from ",
               price,
               value,
               isValidPrice(value)
             );
-            const valid = isValidPrice(value);
+
+            const currency = currencyInfo(props.info.currency);
+
+            const valid = isValidPrice(value, currency.decimalPlaces);
+
+            if (errors.price || !valid) setPrice(value);
 
             return valid || `${value} is not a valid price.`;
           },
         })}
         error={errors.price?.message}
-        symbol={getSymbol(props.info.currency)}
+        symbol={currencyInfo(props.info.currency).symbol}
       ></PriceInput>
 
       <Grid container justify="flex-end">
