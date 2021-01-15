@@ -60,7 +60,6 @@ export default function WishForm(props) {
     data.imageCrop = crop;
     props.onSubmit(data);
   };
-  console.log("props.price, ", props.info.price);
   return (
     <form
       style={props.disabled ? { opacity: ".3", pointerEvents: "none" } : {}}

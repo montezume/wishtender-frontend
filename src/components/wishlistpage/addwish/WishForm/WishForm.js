@@ -12,6 +12,7 @@ import {
   toCurrencyDecimals,
   currencyInfo,
   toDotDecimal,
+  toSmallestUnit,
 } from "../../../../scripts/helpers";
 
 const useStyles = makeStyles((theme) => {
@@ -61,9 +62,7 @@ export default function WishForm(props) {
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => {
     //send data to backend post wish item
-    const priceNumber = toDotDecimal(data.price);
-    data.price = toCurrencyDecimals(priceNumber, clientCurrency);
-
+    data.price = toSmallestUnit(data.price, clientCurrency);
     data.imageCrop = crop;
     props.onSubmit(data);
   };
@@ -93,7 +92,7 @@ export default function WishForm(props) {
           setPrice(e.target.value);
         }}
         inputRef={register({
-          validate: async (value) => {
+          validate: (value) => {
             console.log(
               "validation change from ",
               price,

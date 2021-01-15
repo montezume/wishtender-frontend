@@ -5,6 +5,12 @@ import { fetchGet } from "../../scripts/fetchHelper";
 import { useParams } from "react-router-dom";
 import useTraceUpdate from "../../scripts/useTraceUpdate";
 import Wishlist from "./Wishlist";
+import {
+  unitToStandard,
+  toCurrencyDecimals,
+  parsedCookies,
+  parsePrice,
+} from "../../scripts/helpers";
 
 const handleRoute = "/aliases?handle_lowercased=";
 
@@ -25,6 +31,10 @@ function WishlistPage(props) {
 
   useEffect(() => {
     fetchGet(`${handleRoute}${aliasPath.toLowerCase()}`, (alias) => {
+      alias.wishlists[0].wishlistItems.forEach((item) => {
+        const parsedPrice = parsePrice(item.price, item.currency);
+        item.price = parsedPrice;
+      });
       setAlias(alias);
     });
   }, [aliasPath, currentUser]);
@@ -32,6 +42,9 @@ function WishlistPage(props) {
   useEffect(() => {
     if (refreshWishlist) {
       fetchGet(`/wishlists/${alias.wishlists[0]._id}`, (wishlist) => {
+        wishlist.wishlistItems.forEach(
+          (item) => (item.price = unitToStandard(item.price, item.currency))
+        );
         setWishlist(wishlist);
         setRefreshWishlist(false);
       });

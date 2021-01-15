@@ -19,6 +19,7 @@ import CurrencyContext from "../../../contexts/CurrencyContext";
 import {
   getSymbol,
   toCurrencyDecimals,
+  toSmallestUnit,
   currencyInfo,
   isValidPrice,
   toDotDecimal,
@@ -68,16 +69,23 @@ export default function EditWishForm(props) {
   const onSubmit = (data) => {
     if (imageFile) data.image = imageFile;
 
-    data.price = toDotDecimal(data.price, "en");
     Object.keys(data).forEach((value) => {
-      if (!data[value] || data[value] === props.info[value]) delete data[value];
+      if (
+        (value === "price" && +data[value] === +props.info[value]) ||
+        !data[value] ||
+        data[value] === props.info[value]
+      ) {
+        delete data[value];
+      }
     });
+    if (data.price)
+      data.price = toSmallestUnit(data.price, props.info.currency);
     if (Object.keys(data).length) {
       fetchPatchMulti(data, `/wishlistItems/${props.id}`, () => {
-        props.onClose();
+        props.onClose({ refresh: true });
       });
     } else {
-      props.onClose();
+      props.onClose({ refresh: false });
     }
   };
   const handleImageUpdate = (img) => {

@@ -78,9 +78,9 @@ function Wishlist(props) {
                 currency: selectWish.currency,
               }}
               id={selectWish._id}
-              onClose={() => {
+              onClose={(options) => {
                 setSelectWish(null);
-                props.refreshWishlist();
+                if (options.refresh) props.refreshWishlist();
               }}
             />
           ) : (

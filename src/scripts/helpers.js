@@ -1,3 +1,4 @@
+import { currencies } from "country-data";
 import getCurrencies from "./getCurrencies";
 
 const fetchUser = (callback) => {
@@ -26,6 +27,47 @@ const displayCurrency = (price, currency, locale) => {
   return new Intl.NumberFormat(locale, { style: "currency", currency }).format(
     price
   );
+};
+
+const unitToStandard = (unitValue, currency) => {
+  const price = unitValue / 10 ** currencyInfo(currency).decimalPlaces;
+  return price;
+};
+
+const displayPriceFromUnit = (
+  unitValue,
+  currencyFrom,
+  currencyTo,
+  convertRate,
+  locale
+) => {
+  const price = unitToStandard(unitValue, currencyFrom);
+  const display =
+    currencyFrom !== currencyTo
+      ? displayConversion(
+          price,
+          price * (convertRate || 1),
+          currencyFrom,
+          currencyTo,
+          "en-US",
+          locale
+        )
+      : displayCurrency(price, currencyFrom, currencyTo, "en-US");
+  return display;
+};
+const displayPrice = (price, currencyFrom, currencyTo, convertRate, locale) => {
+  const display =
+    currencyFrom !== currencyTo
+      ? displayConversion(
+          price,
+          price * (convertRate || 1),
+          currencyFrom,
+          currencyTo,
+          "en-US",
+          locale
+        )
+      : displayCurrency(price, currencyFrom, currencyTo, "en-US");
+  return display;
 };
 
 const displayConversion = (
@@ -76,6 +118,10 @@ const toDotDecimal = (price) => {
   );
 };
 
+const parsePrice = (price, currency) => {
+  return toCurrencyDecimals(unitToStandard(price, currency), currency);
+};
+
 const toCurrencyDecimals = (val, currency) => {
   const decimalPlaces = Intl.NumberFormat("en", {
     style: "currency",
@@ -88,11 +134,12 @@ const toCurrencyDecimals = (val, currency) => {
 };
 
 const toSmallestUnit = (price, currency) => {
+  const dotDec = toDotDecimal(price);
   return new Intl.NumberFormat("en", {
     style: "currency",
-    currency: "USD",
+    currency,
   })
-    .formatToParts(price)
+    .formatToParts(dotDec)
     .reduce((a, c) => {
       if (c.type === "integer" || c.type === "fraction") return a + c.value;
       return a;
@@ -151,6 +198,7 @@ const currencyInfo = (currency, locale = "en") => {
 };
 
 export {
+  unitToStandard,
   currencyInfo,
   isValidPrice,
   getSymbol,
@@ -164,4 +212,7 @@ export {
   fetchUser,
   chooseCurrency,
   displayConversion,
+  displayPriceFromUnit,
+  displayPrice,
+  parsePrice,
 };

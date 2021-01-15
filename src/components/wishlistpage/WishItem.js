@@ -6,7 +6,13 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
 import { LocaleContext } from "../../contexts/LocaleContext";
-import { displayCurrency, displayConversion } from "../../scripts/helpers";
+import {
+  displayCurrency,
+  displayConversion,
+  currencyInfo,
+  displayPrice,
+} from "../../scripts/helpers";
+import { currencies } from "country-data";
 
 const useStyles = makeStyles({
   root: {
@@ -50,21 +56,13 @@ export default function MediaCard(props) {
           <Typography color="textPrimary" className="price">
             {/* en should actual be current user language */}
             {/* How to get en? from browser then set in user context? */}
-            {props.currency !== clientCurrency
-              ? displayConversion(
-                  props.price,
-                  props.price * (props.convertRate || 1),
-                  props.currency,
-                  clientCurrency,
-                  "en-US",
-                  localeContext
-                )
-              : displayCurrency(
-                  props.price,
-                  props.currency,
-                  clientCurrency,
-                  "en-US"
-                )}
+            {displayPrice(
+              props.price,
+              props.currency,
+              clientCurrency,
+              props.convertRate,
+              localeContext
+            )}
           </Typography>
         </CardContent>
       </CardActionArea>

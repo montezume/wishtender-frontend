@@ -1,12 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { fetchGet, fetchPostJson } from "../../scripts/fetchHelper";
-import {
-  displayConversion,
-  unitToStandard,
-  displayPriceFromUnit,
-  parsePrice,
-  displayPrice,
-} from "../../scripts/helpers";
+import { displayConversion } from "../../scripts/helpers";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
 import { LocaleContext } from "../../contexts/LocaleContext";
 import ExchangeRateApiInterface from "../../scripts/ExchangeRatesApiInterface";
@@ -22,29 +16,10 @@ export default function Cart(props) {
 
   const { register, handleSubmit, errors } = useForm();
 
-  const parseCartPrices = (cart) => {
-    const aliases = Object.keys(cart.aliasCarts);
-    aliases.forEach((alias) => {
-      const aliasCart = cart.aliasCarts[alias];
-      aliasCart.totalPrice = parsePrice(
-        aliasCart.totalPrice,
-        aliasCart.alias.currency
-      );
-      const items = Object.keys(aliasCart.items);
-      items.forEach((item) => {
-        const itemObj = aliasCart.items[item];
-        itemObj.price = parsePrice(itemObj.price, aliasCart.alias.currency);
-      });
-    });
-  };
   // const [checkoutSessionId, setCheckoutSessionId] = useState("");
   useEffect(() => {
-    if (props.cart) parseCartPrices(props.cart);
     if (!props.cart && !cart) {
-      fetchGet("/cart", (crt) => {
-        parseCartPrices(crt);
-        setCart(crt);
-      });
+      fetchGet("/cart", setCart);
     }
   }, [cart, props.cart]);
 
@@ -54,19 +29,21 @@ export default function Cart(props) {
     }
   }, [clientCurrency]);
 
-  const checkoutCart = (data) => {
+  const checkoutCart = (aliasId) => {
     // create stripe session and get session id
     // redirect to session in the callback
     fetchPostJson(
       {
-        alias: data.aliasId,
+        alias: aliasId,
         order: {
           buyerInfo: {
-            email: data.email,
-            fromLine: data.fromLine,
+            email: "g@props.com",
+            fromLine: "zoobie122 on chaterbate",
           },
-          alias: data.aliasId,
-          noteToWisher: data.note,
+          alias: aliasId,
+          noteToWisher: "You are so hot",
+          processedBy: "Stripe",
+          processed: false,
         },
       },
       "/checkout",
@@ -95,7 +72,7 @@ export default function Cart(props) {
   };
 
   const cartToHTML = (() => {
-    if ((cart || props.cart) && exchangeRates) {
+    if (cart || props.cart) {
       const cartInfo = cart || props.cart;
       const aliasCarts = cartInfo.aliasCarts;
       const aliases = Object.keys(aliasCarts);
@@ -106,11 +83,14 @@ export default function Cart(props) {
         const itemListItems = itemKeys.map((i) => (
           <li key={i}>
             {items[i].item.itemName}{" "}
-            {displayPrice(
+            {displayConversion(
               items[i].price,
+              items[i].price *
+                (1 / (exchangeRates && exchangeRates[items[i].item.currency]) ||
+                  1),
               items[i].item.currency,
               clientCurrency,
-              1 / exchangeRates[items[i].item.currency],
+              "en-US",
               localeContext
             )}{" "}
             QTY:
@@ -122,12 +102,8 @@ export default function Cart(props) {
         let messageLength;
         if (exchangeRates) {
           const totalPriceUSD =
-            (unitToStandard(
-              aliasCarts[a].totalPrice,
-              aliasCarts[a].alias.currency
-            ) *
-              exchangeRates[aliasCarts[a].alias.currency]) /
-            exchangeRates["USD"];
+            (aliasCarts[a].totalPrice * 1) /
+            (exchangeRates && exchangeRates["USD"]);
           messageLength = Math.round(100 + totalPriceUSD);
         }
         return (
@@ -140,11 +116,15 @@ export default function Cart(props) {
                 </h2>
                 <ul id={a}>
                   {itemListItems} Total:{" "}
-                  {displayPrice(
+                  {displayConversion(
                     aliasCarts[a].totalPrice,
+                    aliasCarts[a].totalPrice *
+                      (1 /
+                        (exchangeRates &&
+                          exchangeRates[aliasCarts[a].alias.currency]) || 1),
                     aliasCarts[a].alias.currency,
                     clientCurrency,
-                    1 / exchangeRates[aliasCarts[a].alias.currency],
+                    "en-US",
                     localeContext
                   )}{" "}
                   + Fees
@@ -162,53 +142,27 @@ export default function Cart(props) {
                             value: messageLength,
                             message: `message must be less than ${
                               messageLength + 1
-                            } characters`,
+                            }characters`,
                           },
                         })}
                         id={`note-for-${a}`}
-                        name="note"
                         name="note"
                         rows="4"
                         cols="50"
                       ></textarea>
                     </div>
                     Email:
-                    <input
-                      ref={register({
-                        required: "Email Required",
-                        pattern: {
-                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                          message: "Enter a valid e-mail address",
-                        },
-                      })}
-                      id="email"
-                      name="email"
-                    ></input>{" "}
-                    ** Your email is private. WishTender will use your email to
-                    relay you any thank you notes from the wisher, but the
-                    wisher will not see your email.
-                    <br></br> From:{" "}
-                    <input
-                      ref={register({
-                        maxLength: {
-                          value: 60,
-                          message: `From line must be less than ${
-                            60 + 1
-                          } characters`,
-                        },
-                      })}
-                      id="from"
-                      name="fromLine"
-                    ></input>{" "}
-                    ** This is what the wisher will see.
-                    {errors.note?.message}
-                    {errors.email?.message}
-                    {errors.fromLine?.message}
-                    <button type="submit">
-                      Check Out {aliasCarts[a].alias.aliasName}'s gifts
-                    </button>
+                    <input id="email" name="email"></input> ** Your email is
+                    private. WishTender will use your email to relay you any
+                    thank you notes from the wisher, but the wisher will not see
+                    your email.
+                    <br></br> From: <input id="from" name="fromLine"></input> **
+                    This is what the wisher will see.
                   </form>
                 </ul>
+                <button type="submit">
+                  Check Out {aliasCarts[a].alias.aliasName}'s gifts
+                </button>
               </>
             )}
           </>
