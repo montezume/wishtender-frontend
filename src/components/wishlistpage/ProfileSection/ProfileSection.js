@@ -7,7 +7,7 @@ import { UserContext } from "../../../contexts/UserContext";
 import { useParams } from "react-router-dom";
 import { fetchPatchImage, fetchPatchJson } from "../../../scripts/fetchHelper";
 import { Redirect } from "react-router-dom";
-const handleRoute = "/aliases?handle_lowercased=";
+const handleRoute = "/api/aliases?handle_lowercased=";
 
 /**
  * Renders a <ProfileSection /> component
@@ -43,7 +43,12 @@ function ProfileSection(props) {
   }, [props.info, currentUser]);
 
   const handleUpdateProfilePicture = (image) => {
-    fetchPatchImage(image, "image", `aliases/${aliasId}`, setProfilePicture);
+    fetchPatchImage(
+      image,
+      "image",
+      `/api/aliases/${aliasId}`,
+      setProfilePicture
+    );
   };
 
   const handleCheckHandleAvailability = async (handle) => {
@@ -57,22 +62,27 @@ function ProfileSection(props) {
     return available;
   };
   const handleUpdateHandle = (handle) => {
-    fetchPatchJson({ handle }, `aliases/${aliasId}`, () => {
+    fetchPatchJson({ handle }, `/api/aliases/${aliasId}`, () => {
       setHandle(handle);
     });
   };
 
   const handleUpdateCoverImage = (image) => {
-    fetchPatchImage(image, "image", `/wishlists/${wishlistId}`, setCoverImage);
+    fetchPatchImage(
+      image,
+      "image",
+      `/api/wishlists/${wishlistId}`,
+      setCoverImage
+    );
   };
   const handleUpdateWishlistMessage = (wishlistMessage) => {
-    fetchPatchJson({ wishlistMessage }, `/wishlists/${wishlistId}`, () => {
+    fetchPatchJson({ wishlistMessage }, `/api/wishlists/${wishlistId}`, () => {
       setWishlistMessage(wishlistMessage);
     });
   };
 
   const handleUpdateWishlistName = (wishlistName) => {
-    fetchPatchJson({ wishlistName }, `/wishlists/${wishlistId}`, () => {
+    fetchPatchJson({ wishlistName }, `/api/wishlists/${wishlistId}`, () => {
       setWishlistName(wishlistName);
     });
   };

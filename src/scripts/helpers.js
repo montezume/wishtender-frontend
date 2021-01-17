@@ -2,7 +2,7 @@ import { currencies } from "country-data";
 import getCurrencies from "./getCurrencies";
 
 const fetchUser = (callback) => {
-  return fetch("/users/current")
+  return fetch("/api/users/current")
     .then((res) => {
       if (res.status === 204) return null;
       return res.json();

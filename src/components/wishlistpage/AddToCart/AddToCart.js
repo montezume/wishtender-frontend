@@ -6,11 +6,15 @@ import { Redirect } from "react-router-dom";
 export default function AddToCart(props) {
   const [cart, setCart] = useState(false);
   const handleClickAddAndShop = () => {
-    fetchPostJson({ itemId: props.item._id }, "/cart/add-to-cart", console.log);
+    fetchPostJson(
+      { itemId: props.item._id },
+      "/api/cart/add-to-cart",
+      console.log
+    );
     props.onClose();
   };
   const handleClickAddAndCheckOut = () => {
-    fetchPostJson({ itemId: props.item._id }, "/cart/add-to-cart", setCart);
+    fetchPostJson({ itemId: props.item._id }, "/api/cart/add-to-cart", setCart);
   };
   return (
     <div>

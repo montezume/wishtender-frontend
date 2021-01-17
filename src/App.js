@@ -33,7 +33,7 @@ import StyledDialog from "./components/common/StyledDialog/StyledDialog";
 import CheckOutSuccess from "./components/CheckOutSuccess/CheckOutSuccess";
 import WishForm from "./components/wishlistpage/AddWish/WishForm/WishForm";
 const currentUser = async () => {
-  let user = await fetch("/users/current", {
+  let user = await fetch("/api/users/current", {
     credentials: "include",
   }).then((res) => {
     if (res.status === 204) return Promise.resolve(null);
@@ -144,12 +144,6 @@ function App(props) {
                   <UserContext.Provider value={user}>
                     <Switch>
                       <Route
-                        path="/test"
-                        render={(props) => {
-                          return <TestPrice></TestPrice>;
-                        }}
-                      />
-                      <Route
                         path="/order"
                         render={(props) => {
                           return <CheckOutSuccess />;
@@ -179,9 +173,4 @@ function App(props) {
   );
 }
 
-App.whyDidYouRender = true;
-
-export default memo(App, (prevProps, nextProps) => {
-  console.log("from memo: ", prevProps, nextProps);
-  return nextProps.count === prevProps.count;
-});
+export default App;

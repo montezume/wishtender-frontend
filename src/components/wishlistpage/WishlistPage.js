@@ -12,7 +12,7 @@ import {
   parsePrice,
 } from "../../scripts/helpers";
 
-const handleRoute = "/aliases?handle_lowercased=";
+const handleRoute = "/api/aliases?handle_lowercased=";
 
 function WishlistPage(props) {
   const [alias, setAlias] = useState(null);
@@ -41,7 +41,7 @@ function WishlistPage(props) {
 
   useEffect(() => {
     if (refreshWishlist) {
-      fetchGet(`/wishlists/${alias.wishlists[0]._id}`, (wishlist) => {
+      fetchGet(`/api/wishlists/${alias.wishlists[0]._id}`, (wishlist) => {
         wishlist.wishlistItems.forEach(
           (item) => (item.price = unitToStandard(item.price, item.currency))
         );
