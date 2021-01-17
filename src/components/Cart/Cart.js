@@ -122,10 +122,7 @@ export default function Cart(props) {
         let messageLength;
         if (exchangeRates) {
           const totalPriceUSD =
-            (unitToStandard(
-              aliasCarts[a].totalPrice,
-              aliasCarts[a].alias.currency
-            ) *
+            (Math.round(aliasCarts[a].totalPrice) *
               exchangeRates[aliasCarts[a].alias.currency]) /
             exchangeRates["USD"];
           messageLength = Math.round(100 + totalPriceUSD);
