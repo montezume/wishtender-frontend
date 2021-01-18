@@ -9,7 +9,6 @@ import { useTheme } from "@material-ui/core/styles";
 import { Container, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import EditWishForm from "../EditWishForm/EditWishForm";
-// fetch post json
 const fetchPostJson = async (data, route, callback) => {
   const headers = new Headers();
   headers.append("Content-Type", "application/json");
@@ -27,6 +26,7 @@ const fetchPostJson = async (data, route, callback) => {
       console.log(err);
     });
 };
+// import { fetchPostJson } from "../../../scripts/fetchHelper";
 const useStyles = makeStyles((theme) => {
   return {
     Container: {
@@ -61,7 +61,7 @@ function AddWish(props) {
   function handleScrapeProduct(url) {
     setUrl(url);
     axios
-      .post("http://localhost:4000/wishes/productInfo", { url: url })
+      .post("http://localhost:4000/api/wishes/productInfo", { url: url })
       .then((res) => {
         const info = res.data;
         const images = info.imageSrcs;
@@ -78,7 +78,7 @@ function AddWish(props) {
     wishInfo.url = url;
     wishInfo.currency = props.currency;
     wishInfo.wishlist = props.wishlist;
-    fetchPostJson(wishInfo, "/wishlistItems", () =>
+    fetchPostJson(wishInfo, "/api/wishlistItems", () =>
       props.afterAddWish(wishInfo)
     );
   };

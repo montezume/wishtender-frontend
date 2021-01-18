@@ -19,6 +19,7 @@ import ThankYou from "./components/LandingPage/ThankYou";
 import CustomizedMenus from "./components/nav/menu.js";
 import LandingPageMenu from "./components/LandingPage/LandingPageMenu.js";
 import Cart from "./components/Cart/Cart.js";
+import WishTracker from "./WishTracker.js";
 
 import { ThemeProvider } from "@material-ui/styles";
 import WishlistPage from "./components/wishlistpage/WishlistPage";
@@ -153,6 +154,12 @@ function App(props) {
                         path="/cart"
                         render={(props) => {
                           return <Cart cart={props?.location?.props?.cart} />;
+                        }}
+                      />
+                      <Route
+                        path="/wish-tracker"
+                        render={(props) => {
+                          return <WishTracker />;
                         }}
                       />
                       <Route
