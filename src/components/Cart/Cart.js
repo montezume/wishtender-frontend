@@ -1,12 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { fetchGet, fetchPostJson } from "../../scripts/fetchHelper";
-import {
-  displayConversion,
-  unitToStandard,
-  displayPriceFromUnit,
-  parsePrice,
-  displayPrice,
-} from "../../scripts/helpers";
+import { displayPrice, parseCartPrices } from "../../scripts/helpers";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
 import { LocaleContext } from "../../contexts/LocaleContext";
 import ExchangeRateApiInterface from "../../scripts/ExchangeRatesApiInterface";
@@ -22,21 +16,6 @@ export default function Cart(props) {
 
   const { register, handleSubmit, errors } = useForm();
 
-  const parseCartPrices = (cart) => {
-    const aliases = Object.keys(cart.aliasCarts);
-    aliases.forEach((alias) => {
-      const aliasCart = cart.aliasCarts[alias];
-      aliasCart.totalPrice = parsePrice(
-        aliasCart.totalPrice,
-        aliasCart.alias.currency
-      );
-      const items = Object.keys(aliasCart.items);
-      items.forEach((item) => {
-        const itemObj = aliasCart.items[item];
-        itemObj.price = parsePrice(itemObj.price, aliasCart.alias.currency);
-      });
-    });
-  };
   // const [checkoutSessionId, setCheckoutSessionId] = useState("");
   useEffect(() => {
     if (props.cart) parseCartPrices(props.cart);
