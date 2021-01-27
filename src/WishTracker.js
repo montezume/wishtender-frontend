@@ -60,7 +60,14 @@ const displayOrder = (order, currency, locale, setReply) => {
       ${order.noteToWisher}`
         : "The wish tender didn't leave a note"}
       <br></br>
-      <button onClick={() => setReply(order)}>Send a reply</button>
+      {order.noteToTender ? (
+        `Your Thank You Note: ${order.noteToTender}`
+      ) : (
+        <>
+          <br></br>
+          <button onClick={() => setReply(order)}>Send a reply</button>
+        </>
+      )}
     </div>
   );
 };
@@ -70,17 +77,20 @@ export default function WishTracker() {
   const clientLocale = useContext(LocaleContext);
   const [orders, setOrders] = useState(null);
   const [reply, setReply] = useState(null);
-  // const [refres, setReply] = useState(null);
+  const [refreshOrders, setRefreshOrders] = useState(null);
+
   useEffect(() => {
-    if (currentUser)
+    if (currentUser || (refreshOrders && currentUser))
       fetchGet(`/api/orders/${currentUser.aliases[0]}`, (orders) => {
         orders.map((order) => {
           parseAliasCartPrices(order.cart);
           return order;
         });
         setOrders(orders);
+        if (refreshOrders) setRefreshOrders(false);
       });
-  }, []);
+  }, [currentUser, refreshOrders]);
+
   return (
     <div>
       <div>wish tracker</div>
@@ -121,7 +131,7 @@ export default function WishTracker() {
                 },
                 `/api/orders/reply/${reply._id}`,
                 (res) => {
-                  // if (res.messageSent) setRefreshOrders(true);
+                  if (res.messageSent) setRefreshOrders(true);
                 }
               );
             }}

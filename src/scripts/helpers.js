@@ -1,3 +1,4 @@
+import { InfoRounded } from "@material-ui/icons";
 import { currencies } from "country-data";
 import getCurrencies from "./getCurrencies";
 
@@ -142,12 +143,13 @@ const parsePrice = (price, currency) => {
 };
 
 const toCurrencyDecimals = (val, currency) => {
-  const decimalPlaces = Intl.NumberFormat("en", {
+  const fraction = Intl.NumberFormat("en", {
     style: "currency",
     currency,
   })
     .formatToParts("1")
-    .find((part) => part.type === "fraction").value.length;
+    .find((part) => part.type === "fraction");
+  const decimalPlaces = fraction ? fraction.value.length : 0;
 
   return (+val).toFixed(decimalPlaces);
 };
@@ -187,7 +189,7 @@ const isValidPrice = (value, decimalPlaces) => {
 const currencyInfo = (currency, locale = "en") => {
   const parts = new Intl.NumberFormat(locale, {
     style: "currency",
-    currency: "USD",
+    currency: currency,
   }).formatToParts("1000");
 
   let separator;
@@ -213,6 +215,8 @@ const currencyInfo = (currency, locale = "en") => {
     }
   });
   const info = { separator, decimal, decimalPlaces, symbol };
+  if (info.decimalPlaces === undefined) info.decimalPlaces = 0;
+  if (info.decimal === undefined) info.decimal = null;
   return info;
 };
 
