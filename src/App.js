@@ -21,6 +21,7 @@ import CustomizedMenus from "./components/nav/menu.js";
 import LandingPageMenu from "./components/LandingPage/LandingPageMenu.js";
 import Cart from "./components/Cart/Cart.js";
 import Login from "./components/Login/Login.js";
+import Logout from "./components/Logout/Logout.js";
 import WishTracker from "./WishTracker.js";
 import ConnectSetup from "./components/ConnectSetup/ConnectSetup";
 
@@ -159,6 +160,9 @@ function App(props) {
                         />
                         <Route path="/login">
                           <Login />
+                        </Route>
+                        <Route path="/logout">
+                          <Logout />
                         </Route>
                         <Route
                           path="/cart"
