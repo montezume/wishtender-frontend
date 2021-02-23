@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
-import { fetchGet, fetchPostJson } from "./scripts/fetchHelper";
-import { UserContext } from "./contexts/UserContext";
+import { fetchGet, fetchPostJson } from "../../scripts/fetchHelper";
+import { UserContext } from "../../contexts/UserContext";
 import {
   displayCurrency,
   parseAliasCartPrices,
@@ -8,8 +8,8 @@ import {
   displayPrice,
   clientCurrency,
   currencyInfo,
-} from "./scripts/helpers";
-import { LocaleContext } from "./contexts/LocaleContext";
+} from "../../scripts/helpers";
+import { LocaleContext } from "../../contexts/LocaleContext";
 
 const displayOrder = (order, currency, locale, setReply) => {
   const sendReply = () => {
@@ -41,17 +41,23 @@ const displayOrder = (order, currency, locale, setReply) => {
     <div id={`order-${order._id}`}>
       <ul>{items}</ul>total:{" "}
       {displayPrice(order.cart.totalPrice, currency, currency, 1, locale)}
-      <br /> You received{" "}
-      {displayPrice(
-        parsePrice(order.cashFlow.toConnect.amount, currency),
-        currency,
-        currency,
-        1,
-        locale
-      )}{" "}
-      because there was a currency conversion. Sometimes our predicted exchange
-      rates aren't the same as our payment processor's exchange rates so you may
-      get a different amount.
+      <br />
+      {order.convertedCart && (
+        <>
+          {" "}
+          You received{" "}
+          {displayPrice(
+            parsePrice(order.cashFlow.toConnect.amount, currency),
+            currency,
+            currency,
+            1,
+            locale
+          )}{" "}
+          because there was a currency conversion. Sometimes our predicted
+          exchange rates aren't the same as our payment processor's exchange
+          rates so you may get a different amount.
+        </>
+      )}
       <br />
       Tender: {order.buyerInfo.fromLine || "Anonymous"}
       <br />

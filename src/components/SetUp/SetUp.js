@@ -11,9 +11,9 @@ export default function Login() {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
     // send the country code to the server where we will also detect the browser's preferred language located in the acceptsLanguages request header
-    fetch("/api/users/registration", {
+    fetch("/api/aliases", {
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify({ ...data, user: "1234replacethis" }),
       headers,
     });
   };

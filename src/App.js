@@ -22,8 +22,10 @@ import LandingPageMenu from "./components/LandingPage/LandingPageMenu.js";
 import Cart from "./components/Cart/Cart.js";
 import Login from "./components/Login/Login.js";
 import Logout from "./components/Logout/Logout.js";
-import WishTracker from "./WishTracker.js";
+import WishTracker from "./components/WishTracker/WishTracker.js";
 import ConnectSetup from "./components/ConnectSetup/ConnectSetup";
+import ConfirmEmail from "./components/ConfirmEmail/ConfirmEmail";
+import ConfirmationStatus from "./components/ConfirmationStatus/ConfirmationStatus";
 
 import { ThemeProvider } from "@material-ui/styles";
 import WishlistPage from "./components/wishlistpage/WishlistPage";
@@ -198,6 +200,13 @@ function App(props) {
                             return <WishTracker />;
                           }}
                         />
+                        <Route path="/confirm-email">
+                          <ConfirmEmail />
+                        </Route>
+                        <Route path="/confirmation-status">
+                          <ConfirmationStatus />
+                        </Route>
+
                         <Route
                           path="/:alias"
                           render={(props) => {

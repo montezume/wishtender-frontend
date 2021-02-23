@@ -4,13 +4,13 @@ import { Redirect } from "react-router-dom";
 
 export default function SignUp() {
   const { register, handleSubmit, errors } = useForm();
-  const [success, setSuccess] = useState(0);
+  const [success, setSuccess] = useState(null);
+  const [email, setEmail] = useState(null);
   // useEffect(() => {
   //   console.log("effect");
   // });
 
   const onSubmit = (data) => {
-    console.log(data);
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
     // send the country code to the server where we will also detect the browser's preferred language located in the acceptsLanguages request header
@@ -26,8 +26,9 @@ export default function SignUp() {
         }
         return response.json();
       })
-      .then((data) => {
-        if (data) {
+      .then((json) => {
+        if (json) {
+          setEmail(data.email);
           setSuccess(true);
         }
       })
@@ -35,7 +36,8 @@ export default function SignUp() {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {success ? <Redirect to="/wishlist-setup" /> : ""}
+      {/* {success ? <Redirect to="/wishlist-setup" /> : ""} */}
+      {success ? <Redirect to={`/confirm-email?email=${email}`} /> : ""}
       <input
         type="text"
         placeholder="Email"
