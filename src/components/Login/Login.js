@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
+
 import { useForm } from "react-hook-form";
+import { Redirect } from "react-router-dom";
 export default function Login() {
+  const [profile, setProfile] = useState(null);
+  const { setUser, getUser } = useContext(UserContext);
   const { register, handleSubmit, errors } = useForm();
   const onSubmit = (data) => {
     const headers = new Headers();
@@ -12,12 +17,14 @@ export default function Login() {
       headers,
     })
       .then(async (res) => {
-        if (res.status === 201) {
-          alert("Login successful");
+        const json = await res.json();
+        if (res.status === 200) {
+          const user = await getUser();
+          setUser(user);
+          setProfile(json.profile);
           return;
         }
-        const text = await res.text();
-        alert(res.status + text);
+        alert(res.status + json);
       })
       .catch((err) => {
         console.log(err);
@@ -25,6 +32,8 @@ export default function Login() {
   };
   return (
     <div>
+      {profile && <Redirect to={`/${profile}`} />}
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           name="email"

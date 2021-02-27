@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-export default function ConnectSuccess() {
-  return <div> Your account is set up</div>;
+export default function CheckOutSuccess() {
+  const params = new URLSearchParams(window.location.search);
+
+  return <div> thanks!{params.get("session_id")}</div>;
 }
