@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Redirect } from "react-router-dom";
+import { UserContext } from "../../contexts/UserContext";
 import CountryOptions from "../CountryOptions/CountryOptions";
 // import ImageInput from "../ImageInput/ImageInput.js";
 
 export default function Login() {
   const { register, handleSubmit, errors } = useForm();
   const [handle, setHandle] = useState(null);
+  const { setUser, getUser } = useContext(UserContext);
 
   const onSubmit = (data) => {
     console.log(data);
@@ -24,6 +26,7 @@ export default function Login() {
       }
       if (res.status === 200 || res.status === 200) {
         const json = await res.json();
+        setUser(await getUser());
         setHandle(json.handle);
       }
     });
