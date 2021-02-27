@@ -18,7 +18,7 @@ function WishlistPage(props) {
   const [alias, setAlias] = useState(null);
   const [wishlist, setWishlist] = useState(null);
   const [refreshWishlist, setRefreshWishlist] = useState(null);
-  const currentUser = useContext(UserContext);
+  const { user: currentUser } = useContext(UserContext);
   let { alias: aliasPath } = useParams();
 
   const states = {

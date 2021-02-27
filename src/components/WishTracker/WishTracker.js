@@ -79,7 +79,7 @@ const displayOrder = (order, currency, locale, setReply) => {
 };
 
 export default function WishTracker() {
-  const currentUser = useContext(UserContext);
+  const { user: currentUser } = useContext(UserContext);
   const clientLocale = useContext(LocaleContext);
   const [orders, setOrders] = useState(null);
   const [reply, setReply] = useState(null);

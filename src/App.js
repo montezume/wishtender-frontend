@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, useEffect, useContext, memo } from "react";
 import { UserContext } from "./contexts/UserContext";
 import { CurrencyContext } from "./contexts/CurrencyContext";
 import { CountryContext } from "./contexts/CountryContext";
@@ -51,13 +51,13 @@ const currentUser = async () => {
 };
 
 function App(props) {
+  const { user: user0, setUser: setUser0, getUser } = useContext(UserContext);
   const [user, setUser] = useState();
-
   const cookies = parsedCookies();
   useTraceUpdate(App.name, props, { user });
 
   useEffect(() => {
-    currentUser().then((user) => {
+    getUser().then((user) => {
       setUser(user);
       if (!clientCurrency(user)) {
         chooseCurrency(JSON.parse(parsedCookies().locale));
@@ -141,7 +141,7 @@ function App(props) {
                   value={JSON.parse(cookies.locale).countryCode}
                 >
                   <CurrencyContext.Provider value={clientCurrency(user)}>
-                    <UserContext.Provider value={user}>
+                    <UserContext.Provider value={(user, setUser, getUser)}>
                       <Switch>
                         <Route path="/wishlist-setup">
                           <SetUp />

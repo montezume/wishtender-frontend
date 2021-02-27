@@ -24,7 +24,7 @@ function ProfileSection(props) {
   const [handle, setHandle] = useState(null);
   const [wishlistMessage, setWishlistMessage] = useState(null);
   const [isAuth, setIsAuth] = useState(false);
-  const currentUser = useContext(UserContext);
+  const { user: currentUser } = useContext(UserContext);
   let { alias: aliasPath } = useParams();
 
   useEffect(() => {
