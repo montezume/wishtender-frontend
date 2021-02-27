@@ -129,7 +129,7 @@ const clientLocale = (user) => {
 
 const clientCurrency = (user) => {
   const cookies = parsedCookies();
-  return user ? user?.currency : cookies.currency;
+  return user && user?.currency ? user?.currency : cookies.currency;
 };
 
 const toDotDecimal = (price) => {

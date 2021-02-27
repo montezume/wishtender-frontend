@@ -31,10 +31,13 @@ function WishlistPage(props) {
 
   useEffect(() => {
     fetchGet(`${handleRoute}${aliasPath.toLowerCase()}`, (alias) => {
-      alias.wishlists[0].wishlistItems.forEach((item) => {
-        const parsedPrice = parsePrice(item.price, item.currency);
-        item.price = parsedPrice;
-      });
+      const wl = alias.wishlists[0];
+      if (wl) {
+        wl.wishlistItems.forEach((item) => {
+          const parsedPrice = parsePrice(item.price, item.currency);
+          item.price = parsedPrice;
+        });
+      }
       setAlias(alias);
     });
   }, [aliasPath, currentUser]);

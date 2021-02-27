@@ -24,8 +24,8 @@ import Login from "./components/Login/Login.js";
 import Logout from "./components/Logout/Logout.js";
 import WishTracker from "./components/WishTracker/WishTracker.js";
 import ConnectSetup from "./components/ConnectSetup/ConnectSetup";
+import ConfirmationEmail from "./components/ConfirmationEmail/ConfirmationEmail";
 import ConfirmEmail from "./components/ConfirmEmail/ConfirmEmail";
-import ConfirmationStatus from "./components/ConfirmationStatus/ConfirmationStatus";
 
 import { ThemeProvider } from "@material-ui/styles";
 import WishlistPage from "./components/wishlistpage/WishlistPage";
@@ -122,17 +122,6 @@ function App(props) {
                 );
               }}
             />
-            <Route
-              path="/wishlist-setup"
-              exact
-              render={(props) => {
-                return (
-                  <div>
-                    <SetUp />
-                  </div>
-                );
-              }}
-            />
 
             <Route
               path="/demo/wishlist"
@@ -154,6 +143,9 @@ function App(props) {
                   <CurrencyContext.Provider value={clientCurrency(user)}>
                     <UserContext.Provider value={user}>
                       <Switch>
+                        <Route path="/wishlist-setup">
+                          <SetUp />
+                        </Route>
                         <Route
                           path="/order"
                           render={(props) => {
@@ -200,11 +192,11 @@ function App(props) {
                             return <WishTracker />;
                           }}
                         />
+                        <Route path="/confirmation-email">
+                          <ConfirmationEmail />
+                        </Route>
                         <Route path="/confirm-email">
                           <ConfirmEmail />
-                        </Route>
-                        <Route path="/confirmation-status">
-                          <ConfirmationStatus />
                         </Route>
 
                         <Route

@@ -2,49 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { CountryContext } from "../../contexts/CountryContext";
 import { Redirect } from "react-router-dom";
-
-const supportedPayoutCountries = [
-  "AT",
-  "AU",
-  "BE",
-  "BG",
-  "CA",
-  "CH",
-  "CY",
-  "CZ",
-  "DE",
-  "DK",
-  "EE",
-  "ES",
-  "FI",
-  "FR",
-  "GB",
-  "GR",
-  "HK",
-  "HU",
-  "IE",
-  "IN",
-  "IT",
-  "JP",
-  "LT",
-  "LU",
-  "LV",
-  "MT",
-  "MY",
-  "NL",
-  "NO",
-  "NZ",
-  "PL",
-  "PT",
-  "RO",
-  "SE",
-  "SG",
-  "SI",
-  "SK",
-  "US",
-];
-
-const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
+import CountryOptions from "../CountryOptions/CountryOptions";
 
 export default function ConnectSetup() {
   const { register, handleSubmit, errors } = useForm();
@@ -59,15 +17,7 @@ export default function ConnectSetup() {
       alert(JSON.stringify(json));
     });
   }, []);
-  const countrySelection = supportedPayoutCountries.map((country) =>
-    clientCountry === country ? (
-      <option selected value={country}>
-        {regionNames?.of(country) || country}
-      </option>
-    ) : (
-      <option value={country}>{regionNames?.of(country) || country}</option>
-    )
-  );
+
   const correctCurrency = (data) => {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
@@ -158,7 +108,7 @@ export default function ConnectSetup() {
             required: "Country Required",
           })}
         >
-          {countrySelection}
+          <CountryOptions />
         </select>
         <input type="submit" value="Setup Payments" />
       </form>

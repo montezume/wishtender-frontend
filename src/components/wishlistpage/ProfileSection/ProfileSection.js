@@ -29,13 +29,24 @@ function ProfileSection(props) {
 
   useEffect(() => {
     if (props.info) {
-      setCoverImage(`${props.info.wishlists[0].coverImage}`);
-      setProfilePicture(`${props.info.profileImage}`);
-      setWishlistName(props.info.wishlists[0].wishlistName);
+      setCoverImage(
+        props.info.wishlists[0]?.coverImage ||
+          "/data/images/coverImages/default_coverimage2.jpg"
+      );
+      setWishlistName(
+        props.info.wishlists[0]?.wishlistName || "Name your wishlist"
+      );
+      setWishlistMessage(
+        props.info.wishlists[0]?.wishlistMessage ||
+          "Write a message for your fans."
+      );
+      setWishlistId(props.info.wishlists[0]?._id || null);
+      setProfilePicture(
+        props.info.profileImage ||
+          "/data/images/profileImages/default_profileImage.png"
+      );
       setHandle(props.info.handle);
-      setWishlistMessage(props.info.wishlists[0].wishlistMessage);
       setAliasId(props.info._id);
-      setWishlistId(props.info.wishlists[0]._id);
       setIsAuth(
         currentUser ? currentUser.aliases.includes(props.info._id) : false
       );

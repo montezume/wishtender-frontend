@@ -37,7 +37,7 @@ export default function SignUp() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {/* {success ? <Redirect to="/wishlist-setup" /> : ""} */}
-      {success ? <Redirect to={`/confirm-email?email=${email}`} /> : ""}
+      {success ? <Redirect to={`/confirmation-email?email=${email}`} /> : ""}
       <input
         type="text"
         placeholder="Email"
