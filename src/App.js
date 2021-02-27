@@ -141,7 +141,7 @@ function App(props) {
                   value={JSON.parse(cookies.locale).countryCode}
                 >
                   <CurrencyContext.Provider value={clientCurrency(user)}>
-                    <UserContext.Provider value={(user, setUser, getUser)}>
+                    <UserContext.Provider value={{ user, setUser, getUser }}>
                       <Switch>
                         <Route path="/wishlist-setup">
                           <SetUp />
