@@ -7,6 +7,7 @@ import { UserContext } from "../../../contexts/UserContext";
 import { useParams } from "react-router-dom";
 import { fetchPatchImage, fetchPatchJson } from "../../../scripts/fetchHelper";
 import { Redirect } from "react-router-dom";
+import ActivateAccount from "./ActivateAccount";
 const handleRoute = "/api/aliases?handle_lowercased=";
 
 /**
@@ -132,6 +133,7 @@ function ProfileSection(props) {
           ></UpdateProfileInfo>
         </div>
       )}
+      {isAuth && !props.info.activated && <ActivateAccount />}
     </div>
   );
 }

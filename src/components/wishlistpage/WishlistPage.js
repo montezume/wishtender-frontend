@@ -53,6 +53,10 @@ function WishlistPage(props) {
       });
     }
   }, [refreshWishlist, wishlist?._id]);
+
+  const handleActivate = () => {
+    fetch("/api/createConnect").then((res) => {});
+  };
   return (
     <div>
       {alias && currentUser !== undefined && (
@@ -62,20 +66,26 @@ function WishlistPage(props) {
         />
       )}
 
-      {alias && currentUser !== undefined && (
-        <Wishlist
-          isAuth={currentUser?.aliases.includes(alias._id) || false}
-          id={wishlist?._id || (alias?.wishlists[0] && alias.wishlists[0]._id)}
-          currency={alias?.currency}
-          items={
-            wishlist?.wishlistItems ||
-            (alias?.wishlists[0] && alias.wishlists[0].wishlistItems)
-          }
-          refreshWishlist={() => {
-            setRefreshWishlist(true);
-          }}
-        />
-      )}
+      {(alias && alias.activated) ||
+      (alias && currentUser?.aliases.includes(alias._id))
+        ? alias &&
+          currentUser !== undefined && (
+            <Wishlist
+              isAuth={currentUser?.aliases.includes(alias._id) || false}
+              id={
+                wishlist?._id || (alias?.wishlists[0] && alias.wishlists[0]._id)
+              }
+              currency={alias?.currency}
+              items={
+                wishlist?.wishlistItems ||
+                (alias?.wishlists[0] && alias.wishlists[0].wishlistItems)
+              }
+              refreshWishlist={() => {
+                setRefreshWishlist(true);
+              }}
+            />
+          )
+        : "This user hasn't activated their wishlist."}
     </div>
   );
 }
