@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import Fab from "@material-ui/core/Fab";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import Zoom from "@material-ui/core/Zoom";
+import { UserContext } from "../../contexts/UserContext";
+import LogoutButton from "./LogoutButton/LogoutButton";
 
 // app bar
 import Toolbar from "@material-ui/core/Toolbar";
@@ -65,6 +67,8 @@ function ScrollTop(props) {
 }
 
 export default function BackToTop(props) {
+  const { user } = useContext(UserContext);
+
   const [scrolledStyle, setscrolledStyle] = useState("noShadow");
 
   const listenScrollEvent = (event) => {
@@ -107,9 +111,13 @@ export default function BackToTop(props) {
               />
             </a>
           </div>
-          <Button color="inherit" href="/wishlist">
-            Login
-          </Button>
+          {!user ? (
+            <Button color="inherit" href="/login">
+              Login
+            </Button>
+          ) : (
+            <LogoutButton />
+          )}
         </Toolbar>
       </AppBar>
 
