@@ -7,6 +7,7 @@ import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import Zoom from "@material-ui/core/Zoom";
 import { UserContext } from "../../contexts/UserContext";
 import LogoutButton from "./LogoutButton/LogoutButton";
+import SignupButton from "./SignupButton/SignupButton";
 
 // app bar
 import Toolbar from "@material-ui/core/Toolbar";
@@ -112,9 +113,12 @@ export default function BackToTop(props) {
             </a>
           </div>
           {!user ? (
-            <Button color="inherit" href="/login">
-              Login
-            </Button>
+            <>
+              <Button color="inherit" href="/login">
+                Login
+              </Button>
+              <SignupButton />
+            </>
           ) : (
             <LogoutButton />
           )}
