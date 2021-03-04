@@ -5,7 +5,6 @@ import { CountryContext } from "./contexts/CountryContext";
 import { LocaleContext } from "./contexts/LocaleContext";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import useTraceUpdate from "./scripts/useTraceUpdate";
-import TestPrice from "./TestPrice";
 // import React from 'react';
 // import './App.css';
 import {
