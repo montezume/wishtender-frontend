@@ -47,8 +47,6 @@ function WishlistPage(props) {
     wishlist,
     refreshWishlist,
     currentUser,
-    convertRate,
-    customGetWishlistAndParse,
   };
   useTraceUpdate(WishlistPage.name, props, states);
 
@@ -66,9 +64,6 @@ function WishlistPage(props) {
         });
     }
   }, [alias, clientCurrency]);
-  useEffect(() => {
-    console.log(wishlist);
-  }, [wishlist]);
 
   useEffect(() => {
     // if (!clientCurrency) {
@@ -188,34 +183,29 @@ function WishlistPage(props) {
           currentUser?.admin &&
           "This user hasn't activated their wishlist. You can see the wishlist because you are an admin."}
         {
-          clientCurrency !== null &&
-            convertRate !== null &&
-            showWishlist &&
-            wishlist &&
-            alias &&
-            localeContext && (
-              <Wishlist
-                handle={aliasPath.toLowerCase()}
-                isAuth={currentUser?.aliases.includes(alias._id) || false}
-                id={
-                  wishlist?._id ||
-                  (alias?.wishlists[0] && alias.wishlists[0]._id)
-                }
-                currency={alias?.currency}
-                // items={
-                //   wishlist?.wishlistItems ||
-                //   (alias?.wishlists[0] && alias.wishlists[0].wishlistItems)
-                // }
-                refreshWishlist={async () => {
-                  const newWl = await getWishlistAndParse(
+          showWishlist && wishlist && alias && (
+            <Wishlist
+              handle={aliasPath.toLowerCase()}
+              isAuth={currentUser?.aliases.includes(alias._id) || false}
+              id={
+                wishlist?._id || (alias?.wishlists[0] && alias.wishlists[0]._id)
+              }
+              currency={alias?.currency}
+              items={
+                wishlist?.wishlistItems ||
+                (alias?.wishlists[0] && alias.wishlists[0].wishlistItems)
+              }
+              refreshWishlist={async () => {
+                setWishlist(
+                  await getWishlistAndParse(
                     alias.wishlists[0]._id,
                     alias.currency,
                     localeContext
-                  );
-                  setWishlist(newWl);
-                }}
-              />
-            )
+                  )
+                );
+              }}
+            />
+          )
           // ))
         }
       </div>
