@@ -11,6 +11,7 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  Tooltip,
 } from "@material-ui/core";
 import AddWish from "./AddWish/AddWish";
 import StyledDialog from "../common/StyledDialog/StyledDialog";
@@ -387,15 +388,17 @@ const Wishlist = withRouter((props) => {
             <Typography> Wishes: {items?.length}</Typography>
             {!props.isAuth && (
               <>
-                <IconButton
-                  onClick={(e) => {
-                    setAnchorEl(e.currentTarget);
-                  }}
-                  color="primary"
-                  size="large"
-                >
-                  <TuneIcon style={{ fontSize: "1.3em" }}></TuneIcon>
-                </IconButton>
+                <Tooltip title="Sort Items" placement="top">
+                  <IconButton
+                    onClick={(e) => {
+                      setAnchorEl(e.currentTarget);
+                    }}
+                    color="primary"
+                    size="large"
+                  >
+                    <TuneIcon style={{ fontSize: "1.3em" }}></TuneIcon>
+                  </IconButton>
+                </Tooltip>
                 <Menu
                   anchorEl={anchorEl}
                   open={openOrderMenu}
