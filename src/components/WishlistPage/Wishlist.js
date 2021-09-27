@@ -187,12 +187,12 @@ const Wishlist = withRouter((props) => {
   //   setUpdateOrder(false);
   // }, [getWishlistAndParseWithArgs, items, setWishlist, wishlist._id]);
   useEffect(() => {
-    setItems(
-      wishlist.wishlistItems.map((item, i) => {
-        item.id = i + 1;
-        return item;
-      })
-    );
+    const updatedItems = wishlist.wishlistItems.map((item, i) => {
+      item.id = i + 1;
+      return item;
+    });
+    setItems(updatedItems);
+    setOrderedItems(updatedItems);
   }, [wishlist]);
 
   // useEffect(() => {
