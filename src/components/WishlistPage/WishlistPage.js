@@ -66,6 +66,9 @@ function WishlistPage(props) {
         });
     }
   }, [alias, clientCurrency]);
+  useEffect(() => {
+    console.log(wishlist);
+  }, [wishlist]);
 
   useEffect(() => {
     // if (!clientCurrency) {
@@ -204,13 +207,12 @@ function WishlistPage(props) {
                 //   (alias?.wishlists[0] && alias.wishlists[0].wishlistItems)
                 // }
                 refreshWishlist={async () => {
-                  setWishlist(
-                    await getWishlistAndParse(
-                      alias.wishlists[0]._id,
-                      alias.currency,
-                      localeContext
-                    )
+                  const newWl = await getWishlistAndParse(
+                    alias.wishlists[0]._id,
+                    alias.currency,
+                    localeContext
                   );
+                  setWishlist(newWl);
                 }}
               />
             )

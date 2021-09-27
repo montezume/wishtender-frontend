@@ -563,7 +563,8 @@ const Wishlist = withRouter((props) => {
               }
             )
               .then(async (res) => {
-                setWishlist(await getWishlistAndParseWithArgs());
+                const newWl = await getWishlistAndParseWithArgs();
+                setWishlist(newWl);
               })
               .catch((err) => alert(err));
             setActiveId(null);
