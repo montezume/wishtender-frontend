@@ -53,7 +53,7 @@ function WishlistPage(props) {
   useTraceUpdate(WishlistPage.name, props, states);
 
   useEffect(() => {
-    if (alias && alias.currency) {
+    if (alias && alias.currency && clientCurrency !== "noConversion") {
       fetch(
         `${process.env.REACT_APP_BASE_URL}/api/exchange?base=${alias.currency}&symbols=${clientCurrency}`
       )
@@ -189,7 +189,7 @@ function WishlistPage(props) {
           "This user hasn't activated their wishlist. You can see the wishlist because you are an admin."}
         {
           clientCurrency !== null &&
-            convertRate !== null &&
+            (convertRate !== null || clientCurrency === "noConversion") &&
             showWishlist &&
             wishlist &&
             alias &&
