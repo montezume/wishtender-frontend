@@ -387,7 +387,7 @@ const Wishlist = withRouter((props) => {
           >
             <Typography> Wishes: {items?.length}</Typography>
             {/* random */}
-            {/* {!props.isAuth && (
+            {!props.isAuth && (
               <>
                 <Tooltip title="Sort Items" placement="top">
                   <IconButton
@@ -441,7 +441,7 @@ const Wishlist = withRouter((props) => {
                   </MenuItem>
                 </Menu>
               </>
-            )} */}
+            )}
           </div>
           {props.isAuth && (
             <div className="wrapper add_a_wish">
