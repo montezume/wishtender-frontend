@@ -348,6 +348,7 @@ const Wishlist = withRouter((props) => {
             }}
           >
             <Typography> Wishes: {items?.length}</Typography>
+            {/* random */}
             {/* {!props.isAuth && (
               <>
                 <Tooltip title="Sort Items" placement="top">
