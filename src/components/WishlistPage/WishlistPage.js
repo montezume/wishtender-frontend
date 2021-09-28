@@ -47,8 +47,6 @@ function WishlistPage(props) {
     wishlist,
     refreshWishlist,
     currentUser,
-    convertRate,
-    customGetWishlistAndParse,
   };
   useTraceUpdate(WishlistPage.name, props, states);
 
@@ -66,9 +64,6 @@ function WishlistPage(props) {
         });
     }
   }, [alias, clientCurrency]);
-  useEffect(() => {
-    console.log(wishlist);
-  }, [wishlist]);
 
   useEffect(() => {
     // if (!clientCurrency) {
@@ -211,11 +206,11 @@ function WishlistPage(props) {
                     alias.wishlists[0]._id,
                     alias.currency,
                     localeContext
-                  );
-                  setWishlist(newWl);
-                }}
-              />
-            )
+                  )
+                );
+              }}
+            />
+          )
           // ))
         }
       </div>
