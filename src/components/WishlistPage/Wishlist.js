@@ -406,6 +406,7 @@ const Wishlist = withRouter((props) => {
             )} */}
           </div>
 
+
           {props.isAuth && (
             <div className="wrapper add_a_wish">
               <AddWish
