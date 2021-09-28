@@ -339,8 +339,74 @@ const Wishlist = withRouter((props) => {
         {/* //test */}
 
         <Container className={customClasses.wishlistWrapper1}>
-          <Typography> Wishes: {props?.items?.length}</Typography>
-          {/* {!props.isAuth && <TuneIcon></TuneIcon>} */}
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Typography> Wishes: {items?.length}</Typography>
+            {/* random */}
+            {/* {!props.isAuth && (
+              <>
+                <Tooltip title="Sort Items" placement="top">
+                  <IconButton
+                    onClick={(e) => {
+                      setAnchorEl(e.currentTarget);
+                    }}
+                    color="primary"
+                    size="large"
+                  >
+                    <TuneIcon style={{ fontSize: "1.3em" }}></TuneIcon>
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  anchorEl={anchorEl}
+                  open={openOrderMenu}
+                  onClose={(e) => {
+                    setAnchorEl(null);
+                  }}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                >
+                  <MenuItem
+                    onClick={() => {
+                      reorderItems("default");
+                      setAnchorEl(null);
+                    }}
+                  >
+                    Default
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      reorderItems("priceHigh");
+                      setAnchorEl(null);
+                    }}
+                  >
+                    Price: High to Low
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      reorderItems("priceLow");
+                      setAnchorEl(null);
+                    }}
+                  >
+                    Price: Low to High
+                  </MenuItem>
+                </Menu>
+              </>
+            )} */}
+          </div>
+
+
           {props.isAuth && (
             <div className="wrapper add_a_wish">
               <AddWish
