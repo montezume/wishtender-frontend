@@ -33,7 +33,7 @@ import ConfirmationEmail from "./components/Onboard/ConfirmationEmail/Confirmati
 import ConfirmEmail from "./components/Onboard/ConfirmEmail/ConfirmEmail";
 
 import { ThemeProvider } from "@material-ui/styles";
-import WishlistPage from "./components/WishlistPage/WishlistPage";
+import WishlistPage from "./components/WishlistPage/WishlistPage2";
 
 // import AddWish from "./components/wishlistpage/addwish1/AddWish.js";
 import SignUp from "./components/Onboard/SignUp/SignUp";

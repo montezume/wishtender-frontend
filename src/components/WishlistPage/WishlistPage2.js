@@ -9,7 +9,7 @@ import { fetchGet } from "../../scripts/fetchHelper";
 import { useParams } from "react-router-dom";
 import useChooseCurrency from "../../hooks/useChooseCurrency";
 import useTraceUpdate from "../../scripts/useTraceUpdate";
-import Wishlist from "./Wishlist";
+import Wishlist from "./Wishlist2";
 import {
   unitToStandard,
   parsePrice,
