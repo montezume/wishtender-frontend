@@ -5,7 +5,15 @@ import { Route, withRouter } from "react-router-dom";
 import TwitterIcon from "@material-ui/icons/Twitter";
 //
 import TuneIcon from "@material-ui/icons/Tune";
-import { Button, Container, Typography } from "@material-ui/core";
+import {
+  Button,
+  Container,
+  Typography,
+  IconButton,
+  Menu,
+  MenuItem,
+  Tooltip,
+} from "@material-ui/core";
 import AddWish from "./AddWish/AddWish";
 import StyledDialog from "../common/StyledDialog/StyledDialog";
 import EditWishForm from "./EditWishForm/EditWishForm";
@@ -133,21 +141,24 @@ const Wishlist = withRouter((props) => {
   const params = new URLSearchParams(window.location.search);
   const customClasses = useCustomStyles(props);
   // const [updateOrder, setUpdateOrder] = useState(false);
-  const [selectWish, setSelectWish] = useState(
-    props.items.find((i) => i._id === params.get("item")) || null
-  );
-  const [addWishVisible, setAddWishVisible] = useState(false);
-  const [textStoppedBouncing, setTextStoppedBouncing] = useState(false);
-  const { currency: clientCurrency } = useContext(CurrencyContext);
   const { setWishlist, wishlist, getWishlistAndParseWithArgs } =
     useContext(WishlistContext);
-
   const [items, setItems] = useState(
     wishlist.wishlistItems.map((item, i) => {
       item.id = i + 1;
       return item;
     })
   );
+  const [selectWish, setSelectWish] = useState(
+    items.find((i) => i._id === params.get("item")) || null
+  );
+  const [orderedItems, setOrderedItems] = useState([...items]);
+  const [order, setOrder] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const openOrderMenu = Boolean(anchorEl);
+  const [addWishVisible, setAddWishVisible] = useState(false);
+  const [textStoppedBouncing, setTextStoppedBouncing] = useState(false);
+  const { currency: clientCurrency } = useContext(CurrencyContext);
 
   useTraceUpdate(Wishlist.name, props, {
     selectWish,
@@ -178,13 +189,19 @@ const Wishlist = withRouter((props) => {
   //   setUpdateOrder(false);
   // }, [getWishlistAndParseWithArgs, items, setWishlist, wishlist._id]);
   useEffect(() => {
-    setItems(
-      wishlist.wishlistItems.map((item, i) => {
-        item.id = i + 1;
-        return item;
-      })
-    );
+    const updatedItems = wishlist.wishlistItems.map((item, i) => {
+      item.id = i + 1;
+      return item;
+    });
+    setItems(updatedItems);
+    setOrderedItems(updatedItems);
   }, [wishlist]);
+
+  // useEffect(() => {
+  //   if (props.isAuth) return;
+
+  //   if (order) setItems();
+  // }, [order, setItems, items]);
 
   useEffect(() => {
     props.history.push(
@@ -194,7 +211,7 @@ const Wishlist = withRouter((props) => {
   }, [selectWish]);
 
   useEffect(() => {
-    if (props.isAuth && !props?.items.length) {
+    if (props.isAuth && !items.length) {
       const handleAnimationEnd = () => {
         setTextStoppedBouncing(true);
       };
@@ -203,7 +220,7 @@ const Wishlist = withRouter((props) => {
       text.addEventListener("animationend", handleAnimationEnd);
       return () => text.removeEventListener("animationend", handleAnimationEnd);
     }
-  }, [props.isAuth, props?.items.length]);
+  }, [props.isAuth, items.length]);
   const MyItem = forwardRef(({ item, id, isAuth, ...props }, ref) => {
     return (
       <Grid
@@ -233,9 +250,30 @@ const Wishlist = withRouter((props) => {
       </Grid>
     );
   });
+
+  const reorderItems = (ord) => {
+    const itemsCopy = [...items];
+    const sortingFunction = (ordr) => {
+      const priceHigh = (it1, it2) => {
+        return +it1.price.float < +it2.price.float ? 1 : -1;
+      };
+      const priceLow = (it1, it2) => {
+        return +it1.price.float > +it2.price.float ? 1 : -1;
+      };
+      const defaultFunc = () => {};
+      let sort;
+      if (ordr === "priceHigh") sort = priceHigh;
+      if (ordr === "priceLow") sort = priceLow;
+      if (ordr === "default") sort = defaultFunc;
+
+      return sort;
+    };
+
+    setOrderedItems(itemsCopy.sort(sortingFunction(ord)));
+  };
   const innerGrid =
-    props.items &&
-    props.items.map((item, i) => {
+    orderedItems &&
+    orderedItems.map((item, i) => {
       return (
         <Grid
           key={item._id}
@@ -406,8 +444,6 @@ const Wishlist = withRouter((props) => {
               </>
             )}
           </div>
-
-
           {props.isAuth && (
             <div className="wrapper add_a_wish">
               <AddWish
@@ -431,9 +467,7 @@ const Wishlist = withRouter((props) => {
                     customClasses.addWishButton
                   } ${customClasses.margin} 
                       ${
-                        props.isAuth &&
-                        !props?.items.length &&
-                        textStoppedBouncing
+                        props.isAuth && !items.length && textStoppedBouncing
                           ? customClasses.animatedBreath
                           : ""
                       }`}
@@ -448,7 +482,7 @@ const Wishlist = withRouter((props) => {
             </div>
           )}
         </Container>
-        {props.isAuth && !props?.items.length && (
+        {props.isAuth && !items.length && (
           <div
             style={{
               height: "100%",
@@ -534,15 +568,19 @@ const Wishlist = withRouter((props) => {
               }
             )
               .then(async (res) => {
-                setWishlist(await getWishlistAndParseWithArgs());
+                const newWl = await getWishlistAndParseWithArgs();
+                setWishlist(newWl);
               })
               .catch((err) => alert(err));
             setActiveId(null);
           }}
         >
           <Grid container spacing={2}>
-            <SortableContext items={items} strategy={rectSortingStrategy}>
-              {items.map((item, index) => {
+            <SortableContext
+              items={orderedItems}
+              strategy={rectSortingStrategy}
+            >
+              {orderedItems.map((item, index) => {
                 return (
                   <MySortableItem
                     id={item.id}
