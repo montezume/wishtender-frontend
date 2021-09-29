@@ -3,6 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import WishItem from "./WishItem";
 import { Route, withRouter } from "react-router-dom";
 import TwitterIcon from "@material-ui/icons/Twitter";
+//
 import TuneIcon from "@material-ui/icons/Tune";
 import { Button, Container, Typography } from "@material-ui/core";
 import AddWish from "./AddWish/AddWish";
@@ -349,7 +350,7 @@ const Wishlist = withRouter((props) => {
           >
             <Typography> Wishes: {items?.length}</Typography>
             {/* random */}
-            {/* {!props.isAuth && (
+            {!props.isAuth && (
               <>
                 <Tooltip title="Sort Items" placement="top">
                   <IconButton
@@ -403,7 +404,7 @@ const Wishlist = withRouter((props) => {
                   </MenuItem>
                 </Menu>
               </>
-            )} */}
+            )}
           </div>
 
 
