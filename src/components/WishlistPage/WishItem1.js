@@ -11,8 +11,7 @@ import html2canvas from "html2canvas"; // this is an edited version found here
 import { WishlistContext } from "../../contexts/WishlistContext";
 import { makeStyles } from "@material-ui/core/styles";
 import { useParams } from "react-router-dom";
-////test
-const nonsense = 8989;
+
 const styles = makeStyles({
   linkButton: {
     "&:hover": {

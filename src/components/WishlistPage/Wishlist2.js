@@ -1,6 +1,6 @@
 import React, { forwardRef, useState, useEffect, useContext } from "react";
 import Grid from "@material-ui/core/Grid";
-import WishItem from "./WishItem";
+import WishItem from "./WishItem1";
 import { Route, withRouter } from "react-router-dom";
 import TwitterIcon from "@material-ui/icons/Twitter";
 //
