@@ -5,5 +5,5 @@
     #  Multi-value headers are expressed with multi-line strings
 	cache-control = '''
 	public,
-    max-age=0,
+  max-age=0,
 	must-revalidate'''
