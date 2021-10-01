@@ -4,6 +4,7 @@ import Collapse from "@material-ui/core/Collapse";
 export default function Dashboard() {
   const [users, setUsers] = useState(null);
   const [open, setOpen] = useState(null);
+  const [sort, setSort] = useState("date");
   useEffect(() => {
     (async () => {
       await fetch(`${process.env.REACT_APP_BASE_URL}/api/users`, {
@@ -77,44 +78,94 @@ export default function Dashboard() {
             {users && users.reduce((a, c) => c.orders?.length + a || a, 0)}{" "}
             Orders{" "}
           </h3>
-          <button onClick={() => setOpen(!open)}>show orders</button>
+          <button onClick={() => setOpen(!open)}>
+            {open ? "hide" : "show"} orders
+          </button>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <p>price is in smallest units (pennies if usd) </p>
+            <p>
+              price is in smallest units (pennies if usd){" "}
+              <button onClick={() => setSort(!sort)}>
+                order by {sort ? "user" : "newest"}
+              </button>
+            </p>
+
             {(() => {
               const orders = users.reduce(
                 (a, c) => (c.orders?.length ? [...c.orders, ...a] : a),
                 []
               );
-              return orders.map((order) => {
-                let items = Object.keys(order.cart.items);
-                let alias = order.cart.alias.handle;
-                return items.map((id) => {
-                  const item = order.cart.items[id].item;
-                  return (
-                    <div
-                      style={{
-                        display: "inline-block",
-                        border: "1px solid pink",
-                        margin: "10px",
-                        width: "200px",
-                      }}
-                    >
-                      to: <a href={"/" + alias}>{alias}</a>
-                      <p>{item.itemName}</p>
-                      <p>
-                        price: {item.price}
-                        {item.currency}
-                      </p>
-                      <img
-                        alt=""
-                        width="50"
-                        height="50"
-                        src={item.itemImage}
-                      ></img>
-                    </div>
-                  );
+              return orders
+                .sort(
+                  sort
+                    ? (order, setOrder) =>
+                        order.paidOn < setOrder.paidOn ? 1 : -1
+                    : () => null
+                )
+                .map((order) => {
+                  let items = Object.keys(order.cart.items);
+                  let alias = order.cart.alias.handle;
+                  return items.map((id) => {
+                    const item = order.cart.items[id].item;
+                    return (
+                      <div
+                        style={{
+                          display: "inline-block",
+                          border: "1px solid pink",
+                          margin: "10px",
+                          width: "300px",
+                        }}
+                      >
+                        to: <a href={"/" + alias}>{alias}</a>
+                        <p>from: {order.buyerInfo.fromLine}</p>
+                        <p id={`order-email-${order._id}`}>
+                          {order.buyerInfo.email}
+                          <button
+                            onClick={() => copy("order-email-" + order._id)}
+                          >
+                            copy
+                          </button>
+                        </p>
+                        <p>Note from wisher: {order.noteToWisher.message}</p>
+                        {order.noteToTender.map((noteToTender) => {
+                          return (
+                            <>
+                              {noteToTender.message && (
+                                <p>Note to wisher: {noteToTender.message}</p>
+                              )}
+                              {noteToTender.imageAttachment && (
+                                <img
+                                  alt=""
+                                  width="50"
+                                  src={noteToTender.imageAttachment}
+                                ></img>
+                              )}
+                            </>
+                          );
+                        })}
+                        <p>{item.itemName}</p>
+                        <p>
+                          price: {item.price}
+                          {item.currency}
+                        </p>
+                        <p>
+                          date:{" "}
+                          {(() => {
+                            const d = new Date(order.paidOn);
+                            return `${
+                              d.getMonth() + 1
+                            }/${d.getDate()}/${d.getFullYear()}`;
+                          })()}
+                        </p>
+                        <img
+                          alt=""
+                          width="50"
+                          height="50"
+                          src={item.itemImage}
+                        ></img>
+                      </div>
+                    );
+                  });
                 });
-              });
             })()}
           </Collapse>
           <div
