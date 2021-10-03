@@ -9,8 +9,8 @@ const openGift = async (
   orderId
 ) => {
   const { clientHeight, clientWidth } = document.documentElement;
-  const eTop = 0 + e.target.getBoundingClientRect().top;
-  const eFromLeft = window.pageXOffset + e.target.getBoundingClientRect().left;
+  const eTop = e.target.getBoundingClientRect().top;
+  const eFromLeft = e.target.getBoundingClientRect().left;
   let vel;
   if (clientWidth <= 850) {
     vel = (clientWidth / 850) * 45;
