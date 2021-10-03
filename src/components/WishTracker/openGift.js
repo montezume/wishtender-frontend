@@ -9,7 +9,7 @@ const openGift = async (
   orderId
 ) => {
   const { clientHeight, clientWidth } = document.documentElement;
-  const eTop = window.pageYOffset + e.target.getBoundingClientRect().top;
+  const eTop = 0 + e.target.getBoundingClientRect().top;
   const eFromLeft = window.pageXOffset + e.target.getBoundingClientRect().left;
   let vel;
   if (clientWidth <= 850) {
@@ -37,6 +37,8 @@ const openGift = async (
     origin: {
       x: eFromLeft / clientWidth,
       y: eTop / clientHeight,
+      // x: 0,
+      // y: 0,
     },
   });
   const headers = new Headers();
