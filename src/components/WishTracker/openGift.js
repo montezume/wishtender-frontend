@@ -62,7 +62,9 @@ const openGift = async (
         console.log(res.status);
       }
     })
-    .catch(console.log);
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 export default openGift;

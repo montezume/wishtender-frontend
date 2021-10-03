@@ -122,7 +122,21 @@ export default function Dashboard() {
                           <button
                             onClick={() => copy("order-email-" + order._id)}
                           >
-                            copy
+                            copy gifter
+                          </button>
+                        </p>
+                        <p id={`order-email-${order._id}`}>
+                          {
+                            users.find(
+                              (user) =>
+                                user?.aliases[0]?._id ===
+                                "60e0b52734b7180004920107"
+                            ).email
+                          }
+                          <button
+                            onClick={() => copy("order-email-" + order._id)}
+                          >
+                            copy wisher
                           </button>
                         </p>
                         <p>Note from wisher: {order.noteToWisher.message}</p>
