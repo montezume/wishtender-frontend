@@ -52,7 +52,9 @@ export default function AllCarts() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        `${process.env.REACT_APP_BASE_URL}/api/exchange/all?base=${clientCurrency}`
+        `${process.env.REACT_APP_BASE_URL}/api/exchange/all?base=${
+          clientCurrency === "noConversion" ? "USD" : clientCurrency
+        }`
       );
 
       const rates = await response.json();
@@ -91,7 +93,11 @@ export default function AllCarts() {
               </Typography>
             </Box>
             {Object.values(cart.aliasCarts).map((cart) => (
-              <AliasCart exchangeRates={exchangeRates} cart={cart} />
+              <AliasCart
+                exchangeRates={exchangeRates}
+                // rateBase={rateBase}
+                cart={cart}
+              />
             ))}
           </>
         ) : (
