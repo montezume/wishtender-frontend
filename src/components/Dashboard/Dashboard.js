@@ -128,9 +128,7 @@ export default function Dashboard() {
                         <p id={`order-email-${order._id}`}>
                           {
                             users.find(
-                              (user) =>
-                                user?.aliases[0]?._id ===
-                                "60e0b52734b7180004920107"
+                              (user) => user?.aliases[0]?._id === order.alias
                             ).email
                           }
                           <button
