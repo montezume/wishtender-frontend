@@ -77,6 +77,53 @@ export default function Dashboard() {
           <h3>
             {users && users.reduce((a, c) => c.orders?.length + a || a, 0)}{" "}
             Orders{" "}
+            {(() => {
+              const orders = users.reduce(
+                (a, c) => (c.orders?.length ? [...c.orders, ...a] : a),
+                []
+              );
+              let items = 0;
+              orders.forEach((order) => {
+                items += Object.keys(order.cart.items).length;
+              });
+              return `items: ${items}`;
+            })()}
+            {(() => {
+              const orders = users.reduce(
+                (a, c) => (c.orders?.length ? [...c.orders, ...a] : a),
+                []
+              );
+              let moneyUSD = 0;
+              orders.forEach((order) => {
+                if (order.cashFlow.toConnect.from.currency !== "USD")
+                  alert(
+                    "not adding gift price in usd, error front end line 99 Dashboard.js"
+                  );
+                moneyUSD += order.cashFlow.toConnect.from.amount;
+              });
+              return (
+                <p>
+                  total money in gifts, not including fee: ${moneyUSD} pennies
+                </p>
+              );
+            })()}
+            {(() => {
+              const orders = users.reduce(
+                (a, c) => (c.orders?.length ? [...c.orders, ...a] : a),
+                []
+              );
+              let feesUSD = 0;
+              orders.forEach((order) => {
+                if (order.cashFlow.toConnect.from.currency !== "USD")
+                  alert(
+                    "not adding gift price in usd, error front end line 99 Dashboard.js"
+                  );
+                feesUSD +=
+                  order.cashFlow.toPlatform.amount -
+                  order.cashFlow.toConnect.from.amount;
+              });
+              return <p>Gross fees: ${feesUSD} pennies</p>;
+            })()}
           </h3>
           <button onClick={() => setOpen(!open)}>
             {open ? "hide" : "show"} orders
