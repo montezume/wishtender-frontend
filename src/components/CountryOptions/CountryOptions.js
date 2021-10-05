@@ -2,9 +2,11 @@ import React, { useContext } from "react";
 import { CountryContext } from "../../contexts/CountryContext";
 import supportedPayoutCountries from "./supportedCountryList";
 import { Controller } from "react-hook-form";
+import "@formatjs/intl-locale/polyfill";
 
 import "@formatjs/intl-displaynames/polyfill";
 import "@formatjs/intl-displaynames/locale-data/en";
+
 import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
 
 const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
