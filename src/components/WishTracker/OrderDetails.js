@@ -9,6 +9,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import GiftSm from "./GiftSm";
 import Gift from "./Gift";
+import TwitterIcon from "@material-ui/icons/Twitter";
 
 import {
   Box,
@@ -19,7 +20,17 @@ import {
   Collapse,
   Typography,
 } from "@material-ui/core";
-
+const tweetIntent = (gifter, handle, price, qty) => {
+  window.open(
+    `https://twitter.com/intent/tweet?text=${
+      gifter || "Someone"
+    }%20just%20bought%20${qty > 1 ? qty : "a"}%20gift${
+      qty > 1 ? "s" : ""
+    }%20off%20my%20wishlist%20worth%20${price}.%20%0a%0aCheck%20out%20my%20wishlist%20here%3A%20https%3A//www.wishtender.com/${handle}%20via%20@WishTender%20`,
+    "popup",
+    "width=600,height=600"
+  );
+};
 const DisplayMessages = ({ notesToTender }) => {
   if (notesToTender.length === undefined) {
     return (
@@ -121,6 +132,23 @@ export default function OrderDetails({
         <Table id={`order-${order._id}`}>
           <TableHead>
             <TableRow>
+              <TableCell>
+                <Button
+                  color="primary"
+                  // variant={"outlined"}
+                  onClick={() => {
+                    tweetIntent(
+                      order.fromLine,
+                      order.alias.handle,
+                      order.tender.amount.display,
+                      order.gifts.length
+                    );
+                  }}
+                  endIcon={<TwitterIcon color="primary" />}
+                >
+                  Share
+                </Button>{" "}
+              </TableCell>
               <TableCell
                 colSpan={5}
                 align="right"
@@ -134,7 +162,7 @@ export default function OrderDetails({
             </TableRow>
             {screen !== "xs" && (
               <TableRow>
-                <TableCell>Wish</TableCell>
+                <TableCell>Wish </TableCell>
                 <TableCell></TableCell>
                 <TableCell>QTY</TableCell>
                 <TableCell>Subtotal</TableCell>
@@ -230,7 +258,7 @@ export default function OrderDetails({
                     }}
                   >
                     {!reply
-                      ? order.noteToTender
+                      ? order.noteToTender.length
                         ? "Reply Again"
                         : "Reply"
                       : "Close"}

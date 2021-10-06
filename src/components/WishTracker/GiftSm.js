@@ -2,9 +2,10 @@ import React, { useContext } from "react";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import Button from "@material-ui/core/Button";
+import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Box } from "@material-ui/core";
+import { Box, Tooltip } from "@material-ui/core";
 import RemoveWish from "./RemoveWish";
 
 const useStyles = makeStyles((theme) => {
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const Gift = ({ orderId, gift, setRefreshWishlist }) => {
+const Gift = ({ orderId, gift, setRefreshWishlist, tweetIntent }) => {
   const classes = useStyles();
   return (
     <TableRow key={orderId + "-" + gift.item._id}>
@@ -41,7 +42,12 @@ const Gift = ({ orderId, gift, setRefreshWishlist }) => {
             alt={gift.item.itemName}
           />
           <p className={classes.itemName}>
-            <a href={gift.item.url}>{gift.item.itemName}</a>
+            <a href={gift.item.url}> {gift.item.itemName}</a>
+          </p>
+          <p>
+            <a href={gift.item.url}>
+              <OpenInNewIcon color="primary" />
+            </a>
           </p>
         </Box>
       </TableCell>
