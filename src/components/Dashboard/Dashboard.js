@@ -164,22 +164,26 @@ export default function Dashboard() {
                       >
                         to: <a href={"/" + alias}>{alias}</a>
                         <p>from: {order.buyerInfo.fromLine}</p>
-                        <p id={`order-email-${order._id}`}>
+                        <p id={`order-gifter-email-${order._id}`}>
                           {order.buyerInfo.email}
                           <button
-                            onClick={() => copy("order-email-" + order._id)}
+                            onClick={() =>
+                              copy("order-gifter-email-" + order._id)
+                            }
                           >
                             copy gifter
                           </button>
                         </p>
-                        <p id={`order-email-${order._id}`}>
+                        <p id={`order-wisher-email-${order._id}`}>
                           {
                             users.find(
                               (user) => user?.aliases[0]?._id === order.alias
                             ).email
                           }
                           <button
-                            onClick={() => copy("order-email-" + order._id)}
+                            onClick={() =>
+                              copy("order-wisher-email-" + order._id)
+                            }
                           >
                             copy wisher
                           </button>
@@ -235,115 +239,124 @@ export default function Dashboard() {
             }}
           >
             {users &&
-              users.map((user) => {
-                return (
-                  <div
-                    style={{
-                      display: "flex",
-                      border: "3px solid #2196F3",
-                      padding: "10px",
-                    }}
-                  >
-                    <img
-                      alt=""
-                      width="50"
-                      height="50"
-                      src={
-                        user.aliases[0]?.profileImage ||
-                        `${process.env.REACT_APP_BASE_URL}/data/images/profileImages/default_profileimage.png`
-                      }
-                    ></img>
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                      <div>
-                        {(() => {
-                          const d = new Date(user.createdAt);
-                          return `${
-                            d.getMonth() + 1
-                          }/${d.getDate()}/${d.getFullYear()}`;
-                        })()}
-                      </div>
-                      <div>
-                        {user.wishlists[0]?.wishlistItems?.length ? (
-                          <span
-                            style={{ color: "#2296f3", fontWeight: "bold" }}
-                          >
-                            {
-                              user.wishlists[0]?.wishlistItems.filter(
-                                (i) => !i.deleted
-                              ).length
-                            }{" "}
-                            Items
-                          </span>
-                        ) : (
-                          "No items"
-                        )}
-                      </div>
-                      <div>
-                        {user.stripeAccountInfo?.activated ? (
-                          <span
-                            style={{ color: "limegreen", fontWeight: "bold" }}
-                          >
-                            Activated
-                          </span>
-                        ) : (
-                          "Not Activated"
-                        )}
-                      </div>
-                      <div style={{ display: "flex", alignItems: "baseline" }}>
-                        <div
-                          style={{ fontSize: ".8em" }}
-                          id={"email" + user._id}
-                        >
-                          {user.email}{" "}
-                        </div>
-                        <button onClick={() => copy("email" + user._id)}>
-                          copy
-                        </button>
-                      </div>
-                      <div>orders: {user.orders?.length}</div>{" "}
-                      <div>
-                        last hour active:{" "}
-                        {(() => {
-                          if (user.userActivity?.hourly) {
-                            const d = new Date(
-                              user.userActivity.hourly[
-                                user.userActivity.hourly.length - 1
-                              ]
-                            );
-                            return `${
-                              d.getMonth() + 1
-                            }/${d.getDate()}/${d.getFullYear()} ${d.getHours()} TZ:+${
-                              d.getTimezoneOffset() / 60
-                            }`;
-                          }
-                          return "No info";
-                        })()}
-                      </div>
-                      <div>
-                        signup date:{" "}
-                        {(() => {
-                          if (user.createdAt) {
+              users
+                .sort((a, b) => {
+                  return (
+                    new Date(b.createdAt).getTime() -
+                    new Date(a.createdAt).getTime()
+                  );
+                })
+                .map((user) => {
+                  return (
+                    <div
+                      style={{
+                        display: "flex",
+                        border: "3px solid #2196F3",
+                        padding: "10px",
+                      }}
+                    >
+                      <img
+                        alt=""
+                        width="50"
+                        height="50"
+                        src={
+                          user.aliases[0]?.profileImage ||
+                          `${process.env.REACT_APP_BASE_URL}/data/images/profileImages/default_profileimage.png`
+                        }
+                      ></img>
+                      <div style={{ display: "flex", flexDirection: "column" }}>
+                        <div>
+                          {(() => {
                             const d = new Date(user.createdAt);
                             return `${
                               d.getMonth() + 1
-                            }/${d.getDate()}/${d.getFullYear()} ${d.getHours()} TZ:+${
-                              d.getTimezoneOffset() / 60
-                            }`;
-                          }
-                          return "No info";
-                        })()}
-                      </div>
-                      <div>
-                        {user.aliases.length && (
-                          <a href={"/" + user.aliases[0].handle}>
-                            {user.aliases[0].handle}
-                          </a>
-                        )}
+                            }/${d.getDate()}/${d.getFullYear()}`;
+                          })()}
+                        </div>
+                        <div>
+                          {user.wishlists[0]?.wishlistItems?.length ? (
+                            <span
+                              style={{ color: "#2296f3", fontWeight: "bold" }}
+                            >
+                              {
+                                user.wishlists[0]?.wishlistItems.filter(
+                                  (i) => !i.deleted
+                                ).length
+                              }{" "}
+                              Items
+                            </span>
+                          ) : (
+                            "No items"
+                          )}
+                        </div>
+                        <div>
+                          {user.stripeAccountInfo?.activated ? (
+                            <span
+                              style={{ color: "limegreen", fontWeight: "bold" }}
+                            >
+                              Activated
+                            </span>
+                          ) : (
+                            "Not Activated"
+                          )}
+                        </div>
+                        <div
+                          style={{ display: "flex", alignItems: "baseline" }}
+                        >
+                          <div
+                            style={{ fontSize: ".8em" }}
+                            id={"email" + user._id}
+                          >
+                            {user.email}{" "}
+                          </div>
+                          <button onClick={() => copy("email" + user._id)}>
+                            copy
+                          </button>
+                        </div>
+                        <div>orders: {user.orders?.length}</div>{" "}
+                        <div>
+                          last hour active:{" "}
+                          {(() => {
+                            if (user.userActivity?.hourly) {
+                              const d = new Date(
+                                user.userActivity.hourly[
+                                  user.userActivity.hourly.length - 1
+                                ]
+                              );
+                              return `${
+                                d.getMonth() + 1
+                              }/${d.getDate()}/${d.getFullYear()} ${d.getHours()} TZ:+${
+                                d.getTimezoneOffset() / 60
+                              }`;
+                            }
+                            return "No info";
+                          })()}
+                        </div>
+                        <div>
+                          signup date:{" "}
+                          {(() => {
+                            if (user.createdAt) {
+                              const d = new Date(user.createdAt);
+                              return `${
+                                d.getMonth() + 1
+                              }/${d.getDate()}/${d.getFullYear()} ${d.getHours()} TZ:+${
+                                d.getTimezoneOffset() / 60
+                              }`;
+                            }
+                            return "No info";
+                          })()}
+                        </div>
+                        <div>
+                          {user.aliases.length && (
+                            <a href={"/" + user.aliases[0].handle}>
+                              {user.aliases[0].handle}
+                            </a>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
           </div>
         </div>
       )}
