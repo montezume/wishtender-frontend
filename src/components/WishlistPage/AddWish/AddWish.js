@@ -168,10 +168,13 @@ function AddWish1(props) {
       headers,
     })
       // .then((res) => res.json())
-      .then((response) => {
+      .then(async (response) => {
         console.log("server response: ", response);
         if (response.status >= 200 && response.status < 300) {
           props.afterAddWish(data);
+        } else {
+          const resp = await response.text();
+          alert(resp);
         }
         clearProduct();
       })
