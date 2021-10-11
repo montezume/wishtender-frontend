@@ -18,7 +18,7 @@ export const CartContext = createContext({
         console.log(cart);
       })
       .catch((err) => {
-        console.log(`couldn't get cart`);
+        console.log(cart ? "couldn't parse cart" : "couldn't get cart");
       });
     // await fetchGet(`${process.env.REACT_APP_BASE_URL}/api/cart`, (res) => {
     //   cart = res;
