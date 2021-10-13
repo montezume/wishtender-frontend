@@ -424,16 +424,28 @@ const Wishlist = withRouter((props) => {
               alignItems: "center",
             }}
           >
-            <Typography> Wishes: {items?.length}</Typography>
+            <div>
+              <Typography> Wishes: {items?.length}</Typography>
+            </div>
             {/* random */}
-            {showCategories && (
-              <Categories
-                categories={wishlist.categories}
-                setShowCategories={setShowCategories}
-                showCategories={showCategories}
-              />
-            )}
-            {!props.isAuth && (
+            <div
+              style={{
+                // width: "100%",
+                display: "flex",
+                justifyContent: "flex-end",
+                alignContent: "flex-start",
+                alignItems: "center",
+                gap: "4%",
+              }}
+            >
+              {showCategories && (
+                <Categories
+                  categories={wishlist.categories}
+                  setShowCategories={setShowCategories}
+                  showCategories={showCategories}
+                />
+              )}
+              {/* {!props.isAuth && ( */}
               <>
                 <Tooltip title="Sort Items" placement="top">
                   <IconButton
@@ -487,7 +499,8 @@ const Wishlist = withRouter((props) => {
                   </MenuItem>
                 </Menu>
               </>
-            )}
+              {/* )} */}
+            </div>
           </div>
           {props.isAuth && (
             <div className="wrapper add_a_wish">
