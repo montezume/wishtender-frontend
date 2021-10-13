@@ -12,8 +12,16 @@ export default function Categories(props) {
   const openCategoriesMenu = Boolean(anchorEl);
 
   return (
-    <div>
+    <div
+    // style={{
+    //   width: "200px",
+    //   display: "flex",
+    //   alignItems: "center",
+    //   color: "grey",
+    // }}
+    >
       <Button
+        variant="outlined"
         onClick={(e) => {
           setAnchorEl(e.currentTarget);
         }}

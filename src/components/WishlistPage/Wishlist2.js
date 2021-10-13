@@ -7,6 +7,7 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import TuneIcon from "@material-ui/icons/Tune";
 import {
   Button,
+  Chip,
   Container,
   Typography,
   IconButton,
@@ -100,7 +101,8 @@ const styles = (theme) => ({
     display: "flex",
     width: "100%",
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "flex-start",
+    flexDirection: "column",
     padding: "0 2%",
 
     [theme.breakpoints.down("xs")]: {
@@ -153,15 +155,38 @@ const Wishlist = withRouter((props) => {
   const [selectWish, setSelectWish] = useState(
     items.find((i) => i._id === params.get("item")) || null
   );
+  // const [sortBy, setSortBy] = useState(params.get("sort") || null);
   const [orderedItems, setOrderedItems] = useState([...items]);
-  const [order, setOrder] = useState(null);
+  // const [order, setOrder] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [showCategories, setShowCategories] = useState(null);
+  const [paramCategories, setaramCategories] = useState(
+    params.get("categories")?.split(",") || null
+  );
+  const [showCategories, setShowCategories] = useState(paramCategories || null);
+
   const openOrderMenu = Boolean(anchorEl);
   const [addWishVisible, setAddWishVisible] = useState(false);
   const [textStoppedBouncing, setTextStoppedBouncing] = useState(false);
   const { currency: clientCurrency } = useContext(CurrencyContext);
 
+  const itemsVisible = (() => {
+    if (!items || !showCategories) return;
+    const itemsVisible = items?.filter((itm) => {
+      if (showCategories.includes("All")) {
+        return true;
+      }
+      let categorySelected = false;
+      for (var i = 0; i < itm.categories.length; i++) {
+        if (showCategories.indexOf(itm.categories[i]) > -1) {
+          categorySelected = true;
+          break;
+        }
+      }
+      if (categorySelected) return true;
+      return false;
+    }).length;
+    return `${itemsVisible}/${items.length}`;
+  })();
   useTraceUpdate(Wishlist.name, props, {
     selectWish,
     addWishVisible,
@@ -206,10 +231,10 @@ const Wishlist = withRouter((props) => {
   }, [showCategories, wishlist.categories]);
 
   useEffect(() => {
+    // if (selectWish === null) return;
     props.history.push(
       `/${props.handle}${selectWish?._id ? `?item=${selectWish._id}` : ""}`
     );
-    console.log(0);
   }, [selectWish]);
 
   useEffect(() => {
@@ -413,8 +438,6 @@ const Wishlist = withRouter((props) => {
         />
       )}
       <ArcherContainer style={{ display: "grid" }}>
-        {/* //test */}
-
         <Container className={customClasses.wishlistWrapper1}>
           <div
             style={{
@@ -425,7 +448,7 @@ const Wishlist = withRouter((props) => {
             }}
           >
             <div>
-              <Typography> Wishes: {items?.length}</Typography>
+              <Typography> Wishes: {items && itemsVisible}</Typography>
             </div>
             {/* random */}
             <div
@@ -537,6 +560,35 @@ const Wishlist = withRouter((props) => {
                   Add A Wish
                 </Button>
               </ArcherElement>
+            </div>
+          )}
+
+          {showCategories && !showCategories.includes("All") && (
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: ".5em",
+                width: "100%",
+              }}
+            >
+              {showCategories.map((cat) => (
+                <Chip
+                  id={`show-chip-category-${cat}`}
+                  label={cat}
+                  onDelete={() => {
+                    if (showCategories.length === 1)
+                      return setShowCategories([...wishlist.categories, "All"]);
+                    const index = showCategories.indexOf(cat);
+                    let newCategories = [
+                      ...showCategories.slice(0, index),
+                      ...showCategories.slice(index + 1),
+                    ];
+
+                    setShowCategories(newCategories);
+                  }}
+                ></Chip>
+              ))}
             </div>
           )}
         </Container>
