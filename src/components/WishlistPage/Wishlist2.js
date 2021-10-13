@@ -49,6 +49,7 @@ import { CSS } from "@dnd-kit/utilities";
 
 import { ArcherContainer, ArcherElement } from "react-archer";
 import theme from "../../theme";
+import Categories from "./Categories";
 
 const styles = (theme) => ({
   animatedBounce: {
@@ -348,11 +349,14 @@ const Wishlist = withRouter((props) => {
           open={selectWish ? true : false}
         >
           <EditWishForm
+            categories={wishlist.categories}
             info={{
               price: selectWish.price.float,
               itemName: selectWish.itemName,
               itemImage: selectWish.itemImage,
               currency: selectWish.currency,
+              categories: selectWish.categories,
+              category: selectWish.category,
             }}
             id={selectWish._id}
             onClose={(options) => {
@@ -388,6 +392,9 @@ const Wishlist = withRouter((props) => {
           >
             <Typography> Wishes: {items?.length}</Typography>
             {/* random */}
+            {wishlist.categories && (
+              <Categories categories={wishlist.categories} />
+            )}
             {!props.isAuth && (
               <>
                 <Tooltip title="Sort Items" placement="top">
