@@ -156,6 +156,7 @@ const Wishlist = withRouter((props) => {
   const [orderedItems, setOrderedItems] = useState([...items]);
   const [order, setOrder] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [showCategories, setShowCategories] = useState(null);
   const openOrderMenu = Boolean(anchorEl);
   const [addWishVisible, setAddWishVisible] = useState(false);
   const [textStoppedBouncing, setTextStoppedBouncing] = useState(false);
@@ -198,11 +199,11 @@ const Wishlist = withRouter((props) => {
     setOrderedItems(updatedItems);
   }, [wishlist]);
 
-  // useEffect(() => {
-  //   if (props.isAuth) return;
-
-  //   if (order) setItems();
-  // }, [order, setItems, items]);
+  useEffect(() => {
+    if (showCategories === null) {
+      setShowCategories([...wishlist.categories, "All"]);
+    }
+  }, [showCategories, wishlist.categories]);
 
   useEffect(() => {
     props.history.push(
@@ -224,31 +225,49 @@ const Wishlist = withRouter((props) => {
   }, [props.isAuth, items.length]);
   const MyItem = forwardRef(({ item, id, isAuth, ...props }, ref) => {
     return (
-      <Grid
-        {...props}
-        ref={ref}
-        key={item._id}
-        id={`item-card-${item._id}`}
-        item
-        xs={6}
-        sm={4}
-        md={3}
-        lg={2}
-        xl={1}
-        container
-        spacing={2}
-      >
-        <div style={{ width: "100%" }} onClick={() => setSelectWish(item)}>
-          <WishItem
-            itemName={item.itemName}
-            isAuth={isAuth}
-            id={item._id}
-            price={item.price}
-            imageUrl={item.itemImage}
-            currency={item.currency}
-          />
-        </div>
-      </Grid>
+      <>
+        {showCategories &&
+          (showCategories.includes("All") ||
+            (() => {
+              var found = false;
+              for (var i = 0; i < item.categories.length; i++) {
+                if (showCategories.indexOf(item.categories[i]) > -1) {
+                  found = true;
+                  break;
+                }
+              }
+              return found;
+            })()) && (
+            <Grid
+              {...props}
+              ref={ref}
+              key={item._id}
+              id={`item-card-${item._id}`}
+              item
+              xs={6}
+              sm={4}
+              md={3}
+              lg={2}
+              xl={1}
+              container
+              spacing={2}
+            >
+              <div
+                style={{ width: "100%" }}
+                onClick={() => setSelectWish(item)}
+              >
+                <WishItem
+                  itemName={item.itemName}
+                  isAuth={isAuth}
+                  id={item._id}
+                  price={item.price}
+                  imageUrl={item.itemImage}
+                  currency={item.currency}
+                />
+              </div>
+            </Grid>
+          )}
+      </>
     );
   });
 
@@ -276,36 +295,51 @@ const Wishlist = withRouter((props) => {
     orderedItems &&
     orderedItems.map((item, i) => {
       return (
-        <Grid
-          key={item._id}
-          id={`item-card-${item._id}`}
-          item
-          xs={6}
-          sm={4}
-          md={3}
-          lg={2}
-          xl={1}
-          container
-          spacing={2}
-        >
-          <div
-            style={{ width: "100%" }}
-            onClick={() => {
-              console.log("wishitem");
+        <>
+          {showCategories &&
+            (showCategories.includes("All") ||
+              (() => {
+                var found = false;
+                for (var i = 0; i < item.categories.length; i++) {
+                  if (showCategories.indexOf(item.categories[i]) > -1) {
+                    found = true;
+                    break;
+                  }
+                }
+                return found;
+              })()) && (
+              <Grid
+                key={item._id}
+                id={`item-card-${item._id}`}
+                item
+                xs={6}
+                sm={4}
+                md={3}
+                lg={2}
+                xl={1}
+                container
+                spacing={2}
+              >
+                <div
+                  style={{ width: "100%" }}
+                  onClick={() => {
+                    console.log("wishitem");
 
-              setSelectWish(item);
-            }}
-          >
-            <WishItem
-              itemName={item.itemName}
-              isAuth={true}
-              price={item.price}
-              id={item._id}
-              imageUrl={item.itemImage}
-              currency={item.currency}
-            />
-          </div>
-        </Grid>
+                    setSelectWish(item);
+                  }}
+                >
+                  <WishItem
+                    itemName={item.itemName}
+                    isAuth={true}
+                    price={item.price}
+                    id={item._id}
+                    imageUrl={item.itemImage}
+                    currency={item.currency}
+                  />
+                </div>
+              </Grid>
+            )}
+        </>
       );
     });
   const MySortableItem = ({ id, item }) => {
@@ -392,8 +426,12 @@ const Wishlist = withRouter((props) => {
           >
             <Typography> Wishes: {items?.length}</Typography>
             {/* random */}
-            {wishlist.categories && (
-              <Categories categories={wishlist.categories} />
+            {showCategories && (
+              <Categories
+                categories={wishlist.categories}
+                setShowCategories={setShowCategories}
+                showCategories={showCategories}
+              />
             )}
             {!props.isAuth && (
               <>

@@ -1,7 +1,13 @@
 import React, { useState } from "react";
-import { Button, Menu, MenuItem } from "@material-ui/core";
+import {
+  Button,
+  FormControlLabel,
+  Checkbox,
+  Menu,
+  MenuItem,
+} from "@material-ui/core";
 
-export default function Categories({ categories }) {
+export default function Categories(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const openCategoriesMenu = Boolean(anchorEl);
 
@@ -31,14 +37,53 @@ export default function Categories({ categories }) {
           horizontal: "left",
         }}
       >
-        {categories.forEach((cat) => (
-          <MenuItem
+        <MenuItem>
+          <FormControlLabel
             onClick={() => {
-              // showCategoryItems(cat);
-              setAnchorEl(null);
+              if (!props.showCategories.includes("All"))
+                props.setShowCategories([...props.categories, "All"]);
             }}
-          >
-            {cat}
+            control={
+              <Checkbox
+                checked={
+                  props.showCategories.includes("All")
+                  // !props.categories.filter(
+                  //   (ct) => props.showCategories.indexOf(ct) < 0
+                  // ).length
+                }
+              />
+            }
+            label={"All"}
+          />
+        </MenuItem>
+
+        {props.categories.map((cat) => (
+          <MenuItem>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      props.setShowCategories([...props.showCategories, cat]);
+                    } else {
+                      const index = props.showCategories.indexOf(cat);
+                      let newCategories = [
+                        ...props.showCategories.slice(0, index),
+                        ...props.showCategories.slice(index + 1),
+                      ];
+                      const indexOfAll = newCategories.indexOf("All");
+                      newCategories = [
+                        ...newCategories.slice(0, indexOfAll),
+                        ...newCategories.slice(indexOfAll + 1),
+                      ];
+                      props.setShowCategories(newCategories);
+                    }
+                  }}
+                  checked={!(props.showCategories.indexOf(cat) < 0)}
+                />
+              }
+              label={cat}
+            />
           </MenuItem>
         ))}
       </Menu>
