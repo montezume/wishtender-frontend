@@ -101,8 +101,10 @@ const styles = (theme) => ({
     display: "flex",
     width: "100%",
     justifyContent: "space-between",
+    // alignItems: "center",
     alignItems: "flex-start",
     flexDirection: "column",
+    // flexDirection: "row",
     padding: "0 2%",
 
     [theme.breakpoints.down("xs")]: {
@@ -226,7 +228,15 @@ const Wishlist = withRouter((props) => {
 
   useEffect(() => {
     if (showCategories === null) {
-      setShowCategories([...wishlist.categories, "All"]);
+      return setShowCategories([...wishlist.categories, "All"]);
+    }
+    const difference = showCategories.filter(
+      (x) => !wishlist.categories.includes(x) && x !== "All"
+    );
+    if (difference.length) {
+      setShowCategories(
+        showCategories.filter((el) => !difference.includes(el))
+      );
     }
   }, [showCategories, wishlist.categories]);
 
@@ -443,125 +453,134 @@ const Wishlist = withRouter((props) => {
             style={{
               width: "100%",
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: "flex-end",
               alignItems: "center",
+              flexWrap: "wrap",
             }}
           >
-            <div>
-              <Typography> Wishes: {items && itemsVisible}</Typography>
-            </div>
-            {/* random */}
             <div
               style={{
-                // width: "100%",
                 display: "flex",
-                justifyContent: "flex-end",
-                alignContent: "flex-start",
+                justifyContent: "space-between",
                 alignItems: "center",
-                gap: "4%",
+                flexGrow: "2",
               }}
             >
-              {showCategories && (
-                <Categories
-                  categories={wishlist.categories}
-                  setShowCategories={setShowCategories}
-                  showCategories={showCategories}
-                />
-              )}
-              {/* {!props.isAuth && ( */}
-              <>
-                <Tooltip title="Sort Items" placement="top">
-                  <IconButton
-                    onClick={(e) => {
-                      setAnchorEl(e.currentTarget);
-                    }}
-                    color="primary"
-                    size="large"
-                  >
-                    <TuneIcon style={{ fontSize: "1.3em" }}></TuneIcon>
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  anchorEl={anchorEl}
-                  open={openOrderMenu}
-                  onClose={(e) => {
-                    setAnchorEl(null);
-                  }}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
-                  }}
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
-                  }}
-                >
-                  <MenuItem
-                    onClick={() => {
-                      reorderItems("default");
+              <Typography> Wishes: {items && itemsVisible}</Typography>
+              <div
+                style={{
+                  // width: "100%",
+                  minWidth: "400px",
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  alignContent: "flex-start",
+                  alignItems: "center",
+                  gap: "4%",
+                }}
+              >
+                {showCategories && (
+                  <Categories
+                    isAuth={props.isAuth}
+                    categories={wishlist.categories}
+                    setShowCategories={setShowCategories}
+                    showCategories={showCategories}
+                  />
+                )}
+                {/* {!props.isAuth && ( */}
+                <>
+                  <Tooltip title="Sort Items" placement="top">
+                    <IconButton
+                      onClick={(e) => {
+                        setAnchorEl(e.currentTarget);
+                      }}
+                      color="primary"
+                      size="large"
+                    >
+                      <TuneIcon style={{ fontSize: "1.3em" }}></TuneIcon>
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    anchorEl={anchorEl}
+                    open={openOrderMenu}
+                    onClose={(e) => {
                       setAnchorEl(null);
                     }}
-                  >
-                    Default
-                  </MenuItem>
-                  <MenuItem
-                    onClick={() => {
-                      reorderItems("priceHigh");
-                      setAnchorEl(null);
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "left",
+                    }}
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "left",
                     }}
                   >
-                    Price: High to Low
-                  </MenuItem>
-                  <MenuItem
-                    onClick={() => {
-                      reorderItems("priceLow");
-                      setAnchorEl(null);
-                    }}
-                  >
-                    Price: Low to High
-                  </MenuItem>
-                </Menu>
-              </>
-              {/* )} */}
+                    <MenuItem
+                      onClick={() => {
+                        reorderItems("default");
+                        setAnchorEl(null);
+                      }}
+                    >
+                      Default
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        reorderItems("priceHigh");
+                        setAnchorEl(null);
+                      }}
+                    >
+                      Price: High to Low
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        reorderItems("priceLow");
+                        setAnchorEl(null);
+                      }}
+                    >
+                      Price: Low to High
+                    </MenuItem>
+                  </Menu>
+                </>
+                {/* )} */}
+              </div>
             </div>
-          </div>
-          {props.isAuth && (
-            <div className="wrapper add_a_wish">
-              <AddWish
-                open={addWishVisible}
-                onClose={() => {
-                  setAddWishVisible(false);
-                }}
-                wishlist={props.id}
-                currency={props.currency}
-                afterAddWish={(wish) => {
-                  setAddWishVisible(false);
-                  props.refreshWishlist();
-                }}
-              />
-              <ArcherElement id="addwish">
-                <Button
-                  onClick={() => {
-                    setAddWishVisible(true);
+            {props.isAuth && (
+              <div className="wrapper add_a_wish">
+                <AddWish
+                  open={addWishVisible}
+                  onClose={() => {
+                    setAddWishVisible(false);
                   }}
-                  className={`${customClasses.gradient} ${
-                    customClasses.addWishButton
-                  } ${customClasses.margin} 
+                  wishlist={props.id}
+                  currency={props.currency}
+                  afterAddWish={(wish) => {
+                    setAddWishVisible(false);
+                    props.refreshWishlist();
+                  }}
+                />
+                <ArcherElement id="addwish">
+                  <Button
+                    onClick={() => {
+                      setAddWishVisible(true);
+                    }}
+                    className={`${customClasses.gradient} ${
+                      customClasses.addWishButton
+                    } ${customClasses.margin} 
                       ${
                         props.isAuth && !items.length && textStoppedBouncing
                           ? customClasses.animatedBreath
                           : ""
                       }`}
-                  color="primary"
-                  disableElevation
-                  variant="contained"
-                  style={{ fontWeight: 600 }}
-                >
-                  Add A Wish
-                </Button>
-              </ArcherElement>
-            </div>
-          )}
+                    color="primary"
+                    disableElevation
+                    variant="contained"
+                    style={{ fontWeight: 600, minWidth: "250px" }}
+                  >
+                    Add A Wish
+                  </Button>
+                </ArcherElement>
+              </div>
+            )}
+          </div>
 
           {showCategories && !showCategories.includes("All") && (
             <div

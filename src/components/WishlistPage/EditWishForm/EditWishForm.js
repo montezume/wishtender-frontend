@@ -123,6 +123,9 @@ export default function EditWishForm(props) {
       for (let i = 0; i < data.categories.length; i++) {
         fd.append("categories[]", data.categories[i]);
       }
+      if (data.categories.length === 0) {
+        fd.append("categories", "[]");
+      }
       const headers = new Headers();
       headers.append("CSRF-Token", user.csrfToken);
       fetch(`${process.env.REACT_APP_BASE_URL}/api/wishlistItems/${props.id}`, {

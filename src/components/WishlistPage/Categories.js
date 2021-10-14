@@ -5,21 +5,20 @@ import {
   Checkbox,
   Menu,
   MenuItem,
+  // IconButton,
 } from "@material-ui/core";
+// import StyledDialog from "../common/StyledDialog/StyledDialog";
+
+// import DeleteForever from "@material-ui/icons/DeleteForever";
 
 export default function Categories(props) {
   const [anchorEl, setAnchorEl] = useState(null);
+  // const [editOn, setEditOn] = useState(null);
+  // const [openDelete, setOpenDelete] = useState(null);
   const openCategoriesMenu = Boolean(anchorEl);
 
   return (
-    <div
-    // style={{
-    //   width: "200px",
-    //   display: "flex",
-    //   alignItems: "center",
-    //   color: "grey",
-    // }}
-    >
+    <div>
       <Button
         variant="outlined"
         onClick={(e) => {
@@ -52,27 +51,30 @@ export default function Categories(props) {
                 props.setShowCategories([...props.categories, "All"]);
             }}
             control={
-              <Checkbox
-                checked={
-                  props.showCategories.includes("All")
-                  // !props.categories.filter(
-                  //   (ct) => props.showCategories.indexOf(ct) < 0
-                  // ).length
-                }
-              />
+              <Checkbox checked={props.showCategories.includes("All")} />
             }
             label={"All"}
           />
         </MenuItem>
 
-        {props.categories.map((cat) => (
+        {props.categories.sort().map((cat) => (
           <MenuItem>
             <FormControlLabel
               control={
                 <Checkbox
                   onChange={(e) => {
-                    if (e.target.checked) {
+                    if (props.showCategories.includes("All")) {
+                      props.setShowCategories([cat]);
+                    } else if (
+                      e.target.checked ||
+                      props.showCategories.includes("All")
+                    ) {
                       props.setShowCategories([...props.showCategories, cat]);
+                    } else if (
+                      !e.target.checked ||
+                      !props.showCategories.length
+                    ) {
+                      props.setShowCategories([...props.showCategories, "All"]);
                     } else {
                       const index = props.showCategories.indexOf(cat);
                       let newCategories = [
@@ -87,14 +89,50 @@ export default function Categories(props) {
                       props.setShowCategories(newCategories);
                     }
                   }}
-                  checked={!(props.showCategories.indexOf(cat) < 0)}
+                  checked={
+                    props.showCategories.includes(cat) &&
+                    !props.showCategories.includes("All")
+                  }
                 />
               }
               label={cat}
             />
+            {/* {editOn && (
+              <IconButton
+                onClick={(e) => {
+                  console.log(e);
+                  setOpenDelete(e.currentTarget.id.slice(24));
+                }}
+                id={"delete-category-forever-" + cat}
+              >
+                <DeleteForever />
+              </IconButton>
+            )} */}
           </MenuItem>
         ))}
+        {/* {props.categories.length && props.isAuth && (
+          <MenuItem onClick={() => setEditOn(!editOn)}>
+            Edit Categories
+          </MenuItem>
+        )} */}
       </Menu>
+
+      {/* <StyledDialog
+        onClose={() => {
+          setOpenDelete(null);
+          setEditOn(null);
+        }}
+        open={openDelete}
+      >
+        {" "}
+        <p>
+          Are you sure you want to delete the category "{openDelete}"? All items
+          will remain on your wishlist but "{openDelete}" will yummy will be
+          removed as a category.
+        </p>
+        <button onClick={() => {}}>Yes, Delete</button>
+        <Button onClick={() => {}}>Cancel</Button>
+      </StyledDialog> */}
     </div>
   );
 }
