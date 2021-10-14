@@ -2,9 +2,11 @@ import React, { forwardRef, useState, useEffect, useContext } from "react";
 import Grid from "@material-ui/core/Grid";
 import WishItem from "./WishItem1";
 import { Route, withRouter } from "react-router-dom";
-import TwitterIcon from "@material-ui/icons/Twitter";
+import FileCopy from "@material-ui/icons/FileCopy";
 //
 import TuneIcon from "@material-ui/icons/Tune";
+import Snackbar from "@material-ui/core/Snackbar";
+
 import {
   Button,
   Chip,
@@ -161,7 +163,8 @@ const Wishlist = withRouter((props) => {
   const [orderedItems, setOrderedItems] = useState([...items]);
   // const [order, setOrder] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [paramCategories, setaramCategories] = useState(
+  const [copiedSnackbar, setCopiedSnackbar] = useState(null);
+  const [paramCategories, setParamCategories] = useState(
     params.get("categories")?.split(",") || null
   );
   const [showCategories, setShowCategories] = useState(paramCategories || null);
@@ -227,7 +230,7 @@ const Wishlist = withRouter((props) => {
   }, [wishlist]);
 
   useEffect(() => {
-    if (showCategories === null) {
+    if (showCategories === null || showCategories.length === 0) {
       return setShowCategories([...wishlist.categories, "All"]);
     }
     const difference = showCategories.filter(
@@ -242,6 +245,7 @@ const Wishlist = withRouter((props) => {
 
   useEffect(() => {
     // if (selectWish === null) return;
+    // showCategories.join('')
     props.history.push(
       `/${props.handle}${selectWish?._id ? `?item=${selectWish._id}` : ""}`
     );
@@ -406,6 +410,16 @@ const Wishlist = withRouter((props) => {
         id={id}
       />
     );
+  };
+
+  const copyCategoriesLink = (value) => {
+    var tempInput = document.createElement("input");
+    tempInput.style = "position: absolute; left: -1000px; top: -1000px";
+    tempInput.value = value;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand("copy");
+    document.body.removeChild(tempInput);
   };
 
   return (
@@ -589,6 +603,7 @@ const Wishlist = withRouter((props) => {
                 flexWrap: "wrap",
                 gap: ".5em",
                 width: "100%",
+                alignItems: "center",
               }}
             >
               {showCategories.map((cat) => (
@@ -608,6 +623,40 @@ const Wishlist = withRouter((props) => {
                   }}
                 ></Chip>
               ))}
+              {props.isAuth && (
+                <>
+                  {/* <div
+                    // style={{ display: "none" }}
+                    id="categories-link"
+                  >{`https://www.wishtender.com/${
+                    props.handle
+                  }?categories=${showCategories.join(",")}`}</div> */}
+                  <Button
+                    color="primary"
+                    onClick={() => {
+                      copyCategoriesLink(
+                        `https://www.wishtender.com/${
+                          props.handle
+                        }?categories=${showCategories.join(",")}`
+                      );
+                      setCopiedSnackbar(true);
+                    }}
+                    endIcon={<FileCopy />}
+                  >
+                    Copy link to these categories
+                  </Button>
+                  <Snackbar
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                    open={copiedSnackbar}
+                    onClose={() => {
+                      setCopiedSnackbar(false);
+                    }}
+                    message="Copied to clipboard"
+                    key={"copied"}
+                    autoHideDuration={2300}
+                  />
+                </>
+              )}
             </div>
           )}
         </Container>
