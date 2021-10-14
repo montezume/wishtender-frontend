@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import StyledDialog from "../../common/StyledDialog/StyledDialog";
-import { Button } from "@material-ui/core";
+import { Button, Input, TextField } from "@material-ui/core";
 export default function CreateNewCategory(props) {
   const memoDisableEnterForm = useCallback((event) => {
     let keycode = event.key;
@@ -30,21 +30,31 @@ export default function CreateNewCategory(props) {
       open={true}
       style={{ padding: "1em" }}
     >
-      <p>Add New Category</p>
-      <input autocomplete="off" id="new"></input>
-      <Button
-        onClick={() => {
-          const value = document.getElementById("new").value;
-          if (props.itemCategories.indexOf(value) < 0) {
-            props.setItemCategories([...props.itemCategories, value]);
-          }
-
-          props.setOpenNew(false);
-          props.setAnchorElCategories(null);
+      {" "}
+      <div
+        style={{
+          padding: "auto",
+          width: "80%",
+          margin: "1em auto",
+          minWidth: "220px",
         }}
       >
-        Save
-      </Button>
+        <p>Add New Category</p>
+        <Input variant="outlined" autoComplete="off" id="new"></Input>
+        <Button
+          onClick={() => {
+            const value = document.getElementById("new").value;
+            if (props.itemCategories.indexOf(value) < 0) {
+              props.setItemCategories([...props.itemCategories, value]);
+            }
+
+            props.setOpenNew(false);
+            props.setAnchorElCategories(null);
+          }}
+        >
+          Save
+        </Button>
+      </div>
     </StyledDialog>
   );
 }
