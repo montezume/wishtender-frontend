@@ -2,11 +2,14 @@ import React, { forwardRef, useState, useEffect, useContext } from "react";
 import Grid from "@material-ui/core/Grid";
 import WishItem from "./WishItem1";
 import { Route, withRouter } from "react-router-dom";
-import TwitterIcon from "@material-ui/icons/Twitter";
+import FileCopy from "@material-ui/icons/FileCopy";
 //
 import TuneIcon from "@material-ui/icons/Tune";
+import Snackbar from "@material-ui/core/Snackbar";
+
 import {
   Button,
+  Chip,
   Container,
   Typography,
   IconButton,
@@ -49,6 +52,7 @@ import { CSS } from "@dnd-kit/utilities";
 
 import { ArcherContainer, ArcherElement } from "react-archer";
 import theme from "../../theme";
+import Categories from "./Categories";
 
 const styles = (theme) => ({
   animatedBounce: {
@@ -99,7 +103,10 @@ const styles = (theme) => ({
     display: "flex",
     width: "100%",
     justifyContent: "space-between",
-    alignItems: "center",
+    // alignItems: "center",
+    alignItems: "flex-start",
+    flexDirection: "column",
+    // flexDirection: "row",
     padding: "0 2%",
 
     [theme.breakpoints.down("xs")]: {
@@ -152,14 +159,39 @@ const Wishlist = withRouter((props) => {
   const [selectWish, setSelectWish] = useState(
     items.find((i) => i._id === params.get("item")) || null
   );
+  // const [sortBy, setSortBy] = useState(params.get("sort") || null);
   const [orderedItems, setOrderedItems] = useState([...items]);
-  const [order, setOrder] = useState(null);
+  // const [order, setOrder] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [copiedSnackbar, setCopiedSnackbar] = useState(null);
+  const [paramCategories, setParamCategories] = useState(
+    params.get("categories")?.split(",") || null
+  );
+  const [showCategories, setShowCategories] = useState(paramCategories || null);
+
   const openOrderMenu = Boolean(anchorEl);
   const [addWishVisible, setAddWishVisible] = useState(false);
   const [textStoppedBouncing, setTextStoppedBouncing] = useState(false);
   const { currency: clientCurrency } = useContext(CurrencyContext);
 
+  const itemsVisible = (() => {
+    if (!items || !showCategories) return;
+    const itemsVisible = items?.filter((itm) => {
+      if (showCategories.includes("All")) {
+        return true;
+      }
+      let categorySelected = false;
+      for (var i = 0; i < itm.categories.length; i++) {
+        if (showCategories.indexOf(itm.categories[i]) > -1) {
+          categorySelected = true;
+          break;
+        }
+      }
+      if (categorySelected) return true;
+      return false;
+    }).length;
+    return `${itemsVisible}/${items.length}`;
+  })();
   useTraceUpdate(Wishlist.name, props, {
     selectWish,
     addWishVisible,
@@ -197,17 +229,26 @@ const Wishlist = withRouter((props) => {
     setOrderedItems(updatedItems);
   }, [wishlist]);
 
-  // useEffect(() => {
-  //   if (props.isAuth) return;
-
-  //   if (order) setItems();
-  // }, [order, setItems, items]);
+  useEffect(() => {
+    if (showCategories === null || showCategories.length === 0) {
+      return setShowCategories([...wishlist.categories, "All"]);
+    }
+    const difference = showCategories.filter(
+      (x) => !wishlist.categories.includes(x) && x !== "All"
+    );
+    if (difference.length) {
+      setShowCategories(
+        showCategories.filter((el) => !difference.includes(el))
+      );
+    }
+  }, [showCategories, wishlist.categories]);
 
   useEffect(() => {
+    // if (selectWish === null) return;
+    // showCategories.join('')
     props.history.push(
       `/${props.handle}${selectWish?._id ? `?item=${selectWish._id}` : ""}`
     );
-    console.log(0);
   }, [selectWish]);
 
   useEffect(() => {
@@ -223,31 +264,49 @@ const Wishlist = withRouter((props) => {
   }, [props.isAuth, items.length]);
   const MyItem = forwardRef(({ item, id, isAuth, ...props }, ref) => {
     return (
-      <Grid
-        {...props}
-        ref={ref}
-        key={item._id}
-        id={`item-card-${item._id}`}
-        item
-        xs={6}
-        sm={4}
-        md={3}
-        lg={2}
-        xl={1}
-        container
-        spacing={2}
-      >
-        <div style={{ width: "100%" }} onClick={() => setSelectWish(item)}>
-          <WishItem
-            itemName={item.itemName}
-            isAuth={isAuth}
-            id={item._id}
-            price={item.price}
-            imageUrl={item.itemImage}
-            currency={item.currency}
-          />
-        </div>
-      </Grid>
+      <>
+        {showCategories &&
+          (showCategories.includes("All") ||
+            (() => {
+              var found = false;
+              for (var i = 0; i < item.categories.length; i++) {
+                if (showCategories.indexOf(item.categories[i]) > -1) {
+                  found = true;
+                  break;
+                }
+              }
+              return found;
+            })()) && (
+            <Grid
+              {...props}
+              ref={ref}
+              key={item._id}
+              id={`item-card-${item._id}`}
+              item
+              xs={6}
+              sm={4}
+              md={3}
+              lg={2}
+              xl={1}
+              container
+              spacing={2}
+            >
+              <div
+                style={{ width: "100%" }}
+                onClick={() => setSelectWish(item)}
+              >
+                <WishItem
+                  itemName={item.itemName}
+                  isAuth={isAuth}
+                  id={item._id}
+                  price={item.price}
+                  imageUrl={item.itemImage}
+                  currency={item.currency}
+                />
+              </div>
+            </Grid>
+          )}
+      </>
     );
   });
 
@@ -275,36 +334,51 @@ const Wishlist = withRouter((props) => {
     orderedItems &&
     orderedItems.map((item, i) => {
       return (
-        <Grid
-          key={item._id}
-          id={`item-card-${item._id}`}
-          item
-          xs={6}
-          sm={4}
-          md={3}
-          lg={2}
-          xl={1}
-          container
-          spacing={2}
-        >
-          <div
-            style={{ width: "100%" }}
-            onClick={() => {
-              console.log("wishitem");
+        <>
+          {showCategories &&
+            (showCategories.includes("All") ||
+              (() => {
+                var found = false;
+                for (var i = 0; i < item.categories.length; i++) {
+                  if (showCategories.indexOf(item.categories[i]) > -1) {
+                    found = true;
+                    break;
+                  }
+                }
+                return found;
+              })()) && (
+              <Grid
+                key={item._id}
+                id={`item-card-${item._id}`}
+                item
+                xs={6}
+                sm={4}
+                md={3}
+                lg={2}
+                xl={1}
+                container
+                spacing={2}
+              >
+                <div
+                  style={{ width: "100%" }}
+                  onClick={() => {
+                    console.log("wishitem");
 
-              setSelectWish(item);
-            }}
-          >
-            <WishItem
-              itemName={item.itemName}
-              isAuth={true}
-              price={item.price}
-              id={item._id}
-              imageUrl={item.itemImage}
-              currency={item.currency}
-            />
-          </div>
-        </Grid>
+                    setSelectWish(item);
+                  }}
+                >
+                  <WishItem
+                    itemName={item.itemName}
+                    isAuth={true}
+                    price={item.price}
+                    id={item._id}
+                    imageUrl={item.itemImage}
+                    currency={item.currency}
+                  />
+                </div>
+              </Grid>
+            )}
+        </>
       );
     });
   const MySortableItem = ({ id, item }) => {
@@ -338,6 +412,16 @@ const Wishlist = withRouter((props) => {
     );
   };
 
+  const copyCategoriesLink = (value) => {
+    var tempInput = document.createElement("input");
+    tempInput.style = "position: absolute; left: -1000px; top: -1000px";
+    tempInput.value = value;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand("copy");
+    document.body.removeChild(tempInput);
+  };
+
   return (
     <div className="wishlist" style={{ paddingBottom: "6em" }}>
       {selectWish && props.isAuth && (
@@ -348,11 +432,14 @@ const Wishlist = withRouter((props) => {
           open={selectWish ? true : false}
         >
           <EditWishForm
+            categories={wishlist.categories}
             info={{
               price: selectWish.price.float,
               itemName: selectWish.itemName,
               itemImage: selectWish.itemImage,
               currency: selectWish.currency,
+              categories: selectWish.categories,
+              category: selectWish.category,
             }}
             id={selectWish._id}
             onClose={(options) => {
@@ -375,110 +462,199 @@ const Wishlist = withRouter((props) => {
         />
       )}
       <ArcherContainer style={{ display: "grid" }}>
-        {/* //test */}
-
         <Container className={customClasses.wishlistWrapper1}>
           <div
             style={{
               width: "100%",
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: "flex-end",
               alignItems: "center",
+              flexWrap: "wrap",
             }}
           >
-            <Typography> Wishes: {items?.length}</Typography>
-            {/* random */}
-            {!props.isAuth && (
-              <>
-                <Tooltip title="Sort Items" placement="top">
-                  <IconButton
-                    onClick={(e) => {
-                      setAnchorEl(e.currentTarget);
-                    }}
-                    color="primary"
-                    size="large"
-                  >
-                    <TuneIcon style={{ fontSize: "1.3em" }}></TuneIcon>
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  anchorEl={anchorEl}
-                  open={openOrderMenu}
-                  onClose={(e) => {
-                    setAnchorEl(null);
-                  }}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
-                  }}
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
-                  }}
-                >
-                  <MenuItem
-                    onClick={() => {
-                      reorderItems("default");
-                      setAnchorEl(null);
-                    }}
-                  >
-                    Default
-                  </MenuItem>
-                  <MenuItem
-                    onClick={() => {
-                      reorderItems("priceHigh");
-                      setAnchorEl(null);
-                    }}
-                  >
-                    Price: High to Low
-                  </MenuItem>
-                  <MenuItem
-                    onClick={() => {
-                      reorderItems("priceLow");
-                      setAnchorEl(null);
-                    }}
-                  >
-                    Price: Low to High
-                  </MenuItem>
-                </Menu>
-              </>
-            )}
-          </div>
-          {props.isAuth && (
-            <div className="wrapper add_a_wish">
-              <AddWish
-                open={addWishVisible}
-                onClose={() => {
-                  setAddWishVisible(false);
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                flexGrow: "2",
+              }}
+            >
+              <Typography> Wishes: {items && itemsVisible}</Typography>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  alignContent: "flex-start",
+                  alignItems: "center",
+                  gap: "4%",
                 }}
-                wishlist={props.id}
-                currency={props.currency}
-                afterAddWish={(wish) => {
-                  setAddWishVisible(false);
-                  props.refreshWishlist();
-                }}
-              />
-              <ArcherElement id="addwish">
-                <Button
-                  onClick={() => {
-                    setAddWishVisible(true);
+              >
+                {showCategories && (
+                  <Categories
+                    isAuth={props.isAuth}
+                    categories={wishlist.categories}
+                    setShowCategories={setShowCategories}
+                    showCategories={showCategories}
+                  />
+                )}
+                {/* {!props.isAuth && ( */}
+                <>
+                  <Tooltip title="Sort Items" placement="top">
+                    <IconButton
+                      onClick={(e) => {
+                        setAnchorEl(e.currentTarget);
+                      }}
+                      color="primary"
+                      size="large"
+                    >
+                      <TuneIcon style={{ fontSize: "1.3em" }}></TuneIcon>
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    anchorEl={anchorEl}
+                    open={openOrderMenu}
+                    onClose={(e) => {
+                      setAnchorEl(null);
+                    }}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "left",
+                    }}
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "left",
+                    }}
+                  >
+                    <MenuItem
+                      onClick={() => {
+                        reorderItems("default");
+                        setAnchorEl(null);
+                      }}
+                    >
+                      Default
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        reorderItems("priceHigh");
+                        setAnchorEl(null);
+                      }}
+                    >
+                      Price: High to Low
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        reorderItems("priceLow");
+                        setAnchorEl(null);
+                      }}
+                    >
+                      Price: Low to High
+                    </MenuItem>
+                  </Menu>
+                </>
+                {/* )} */}
+              </div>
+            </div>
+            {props.isAuth && (
+              <div className="wrapper add_a_wish">
+                <AddWish
+                  open={addWishVisible}
+                  onClose={() => {
+                    setAddWishVisible(false);
                   }}
-                  className={`${customClasses.gradient} ${
-                    customClasses.addWishButton
-                  } ${customClasses.margin} 
+                  wishlist={props.id}
+                  currency={props.currency}
+                  afterAddWish={(wish) => {
+                    setAddWishVisible(false);
+                    props.refreshWishlist();
+                  }}
+                />
+                <ArcherElement id="addwish">
+                  <Button
+                    onClick={() => {
+                      setAddWishVisible(true);
+                    }}
+                    className={`${customClasses.gradient} ${
+                      customClasses.addWishButton
+                    } ${customClasses.margin} 
                       ${
                         props.isAuth && !items.length && textStoppedBouncing
                           ? customClasses.animatedBreath
                           : ""
                       }`}
-                  color="primary"
-                  disableElevation
-                  variant="contained"
-                  style={{ fontWeight: 600 }}
-                >
-                  Add A Wish
-                </Button>
-              </ArcherElement>
+                    color="primary"
+                    disableElevation
+                    variant="contained"
+                    style={{ fontWeight: 600, minWidth: "250px" }}
+                  >
+                    Add A Wish
+                  </Button>
+                </ArcherElement>
+              </div>
+            )}
+          </div>
+
+          {showCategories && !showCategories.includes("All") && (
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: ".5em",
+                width: "100%",
+                alignItems: "center",
+              }}
+            >
+              {showCategories.map((cat) => (
+                <Chip
+                  id={`show-chip-category-${cat}`}
+                  label={cat}
+                  onDelete={() => {
+                    if (showCategories.length === 1)
+                      return setShowCategories([...wishlist.categories, "All"]);
+                    const index = showCategories.indexOf(cat);
+                    let newCategories = [
+                      ...showCategories.slice(0, index),
+                      ...showCategories.slice(index + 1),
+                    ];
+
+                    setShowCategories(newCategories);
+                  }}
+                ></Chip>
+              ))}
+              {props.isAuth && (
+                <>
+                  {/* <div
+                    // style={{ display: "none" }}
+                    id="categories-link"
+                  >{`https://www.wishtender.com/${
+                    props.handle
+                  }?categories=${showCategories.join(",")}`}</div> */}
+                  <Button
+                    color="primary"
+                    onClick={() => {
+                      copyCategoriesLink(
+                        `https://www.wishtender.com/${
+                          props.handle
+                        }?categories=${showCategories.join(",")}`
+                      );
+                      setCopiedSnackbar(true);
+                    }}
+                    endIcon={<FileCopy />}
+                  >
+                    Copy link to these categories
+                  </Button>
+                  <Snackbar
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                    open={copiedSnackbar}
+                    onClose={() => {
+                      setCopiedSnackbar(false);
+                    }}
+                    message="Copied to clipboard"
+                    key={"copied"}
+                    autoHideDuration={2300}
+                  />
+                </>
+              )}
             </div>
           )}
         </Container>

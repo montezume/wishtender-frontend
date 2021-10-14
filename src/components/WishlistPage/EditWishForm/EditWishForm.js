@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { UserContext } from "../../../contexts/UserContext";
+import CategoryEdit from "./CategoryEdit";
 
 import SelectCropUpdateImage from "../ProfileSection/SelectCropUpdateImage/SelectCropUpdateImage";
 import {
@@ -12,6 +13,9 @@ import {
   FormControl,
   FormHelperText,
   Box,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PriceInput from "../PriceInput";
@@ -60,6 +64,7 @@ export default function EditWishForm(props) {
   const classes = useStyles();
   const [price, setPrice] = useState("");
   const [itemName, setItemName] = useState("");
+  const [categories, setCategories] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [deleteWarningVisible, setDeleteWarningVisible] = useState(false);
   // const buttonHeight = useButtonHeight(
@@ -67,12 +72,13 @@ export default function EditWishForm(props) {
   // );
   useEffect(() => {
     setItemName(props.info && props.info.itemName);
+    setCategories(props.info && props.info.categories);
     setPrice(props.info && props.info.price);
   }, [props.info]);
   const {
     register,
     setValue,
-
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm();
@@ -80,6 +86,10 @@ export default function EditWishForm(props) {
   useEffect(() => {
     if (price !== "") setValue("price", price, { shouldValidate: true });
   }, [price, setValue]);
+  useEffect(() => {
+    if (categories !== "")
+      setValue("categories", categories, { shouldValidate: true });
+  }, [categories, setValue]);
 
   const onSubmit = (data) => {
     if (imageFile) data.image = imageFile;
@@ -105,7 +115,19 @@ export default function EditWishForm(props) {
       // );
       const fd = new FormData();
       const dataArray = Object.entries(data);
-      dataArray.forEach((datum) => fd.append(datum[0], datum[1]));
+
+      dataArray.forEach((datum) => {
+        if (datum[0] === "categories") return;
+        fd.append(datum[0], datum[1]);
+      });
+      if (data.categories) {
+        for (let i = 0; i < data.categories.length; i++) {
+          fd.append("categories[]", data.categories[i]);
+        }
+        if (data.categories.length === 0) {
+          fd.append("categories", "[]");
+        }
+      }
       const headers = new Headers();
       headers.append("CSRF-Token", user.csrfToken);
       fetch(`${process.env.REACT_APP_BASE_URL}/api/wishlistItems/${props.id}`, {
@@ -150,6 +172,7 @@ export default function EditWishForm(props) {
       message: "Product name must be more than 4 characters",
     },
   });
+  const { ref: categoriesRef, ...categoriesReg } = register("categories");
   const { ref: priceRef, ...priceReg } = register("price", {
     validate: async (value) => {
       console.log("validation change from ", price, value, isValidPrice(value));
@@ -171,6 +194,7 @@ export default function EditWishForm(props) {
       </ResponsiveDialogTitleSection>
       <Box display="flex" flexDirection="column" style={{ height: "100%" }}>
         <form
+          id="edit-wish-form"
           autoComplete="off"
           style={{
             display: "flex",
@@ -236,6 +260,19 @@ export default function EditWishForm(props) {
               symbol={currencyInfo(props.info.currency).symbol}
               decimalPlaces={currencyInfo(props.info.currency).decimalPlaces}
             ></PriceInput>
+
+            <CategoryEdit
+              // control={control}
+              // name="categories"
+              // label="Add Category"
+              register={categoriesReg}
+              inputRef={categoriesRef}
+              // labelId="categories-edit-label"
+              // id="categories-edit"
+              itemCategories={categories}
+              setItemCategories={setCategories}
+              wishlistCategories={props.categories}
+            />
 
             <Grid container justify="flex-end">
               <StyledDialog
