@@ -120,11 +120,13 @@ export default function EditWishForm(props) {
         if (datum[0] === "categories") return;
         fd.append(datum[0], datum[1]);
       });
-      for (let i = 0; i < data.categories.length; i++) {
-        fd.append("categories[]", data.categories[i]);
-      }
-      if (data.categories.length === 0) {
-        fd.append("categories", "[]");
+      if (data.categories) {
+        for (let i = 0; i < data.categories.length; i++) {
+          fd.append("categories[]", data.categories[i]);
+        }
+        if (data.categories.length === 0) {
+          fd.append("categories", "[]");
+        }
       }
       const headers = new Headers();
       headers.append("CSRF-Token", user.csrfToken);

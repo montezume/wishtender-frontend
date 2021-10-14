@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { Controller } from "react-hook-form";
-import StyledDialog from "../../common/StyledDialog/StyledDialog";
 
 import {
   FormControl,
@@ -10,9 +9,11 @@ import {
   Button,
   Menu,
 } from "@material-ui/core";
+import CreateNewCategory from "./CreateNewCategory";
 
 export default function CategoryEdit(props) {
   const [openNew, setOpenNew] = useState(null);
+  const [eventAdded, setEventAdded] = useState(null);
   const [anchorElCategories, setAnchorElCategories] = useState(null);
 
   const openCatOptions = Boolean(anchorElCategories);
@@ -28,26 +29,6 @@ export default function CategoryEdit(props) {
     // setItemCategories(props.itemCategories);
   }, [props.itemCategories, props.wishlistCategories]);
 
-  useEffect(() => {
-    if (!openNew && !document.getElementById("new")) return;
-    const disableEnterForm = function (event) {
-      var keycode = event.key;
-      if (keycode === "Enter") {
-        event.stopPropagation();
-        const value = document.getElementById("new")?.value;
-        if (props.itemCategories.indexOf(value) < 0) {
-          props.setItemCategories([...props.itemCategories, value]);
-        }
-        setOpenNew(false);
-        setAnchorElCategories(null);
-      }
-    };
-    if (openNew) {
-      document.addEventListener("keypress", disableEnterForm);
-    } else {
-      document.removeEventListener("keypress", disableEnterForm);
-    }
-  }, [openNew, props]);
   const handleChange = (event) => {
     if (itemCategories?.indexOf(event.target.attributes.value.value) >= 0)
       return;
@@ -87,81 +68,83 @@ export default function CategoryEdit(props) {
 
   return (
     <>
-      <div style={{ gap: "1em", display: "flex", flexWrap: "wrap" }}>
-        Categories:
-        {props.itemCategories?.length
-          ? props.itemCategories.map((cat) => (
-              <Chip
-                id={`chip-category-${cat}`}
-                label={cat}
-                onDelete={handleDelete}
-              />
-            ))
-          : ""}
-      </div>
-      <FormControl
+      <div
         style={{
-          minWidth: 220,
-          width: 220,
+          padding: "1em 1em .8em 1em",
+          border: "1px solid lightgrey",
+          borderRadius: "20px",
         }}
       >
-        <Button
-          focusRipple={false}
-          onClick={(e) => {
-            setAnchorElCategories(e.currentTarget);
+        <div
+          style={{
+            gap: "1em",
+            display: "flex",
+            flexWrap: "wrap",
           }}
         >
-          Add category
-        </Button>
-        <Menu
-          anchorEl={anchorElCategories}
-          open={openCatOptions}
-          onClose={() => {
-            setAnchorElCategories(null);
-          }}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "left",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "left",
+          Categories:
+          {props.itemCategories?.length
+            ? props.itemCategories.map((cat) => (
+                <Chip
+                  id={`chip-category-${cat}`}
+                  label={cat}
+                  onDelete={handleDelete}
+                />
+              ))
+            : ""}
+        </div>
+        <FormControl
+          style={{
+            minWidth: 220,
+            width: 220,
+            margin: "1em 0 0 0",
           }}
         >
-          {categoriesMenu}
-          <MenuItem
-            onClick={() => {
-              setOpenNew(true);
+          <Button
+            // variant="outlined"
+            color="primary"
+            // focusRipple={false}
+            onClick={(e) => {
+              setAnchorElCategories(e.currentTarget);
             }}
           >
-            Add new category
-          </MenuItem>
-        </Menu>
-      </FormControl>
-      {openNew && (
-        <StyledDialog
-          onClose={() => {
-            setOpenNew(false);
-          }}
-          open={openNew}
-        >
-          <p>Add New Category</p>
-          <input autocomplete="off" id="new"></input>
-          <button
-            onClick={() => {
-              const value = document.getElementById("new").value;
-              if (props.itemCategories.indexOf(value) < 0) {
-                props.setItemCategories([...props.itemCategories, value]);
-              }
-
-              setOpenNew(false);
+            Add category
+          </Button>
+          <Menu
+            anchorEl={anchorElCategories}
+            open={openCatOptions}
+            onClose={() => {
               setAnchorElCategories(null);
             }}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
           >
-            Save
-          </button>
-        </StyledDialog>
-      )}
+            {categoriesMenu}
+            <MenuItem
+              onClick={() => {
+                setOpenNew(true);
+              }}
+            >
+              Add new category
+            </MenuItem>
+          </Menu>
+        </FormControl>
+
+        {openNew && (
+          <CreateNewCategory
+            setOpenNew={setOpenNew}
+            itemCategories={props.itemCategories}
+            setItemCategories={props.setItemCategories}
+            setAnchorElCategories={setAnchorElCategories}
+          />
+        )}
+      </div>
     </>
   );
 }

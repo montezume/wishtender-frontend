@@ -483,8 +483,6 @@ const Wishlist = withRouter((props) => {
               <Typography> Wishes: {items && itemsVisible}</Typography>
               <div
                 style={{
-                  // width: "100%",
-                  minWidth: "400px",
                   display: "flex",
                   justifyContent: "flex-end",
                   alignContent: "flex-start",

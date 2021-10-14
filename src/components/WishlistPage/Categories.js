@@ -110,6 +110,11 @@ export default function Categories(props) {
             )} */}
           </MenuItem>
         ))}
+        {!props.categories.length && props.isAuth && (
+          <p style={{ margin: "1em", width: "fit" }}>
+            Tip: To add a category, edit a wish.
+          </p>
+        )}
         {/* {props.categories.length && props.isAuth && (
           <MenuItem onClick={() => setEditOn(!editOn)}>
             Edit Categories
