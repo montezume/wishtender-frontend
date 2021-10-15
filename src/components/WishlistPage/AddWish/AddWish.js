@@ -1,37 +1,18 @@
 import React, { useState, useContext } from "react";
 import { UserContext } from "../../../contexts/UserContext";
-
-import { Button, LinearProgress } from "@material-ui/core";
+import TabPanel from "./TabPanel";
+import { Button, LinearProgress, Tab, Tabs } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import theme from "../../../theme";
-import axios from "axios";
 import Search from "./Search.js";
 import filterOutSmallImages from "./filterImages";
 import WishForm from "./WishForm/WishForm";
+import WishFormManual from "./WishForm/WishFormManual";
 import useScreenSize from "../../../hooks/useScreenSize";
 import "./AddWish.css";
 import StyledDialog from "../../common/StyledDialog/StyledDialog";
 import { Box } from "@material-ui/core";
 import ResponsiveDialogTitleSection from "../../common/StyledDialog/TopSections/ResponsiveTopTitleSection/ResponsiveDialogCloseAndTitleSection.js";
-// const fetchPostJson = async (data, route, callback) => {
-//   const headers = new Headers();
-//   headers.append("Content-Type", "application/json");
-//   await fetch(route, {
-//     credentials: "include",
-//     method: "POST",
-//     body: JSON.stringify(data),
-//     headers,
-//   })
-//     // .then((res) => res.json())
-//     .then((response) => {
-//       console.log("server response: ", response);
-//       if (callback) callback();
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
-// import { fetchPostJson } from "../../../scripts/fetchHelper";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -91,6 +72,7 @@ function AddWish1(props) {
     };
   });
   const classes = useStyles();
+  const [selectedTab, setSelectedTab] = useState("url");
   const [filteredImages, setFilteredImages] = useState([]);
   const [url, setUrl] = useState(null);
   const [retrieved, setRetrieved] = useState(null);
@@ -102,28 +84,6 @@ function AddWish1(props) {
   }
 
   function handleScrapeProduct(url) {
-    // setUrl(url);
-    // axios
-    //   .get(`${process.env.REACT_APP_BASE_URL}/api/wishes/productInfo`, {
-    //     url: url,
-    //   })
-    //   .then(async (res) => {
-    //     // if (res.status !== 200) {
-    //     //   const json = await res.json();
-    //     //   alert(json.message);
-    //     // }
-    //     const info = res.data;
-    //     const images = info.imageSrcs;
-    //     delete info.imageSrcs;
-    //     setProductInfo(info);
-    //     if (res.data) setRetrieved("true");
-
-    //     const uniqueImages = [...new Set(images)];
-    //     filterAndSetImages(uniqueImages);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
     setUrl(url);
     setStatus("loading");
 
@@ -155,18 +115,34 @@ function AddWish1(props) {
       });
   }
   const postWish = async (data) => {
-    data.url = url;
+    if (selectedTab === "url") data.url = url;
     data.currency = props.currency;
     data.wishlist = props.wishlist;
-    const headers = new Headers();
-    headers.append("CSRF-Token", user.csrfToken);
-    headers.append("Content-Type", "application/json");
-    await fetch(process.env.REACT_APP_BASE_URL + "/api/wishlistItems", {
+    const fetchOptions = {
       credentials: "include",
       method: "POST",
-      body: JSON.stringify(data),
-      headers,
-    })
+    };
+    const headers = new Headers();
+    headers.append("CSRF-Token", user.csrfToken);
+    if (selectedTab === "manual") {
+      const fd = new FormData();
+      const dataArray = Object.entries(data);
+
+      dataArray.forEach((datum) => {
+        if (datum[0] === "categories") return;
+        fd.append(datum[0], datum[1]);
+      });
+      fetchOptions.headers = headers;
+      fetchOptions.body = fd;
+    } else if (selectedTab === "url") {
+      headers.append("Content-Type", "application/json");
+      fetchOptions.body = JSON.stringify(data);
+      fetchOptions.headers = headers;
+    }
+    await fetch(
+      process.env.REACT_APP_BASE_URL + "/api/wishlistItems",
+      fetchOptions
+    )
       // .then((res) => res.json())
       .then(async (response) => {
         console.log("server response: ", response);
@@ -181,11 +157,6 @@ function AddWish1(props) {
       .catch((err) => {
         console.log(err);
       });
-    // fetchPostJson(
-    //   wishInfo,
-    //   process.env.REACT_APP_BASE_URL + "/api/wishlistItems",
-    //   () => props.afterAddWish(wishInfo)
-    // );
   };
   const clearProduct = () => {
     setStatus(null);
@@ -226,44 +197,69 @@ function AddWish1(props) {
         >
           Add A Wish
         </ResponsiveDialogTitleSection>
-        <div
-          style={{
-            height: "100%",
-            flexDirection: "column",
-            padding: "1em",
-            background: theme.palette.secondary.light,
-            width: screenSize === "sm" && "400px",
+        <Tabs
+          centered
+          onChange={(e, newValue) => {
+            setSelectedTab(newValue);
           }}
+          value={selectedTab}
+          aria-label="basic tabs example"
         >
-          Want to add wishes faster?
-          <div style={{ padding: ".5em 0 0 0" }}>
-            Get the{" "}
-            <Button
-              style={{
-                display: "inline",
-              }}
-              disableElevation={true}
-              href="/extension"
-              variant="contained"
-              color="primary"
-            >
-              Add To WishTender{" "}
-            </Button>{" "}
-            Quick Button
+          <Tab value={"url"} label="From URl" />
+          <Tab value={"manual"} label="Custom" />
+        </Tabs>
+        <TabPanel selectedTab={selectedTab} tab={"url"}>
+          <div
+            style={{
+              height: "100%",
+              flexDirection: "column",
+              padding: "1em",
+              background: theme.palette.secondary.light,
+              width: screenSize === "sm" && "400px",
+            }}
+          >
+            Want to add wishes faster?
+            <div style={{ padding: ".5em 0 0 0" }}>
+              Get the{" "}
+              <Button
+                style={{
+                  display: "inline",
+                }}
+                disableElevation={true}
+                href="/extension"
+                variant="contained"
+                color="primary"
+              >
+                Add To WishTender{" "}
+              </Button>{" "}
+              Quick Button
+            </div>
           </div>
-        </div>
-        <Box className={classes.container}>
-          <Box className={classes.input_container}>
-            <Search submit={(e) => handleScrapeProduct(e)} />
+          <Box className={classes.container}>
+            <Box className={classes.input_container}>
+              <Search submit={(e) => handleScrapeProduct(e)} />
+            </Box>
+
+            <WishForm
+              classes={classes}
+              disabled={!retrieved}
+              info={productInfo}
+              images={filteredImages}
+              onSubmit={postWish}
+            />
           </Box>
-          <WishForm
-            classes={classes}
-            disabled={!retrieved}
-            info={productInfo}
-            images={filteredImages}
-            onSubmit={postWish}
-          />
-        </Box>
+        </TabPanel>
+        <TabPanel selectedTab={selectedTab} tab={"manual"}>
+          <Box className={classes.container}>
+            <WishFormManual
+              classes={classes}
+              info={productInfo}
+              images={filteredImages}
+              onSubmit={postWish}
+              manual={true}
+            />
+          </Box>
+        </TabPanel>
       </Box>
     </StyledDialog>
   );

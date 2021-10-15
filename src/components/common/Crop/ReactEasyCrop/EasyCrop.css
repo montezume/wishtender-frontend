@@ -23,12 +23,15 @@
   bottom: 80px;
   width: 100%;
   background: black;
+  border: 1px solid lightgray;
+  margin: auto;
+  width: 70%;
 
   position: relative;
 }
 
 .crop-preview:after {
-  content: '';
+  content: "";
   display: block;
   padding-bottom: 100%;
 }

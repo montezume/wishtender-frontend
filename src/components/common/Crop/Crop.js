@@ -52,9 +52,12 @@ export default function Crop(props) {
   };
 
   return (
-    <form className="crop-and-upload-container">
+    <form
+      style={{ minWidth: "260px", margin: "1em" }}
+      className="crop-and-upload-container"
+    >
       {/* <CloseButton onClose={props.onClose}></CloseButton> */}
-      <Typography className={classes.title}>Profile Picture</Typography>
+      <Typography className={classes.title}>{props.label}</Typography>
       <EasyCrop
         imgSrc={props.imgSrc || ""}
         onCropComplete={onCropComplete}
@@ -63,14 +66,16 @@ export default function Crop(props) {
         aspect={props.aspect}
         finalImageDimensions={props.finalImageDimensions}
       ></EasyCrop>
-      <Button
-        variant="contained"
-        color="primary"
-        disableElevation
-        onClick={onCropAndSave}
-      >
-        Crop and Save
-      </Button>
+      <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+        <Button
+          variant="contained"
+          color="primary"
+          disableElevation
+          onClick={onCropAndSave}
+        >
+          Crop and Save
+        </Button>
+      </div>
     </form>
   );
 }
