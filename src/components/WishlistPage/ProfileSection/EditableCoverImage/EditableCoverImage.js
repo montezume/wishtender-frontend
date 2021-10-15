@@ -5,7 +5,6 @@ import "./EditableCoverImage.css";
 import SelectCropUpdateImage from "../SelectCropUpdateImage/SelectCropUpdateImage";
 import StyledIconButton from "../../../common/StyledIconButton/StyledIconButton";
 
-
 /**
  * Renders a <EditableCoverImage /> component
  * @param  props
@@ -21,6 +20,7 @@ export default function EditableCoverImage(props) {
       {props.isAuth && (
         <div className="edit-image-button__container">
           <SelectCropUpdateImage
+            label="Cover Image"
             handleUpdateImage={props.handleUpdateCoverImage}
             // ariaLabel="Update Cover Image"
             // size="medium"
@@ -31,9 +31,8 @@ export default function EditableCoverImage(props) {
               height: aspect.h * 60,
             }}
           >
-                        <StyledIconButton             ariaLabel="Update Cover Image"
-            size="medium">
-            <PhotoSizeSelectActual />
+            <StyledIconButton ariaLabel="Update Cover Image" size="medium">
+              <PhotoSizeSelectActual />
             </StyledIconButton>
           </SelectCropUpdateImage>
         </div>

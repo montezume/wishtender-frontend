@@ -217,11 +217,12 @@ export default function EditWishForm(props) {
                     ? URL.createObjectURL(imageFile)
                     : props.info.itemImage
                 }
-                style={{ width: "70%" }}
+                style={{ width: "161px" }}
                 alt="product"
               />
 
               <SelectCropUpdateImage
+                label={"Item Image"}
                 aspect={1}
                 cropShape="rect"
                 finalImageDimensions={{ width: 300, height: 300 }}

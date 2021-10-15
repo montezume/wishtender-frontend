@@ -16,16 +16,18 @@ const Gift = ({ orderId, gift }) => {
         <p>{gift.item.itemName}</p>
       </TableCell>
       <TableCell>
-        <Button
-          size="small"
-          color="primary"
-          disableElevation
-          href={gift.item.url}
-          rel="noopener"
-          target="_blank"
-        >
-          Purchase
-        </Button>
+        {gift.item.url && (
+          <Button
+            size="small"
+            color="primary"
+            disableElevation
+            href={gift.item.url}
+            rel="noopener"
+            target="_blank"
+          >
+            Purchase
+          </Button>
+        )}
 
         <RemoveWish wish={gift.item._id}>
           <Button size="small" disableElevation style={{ display: "block" }}>

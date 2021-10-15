@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import Cropper from 'react-easy-crop';
-import Slider from '@material-ui/core/Slider';
-import './EasyCrop.css';
+import React, { useState } from "react";
+import Cropper from "react-easy-crop";
+import Slider from "@material-ui/core/Slider";
+import "./EasyCrop.css";
 
 /**
  * Renders a <EasyCrop /> component
@@ -15,10 +15,12 @@ export default function EasyCrop(props) {
   const [crop, onCropChange] = useState({ x: 0, y: 0 });
   const [zoom, onZoomChange] = useState(1);
 
-  const slider = props.slider !== null && props.slider !== undefined ? props.slider : true;
+  const slider =
+    props.slider !== null && props.slider !== undefined ? props.slider : true;
 
   const onCropComplete = (croppedArea, croppedAreaPixels) => {
-    if (props.onCropComplete) props.onCropComplete({ croppedArea, croppedAreaPixels });
+    if (props.onCropComplete)
+      props.onCropComplete({ croppedArea, croppedAreaPixels });
   };
 
   return (
@@ -32,7 +34,7 @@ export default function EasyCrop(props) {
           onCropChange={onCropChange}
           onCropComplete={onCropComplete}
           onZoomChange={onZoomChange}
-          cropShape={props.cropShape || 'round'}
+          cropShape={props.cropShape || "round"}
           aspect={props.aspect || 1}
           showGrid={props.showGrid || false}
         />

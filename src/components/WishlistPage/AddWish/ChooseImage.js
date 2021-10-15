@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import IconButton from "@material-ui/core/IconButton";
@@ -17,9 +17,9 @@ function ChooseImage(props) {
   const [displayImage, setDisplayImage] = useState(0);
   const theme = useTheme();
 
-  // useEffect(() => {
-  //   if (!displayImage) setDisplayImage(0);
-  // }, [props]);
+  useEffect(() => {
+    if (props.noCrop) props.onImageChosen(props.images[displayImage]);
+  }, [displayImage, props]);
 
   function move(num) {
     let newDisplayImage = displayImage + num;
@@ -40,16 +40,32 @@ function ChooseImage(props) {
 
   return (
     <div style={{ display: "inherit", gap: "inherit" }}>
-      <Typography>Choose & Position Image</Typography>
-      <div style={{ position: "relative" }}>
+      <Typography>
+        Choose {!props.noCrop ? "& Position " : ""}Image
+        {props.noCrop ? " Or Upload " : ""}
+      </Typography>
+      <div style={{ position: "relative", width: "80%", margin: "auto" }}>
         {/* <EasyCrop slider={false} cropShape="rect" imgSrc={props.images[displayImage]}></EasyCrop> */}
-        <EasyCrop
-          aspect="1"
-          cropShape="rect"
-          slider={false}
-          onCropComplete={handleSetCrop}
-          imgSrc={props.images[displayImage]}
-        ></EasyCrop>
+        {props.noCrop ? (
+          <div>
+            <img
+              style={{
+                maxHeight: "100%",
+                maxWidth: "100%",
+              }}
+              src={props.images[displayImage]}
+              alt="manual gift default"
+            ></img>
+          </div>
+        ) : (
+          <EasyCrop
+            aspect="1"
+            cropShape="rect"
+            slider={false}
+            onCropComplete={handleSetCrop}
+            imgSrc={props.images[displayImage]}
+          ></EasyCrop>
+        )}
         <div
           style={{
             position: "relative",
@@ -59,10 +75,18 @@ function ChooseImage(props) {
             background: theme.palette.primary.main + "80",
           }}
         >
-          <IconButton onClick={() => move(-1)}>
+          <IconButton
+            onClick={() => {
+              move(-1);
+            }}
+          >
             <NavigateBeforeIcon />
           </IconButton>
-          <IconButton onClick={() => move(1)}>
+          <IconButton
+            onClick={() => {
+              move(1);
+            }}
+          >
             <NavigateNextIcon />
           </IconButton>
         </div>
