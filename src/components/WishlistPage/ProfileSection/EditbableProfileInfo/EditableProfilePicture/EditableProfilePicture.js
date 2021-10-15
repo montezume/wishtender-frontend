@@ -24,6 +24,7 @@ export default function EditableProfilePicture({
       {isAuth && (
         <div className="update_profile_picture_button__container">
           <SelectCropUpdateImage
+            label="Profile Image"
             aspect={aspect.w / aspect.h}
             // size="small"
             // ariaLabel="Update Profile Image"

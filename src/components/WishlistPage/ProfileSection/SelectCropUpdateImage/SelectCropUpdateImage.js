@@ -11,7 +11,7 @@ import FileInputWrapper from "../../../common/FileInputWrapper/FileInputWrapper"
  * @param  props.finalImageDimensions ex- {width: 300, height: 300}
  * @param  props.children HTML to act like button
  **/
-export default function InputProfilePic(props) {
+export default function InputPic(props) {
   const [newImageSrc, setNewImageSrc] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -36,6 +36,7 @@ export default function InputProfilePic(props) {
         onClose={handleDialogClose}
       >
         <Crop
+          label={props.label}
           onClose={handleDialogClose}
           onCroppedImageCreated={props.handleUpdateImage}
           imgSrc={newImageSrc}
