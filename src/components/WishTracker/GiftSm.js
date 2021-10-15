@@ -42,13 +42,19 @@ const Gift = ({ orderId, gift, setRefreshWishlist, tweetIntent }) => {
             alt={gift.item.itemName}
           />
           <p className={classes.itemName}>
-            <a href={gift.item.url}> {gift.item.itemName}</a>
+            {gift.item.url ? (
+              <a href={gift.item.url}> {gift.item.itemName}</a>
+            ) : (
+              gift.item.itemName
+            )}
           </p>
-          <p>
-            <a href={gift.item.url}>
-              <OpenInNewIcon color="primary" />
-            </a>
-          </p>
+          {gift.item.url && (
+            <p>
+              <a href={gift.item.url}>
+                <OpenInNewIcon color="primary" />
+              </a>
+            </p>
+          )}
         </Box>
       </TableCell>
       <TableCell className={classes.cell2}>

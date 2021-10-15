@@ -95,11 +95,14 @@ export default function WishFormManual(props) {
   } = useForm();
 
   useEffect(() => {
-    setValue("url", url, { shouldValidate: true });
+    // setValue("url", url, { shouldValidate: true });
     setValue("itemName", name, { shouldValidate: true });
     if (price !== "") setValue("price", price, { shouldValidate: true });
   }, [name, price, setValue, url]);
   const onSubmit = (data) => {
+    if (data.url === null || data.url === "") {
+      delete data.url;
+    }
     //send data to backend post wish item
     data.price = toSmallestUnit(data.price, clientCurrency);
     // data.imageCrop = crop;

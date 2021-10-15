@@ -73,7 +73,7 @@ export default function AddToCart(props) {
           </Typography>
           <img
             style={{
-              width: "50%",
+              width: "170px",
               boxShadow: "20px 20px 30px grey",
               borderRadius: "4px",
               margin: "20px",
