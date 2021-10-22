@@ -29,6 +29,30 @@ export default withRouter(function AccountSettings(props) {
   const [dialog, setDialog] = useState(null);
   const { user, getUser, setUser } = useContext(UserContext);
 
+  const paymentMenuItem = user.stripeAccountInfo?.activated ? (
+    <StyledMenuItem
+      href={paymentLink}
+      style={{ borderBottom: "1px solid #e6e6e6" }}
+      component={Link}
+      color="primary"
+    >
+      <ListItemText primary="Payment Dashboard" />
+      <ArrowRightIcon />
+    </StyledMenuItem>
+  ) : (
+    <StyledMenuItem
+      onClick={() =>
+        alert("You need to activate payments from the wishlist page first.")
+      }
+      style={{ borderBottom: "1px solid #e6e6e6" }}
+      component={Link}
+      color="primary"
+    >
+      <ListItemText primary="Payment Dashboard" />
+      <ArrowRightIcon />
+    </StyledMenuItem>
+  );
+
   return (
     //collapsing margins, need display flex
     <Container
@@ -40,16 +64,7 @@ export default withRouter(function AccountSettings(props) {
       }}
     >
       <Paper style={{ marginTop: "7vw" }}>
-        <StyledMenuItem
-          href={paymentLink}
-          style={{ borderBottom: "1px solid #e6e6e6" }}
-          component={Link}
-          color="primary"
-        >
-          <ListItemText primary="Payment Dashboard" />
-          <ArrowRightIcon />
-        </StyledMenuItem>
-
+        {paymentMenuItem}
         <StyledMenuItem
           color="primary"
           onClick={() => {

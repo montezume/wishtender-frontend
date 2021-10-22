@@ -29,6 +29,27 @@ function WishTracker(props) {
   const [refreshOrders, setRefreshOrders] = useState(null);
   const paymentLink = `${process.env.REACT_APP_BASE_URL}/api/stripe/login?from=wish-tracker`;
 
+  const paymentButton = currentUser.stripeAccountInfo?.activated ? (
+    <Button
+      color="primary"
+      style={{ fontWeight: "500" }}
+      disableElevation
+      href={paymentLink}
+    >
+      Payment Dashboard <RightIcon color="primary" />
+    </Button>
+  ) : (
+    <Button
+      color="primary"
+      style={{ fontWeight: "500" }}
+      disableElevation
+      onClick={() =>
+        alert("You need to activate payments from the wishlist page first.")
+      }
+    >
+      Payment Dashboard <RightIcon color="primary" />
+    </Button>
+  );
   // local 4000 if startlocal
   // api staging if startstaging
   // api if start
@@ -83,16 +104,7 @@ function WishTracker(props) {
                 <Typography variant="h6" style={{ margin: "0 8px" }}>
                   Wish-Tracker
                 </Typography>
-                <Button
-                  color="primary"
-                  // component={Button}
-                  style={{ fontWeight: "500" }}
-                  // variant="outlined"
-                  disableElevation
-                  href={paymentLink}
-                >
-                  Payment Dashboard <RightIcon color="primary" />
-                </Button>
+                {paymentButton}
               </Box>
             ) : (
               <Box
@@ -100,16 +112,7 @@ function WishTracker(props) {
                 alignItems="center"
                 justifyContent="space-between"
               >
-                <Button
-                  color="primary"
-                  // component={Button}
-                  style={{ fontWeight: "500" }}
-                  // variant="outlined"
-                  disableElevation
-                  href={paymentLink}
-                >
-                  Payment Dashboard <RightIcon color="primary" />
-                </Button>
+                {paymentButton}
 
                 <Typography variant="h6" style={{ margin: "0 8px" }}>
                   Wish-Tracker

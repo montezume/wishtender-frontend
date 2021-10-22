@@ -10,6 +10,22 @@
       "name": "Launch Chrome against localhost",
       "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}"
+    },
+    {
+      "type": "pwa-chrome",
+      "request": "launch",
+      "name": "Launch vscode not extension",
+      "url": "http://localhost:3000",
+
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "type": "pwa-chrome",
+      "request": "launch",
+      "name": "Launch vscode mobile",
+      "url": "http://10.0.2.2:3000",
+
+      "webRoot": "${workspaceFolder}"
     }
   ]
 }
