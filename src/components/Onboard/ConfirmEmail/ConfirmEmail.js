@@ -2,8 +2,9 @@ import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { Box, Button, Typography, Container } from "@material-ui/core";
 import { UserContext } from "../../../contexts/UserContext";
+import { withRouter } from "react-router";
 
-export default function ConfirmEmail() {
+export default withRouter(function ConfirmEmail(props) {
   const { user, setUser, getUser } = useContext(UserContext);
 
   const [message, setMessage] = useState(null);
@@ -26,8 +27,12 @@ export default function ConfirmEmail() {
       if (res.status >= 400 && res.status < 500) {
         const json = await res.json();
         setMessage(json.message);
+        if (res.status == 429) alert(json.message);
       }
-      if (res.status === 201) setMessage("Sent");
+      if (res.status === 200) {
+        setMessage("Sent");
+        return props.history.push("/confirmation-email?email=" + email);
+      }
     });
   };
   const confirm = (email, token) => {
@@ -49,7 +54,6 @@ export default function ConfirmEmail() {
         if (!user) {
           const updatedUser = await getUser();
           setUser(updatedUser);
-
           if (!updatedUser.aliases || !updatedUser.aliases.length) {
             setSuccess("/wishlist-setup");
           } else {
@@ -140,7 +144,6 @@ export default function ConfirmEmail() {
               </Button>
             </Box>
             {success ? <Redirect to={success} /> : ""}
-            {message && message}
           </>
         ) : (
           <>
@@ -170,11 +173,10 @@ export default function ConfirmEmail() {
               </Button>
             </Box>
             {success ? <Redirect to={success} /> : ""}
-            {message && message}
           </>
         )}
         {message && message}
       </Container>
     </Box>
   );
-}
+});
