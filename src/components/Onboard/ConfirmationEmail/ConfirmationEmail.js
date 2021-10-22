@@ -34,8 +34,13 @@ export default withRouter(
         if (res.status >= 400 && res.status < 500) {
           const json = await res.json();
           setMessage(json.message);
+          alert(json.message);
         }
-        if (res.status === 201) setMessage("Sent");
+
+        if (res.status === 200) {
+          setMessage("Sent");
+          alert("Email sent.");
+        }
       });
     };
 
