@@ -52,6 +52,7 @@ export default function Footer() {
         <a target="_blank" href="files/privacy-9-1-21.pdf">
           Privacy Policy
         </a>
+        <a href="/how-it-works">How it works</a>
       </div>
       <div className={classes.footer_section}>
         <h2>Contact</h2>

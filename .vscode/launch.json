@@ -26,6 +26,14 @@
       "url": "http://10.0.2.2:3000",
 
       "webRoot": "${workspaceFolder}"
+    },
+    {
+      "type": "pwa-chrome",
+      "request": "launch",
+      "name": "Launch vscode andriod usb",
+      "url": "http://192.168.0.17:3000",
+
+      "webRoot": "${workspaceFolder}"
     }
   ]
 }

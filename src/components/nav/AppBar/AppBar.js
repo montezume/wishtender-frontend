@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import AccountIcon from "@material-ui/icons/AccountBox";
 import PopUpMenu from "../../common/PopUpMenu/PopUpMenu";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -9,6 +9,7 @@ import LogoutButton from "../LogoutButton/LogoutButton";
 import SignupButton from "../SignupButton/SignupButton";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCartOutlined";
 import Tooltip from "@material-ui/core/Tooltip";
+import LinkMUI from "@material-ui/core/Link";
 
 // app bar
 import Toolbar from "@material-ui/core/Toolbar";
@@ -126,6 +127,19 @@ function BackToTop(props) {
               />
             </a>
           </div>
+          <Button
+            className={classes.margin}
+            component={Link}
+            to={{
+              pathname: "/how-it-works",
+              state:
+                props.location.pathname !== "/"
+                  ? { userType: "gifters" }
+                  : { userType: "wishers" },
+            }}
+          >
+            How it works
+          </Button>
           {!user ? (
             props.screen !== "xs" ? (
               <>
@@ -194,4 +208,4 @@ function BackToTop(props) {
     </React.Fragment>
   );
 }
-export default withStyles(styles)(BackToTop);
+export default withRouter(withStyles(styles)(BackToTop));

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { UserContext } from "../../../contexts/UserContext";
-import TabPanel from "./TabPanel";
+import TabPanel from "../../common/TabPanel";
 import { Button, LinearProgress, Tab, Tabs } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import theme from "../../../theme";
