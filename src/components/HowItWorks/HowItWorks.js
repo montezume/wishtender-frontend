@@ -89,8 +89,8 @@ export default function HowItWorks(props) {
         <InstructionCard
           classes={classes}
           step="Step 3: Add your link to your Twitter/Linktree/Other"
-          body="Share you wishlist link with your fans. When a fan purchase an
-          item you get the cash to purchase the item. You can send a picture
+          body="Share you wishlist link with your fans. When a fan purchases an
+          item off your wishlist, you get the cash to purchase the item. You can send a picture
           'thank you' note within the app."
           imageSrc="images/link.png"
         />
@@ -111,7 +111,7 @@ export default function HowItWorks(props) {
         <InstructionCard
           classes={classes}
           step="Step 2: Leave a message"
-          body="You can choose to leave a message and a pseudonym. Your email will be kept hidden, but we will relay any picture messages from your fan to this email."
+          body="You can choose to leave a message and a pseudonym. Your email will be kept hidden, but we will relay any picture messages from the creator to this email."
           imageSrc="images/message.png"
         />
         <InstructionCard
