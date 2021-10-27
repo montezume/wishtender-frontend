@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "./contexts/UserContext";
 import { RouteContext } from "./contexts/RouteContext";
-
+import HowItWorks from "./components/HowItWorks/HowItWorks";
 import Extension from "./components/Extension/Extension";
 import { CurrencyContext } from "./contexts/CurrencyContext";
 import { CountryContext } from "./contexts/CountryContext";
@@ -215,6 +215,7 @@ function App(props) {
       <Route path="/reset-password">
         <ResetPassword />
       </Route>
+      <Route component={HowItWorks} path="/how-it-works"></Route>
 
       <Route
         path="/connect-success"
