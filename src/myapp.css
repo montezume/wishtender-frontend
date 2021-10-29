@@ -130,7 +130,7 @@ a {
 }
 
 .wishlist .MuiGrid-spacing-xs-2 > .MuiGrid-item {
-  padding: 2%;
+  /* padding: 1em; */
 }
 .wish_item img {
   width: inherit;
