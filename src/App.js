@@ -43,14 +43,10 @@ import theme from "./theme";
 import CheckOutSuccess from "./components/CheckOutSuccess/CheckOutSuccess";
 // import WishForm from "./components/wishlistpage/AddWish/WishForm/WishForm";
 import ConnectSuccess from "./components/ConnectSuccess/ConnectSucess";
-import { CssBaseline, Dialog } from "@material-ui/core";
-import StyledDialog from "./components/common/StyledDialog/StyledDialog";
-import SelectCurrencyForm from "./components/SelectCurrencyForm/SelectCurrencyForm";
+import { CssBaseline, Snackbar } from "@material-ui/core";
 import ForgotPassword from "./components/ResetPassword/ForgotPassword";
 import SendResetPassword from "./components/ResetPassword/SendResetPassword";
 import ResetPassword from "./components/ResetPassword/ResetLinkFlow/ResetPassword";
-import UpdateEmail from "./components/AccountSettings/UpdateEmail";
-import LandingPageMenu from "./components/LandingPage/LandingPageMenu";
 import StripeInstructions from "./components/WishlistPage/ProfileSection/StripeInstructions";
 
 function App(props) {
@@ -59,48 +55,74 @@ function App(props) {
     useContext(CurrencyContext);
 
   const [user, setUser] = useState();
-  const [currencyList, setCurrencyList] = useState([]);
   const [currency, setCurrency] = useState(null);
-  const [currencyNeeded, setCurrencyNeeded] = useState(false);
+
+  const [cookies, setCookies] = useState(parsedCookies());
+  const [currencyList, setCurrencyList] = useState(
+    cookies?.locale ? getCurrencyList(JSON.parse(cookies?.locale)) : []
+  );
+
+  const [showCurrencySnackBar, setShowCurrencySnackBar] = useState(null);
+  // const [currencyNeeded, setCurrencyNeeded] = useState(false);
+  const currencyNotNeeded = window.location.pathname === "/";
   const { getNotifications } = useContext(NotificationContext);
   const [notifications, setNotifications] = useState();
   const [isCurrentUsersProfile, setIsCurrentUsersProfile] = useState();
-  const cookies = parsedCookies();
   useTraceUpdate(App.name, props, { user });
+
+  // handle getting user
   useEffect(() => {
     getUser().then((user) => {
-      if (user && user?.currency) {
-        setCurrency(user.currency);
-      }
-      if ((!user || !user?.currency) && parsedCookies().currency) {
-        setCurrency(getCurrencyCookie());
-      }
       setUser(user);
-      const cookies = parsedCookies();
-      const locale = cookies.locale ? JSON.parse(cookies.locale) : null;
-      const currencies = getCurrencyList(locale);
-      setCurrencyList(currencies);
-      if (currencyNeeded) {
-        // const currencies = getCurrencyList(JSON.parse(parsedCookies().locale));
-        // setCurrencyList(currencies);
-        // chooseCurrency(JSON.parse(parsedCookies().locale));
-      }
     });
-  }, [currency, currencyNeeded, getUser]);
+  }, [getUser]);
 
-  //
+  // handle getting detecting currency preferences from locale cookie
   useEffect(() => {
-    if (user && user?.currency) {
-      setCurrency(user.currency);
+    if (!currencyNotNeeded && !cookies?.currency) {
+      const newCookies = parsedCookies();
+      setCookies(newCookies);
+      const locale = newCookies.locale ? JSON.parse(newCookies.locale) : null;
+      const newList = getCurrencyList(locale);
+      setCurrencyList(newList);
+      ///what code do we need to pass to this?
+      if (newList[0].match) {
+        setCurrencyCookieAndContext(newList[0].code, setCurrency);
+        setShowCurrencySnackBar(true);
+      } else {
+        setCurrencyCookieAndContext("noConversion", setCurrency);
+        setShowCurrencySnackBar(true);
+      }
     }
-  }, [user]);
+  }, [
+    cookies?.currency,
+    cookies.locale,
+    currencyList,
+    currencyNotNeeded,
+    setCurrencyCookieAndContext,
+    user,
+  ]);
 
+  // handle setting currency context
+  useEffect(() => {
+    // user user settings
+    if (user && user?.currency) {
+      return setCurrency(user.currency);
+    }
+    //set currency from the saved cookie
+    if ((!user || !user?.currency) && parsedCookies().currency) {
+      return setCurrency(getCurrencyCookie());
+    }
+  }, [getCurrencyCookie, user]);
+
+  // handle notifications
   useEffect(() => {
     if (!user || !user.aliases || !user.aliases.length) return;
     getNotifications(user.aliases[0]).then((notifications) => {
       setNotifications(notifications);
     });
   }, [user, getNotifications]);
+
   const SwitchRoutes = (
     <Switch>
       <Route
@@ -286,7 +308,6 @@ function App(props) {
                     currency,
                     currencyList,
                     setCurrency,
-                    setCurrencyNeeded,
                     getCurrencyCookie,
                     setCurrencyCookie,
                     setCurrencyCookieAndContext,
@@ -307,28 +328,25 @@ function App(props) {
                           allRoutes: routesArray,
                         }}
                       >
-                        {currencyNeeded && (
-                          <StyledDialog
-                            noClose={true}
-                            open={currencyNeeded}
-                            onClose={() => {
-                              setCurrencyNeeded(false);
-                              if (!currency) {
-                                setCurrencyCookie("noConversion");
-                              }
+                        {currency && (
+                          <Snackbar
+                            anchorOrigin={{
+                              vertical: "top",
+                              horizontal: "right",
                             }}
-                          >
-                            <SelectCurrencyForm
-                              onClose={() => {
-                                setCurrencyNeeded(false);
-                                if (!currency) {
-                                  setCurrencyCookie("noConversion");
-                                }
-                              }}
-                              currencies={currencyList}
-                            />
-                          </StyledDialog>
+                            open={showCurrencySnackBar}
+                            onClose={() => {
+                              setShowCurrencySnackBar(false);
+                            }}
+                            message={
+                              currency === "noConversion"
+                                ? "Your currency wasn't detected."
+                                : "Your currency was detected as " + currency
+                            }
+                            autoHideDuration={4000}
+                          />
                         )}
+
                         <div
                           style={{
                             minHeight: "calc(100vh - 72px)",

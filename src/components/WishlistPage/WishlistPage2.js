@@ -7,17 +7,12 @@ import { CurrencyContext } from "../../contexts/CurrencyContext";
 import { RouteContext } from "../../contexts/RouteContext";
 import { fetchGet } from "../../scripts/fetchHelper";
 import { useParams } from "react-router-dom";
-import useChooseCurrency from "../../hooks/useChooseCurrency";
 import useTraceUpdate from "../../scripts/useTraceUpdate";
 import Wishlist from "./Wishlist2";
 import {
-  unitToStandard,
-  parsePrice,
-  // clientCurrency,
   parseWishlistPrices,
   parseConvertWishlistPrices,
 } from "../../scripts/helpers";
-import { Typography } from "@material-ui/core";
 
 const handleRoute =
   process.env.REACT_APP_BASE_URL + "/api/aliases?handle_lowercased=";
@@ -31,12 +26,7 @@ function WishlistPage(props) {
   const { getWishlistAndParse, getWishlist } = useContext(WishlistContext);
   const [customGetWishlistAndParse, setCustomGetWishlistAndParse] =
     useState(null);
-  useChooseCurrency();
-  const {
-    currency: clientCurrency,
-    setCurrency,
-    setCurrencyNeeded,
-  } = useContext(CurrencyContext);
+  const { currency: clientCurrency, setCurrency } = useContext(CurrencyContext);
 
   const { setIsCurrentUsersProfile, isCurrentUsersProfile } =
     useContext(RouteContext);
@@ -129,7 +119,6 @@ function WishlistPage(props) {
     convertRate,
     currentUser,
     localeContext,
-    setCurrencyNeeded,
     setIsCurrentUsersProfile,
   ]);
 

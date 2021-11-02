@@ -1,5 +1,5 @@
-import { IconButton, Button, MenuItem, Tooltip } from "@material-ui/core";
-import React, { useContext, useEffect, useState } from "react";
+import { Button, Tooltip } from "@material-ui/core";
+import React, { useContext, useState } from "react";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
 import PopUpMenu from "../common/PopUpMenu/PopUpMenu";
 import currenciesMenuItemArray from "../SelectCurrencyForm/currenciesMenuArray";
@@ -18,7 +18,7 @@ export default function CurrenciesMenu({ onClose, anchorEl }) {
 
   return (
     <>
-      {currencyList?.length && currency && (
+      {currencyList?.length && currency ? (
         <>
           <Tooltip title="Currency">
             <Button
@@ -48,6 +48,8 @@ export default function CurrenciesMenu({ onClose, anchorEl }) {
             })}
           </PopUpMenu>
         </>
+      ) : (
+        ""
       )}
     </>
   );
