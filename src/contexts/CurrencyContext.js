@@ -31,5 +31,4 @@ export const CurrencyContext = createContext({
   },
   getCurrency: () => {},
   setCurrency: () => {},
-  setCurrencyNeeded: () => {},
 });

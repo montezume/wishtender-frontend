@@ -124,7 +124,7 @@ export default function SelectCurrencyForm(props) {
             </Typography>
 
             <FormControl>
-              <FormLabel>Covert Prices?</FormLabel>
+              <FormLabel>Convert Prices?</FormLabel>
               <RadioGroup
                 value={convert ? "convert" : "noConvert"}
                 onChange={(e) => {
