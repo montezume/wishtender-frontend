@@ -249,7 +249,7 @@ const Wishlist = withRouter((props) => {
     props.history.push(
       `/${props.handle}${selectWish?._id ? `?item=${selectWish._id}` : ""}`
     );
-  }, [selectWish]);
+  }, [props.handle, props.history, selectWish]);
 
   useEffect(() => {
     if (props.isAuth && !items.length) {
@@ -429,7 +429,7 @@ const Wishlist = withRouter((props) => {
           onClose={() => {
             setSelectWish(null);
           }}
-          open={selectWish ? true : false}
+          open={props.location.search.match(/(?<=\?item=)(.*)/g)}
         >
           <EditWishForm
             categories={wishlist.categories}
@@ -454,7 +454,8 @@ const Wishlist = withRouter((props) => {
       )} */}
       {selectWish && !props.isAuth && (
         <AddToCart
-          open={selectWish ? true : false}
+          // got to item page
+          open={props.location.search.match(/(?<=\?item=)(.*)/g)}
           onClose={() => {
             setSelectWish(null);
           }}
