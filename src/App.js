@@ -79,7 +79,7 @@ function App(props) {
 
   // handle getting detecting currency preferences from locale cookie
   useEffect(() => {
-    if (!currencyNotNeeded && !cookies?.currency) {
+    if (!currencyNotNeeded && !cookies?.currency && parsedCookies().locale) {
       const newCookies = parsedCookies();
       setCookies(newCookies);
       const locale = newCookies.locale ? JSON.parse(newCookies.locale) : null;
@@ -95,6 +95,7 @@ function App(props) {
       }
     }
   }, [
+    cookies,
     cookies?.currency,
     cookies.locale,
     currencyList,
