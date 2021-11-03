@@ -429,7 +429,13 @@ const Wishlist = withRouter((props) => {
           onClose={() => {
             setSelectWish(null);
           }}
-          open={props.location.search.match(/(?<=\?item=)(.*)/g)}
+          // Looks like Safari doesn't support lookbehind yet
+          // open={props.location.search.match(/(?<=\?item=)(.*)/g)}
+          open={props.location.search
+            ?.slice(1)
+            ?.split("&")
+            ?.find((query) => query.slice(0, 4) === "item")
+            ?.slice(5)}
         >
           <EditWishForm
             categories={wishlist.categories}
@@ -455,7 +461,13 @@ const Wishlist = withRouter((props) => {
       {selectWish && !props.isAuth && (
         <AddToCart
           // got to item page
-          open={props.location.search.match(/(?<=\?item=)(.*)/g)}
+          // no positive lookbehind on safari yet
+          // open={props.location.search.match(/(?<=\?item=)(.*)/g)}
+          open={props.location.search
+            ?.slice(1)
+            ?.split("&")
+            ?.find((query) => query.slice(0, 4) === "item")
+            ?.slice(5)}
           onClose={() => {
             setSelectWish(null);
           }}
