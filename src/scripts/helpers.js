@@ -1,4 +1,8 @@
 import getCurrencies from "./getCurrencies";
+import "@formatjs/intl-pluralrules/polyfill";
+import "@formatjs/intl-locale/polyfill";
+import "@formatjs/intl-numberformat/polyfill";
+import "@formatjs/intl-numberformat/locale-data/en";
 const countryData = require("country-data");
 
 const parsedCookies = () => {
