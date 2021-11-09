@@ -364,6 +364,7 @@ function App(props) {
                         >
                           {currency && (
                             <Snackbar
+                              style={{ top: "80px" }}
                               anchorOrigin={{
                                 vertical: "top",
                                 horizontal: "right",
@@ -377,7 +378,7 @@ function App(props) {
                                   ? "Your currency wasn't detected."
                                   : "Your currency was detected as " + currency
                               }
-                              autoHideDuration={4000}
+                              autoHideDuration={3500}
                             />
                           )}
 
