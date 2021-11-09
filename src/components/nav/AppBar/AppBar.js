@@ -137,7 +137,7 @@ function BackToTop(props) {
             to={{
               pathname: "/how-it-works",
               state:
-                props.location.pathname !== "/"
+                props.location.pathname !== "/" && !user?.email
                   ? { userType: "gifters" }
                   : { userType: "wishers" },
             }}
