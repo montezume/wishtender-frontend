@@ -8,7 +8,7 @@ import AddIcon from "@material-ui/icons/AddBox";
 import RemoveIcon from "@material-ui/icons/RemoveCircle";
 import theme from "../../theme";
 import { fetchPatchJson } from "../../scripts/fetchHelper";
-import { CartContext } from "./CartContext";
+import { CartContext } from "../../contexts/CartContext";
 import DisplayPrice from "../common/DisplayPrice";
 import { LocaleContext } from "../../contexts/LocaleContext";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
@@ -77,6 +77,9 @@ const updateCart = async (
         exchangeRates
       );
       cartContext.setCart(cart);
+      cartContext.setCartNotifications(
+        cartContext.cartNotificationsFromCart(cart)
+      );
     }
   );
 };

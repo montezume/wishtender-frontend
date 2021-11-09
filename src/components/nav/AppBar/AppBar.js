@@ -9,7 +9,8 @@ import LogoutButton from "../LogoutButton/LogoutButton";
 import SignupButton from "../SignupButton/SignupButton";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCartOutlined";
 import Tooltip from "@material-ui/core/Tooltip";
-import LinkMUI from "@material-ui/core/Link";
+import Badge from "@material-ui/core/Badge";
+import { CartContext } from "../../../contexts/CartContext";
 
 // app bar
 import Toolbar from "@material-ui/core/Toolbar";
@@ -46,6 +47,7 @@ function BackToTop(props) {
   const { user } = useContext(UserContext);
   const [accountMenuAnchor, setAccountMenuAnchor] = useState(null);
   const [currencyMenuAnchor, setCurrencyMenuAnchor] = useState(null);
+  const { cartNotifications } = useContext(CartContext);
 
   const [scrolledStyle, setscrolledStyle] = useState("noShadow");
   const toggleAccountMenu = (event) => {
@@ -79,7 +81,9 @@ function BackToTop(props) {
   const classes = useCustomStyles(props);
   const ShoppingCartButton = (
     <IconButton component={Link} to="/cart" color="primary">
-      <ShoppingCartIcon></ShoppingCartIcon>
+      <Badge badgeContent={cartNotifications} color="error">
+        <ShoppingCartIcon></ShoppingCartIcon>
+      </Badge>
     </IconButton>
   );
   return (
@@ -133,7 +137,7 @@ function BackToTop(props) {
             to={{
               pathname: "/how-it-works",
               state:
-                props.location.pathname !== "/"
+                props.location.pathname !== "/" && !user?.email
                   ? { userType: "gifters" }
                   : { userType: "wishers" },
             }}
