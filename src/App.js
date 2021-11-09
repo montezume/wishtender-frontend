@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "./contexts/UserContext";
+import { CartContext } from "./contexts/CartContext";
+// import { ExchangeRatesContext } from "./contexts/ExchangeRatesContext";
+
 import { RouteContext } from "./contexts/RouteContext";
 import HowItWorks from "./components/HowItWorks/HowItWorks";
 import Extension from "./components/Extension/Extension";
@@ -55,9 +58,16 @@ function App(props) {
     useContext(CurrencyContext);
 
   const [user, setUser] = useState();
+  const [cart, setCart] = useState();
+  const [cartNotifications, setCartNotifications] = useState();
+  const { getCartNotifications, getCart, cartNotificationsFromCart } =
+    useContext(CartContext);
+
   const [currency, setCurrency] = useState(null);
 
   const [cookies, setCookies] = useState(parsedCookies());
+  // const [exchangeRates, setExchangeRates] = useState();
+  const [localeCookies, setLocaleCookies] = useState(cookies);
   const [currencyList, setCurrencyList] = useState(
     cookies?.locale ? getCurrencyList(JSON.parse(cookies?.locale)) : []
   );
@@ -104,7 +114,16 @@ function App(props) {
     user,
   ]);
 
-  // handle setting currency context
+  // set cart
+  useEffect(() => {
+    if (user !== undefined) {
+      (async () => {
+        const notifications = await getCartNotifications();
+        setCartNotifications(notifications);
+      })();
+    }
+  }, [getCartNotifications, user]);
+
   useEffect(() => {
     // user user settings
     if (user && user?.currency) {
@@ -322,54 +341,66 @@ function App(props) {
                         getNotifications,
                       }}
                     >
-                      <RouteContext.Provider
+                      <CartContext.Provider
                         value={{
-                          isCurrentUsersProfile,
-                          setIsCurrentUsersProfile,
-                          allRoutes: routesArray,
+                          cart,
+                          setCart,
+                          getCartNotifications,
+                          getCart,
+                          cartNotificationsFromCart,
+                          cartNotifications,
+                          setCartNotifications,
                         }}
                       >
-                        {currency && (
-                          <Snackbar
-                            anchorOrigin={{
-                              vertical: "top",
-                              horizontal: "right",
-                            }}
-                            open={showCurrencySnackBar}
-                            onClose={() => {
-                              setShowCurrencySnackBar(false);
-                            }}
-                            message={
-                              currency === "noConversion"
-                                ? "Your currency wasn't detected."
-                                : "Your currency was detected as " + currency
-                            }
-                            autoHideDuration={4000}
-                          />
-                        )}
-
-                        <div
-                          style={{
-                            minHeight: "calc(100vh - 72px)",
-                            position: "relative",
-
-                            // start too low without this???
-                            // border: ".2px solid #9990",
-                            // height: "100%",
+                        <RouteContext.Provider
+                          value={{
+                            isCurrentUsersProfile,
+                            setIsCurrentUsersProfile,
+                            allRoutes: routesArray,
                           }}
                         >
-                          <Switch>
-                            {/* <Route path="/" exact>
+                          {currency && (
+                            <Snackbar
+                              anchorOrigin={{
+                                vertical: "top",
+                                horizontal: "right",
+                              }}
+                              open={showCurrencySnackBar}
+                              onClose={() => {
+                                setShowCurrencySnackBar(false);
+                              }}
+                              message={
+                                currency === "noConversion"
+                                  ? "Your currency wasn't detected."
+                                  : "Your currency was detected as " + currency
+                              }
+                              autoHideDuration={4000}
+                            />
+                          )}
+
+                          <div
+                            style={{
+                              minHeight: "calc(100vh - 72px)",
+                              position: "relative",
+
+                              // start too low without this???
+                              // border: ".2px solid #9990",
+                              // height: "100%",
+                            }}
+                          >
+                            <Switch>
+                              {/* <Route path="/" exact>
                             <LandingPageMenu />
                           </Route> */}
-                            <Route path="/">
-                              <Menu />
-                            </Route>
-                          </Switch>
-                          {SwitchRoutes}
-                        </div>
-                        <Footer></Footer>
-                      </RouteContext.Provider>
+                              <Route path="/">
+                                <Menu />
+                              </Route>
+                            </Switch>
+                            {SwitchRoutes}
+                          </div>
+                          <Footer></Footer>
+                        </RouteContext.Provider>
+                      </CartContext.Provider>
                     </NotificationContext.Provider>
                   </UserContext.Provider>
                 </CurrencyContext.Provider>

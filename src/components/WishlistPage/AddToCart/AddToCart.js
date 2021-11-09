@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { CartContext } from "../../../contexts/CartContext";
 import { Box, Button, Typography } from "@material-ui/core";
 import { fetchPatchJson } from "../../../scripts/fetchHelper";
 import { Redirect } from "react-router-dom";
@@ -9,15 +10,21 @@ import useScreenSize from "../../../hooks/useScreenSize";
 import DisplayPrice2 from "../../common/DisplayPrice2";
 export default function AddToCart(props) {
   const [cart, setCart] = useState(false);
+  const cartContext = useContext(CartContext);
+
   const screenSize = useScreenSize({
     breakpoints: { xs: 0, sm: 450 },
     useStandard: false,
   });
+  const updateCart = async () => {
+    const notifications = await cartContext.getCartNotifications();
+    cartContext.setCartNotifications(notifications);
+  };
   const handleClickAddAndShop = () => {
     fetchPatchJson(
       { itemId: props.item._id },
       process.env.REACT_APP_BASE_URL + "/api/cart/add-to-cart",
-      console.log
+      updateCart
     );
     props.onClose();
   };

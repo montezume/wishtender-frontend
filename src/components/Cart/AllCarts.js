@@ -1,16 +1,20 @@
 import React, { useEffect, useContext, useState } from "react";
 import AliasCart from "./AliasCart";
-import { CartContext } from "./CartContext";
+import { CartContext } from "../../contexts/CartContext";
 import { LocaleContext } from "../../contexts/LocaleContext";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
 import EmptyCart from "./EmptyCart";
 import { Box, Typography } from "@material-ui/core";
-import { KeyboardReturnOutlined } from "@material-ui/icons";
 export default function AllCarts() {
-  const [cart, setCart] = useState(null);
   const [useRates, setUseRates] = useState(null);
   const [exchangeRates, setExchangeRates] = useState(null);
-  const { getCart } = useContext(CartContext);
+  const {
+    getCart,
+    cart,
+    setCart,
+    setCartNotifications,
+    cartNotificationsFromCart,
+  } = useContext(CartContext);
   const { currency: clientCurrency } = useContext(CurrencyContext);
   const localeContext = useContext(LocaleContext);
 
@@ -18,7 +22,7 @@ export default function AllCarts() {
     //set useRates
 
     if (clientCurrency === null) return undefined;
-    if (cart === null) return undefined;
+    if (!cart || !Object.values(cart).length) return undefined;
     // need rates for messages
     const anyAliasCartIsNotInUSD = !!Object.values(cart.aliasCarts).filter(
       (aliasCart) => aliasCart.alias.currency !== "USD"
@@ -72,16 +76,28 @@ export default function AllCarts() {
         localeContext,
         exchangeRates
       );
+
       setCart(newCart);
+      setCartNotifications(cartNotificationsFromCart(newCart));
     })();
-  }, [clientCurrency, exchangeRates, getCart, localeContext]);
+  }, [
+    cartNotificationsFromCart,
+    clientCurrency,
+    exchangeRates,
+    getCart,
+    localeContext,
+    setCart,
+    setCartNotifications,
+  ]);
 
   return (
-    <CartContext.Provider value={{ cart, setCart, getCart }}>
-      {cart &&
+    <>
+      {cart !== undefined &&
+        (cart &&
         useRates !== null &&
         ((useRates && exchangeRates) || !useRates) &&
-        (cart.aliasCarts && Object.values(cart.aliasCarts).length ? (
+        cart.aliasCarts &&
+        Object.values(cart.aliasCarts).length ? (
           <>
             <Box
               display="flex"
@@ -103,6 +119,6 @@ export default function AllCarts() {
         ) : (
           <EmptyCart></EmptyCart>
         ))}
-    </CartContext.Provider>
+    </>
   );
 }
