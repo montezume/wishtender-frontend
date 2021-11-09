@@ -228,6 +228,15 @@ const Wishlist = withRouter((props) => {
     setItems(updatedItems);
     setOrderedItems(updatedItems);
   }, [wishlist]);
+  useEffect(() => {
+    if (selectWish) {
+      const updatedSelect = items.find((i) => i._id === selectWish._id);
+
+      if (updatedSelect.price.converted !== selectWish.price.converted) {
+        setSelectWish(updatedSelect);
+      }
+    }
+  }, [items, selectWish]);
 
   useEffect(() => {
     if (showCategories === null || showCategories.length === 0) {
