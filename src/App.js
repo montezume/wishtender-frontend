@@ -89,6 +89,9 @@ function App(props) {
 
   // handle getting detecting currency preferences from locale cookie
   useEffect(() => {
+    if (user && user?.currency) {
+      return;
+    }
     if (!currencyNotNeeded && !cookies?.currency && parsedCookies().locale) {
       const newCookies = parsedCookies();
       setCookies(newCookies);
