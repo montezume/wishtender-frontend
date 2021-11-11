@@ -263,7 +263,7 @@ export default function FAQ(props) {
           <li>Polish złoty</li>
           <li>Philippine peso</li>
           <li>Pound sterling</li>
-          <li>Russian ruble</li>
+          <li>Russian rouble</li>
           <li>Romanian new leu</li>
           <li>Swedish krona/kronor</li>
           <li>South Korean won</li>
@@ -276,7 +276,7 @@ export default function FAQ(props) {
         <h2>Why are the countries different for wishers and gifters?</h2>
         <Typography>
           {" "}
-          Our payment processor can accept funds from many currencies, but can
+          Our payment processor can accept money from many currencies, but can
           only pay out money to a limited amount of countries.
         </Typography>
         <h2>Will you add more countries?</h2>
@@ -287,8 +287,8 @@ export default function FAQ(props) {
         </Typography>
         <h2>How much of the money for the gift do I get?</h2>
         <Typography>
-          You get the total amount you listed. If there's a currency conversion
-          then you may get MORE or LESS than you listed because of discrepancies
+          You get the amount you listed. If there's a currency conversion then
+          you may get MORE or LESS than you listed because of discrepancies
           between exchange rates. It shouldn't be too much of a difference, but
           if it is let us know.
         </Typography>
@@ -323,7 +323,7 @@ export default function FAQ(props) {
           reputation on line to keep ourselves accountable to delivering a solid
           product.
         </Typography>
-        <h2>How is WishTender sex worker friendly if it uses Stripe?</h2>
+        <h2>How is sex work friendly if it uses Stripe?</h2>
         <Typography>
           Stripe allows our users to get gifts from clients no matter what
           industry they are in since you are getting gifts and not selling
@@ -360,7 +360,7 @@ export default function FAQ(props) {
           <li>
             <strong>We are more flexible than Amazon.</strong> Since wishers get
             the funds to purchase the gift, you can list anything on your
-            wishlist not just Amazon products; But also items from any site or
+            wishlist not just Amazon products; Bu also items from any site or
             even offline items like spa days, full outfits, or having your rent
             funded.
           </li>
@@ -382,7 +382,7 @@ export default function FAQ(props) {
           <li>
             <strong>We're made for creators.</strong> We have features that
             Amazon doesn't have with you in mind. For example, you can leave a
-            "thank you" picture message within WishTender. And we're constantly
+            thank you picture note within WishTender. And we're constantly
             looking to improve the site to fit your needs.
           </li>
         </ol>
