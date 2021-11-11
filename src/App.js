@@ -23,6 +23,7 @@ import {
 } from "./scripts/helpers";
 import "./myapp.css";
 import HomePage from "./components/HomePage";
+import FAQ from "./components/FAQ/FAQ";
 import LandingPage from "./components/LandingPage/LandingPage";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Footer from "./components/Footer/Footer";
@@ -221,6 +222,9 @@ function App(props) {
 
       <Route path="/extension" exact>
         <Extension />
+      </Route>
+      <Route path="/faq" exact>
+        <FAQ />
       </Route>
       <Route path="/sign-up" exact>
         <SignUp />
