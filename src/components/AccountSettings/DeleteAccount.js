@@ -1,10 +1,18 @@
 import { useForm } from "react-hook-form";
 import React, { useState } from "react";
-import { TextField, Box, useTheme } from "@material-ui/core";
+import StyledDialog from "../common/StyledDialog/StyledDialog";
+import {
+  makeStyles,
+  Button,
+  TextField,
+  Box,
+  useTheme,
+} from "@material-ui/core";
 import useScreenSize from "../../hooks/useScreenSize";
 import themeStyles from "../../themeStyles";
 import ResponsiveDialogTitleSection from "../common/StyledDialog/TopSections/ResponsiveTopTitleSection/ResponsiveDialogCloseAndTitleSection";
 import ProgressButton from "../common/ProgressButton";
+import userEvent from "@testing-library/user-event";
 
 export default function UpdateEmail(props) {
   const theme = useTheme();

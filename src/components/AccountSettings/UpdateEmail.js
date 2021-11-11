@@ -20,7 +20,20 @@ export default function UpdateEmail(props) {
     breakpoints: { xs: 0, sm: 450 },
     useStandard: false,
   });
-
+  const useStyles = makeStyles((theme) => {
+    return {
+      root: {
+        display: "flex",
+        flexDirection: "column",
+        gap: "1em",
+        padding:
+          screenSize === "xs"
+            ? theme.spacing(6, 0, 1, 0)
+            : theme.spacing(4, 0, 1, 0),
+        width: "80%",
+      },
+    };
+  });
   const {
     register,
     handleSubmit,
