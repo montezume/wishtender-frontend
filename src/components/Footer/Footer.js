@@ -53,6 +53,7 @@ export default function Footer() {
           Privacy Policy
         </a>
         <a href="/how-it-works">How it works</a>
+        <a href="/faq">Frequently Asked Questions</a>
       </div>
       <div className={classes.footer_section}>
         <h2>Contact</h2>
