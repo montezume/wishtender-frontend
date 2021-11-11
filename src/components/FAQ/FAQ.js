@@ -63,6 +63,11 @@ const useStyles = makeStyles((theme) => {
         fontSize: "1.1em",
         lineHeight: "1.5rem",
       },
+
+      "& li": {
+        fontSize: "1.1em",
+        lineHeight: "1.5rem",
+      },
     },
   };
 });
@@ -277,7 +282,7 @@ export default function FAQ(props) {
         <h2>Will you add more countries?</h2>
         <Typography>
           Yes. Our payment processor is accommodating more countries and
-          currencies overtime. Let us know what countries you are interested in
+          currencies over time. Let us know what countries you are interested in
           and we’ll see if it can be accommodated.
         </Typography>
         <h2>How much of the money for the gift do I get?</h2>
@@ -306,10 +311,10 @@ export default function FAQ(props) {
         </Typography>
         <h2>How can I trust WishTender?</h2>
         <Typography>
-          We are a very new company, but can connect you with users who have
-          received gifts using WishTender. Unlike many sites in the industry
-          that are built by anonymous founders, WishTender is openly being built
-          by{" "}
+          We are a very new company, but we're happy to connect you with users
+          who have received gifts using WishTender. Unlike many sites in the
+          industry that are built by anonymous founders, WishTender is openly
+          being built by{" "}
           <a href="https://twitter.com/DashBarkHuss">
             {" "}
             Dashiell Rose Bark-Huss
@@ -350,6 +355,37 @@ export default function FAQ(props) {
           They will show up as WishTender LLC. You will <strong>not</strong> see
           the specific wisher's wishlist on your credit card bill.
         </Typography>
+        <h2>How is WishTender different than Amazon wishlists?</h2>
+        <ol>
+          <li>
+            <strong>We are more flexible than Amazon.</strong> Since wishers get
+            the funds to purchase the gift, you can list anything on your
+            wishlist not just Amazon products; Bu also items from any site or
+            even offline items like spa days, full outfits, or having your rent
+            funded.
+          </li>
+          <li>
+            <strong>We are safer than Amazon.</strong>
+            <ol>
+              <li>
+                We don’t allow gifters to initiate returns. This helps you avoid
+                a fan claiming they got you a gift, only to have them cancel it
+                later.
+              </li>
+              <li>
+                Purchasers can call up Amazon stores and request your address.
+                On WishTender, your information is totally private.
+              </li>
+            </ol>
+          </li>
+
+          <li>
+            <strong>We're made for creators.</strong> We have features that
+            Amazon doesn't have with you in mind. For example, you can leave a
+            thank you picture note within WishTender. And we're constantly
+            looking to improve the site to fit your needs.
+          </li>
+        </ol>
       </Container>
       <nav style={matches ? { display: "block" } : {}}>
         <Typography variant="body1" gutterBottom="true">
