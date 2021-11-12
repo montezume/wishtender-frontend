@@ -265,6 +265,7 @@ export default function Dashboard() {
                         }
                       ></img>
                       <div style={{ display: "flex", flexDirection: "column" }}>
+                        <div>ID: {user._id}</div>
                         <div>
                           {(() => {
                             const d = new Date(user.createdAt);
