@@ -484,7 +484,7 @@ const Wishlist = withRouter((props) => {
         />
       )}
       <ArcherContainer style={{ display: "grid" }}>
-        <Container className={customClasses.wishlistWrapper1}>
+        <div className={customClasses.wishlistWrapper1}>
           <div
             style={{
               width: "100%",
@@ -679,7 +679,7 @@ const Wishlist = withRouter((props) => {
               )}
             </div>
           )}
-        </Container>
+        </div>
         {props.isAuth && !items.length && (
           <div
             style={{
