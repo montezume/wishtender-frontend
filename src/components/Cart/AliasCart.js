@@ -4,6 +4,8 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  FormHelperText,
+  Checkbox,
   TableHead,
   TableRow,
   Button,
@@ -12,6 +14,7 @@ import {
   TextField,
   InputAdornment,
   Tooltip,
+  FormControlLabel,
   Box,
   OutlinedInput,
   InputLabel,
@@ -19,7 +22,7 @@ import {
 } from "@material-ui/core";
 import HelpIcon from "@material-ui/icons/Help";
 
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import React, { useState } from "react";
 import useSmallScreen from "../../hooks/useSmallScreen";
 import theme from "../../theme";
@@ -27,7 +30,8 @@ import Gift from "./Gift";
 import { fetchPostJson } from "../../scripts/fetchHelper";
 import DisplayPrice from "../common/DisplayPrice";
 import DisplayPrice2 from "../common/DisplayPrice2";
-const TenderInfoInputs = ({ cart, register }) => {
+
+const TenderInfoInputs = ({ cart, register, control }) => {
   const { ref: fromLineRef, ...fromLineReg } = register("fromLine", {
     maxLength: {
       value: 60,
@@ -41,6 +45,7 @@ const TenderInfoInputs = ({ cart, register }) => {
       message: "Enter a valid e-mail address",
     },
   });
+  const { ref: privateRef, ...privateReg } = register("private");
 
   return (
     <>
@@ -86,6 +91,34 @@ const TenderInfoInputs = ({ cart, register }) => {
             </InputAdornment>
           }
         ></OutlinedInput>
+      </FormControl>{" "}
+      <FormControl required component="fieldset">
+        <FormControlLabel
+          control={
+            <Controller
+              {...privateReg}
+              inputRef={privateRef}
+              name="private"
+              control={control}
+              render={(props) => (
+                <Checkbox
+                  {...props}
+                  checked={props.field.value}
+                  onChange={(e) => {
+                    props.field.onChange(e.target.checked);
+                  }}
+                />
+              )}
+            />
+          }
+          label="Don't Publish"
+        />
+        <FormHelperText>
+          If checked, your wisher will not be able to publish your message and
+          pseudonym you provided above to their wishlist. Regardless of whether
+          you check this or not, your email and personal information will always
+          be private.
+        </FormHelperText>
       </FormControl>
     </>
   );
@@ -96,6 +129,7 @@ export default function AliasCart({ cart, exchangeRates }) {
     formState: { errors },
     handleSubmit,
     register,
+    control,
   } = useForm();
   const [message, setMessage] = useState("");
   const smallScreen = useSmallScreen();
@@ -112,6 +146,7 @@ export default function AliasCart({ cart, exchangeRates }) {
           },
           alias: cart.alias._id,
           noteToWisher: data.message,
+          private: data.private || false,
         },
       },
       process.env.REACT_APP_BASE_URL + "/api/checkout",
@@ -240,10 +275,21 @@ export default function AliasCart({ cart, exchangeRates }) {
                     } remaining.`}
                   ></TextField>
                   {smallScreen ? (
-                    <TenderInfoInputs register={register} cart={cart} />
+                    <TenderInfoInputs
+                      register={register}
+                      cart={cart}
+                      control={control}
+                    />
                   ) : (
-                    <Box display="flex" style={{ gap: "1em" }}>
-                      <TenderInfoInputs register={register} cart={cart} />
+                    <Box
+                      display="flex"
+                      style={{ gap: "1em", flexWrap: "wrap" }}
+                    >
+                      <TenderInfoInputs
+                        register={register}
+                        cart={cart}
+                        control={control}
+                      />
                     </Box>
                   )}
                   <div>

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Collapse from "@material-ui/core/Collapse";
+import Accordion from "@material-ui/core/Accordion";
 
 export default function Dashboard() {
   const [users, setUsers] = useState(null);
-  const [open, setOpen] = useState(null);
+  const [openOrders, setOpenOrders] = useState(null);
+  const [openIds, setOpenIds] = useState(null);
   const [sort, setSort] = useState("date");
   useEffect(() => {
     (async () => {
@@ -60,6 +62,15 @@ export default function Dashboard() {
 
     return activityLevel;
   };
+
+  const firstEmailToGifter = (gifter, wisher) =>
+    `mailto:${
+      gifter.email
+    }?subject=${gifter.fromLine.trim()}%2C+saw+you+bought+a+gift&body=Hey+${gifter.fromLine.trim()}%2C+this+is+Dash+the+Founder+of+WishTender.+I+saw+you+bought+a+gift+for+${wisher.aliases[0].aliasName.trim()}.+Thanks+for+using+WishTender.%0D%0A%0D%0AHow+are+you+finding+WishTender+so+far%3F+Did+the+gift+giving+experience+go+ok%3F%0D%0A%0D%0AWe%27re+a+new+company+and+looking+to+improve.+%0D%0A%0D%0ADashiell+Rose+Bark-Huss%0D%0AFounder+WishTender%0D%0A%3Ca+href%3D%22https%3A%2F%2Ftwitter.com%2FDashBarkHuss%22+target%3D%22_blank%22%3Emy+twitter%3C%2Fa%3E+`;
+  const firstEmailToWisher = (wisher) =>
+    `mailto:${
+      wisher.email
+    }?subject=${wisher.aliases[0].aliasName.trim()}%2C+saw+you+got+a+gift&body=Hey+${wisher.aliases[0].aliasName.trim()}%2C+this+is+Dash+the+founder+of+WishTender.+I+saw+you+got+a+gift.%0D%0A%0D%0AHow+are+you+finding+WishTender+so+far%3F+Did+the+gift+receiving+experience+go+ok%3F%0D%0A%0D%0AWe%27re+a+new+company+and+looking+to+improve.%0D%0A%0D%0ADashiell+Rose+Bark-Huss%0D%0AFounder+WishTender%0D%0A%3Ca+href%3D%22https%3A%2F%2Ftwitter.com%2FDashBarkHuss%22+target%3D%22_blank%22%3Emy+twitter%3C%2Fa%3E`;
   const copy = (id) => {
     var r = document.createRange();
     r.selectNode(document.getElementById(id));
@@ -125,10 +136,10 @@ export default function Dashboard() {
               return <p>Gross fees: ${feesUSD} pennies</p>;
             })()}
           </h3>
-          <button onClick={() => setOpen(!open)}>
-            {open ? "hide" : "show"} orders
+          <button onClick={() => setOpenOrders(!openOrders)}>
+            {openOrders ? "hide" : "show"} orders
           </button>
-          <Collapse in={open} timeout="auto" unmountOnExit>
+          <Collapse in={openOrders} timeout="auto" unmountOnExit>
             <p>
               price is in smallest units (pennies if usd){" "}
               <button onClick={() => setSort(!sort)}>
@@ -151,6 +162,9 @@ export default function Dashboard() {
                 .map((order) => {
                   let items = Object.keys(order.cart.items);
                   let alias = order.cart.alias.handle;
+                  const wisherUser = users.find(
+                    (user) => user?.aliases[0]?._id === order.alias
+                  );
                   return items.map((id) => {
                     const item = order.cart.items[id].item;
                     return (
@@ -162,6 +176,7 @@ export default function Dashboard() {
                           width: "300px",
                         }}
                       >
+                        <p>_id: {order._id}</p>
                         to: <a href={"/" + alias}>{alias}</a>
                         <p>from: {order.buyerInfo.fromLine}</p>
                         <p id={`order-gifter-email-${order._id}`}>
@@ -174,12 +189,27 @@ export default function Dashboard() {
                             copy gifter
                           </button>
                         </p>
+                        <p>
+                          <a
+                            target="_blank"
+                            href={firstEmailToWisher(wisherUser)}
+                          >
+                            First Email to wisher
+                          </a>
+                        </p>
+                        <p>
+                          <a
+                            target="_blank"
+                            href={firstEmailToGifter(
+                              order.buyerInfo,
+                              wisherUser
+                            )}
+                          >
+                            First Email to gifter
+                          </a>
+                        </p>
                         <p id={`order-wisher-email-${order._id}`}>
-                          {
-                            users.find(
-                              (user) => user?.aliases[0]?._id === order.alias
-                            ).email
-                          }
+                          {wisherUser.email}
                           <button
                             onClick={() =>
                               copy("order-wisher-email-" + order._id)
@@ -265,7 +295,24 @@ export default function Dashboard() {
                         }
                       ></img>
                       <div style={{ display: "flex", flexDirection: "column" }}>
-                        <div>ID: {user._id}</div>
+                        <button onClick={() => setOpenIds(!openIds)}>
+                          {openIds ? "hide" : "show"} ids
+                        </button>
+                        <Collapse in={openIds} timeout="auto" unmountOnExit>
+                          <div>User ID: {user._id}</div>
+                          <br />
+                          <div>alias ID: {user?.aliases[0]?._id}</div>
+                          <br />
+                          <div>
+                            stripe info ID: {user?.stripeAccountInfo?._id}
+                          </div>
+                          <br />
+                          <div>
+                            stripe account:{" "}
+                            {user?.stripeAccountInfo?.stripeAccountId}
+                          </div>
+                          <br />
+                        </Collapse>
                         <div>
                           {(() => {
                             const d = new Date(user.createdAt);
