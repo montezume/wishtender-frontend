@@ -22,6 +22,7 @@ import {
 } from "../../../../scripts/helpers";
 import customStyles from "../../../../themeStyles";
 import useScreenSize from "../../../../hooks/useScreenSize";
+import AutoDeleteInput from "./AutoDeleteInput";
 
 /**
  * Renders a <WishFormManual /> component
@@ -90,6 +91,7 @@ export default function WishFormManual(props) {
   const {
     register,
     handleSubmit,
+    control,
     setValue,
     formState: { errors },
   } = useForm();
@@ -231,6 +233,7 @@ export default function WishFormManual(props) {
             </p>
           </SelectCropUpdateImage>
         </Container>
+        <AutoDeleteInput register={register} control={control} />
       </Box>
       <Button
         disableElevation={true}

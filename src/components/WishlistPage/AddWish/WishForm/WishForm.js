@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Box, TextField, Typography } from "@material-ui/core";
+
+//
 import { makeStyles } from "@material-ui/core/styles";
 import ChooseImage from "../ChooseImage";
 import PriceInput from "../../PriceInput";
@@ -12,6 +14,7 @@ import {
 } from "../../../../scripts/helpers";
 import customStyles from "../../../../themeStyles";
 import useScreenSize from "../../../../hooks/useScreenSize";
+import AutoDeleteInput from "./AutoDeleteInput";
 
 /**
  * Renders a <WishForm /> component
@@ -75,6 +78,7 @@ export default function WishForm(props) {
     handleSubmit,
     setValue,
     formState: { errors },
+    control,
   } = useForm();
 
   useEffect(() => {
@@ -89,6 +93,8 @@ export default function WishForm(props) {
     props.onSubmit(data);
   };
   // console.log("props.price, ", props.info.price);
+  // autodelete
+
   const { ref: itemNameRef, itemNameReg } = register("itemName");
   const { ref: priceRef, ...priceReg } = register("price", {
     validate: (value) => {
@@ -144,6 +150,7 @@ export default function WishForm(props) {
           symbol={currencyInfo(clientCurrency).symbol}
           decimalPlaces={currencyInfo(clientCurrency).decimalPlaces}
         ></PriceInput>
+        <AutoDeleteInput register={register} control={control} />
       </Box>
       <Button
         disableElevation={true}
