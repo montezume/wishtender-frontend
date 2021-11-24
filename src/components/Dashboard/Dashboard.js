@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Collapse from "@material-ui/core/Collapse";
-import Accordion from "@material-ui/core/Accordion";
+import { parsedCookies } from "../../scripts/helpers";
 
 export default function Dashboard() {
   const [users, setUsers] = useState(null);
@@ -62,7 +62,12 @@ export default function Dashboard() {
 
     return activityLevel;
   };
-
+  const signedUpEmail = (wisher) =>
+    `mailto:${
+      wisher.email
+    }?subject=${wisher.aliases[0]?.aliasName.trim()}+saw+you+created+a+wishlist-+Just+checking+in&body=Hey+${wisher.aliases[0]?.aliasName.trim()}%2C+this+is+Dash%2C+the+founder+of+WishTender.%0D%0A%0D%0AI+saw+you+created+a+wishlist.+Thanks+for+joining.+Let+me+know+if+you+need+anything.%0D%0A%0D%0AIf+you+want+live+help%2C+or+a+walk+through%2C+schedule+a+chat+here%3A++++%3Ca+href%3D%22https%3A%2F%2Fcalendly.com%2Fdashiell%2F20min%22+target%3D%22_blank%22%3E++++++++calendly%0D%0A++++%3C%2Fa%3E%0D%0A%0D%0ADashiell+Rose+Bark-Huss%0D%0AFounder+WishTender%0D%0Amy+twitter%0D%0A%3Ca+href%3D%22https%3A%2F%2Ftwitter.com%2FDashBarkHuss%22+target%3D%22_blank%22%3Emy+twitter%3C%2Fa%3E+`;
+  const didntCompleteWishtlist = (wisher) =>
+    `mailto:${wisher.email}?subject=Wishlist+setup-+did+something+go+wrong%3F&body=Hey+this+is+Dash%2C+the+founder+of+WishTender.%0D%0A%0D%0AI+saw+you+signed+but+didn%27t+complete+set+up.%0D%0A%0D%0AWas+wondering+what+happened%3F%0D%0A%0D%0AYou+can+reply+with+a+number%3A+%0D%0A1.+Decided+I+wasn%27t+interested%0D%0A2.+Something+went+wrong%0D%0A3.+Too+much+effort%0D%0A%0D%0A%0D%0ADashiell+Rose+Bark-Huss%0D%0AFounder+WishTender%0D%0A%3Ca+href%3D%22https%3A%2F%2Ftwitter.com%2FDashBarkHuss%22+target%3D%22_blank%22%3Emy+twitter%3C%2Fa%3E+`;
   const firstEmailToGifter = (gifter, wisher) =>
     `mailto:${
       gifter.email
@@ -401,6 +406,19 @@ export default function Dashboard() {
                             </a>
                           )}
                         </div>
+                        <p>
+                          <a target="_blank" href={signedUpEmail(user)}>
+                            Signup email
+                          </a>
+                        </p>
+                        <p>
+                          <a
+                            target="_blank"
+                            href={didntCompleteWishtlist(user)}
+                          >
+                            Didn't complete signup email
+                          </a>
+                        </p>
                       </div>
                     </div>
                   );
