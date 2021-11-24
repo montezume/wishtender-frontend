@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Box, TextField, Typography } from "@material-ui/core";
-
-//
 import { makeStyles } from "@material-ui/core/styles";
 import ChooseImage from "../ChooseImage";
 import PriceInput from "../../PriceInput";
@@ -93,8 +91,6 @@ export default function WishForm(props) {
     props.onSubmit(data);
   };
   // console.log("props.price, ", props.info.price);
-  // autodelete
-
   const { ref: itemNameRef, itemNameReg } = register("itemName");
   const { ref: priceRef, ...priceReg } = register("price", {
     validate: (value) => {
