@@ -26,8 +26,6 @@ import AddToCart from "./AddToCart/AddToCart";
 import { withStyles } from "@material-ui/core/styles";
 import useCustomStyles from "../../themeStyles";
 import { WishlistContext } from "../../contexts/WishlistContext";
-import { SortableContainer, SortableElement } from "react-sortable-hoc";
-import useScreenSize from "../../hooks/useScreenSize";
 
 // import arrayMove from "array-move";
 // import "./styles.css";
@@ -328,10 +326,27 @@ const Wishlist = withRouter((props) => {
       const priceLow = (it1, it2) => {
         return +it1.price.float > +it2.price.float ? 1 : -1;
       };
+      const time = (order) => {
+        return (it1, it2) => {
+          const getTime = (it) => {
+            const timestamp = it._id.substring(0, 8);
+            const date = new Date(parseInt(timestamp, 16) * 1000);
+            return date;
+          };
+          const sort =
+            order === "newest"
+              ? getTime(it1) < getTime(it2)
+              : getTime(it1) > getTime(it2);
+          return sort ? 1 : -1;
+        };
+      };
+
       const defaultFunc = () => {};
       let sort;
       if (ordr === "priceHigh") sort = priceHigh;
       if (ordr === "priceLow") sort = priceLow;
+      if (ordr === "timeNewest") sort = time("newest");
+      if (ordr === "timeOldest") sort = time("oldest");
       if (ordr === "default") sort = defaultFunc;
 
       return sort;
@@ -571,6 +586,22 @@ const Wishlist = withRouter((props) => {
                       }}
                     >
                       Price: Low to High
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        reorderItems("timeNewest");
+                        setAnchorEl(null);
+                      }}
+                    >
+                      Most Recent
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        reorderItems("timeOldest");
+                        setAnchorEl(null);
+                      }}
+                    >
+                      Oldest
                     </MenuItem>
                   </Menu>
                 </>
