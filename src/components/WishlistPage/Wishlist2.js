@@ -470,6 +470,7 @@ const Wishlist = withRouter((props) => {
               currency: selectWish.currency,
               categories: selectWish.categories,
               category: selectWish.category,
+              repeatPurchases: selectWish.repeatPurchases,
             }}
             id={selectWish._id}
             onClose={(options) => {
