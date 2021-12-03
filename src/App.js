@@ -128,6 +128,29 @@ function App(props) {
     }
   }, [getCartNotifications, user]);
 
+  // const params = new URLSearchParams(window.location.search);
+  // affiliate or other queries from link
+  // useEffect(() => {
+  //   (async () => {
+  //     if (parsedCookies().ref) {
+  //       // check if valid ref then return
+  //     }
+  //     const affiliate = params.get("ref");
+  //     if (affiliate) {
+  //       const baseUrl = process.env.REACT_APP_BASE_URL;
+  //       const cookie = `ref=${affiliate}; max-age=${3600 * 24 * 30}${
+  //         baseUrl === "https://api.wishtender.com" ||
+  //         baseUrl === "https://api-staging.wishtender.com"
+  //           ? "; domain=wishtender.com"
+  //           : ""
+  //       }`;
+  //       document.cookie = cookie;
+
+  //       window.location.href = window.location.origin;
+  //     }
+  //   })();
+  // }, [params, props.history]);
+
   useEffect(() => {
     // user user settings
     if (user && user?.currency) {

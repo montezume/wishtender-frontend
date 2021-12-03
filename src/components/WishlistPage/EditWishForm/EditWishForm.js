@@ -105,6 +105,8 @@ export default function EditWishForm(props) {
         data[value] === props.info[value]
       ) {
         delete data[value];
+      } else if (value === "repeatPurchases" && data[value] === undefined) {
+        data[value] = false;
       }
     });
     if (data.price)
@@ -151,7 +153,7 @@ export default function EditWishForm(props) {
           props.onClose({ refresh: true });
         })
         .catch((err) => {
-          console.log(err);
+          alert(err);
         });
     } else {
       props.onClose({ refresh: false });

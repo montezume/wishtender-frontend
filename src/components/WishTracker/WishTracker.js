@@ -24,8 +24,6 @@ function WishTracker(props) {
   const { getWishlist } = useContext(WishlistContext);
   const [orders, setOrders] = useState(null);
   const [wishlist, setWishlist] = useState(null);
-  // const [refreshWishlist, setRefreshWishlist] = useState(null);
-  // const [reply, setReply] = useState(null);
   const [refreshOrders, setRefreshOrders] = useState(null);
   const paymentLink = `${process.env.REACT_APP_BASE_URL}/api/stripe/login?from=wish-tracker`;
 
