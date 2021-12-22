@@ -26,8 +26,18 @@ const unitToStandard = (unitValue, currency) => {
   return price;
 };
 
+const displayPriceFromUnit = (unitValue, currency, locale) => {
+  const price = unitToStandard(unitValue, currency);
+  const display = displayCurrency(
+    price,
+
+    currency,
+    locale
+  );
+  return display;
+};
 // never gets used??
-const displayPriceFromUnit = (
+const displayPriceFromUnitConvert = (
   unitValue,
   currencyFrom,
   currencyTo,
