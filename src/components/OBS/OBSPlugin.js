@@ -17,7 +17,7 @@ function usePrevious(value) {
 const baseUrl = process.env.REACT_APP_BASE_URL;
 const wsURL =
   "ws" +
-  (baseUrl.slice(0, 5) === "http:" ? baseUrl.slice(4) : baseUrl.slice(0, 5));
+  (baseUrl.slice(0, 5) === "http:" ? baseUrl.slice(4) : baseUrl.slice(5));
 const prod = baseUrl === "https://api.wishtender.com/";
 export default function OBSPlugin(props) {
   const [height, setHeight] = useState(46);
