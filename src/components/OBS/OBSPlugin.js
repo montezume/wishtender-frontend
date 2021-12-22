@@ -300,7 +300,7 @@ export default function OBSPlugin(props) {
       setGiftBaskets((prev) => [...prev, giftBasket]);
     }
     if (data.type === "seen") {
-      const match = giftBaskets.find((i) => i.id === giftBasket.id);
+      const match = giftBaskets.find((i) => i?.id === giftBasket?.id);
       if (match) {
         setGiftOpening(match);
         setGiftBaskets(giftBaskets.filter((item) => item.id !== match.id));
@@ -365,7 +365,7 @@ export default function OBSPlugin(props) {
         },
       };
       giftOpening.imageURLs.forEach((gift, i) =>
-        sleep(() => confetti(configs), 1000 * i)
+        sleep(() => confetti(configs), 1300 * i + 400)
       );
       function sleep(fn, time) {
         return new Promise((resolve) => {
@@ -406,7 +406,7 @@ export default function OBSPlugin(props) {
               className={classes.openGift}
               alt=""
               style={{
-                animationDelay: `${i * 1.3}s`,
+                animationDelay: `${i * 1.3 + 0.4}s`,
               }}
               src={img}
             />
@@ -428,13 +428,7 @@ export default function OBSPlugin(props) {
       {giftBaskets.map &&
         giftBaskets.map((item) => (
           <div className={classes.gift}>
-            <img
-              alt=""
-              // src="../images/giftObs.png"
-              // src="../images/giftObsWhiteOutline.png"
-              src="../images/giftObsShadow.png"
-              // src="../images/giftObsNoOutline.png"
-            />
+            <img alt="" src="../images/giftObsShadow.png" />
           </div>
         ))}
       <div className={classes.wishlistLink}>

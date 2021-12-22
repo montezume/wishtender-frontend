@@ -126,8 +126,10 @@ function AddWish1(props) {
     headers.append("CSRF-Token", user.csrfToken);
     if (selectedTab === "manual") {
       const fd = new FormData();
+      if (data.repeatPurchases === undefined) {
+        data.repeatPurchases = false;
+      }
       const dataArray = Object.entries(data);
-
       dataArray.forEach((datum) => {
         if (datum[0] === "categories") return;
         fd.append(datum[0], datum[1]);

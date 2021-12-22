@@ -27,6 +27,7 @@ import HomePage from "./components/HomePage";
 import FAQ from "./components/FAQ/FAQ";
 import LandingPage from "./components/LandingPage/LandingPage";
 import Dashboard from "./components/Dashboard/Dashboard";
+import OBSPlugin from "./components/OBS/OBSPlugin";
 import UserActivity from "./components/UserActivity/UserActivity";
 import AffiliateDashboard from "./components/Affiliate/Dashboard";
 import AffiliateSetup from "./components/Affiliate/Setup";
@@ -152,27 +153,27 @@ function App(props) {
   }, [getCartNotifications, user]);
 
   // affiliate or other queries from link
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    (async () => {
-      // if (parsedCookies().ref) {
-      //   // check if valid ref then return
-      // }
-      const affiliateCode = params.get("ref");
-      if (affiliateCode) {
-        const baseUrl = process.env.REACT_APP_BASE_URL;
-        const cookie = `ref=${affiliateCode}; max-age=${3600 * 24 * 30}${
-          baseUrl === "https://api.wishtender.com" ||
-          baseUrl === "https://api-staging.wishtender.com"
-            ? "; domain=wishtender.com"
-            : ""
-        }`;
-        document.cookie = cookie;
+  // useEffect(() => {
+  //   const params = new URLSearchParams(window.location.search);
+  //   (async () => {
+  //     // if (parsedCookies().ref) {
+  //     //   // check if valid ref then return
+  //     // }
+  //     const affiliateCode = params.get("ref");
+  //     if (affiliateCode) {
+  //       const baseUrl = process.env.REACT_APP_BASE_URL;
+  //       const cookie = `ref=${affiliateCode}; max-age=${3600 * 24 * 30}${
+  //         baseUrl === "https://api.wishtender.com" ||
+  //         baseUrl === "https://api-staging.wishtender.com"
+  //           ? "; domain=wishtender.com"
+  //           : ""
+  //       }`;
+  //       document.cookie = cookie;
 
-        window.location.href = removeURLParameter(window.location.href, "ref");
-      }
-    })();
-  }, [props.history]);
+  //       window.location.href = removeURLParameter(window.location.href, "ref");
+  //     }
+  //   })();
+  // }, [props.history]);
 
   useEffect(() => {
     // user user settings
@@ -378,7 +379,7 @@ function App(props) {
         <AccountSettings />
       </Route>
 
-      <Route path="/:alias">
+      <Route path="/:alias" exact>
         <WishlistPage />
       </Route>
     </Switch>
@@ -476,9 +477,13 @@ function App(props) {
                             }}
                           >
                             <Switch>
+                              <Route exact path="/stream/:alias">
+                                <OBSPlugin />
+                              </Route>
                               {/* <Route path="/" exact>
                             <LandingPageMenu />
                           </Route> */}
+
                               <Route path="/">
                                 <Menu />
                               </Route>
