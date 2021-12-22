@@ -15,9 +15,8 @@ function usePrevious(value) {
 }
 
 const baseUrl = process.env.REACT_APP_BASE_URL;
-const wsURL =
-  "ws" +
-  (baseUrl.slice(0, 5) === "http:" ? baseUrl.slice(4) : baseUrl.slice(5));
+const secure = baseUrl.slice(0, 5) === "https";
+const wsURL = secure ? "wss" + baseUrl.slice(5) : "ws" + baseUrl.slice(4);
 const prod = baseUrl === "https://api.wishtender.com/";
 export default function OBSPlugin(props) {
   const [height, setHeight] = useState(46);
@@ -268,15 +267,15 @@ export default function OBSPlugin(props) {
 
   // dev only!!!!! delete later
 
-  useEffect(() => {
-    if (!prod) {
-      if (connectErrors > 20) {
-        console.log("too many connects");
-        alert("too many connects");
-        setConnectErrors(0);
-      }
-    }
-  }, [connectErrors]);
+  // useEffect(() => {
+  //   if (!prod) {
+  //     if (connectErrors > 20) {
+  //       console.log("too many connects");
+  //       alert("too many connects");
+  //       setConnectErrors(0);
+  //     }
+  //   }
+  // }, [connectErrors]);
 
   function connect() {
     socket.current = new WebSocket(URL);
