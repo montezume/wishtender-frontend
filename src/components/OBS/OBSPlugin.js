@@ -18,6 +18,7 @@ const baseUrl = process.env.REACT_APP_BASE_URL;
 const secure = baseUrl.slice(0, 5) === "https";
 const wsURL = secure ? "wss" + baseUrl.slice(5) : "ws" + baseUrl.slice(4);
 const prod = baseUrl === "https://api.wishtender.com/";
+//test
 export default function OBSPlugin(props) {
   const [height, setHeight] = useState(46);
   const [connectErrors, setConnectErrors] = useState(0);
