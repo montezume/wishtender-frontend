@@ -21,17 +21,21 @@ import {
   chooseCurrency,
   getCurrencyList,
 } from "./scripts/helpers";
+
 import "./myapp.css";
 import HomePage from "./components/HomePage";
 import FAQ from "./components/FAQ/FAQ";
 import LandingPage from "./components/LandingPage/LandingPage";
 import Dashboard from "./components/Dashboard/Dashboard";
+import OBSPlugin from "./components/OBS/OBSPlugin";
+import UserActivity from "./components/UserActivity/UserActivity";
+import AffiliateDashboard from "./components/Affiliate/Dashboard";
+import AffiliateSetup from "./components/Affiliate/Setup";
 import Footer from "./components/Footer/Footer";
 import ThankYou from "./components/LandingPage/ThankYou";
 import Menu from "./components/nav/Menu/Menu.js";
 import Cart from "./components/Cart/Cart.js";
 import Login from "./components/Login/Login.js";
-import Logout from "./components/nav/LogoutButton/LogoutButton.js";
 import WishTracker from "./components/WishTracker/WishTracker.js";
 import ConfirmationEmail from "./components/Onboard/ConfirmationEmail/ConfirmationEmail";
 import ConfirmEmail from "./components/Onboard/ConfirmEmail/ConfirmEmail";
@@ -52,6 +56,26 @@ import ForgotPassword from "./components/ResetPassword/ForgotPassword";
 import SendResetPassword from "./components/ResetPassword/SendResetPassword";
 import ResetPassword from "./components/ResetPassword/ResetLinkFlow/ResetPassword";
 import StripeInstructions from "./components/WishlistPage/ProfileSection/StripeInstructions";
+
+function removeURLParameter(url, parameter) {
+  //prefer to use l.search if you have a location/link object
+  var urlparts = url.split("?");
+  if (urlparts.length >= 2) {
+    var prefix = encodeURIComponent(parameter) + "=";
+    var pars = urlparts[1].split(/[&;]/g);
+
+    //reverse iteration as may be destructive
+    for (var i = pars.length; i-- > 0; ) {
+      //idiom for string.startsWith
+      if (pars[i].lastIndexOf(prefix, 0) !== -1) {
+        pars.splice(i, 1);
+      }
+    }
+
+    return urlparts[0] + (pars.length > 0 ? "?" + pars.join("&") : "");
+  }
+  return url;
+}
 
 function App(props) {
   const { getUser } = useContext(UserContext);
@@ -127,6 +151,29 @@ function App(props) {
       })();
     }
   }, [getCartNotifications, user]);
+
+  // affiliate or other queries from link
+  // useEffect(() => {
+  //   const params = new URLSearchParams(window.location.search);
+  //   (async () => {
+  //     // if (parsedCookies().ref) {
+  //     //   // check if valid ref then return
+  //     // }
+  //     const affiliateCode = params.get("ref");
+  //     if (affiliateCode) {
+  //       const baseUrl = process.env.REACT_APP_BASE_URL;
+  //       const cookie = `ref=${affiliateCode}; max-age=${3600 * 24 * 30}${
+  //         baseUrl === "https://api.wishtender.com" ||
+  //         baseUrl === "https://api-staging.wishtender.com"
+  //           ? "; domain=wishtender.com"
+  //           : ""
+  //       }`;
+  //       document.cookie = cookie;
+
+  //       window.location.href = removeURLParameter(window.location.href, "ref");
+  //     }
+  //   })();
+  // }, [props.history]);
 
   useEffect(() => {
     // user user settings
@@ -244,12 +291,7 @@ function App(props) {
       <Route path="/login">
         <Login />
       </Route>
-      {/* <Route path="/logout">
-        <Logout />
-      </Route> */}
-      {/* <Route path="/test">
-        <Test />
-      </Route> */}
+
       <Route
         path="/cart"
         render={(props) => {
@@ -289,6 +331,44 @@ function App(props) {
           return <>{user.admin ? <Dashboard /> : "Not authorized"}</>;
         }}
       />
+      <Route
+        path="/activity"
+        render={(props) => {
+          return <>{user.admin ? <UserActivity /> : "Not authorized"}</>;
+        }}
+      />
+
+      <Route
+        exact
+        path="/affiliate"
+        render={(props) => {
+          return (
+            <>
+              {user && (user.admin || user.affiliateCode) ? (
+                <AffiliateDashboard />
+              ) : (
+                "Not authorized"
+              )}
+            </>
+          );
+        }}
+      />
+      <Route
+        exact
+        path="/affiliate/setup"
+        render={(props) => {
+          return (
+            <>
+              {user && (user.admin || user.affiliateCode) ? (
+                <AffiliateSetup />
+              ) : (
+                "Not authorized"
+              )}
+            </>
+          );
+        }}
+      />
+
       <Route path="/confirmation-email">
         <ConfirmationEmail />
       </Route>
@@ -299,7 +379,7 @@ function App(props) {
         <AccountSettings />
       </Route>
 
-      <Route path="/:alias">
+      <Route path="/:alias" exact>
         <WishlistPage />
       </Route>
     </Switch>
@@ -397,9 +477,13 @@ function App(props) {
                             }}
                           >
                             <Switch>
+                              <Route exact path="/stream/:alias">
+                                <OBSPlugin />
+                              </Route>
                               {/* <Route path="/" exact>
                             <LandingPageMenu />
                           </Route> */}
+
                               <Route path="/">
                                 <Menu />
                               </Route>

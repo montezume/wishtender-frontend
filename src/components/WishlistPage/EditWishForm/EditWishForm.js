@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { UserContext } from "../../../contexts/UserContext";
 import CategoryEdit from "./CategoryEdit";
+import AutoDeleteInput from "../AddWish/WishForm/AutoDeleteInput";
 
 import SelectCropUpdateImage from "../ProfileSection/SelectCropUpdateImage/SelectCropUpdateImage";
 import {
@@ -62,15 +63,18 @@ export default function EditWishForm(props) {
 
   const themeClasses = themeStyles();
   const classes = useStyles();
-  const [price, setPrice] = useState("");
   const [itemName, setItemName] = useState("");
+  const [repeatPurchases, setRepeatPurchases] = useState("");
+  const [price, setPrice] = useState("");
   const [categories, setCategories] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [deleteWarningVisible, setDeleteWarningVisible] = useState(false);
+
   // const buttonHeight = useButtonHeight(
   //   document.querySelector(`#submit_dialog`)
   // );
   useEffect(() => {
+    setRepeatPurchases(props.info && props.info.repeatPurchases);
     setItemName(props.info && props.info.itemName);
     setCategories(props.info && props.info.categories);
     setPrice(props.info && props.info.price);
@@ -97,10 +101,12 @@ export default function EditWishForm(props) {
     Object.keys(data).forEach((value) => {
       if (
         (value === "price" && +data[value] === +props.info[value]) ||
-        !data[value] ||
+        (!data[value] && value !== "repeatPurchases") || // !data[value] -> can't remember why I put this here but it messes up empty values. repeat purchases is sometimes empty because it didn't always exist.
         data[value] === props.info[value]
       ) {
         delete data[value];
+      } else if (value === "repeatPurchases" && data[value] === undefined) {
+        data[value] = false;
       }
     });
     if (data.price)
@@ -147,7 +153,7 @@ export default function EditWishForm(props) {
           props.onClose({ refresh: true });
         })
         .catch((err) => {
-          console.log(err);
+          alert(err);
         });
     } else {
       props.onClose({ refresh: false });
@@ -192,7 +198,11 @@ export default function EditWishForm(props) {
       <ResponsiveDialogTitleSection onClose={props.onClose}>
         Edit Wish
       </ResponsiveDialogTitleSection>
-      <Box display="flex" flexDirection="column" style={{ height: "100%" }}>
+      <Box
+        display="flex"
+        flexDirection="column"
+        style={{ height: "100%", maxWidth: "500px" }}
+      >
         <form
           id="edit-wish-form"
           autoComplete="off"
@@ -293,6 +303,17 @@ export default function EditWishForm(props) {
                   Yes
                 </Button>
               </StyledDialog>
+              {/* <FormControl error={errors.itemName ? true : false}> */}
+              {repeatPurchases !== "" && (
+                <AutoDeleteInput
+                  register={register}
+                  control={control}
+                  defaultValue={
+                    repeatPurchases !== undefined ? repeatPurchases : true
+                  }
+                />
+              )}
+
               <Button
                 size="small"
                 onClick={() => setDeleteWarningVisible(true)}

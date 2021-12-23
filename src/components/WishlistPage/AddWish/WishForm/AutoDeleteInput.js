@@ -7,7 +7,7 @@ import {
 } from "@material-ui/core";
 import { Controller } from "react-hook-form";
 
-export default function AutoDeleteInput({ register, control }) {
+export default function AutoDeleteInput({ register, control, defaultValue }) {
   const { ref: repeatPurchasesRef, ...repeatPurchasesReg } =
     register("repeatPurchases");
 
@@ -20,10 +20,10 @@ export default function AutoDeleteInput({ register, control }) {
             inputRef={repeatPurchasesRef}
             name="repeatPurchases"
             control={control}
-            defaultValue={false}
             render={(props) => (
               <Checkbox
                 {...props}
+                defaultChecked={defaultValue}
                 checked={props.field.value}
                 onChange={(e) => {
                   props.field.onChange(e.target.checked);
