@@ -56,6 +56,10 @@ import ForgotPassword from "./components/ResetPassword/ForgotPassword";
 import SendResetPassword from "./components/ResetPassword/SendResetPassword";
 import ResetPassword from "./components/ResetPassword/ResetLinkFlow/ResetPassword";
 import StripeInstructions from "./components/WishlistPage/ProfileSection/StripeInstructions";
+import LeaderBoard from "./components/LeaderBoard/LeaderBoard";
+import CurrentMonthAll from "./components/LeaderBoard/CurrentMonthAll";
+import Twenty21All from "./components/LeaderBoard/Twenty21All";
+import Last30All from "./components/LeaderBoard/Last30All";
 
 function removeURLParameter(url, parameter) {
   //prefer to use l.search if you have a location/link object
@@ -207,7 +211,6 @@ function App(props) {
           );
         }}
       />
-
       <Route
         path="/demo"
         exact
@@ -219,7 +222,6 @@ function App(props) {
           );
         }}
       />
-
       <Route
         path="/demo/wishlist"
         render={(props) => {
@@ -230,7 +232,6 @@ function App(props) {
           );
         }}
       />
-
       <Route
         path="/stripe_instructions"
         render={(props) => {
@@ -243,7 +244,6 @@ function App(props) {
           return <h1>Redirecting...</h1>;
         }}
       />
-
       <Route
         path="/"
         exact
@@ -266,7 +266,6 @@ function App(props) {
           );
         }}
       />
-
       <Route path="/extension" exact>
         <Extension />
       </Route>
@@ -291,23 +290,19 @@ function App(props) {
       <Route path="/login">
         <Login />
       </Route>
-
       <Route
         path="/cart"
         render={(props) => {
           return <Cart cart={props?.location?.props?.cart} />;
         }}
       />
-
       <Route path="/request-password-reset">
         {user ? <SendResetPassword></SendResetPassword> : <ForgotPassword />}
       </Route>
-
       <Route path="/reset-password">
         <ResetPassword />
       </Route>
       <Route component={HowItWorks} path="/how-it-works"></Route>
-
       <Route
         path="/connect-success"
         exact
@@ -337,7 +332,34 @@ function App(props) {
           return <>{user.admin ? <UserActivity /> : "Not authorized"}</>;
         }}
       />
-
+      <Route
+        exact
+        path="/leaderboard"
+        render={(props) => {
+          return <LeaderBoard />;
+        }}
+      />
+      <Route
+        exact
+        path="/leaderboard/current-month"
+        render={(props) => {
+          return <CurrentMonthAll />;
+        }}
+      />
+      <Route
+        exact
+        path="/leaderboard/last-30-days"
+        render={(props) => {
+          return <Last30All />;
+        }}
+      />
+      <Route
+        exact
+        path="/leaderboard/2021"
+        render={(props) => {
+          return <Twenty21All />;
+        }}
+      />
       <Route
         exact
         path="/affiliate"
@@ -368,7 +390,6 @@ function App(props) {
           );
         }}
       />
-
       <Route path="/confirmation-email">
         <ConfirmationEmail />
       </Route>
@@ -378,7 +399,6 @@ function App(props) {
       <Route path="/account-settings">
         <AccountSettings />
       </Route>
-
       <Route path="/:alias" exact>
         <WishlistPage />
       </Route>
