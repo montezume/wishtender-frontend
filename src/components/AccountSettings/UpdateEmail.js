@@ -48,11 +48,11 @@ export default function UpdateEmail(props) {
         const json = await res.json();
         if (res.status >= 400 && res.status < 500) {
           setReqStatus("error");
-          console.log(json);
+          alert(json);
         }
       })
       .catch((err) => {
-        console.log(err);
+        alert(err);
       });
   };
 
