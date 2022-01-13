@@ -27,7 +27,7 @@ const EnableLeaderboard = ({ setLoading }) => {
   return (
     <>
       <Switch
-        checked={user.publicizeStats}
+        checked={!!user.publicizeStats}
         onChange={() => {
           setLoading(true);
           const headers = new Headers();
@@ -39,7 +39,20 @@ const EnableLeaderboard = ({ setLoading }) => {
             headers,
             body: JSON.stringify({ publicizeStats: !user.publicizeStats }),
           }).then(async (res) => {
-            setUser(await getUser());
+            if (res.status >= 400 && res.status < 500) {
+              const json = await res.json();
+              if (json.errors) {
+                alert(json.errors.map((msg) => msg.msg).join(" "));
+              } else {
+                alert(json.message);
+              }
+            }
+            if (res.status >= 500 && res.status < 600) {
+              const text = await res.text();
+              alert(text);
+            }
+            const userUpdate = await getUser();
+            setUser(userUpdate);
             setLoading(false);
           });
         }}
