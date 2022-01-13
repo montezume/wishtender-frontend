@@ -1,21 +1,65 @@
-import { Container, Paper, Button, Dialog, Link } from "@material-ui/core";
+import {
+  Container,
+  Paper,
+  Button,
+  Link,
+  LinearProgress,
+  Box,
+} from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import React, { useState, useContext, useEffect } from "react";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import ListItemText from "@material-ui/core/ListItemText";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import MenuItem from "@material-ui/core/MenuItem";
 import { fetchDelete } from "../../scripts/fetchHelper";
 import { UserContext } from "../../contexts/UserContext";
 import SendResetPassword from "../ResetPassword/SendResetPassword.js";
 import StyledDialog from "../common/StyledDialog/StyledDialog";
-import RightIcon from "@material-ui/icons/KeyboardArrowRight";
-import Form from "./Form";
 import { withRouter } from "react-router";
 import UpdateEmail from "./UpdateEmail";
 import DeleteAccount from "./DeleteAccount";
+import Switch from "@material-ui/core/Switch";
 const paymentLink = `${process.env.REACT_APP_BASE_URL}/api/stripe/login?from=account-settings`;
 
+const EnableLeaderboard = ({ setLoading }) => {
+  const { user, getUser, setUser } = useContext(UserContext);
+
+  return (
+    <>
+      <Switch
+        checked={!!user.publicizeStats}
+        onChange={() => {
+          setLoading(true);
+          const headers = new Headers();
+          headers.append("CSRF-Token", user.csrfToken);
+          headers.append("Content-Type", "application/json");
+          fetch(`${process.env.REACT_APP_BASE_URL}/api/users/`, {
+            method: "PATCH",
+            credentials: "include",
+            headers,
+            body: JSON.stringify({ publicizeStats: !user.publicizeStats }),
+          }).then(async (res) => {
+            if (res.status >= 400 && res.status < 500) {
+              const json = await res.json();
+              if (json.errors) {
+                alert(json.errors.map((msg) => msg.msg).join(" "));
+              } else {
+                alert(json.message);
+              }
+            }
+            if (res.status >= 500 && res.status < 600) {
+              const text = await res.text();
+              alert(text);
+            }
+            const userUpdate = await getUser();
+            setUser(userUpdate);
+            setLoading(false);
+          });
+        }}
+      />
+    </>
+  );
+};
 const StyledMenuItem = withStyles((theme) => ({
   root: {
     borderBottom: "1px solid #e6e6e6",
@@ -27,6 +71,7 @@ const StyledMenuItem = withStyles((theme) => ({
 
 export default withRouter(function AccountSettings(props) {
   const [dialog, setDialog] = useState(null);
+  const [loading, setLoading] = useState();
   const { user, getUser, setUser } = useContext(UserContext);
 
   const paymentMenuItem = user.stripeAccountInfo?.activated ? (
@@ -59,11 +104,27 @@ export default withRouter(function AccountSettings(props) {
       style={{
         maxWidth: "750px",
         display: "flex",
+        position: "relative",
         justifyContent: "space-evenly",
         flexDirection: "column",
       }}
     >
-      <Paper style={{ marginTop: "7vw" }}>
+      <Paper
+        style={{
+          marginTop: "7vw",
+          position: "relative",
+        }}
+      >
+        {loading && (
+          <div
+            style={{
+              width: "100%",
+              position: "absolute",
+            }}
+          >
+            {<LinearProgress />}
+          </div>
+        )}
         {paymentMenuItem}
         <StyledMenuItem
           color="primary"
@@ -85,7 +146,6 @@ export default withRouter(function AccountSettings(props) {
           <ListItemText primary="Password" />
           <ArrowRightIcon />
         </StyledMenuItem>
-
         <StyledMenuItem
           onClick={() => {
             setDialog("delete");
@@ -95,6 +155,27 @@ export default withRouter(function AccountSettings(props) {
           <ListItemText primary="Delete Account" />
           <ArrowRightIcon />
         </StyledMenuItem>
+
+        <Box //
+          display="flex"
+          flexDirection="row"
+          style={{
+            padding: ".5em 1em",
+            borderTop: "1px solid #e6e6e6",
+          }}
+          // get rid of click hover
+          color="primary"
+        >
+          <ListItemText
+            primary={
+              <>
+                Display my account on the public{" "}
+                <Link href="leaderboard"> leaderboard</Link>
+              </>
+            }
+          />
+          <EnableLeaderboard setLoading={setLoading} />
+        </Box>
       </Paper>
       <StyledDialog onClose={() => setDialog(null)} open={dialog === "email"}>
         <UpdateEmail

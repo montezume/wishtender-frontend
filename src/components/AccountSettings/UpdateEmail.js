@@ -45,14 +45,24 @@ export default function UpdateEmail(props) {
           setReqStatus("success");
           props.onClose();
         }
-        const json = await res.json();
         if (res.status >= 400 && res.status < 500) {
+          const json = await res.json();
           setReqStatus("error");
-          console.log(json);
+          if (json.errors) {
+            alert(json.errors.map((msg) => msg.msg).join(" "));
+          } else {
+            alert(json.message);
+          }
+        }
+        if (res.status >= 500 && res.status < 600) {
+          const text = await res.text();
+          setReqStatus("error");
+          alert(text);
         }
       })
       .catch((err) => {
-        console.log(err);
+        alert(err);
+        setReqStatus("error");
       });
   };
 
