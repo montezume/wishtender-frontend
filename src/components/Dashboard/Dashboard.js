@@ -6,6 +6,7 @@ export default function Dashboard() {
   const [users, setUsers] = useState(null);
   const [openOrders, setOpenOrders] = useState(null);
   const [openIds, setOpenIds] = useState(null);
+  const [filterActivated, setFilterActivated] = useState(null);
   const [sort, setSort] = useState("date");
   useEffect(() => {
     (async () => {
@@ -266,6 +267,9 @@ export default function Dashboard() {
                 });
             })()}
           </Collapse>
+          <button onClick={() => setFilterActivated(!filterActivated)}>
+            {filterActivated ? "show all" : "show only activated"}
+          </button>
           <div
             style={{
               display: "grid",
@@ -281,6 +285,9 @@ export default function Dashboard() {
                     new Date(a.createdAt).getTime()
                   );
                 })
+                .filter((usr) =>
+                  filterActivated ? usr?.stripeAccountInfo?.activated : true
+                )
                 .map((user) => {
                   return (
                     <div
