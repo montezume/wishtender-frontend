@@ -1,20 +1,24 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Title from "../common/TableTitle";
 import { Link } from "@material-ui/core";
+import Avatar from "@material-ui/core/Avatar";
+
 const useStyles = makeStyles((theme) => ({
-  seeMore: {
-    marginTop: theme.spacing(3),
+  userDisplay: {
+    display: "flex",
+    alignItems: "center",
+    gap: "1em",
   },
 }));
 export default function UserTable(props) {
+  const classes = useStyles();
   const { users } = props;
   const { limit } = props;
+  const { showPercent } = props;
 
   return (
     <>
@@ -22,6 +26,7 @@ export default function UserTable(props) {
         <TableRow>
           <TableCell>Rank</TableCell>
           <TableCell>Handle</TableCell>
+          {showPercent && <TableCell>Top</TableCell>}
         </TableRow>
       </TableHead>
       <TableBody>
@@ -30,13 +35,26 @@ export default function UserTable(props) {
             <TableCell>{"#" + (i + 1)}</TableCell>
             <TableCell>
               {!user.alias?.handle ? (
-                "Anonymous"
+                <div className={classes.userDisplay}>
+                  <Avatar alt={"anonymous"} />
+                  Anonymous
+                </div>
               ) : (
-                <Link
-                  href={user.alias?.handle}
-                >{`@${user.alias?.handle}`}</Link>
+                <>
+                  <Link
+                    className={classes.userDisplay}
+                    href={"../" + user.alias?.handle}
+                  >
+                    <Avatar
+                      alt={user.alias?.handle}
+                      src={user.alias?.profileImage}
+                    />
+                    {`@${user.alias?.handle}`}
+                  </Link>
+                </>
               )}
             </TableCell>
+            {showPercent && <TableCell>{user.topPercent}%</TableCell>}
           </TableRow>
         ))}
       </TableBody>

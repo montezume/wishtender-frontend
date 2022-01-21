@@ -15,34 +15,16 @@ import Badge from "@material-ui/core/Badge";
 import Tooltip from "@material-ui/core/Tooltip";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { withStyles, makeStyles } from "@material-ui/core";
-// const useStyles = makeStyles({
-//   top: "10px",
-//   border: "1px solid blue",
-//   tabToolTip: {
-//     "$.MuiTooltip-tooltip": {
-//       top: "10px",
-//       border: "1px solid red",
-//     },
-//     "$ .MuiTooltip-tooltip": {
-//       top: "10px",
-//       border: "1px solid red",
-//     },
-//     "$..MuiTooltip-popper": {
-//       top: "10px",
-//       border: "1px solid red",
-//     },
-//     "$ .MuiTooltip-popper": {
-//       top: "10px",
-//       border: "1px solid red",
-//     },
-//   },
-// });
+const useStyles = makeStyles((theme) => ({
+  tab: { minWidth: theme.spacing(8) },
+}));
 const TabTooltip = withStyles({
   tooltip: {
     margin: 2,
   },
 })(Tooltip);
 export default withRouter(function AccountTabs(props) {
+  const classes1 = useStyles();
   const classes = themeStyles(props);
   const [activeTab, setActiveTab] = useState(false);
   const [alias, setAlias] = useState(false);
@@ -80,6 +62,7 @@ export default withRouter(function AccountTabs(props) {
       >
         <TabTooltip title="Wishlist">
           <Tab
+            className={classes1.tab}
             onClick={async () => {
               const res = await fetch(
                 `${process.env.REACT_APP_BASE_URL}/api/aliases?user=${userContext.user._id}`,
@@ -98,6 +81,7 @@ export default withRouter(function AccountTabs(props) {
         </TabTooltip>
         <TabTooltip title="Wish-Tracker">
           <Tab
+            className={classes1.tab}
             component={Link}
             to="/wish-tracker"
             icon={

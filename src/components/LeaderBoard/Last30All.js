@@ -1,23 +1,12 @@
 import React from "react";
 import { Container, Paper, Grid } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
 import Last30 from "./Last30";
-const useStyles = makeStyles((theme) => ({
-  container: {
-    paddingTop: theme.spacing(5),
-    paddingBottom: theme.spacing(5),
-  },
-  paper: {
-    padding: theme.spacing(2),
-    display: "flex",
-    overflow: "auto",
-    flexDirection: "column",
-  },
-}));
+import useStyles from "./styles";
+
 export default function Last30All() {
   const classes = useStyles();
   return (
-    <>
+    <div className={classes.background}>
       <Container className={classes.container}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
@@ -27,6 +16,6 @@ export default function Last30All() {
           </Grid>
         </Grid>
       </Container>
-    </>
+    </div>
   );
 }

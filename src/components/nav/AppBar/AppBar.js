@@ -11,7 +11,7 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCartOutlined";
 import Tooltip from "@material-ui/core/Tooltip";
 import Badge from "@material-ui/core/Badge";
 import { CartContext } from "../../../contexts/CartContext";
-
+import StarBorderIcon from "@material-ui/icons/StarBorder";
 // app bar
 import Toolbar from "@material-ui/core/Toolbar";
 import AppBar from "@material-ui/core/AppBar";
@@ -144,6 +144,16 @@ function BackToTop(props) {
           >
             How it works
           </Button>
+
+          <Tooltip title="Leaderboard" aria-label="Leaderboard">
+            <IconButton
+              className={classes.doubleIconButton}
+              href="/leaderboard"
+              aria-label="leaderboard"
+            >
+              <StarBorderIcon />
+            </IconButton>
+          </Tooltip>
           {!user ? (
             props.screen !== "xs" ? (
               <>

@@ -4,7 +4,19 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { Link } from "@material-ui/core";
-export default function UserTable(props) {
+import { makeStyles } from "@material-ui/core/styles";
+import Avatar from "@material-ui/core/Avatar";
+
+const useStyles = makeStyles((theme) => ({
+  userDisplay: {
+    display: "flex",
+    alignItems: "center",
+    gap: "1em",
+  },
+}));
+
+export default function UserTableFull(props) {
+  const classes = useStyles();
   const { users } = props;
   const { limit } = props;
 
@@ -26,11 +38,23 @@ export default function UserTable(props) {
             <TableCell>{"#" + (i + 1)}</TableCell>
             <TableCell>
               {!user.alias?.handle ? (
-                "Anonymous"
+                <div className={classes.userDisplay}>
+                  <Avatar alt={"anonymous"} />
+                  Anonymous
+                </div>
               ) : (
-                <Link
-                  href={user.alias?.handle}
-                >{`@${user.alias?.handle}`}</Link>
+                <>
+                  <Link
+                    className={classes.userDisplay}
+                    href={"../" + user.alias?.handle}
+                  >
+                    <Avatar
+                      alt={user.alias?.handle}
+                      src={user.alias?.profileImage}
+                    />
+                    {`@${user.alias?.handle}`}
+                  </Link>
+                </>
               )}
             </TableCell>
             {/* <TableCell>{(((i + 1) / total users) * 100).toFixed(2) + "%"}</TableCell> */}
