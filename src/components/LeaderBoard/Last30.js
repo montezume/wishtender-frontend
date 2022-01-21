@@ -31,6 +31,7 @@ export default function Last30({ limit, link }) {
       {users && (
         <UserTable
           limit={limit}
+          showPercent={true}
           link={link}
           users={users}
           title={"Last 30 Days "}

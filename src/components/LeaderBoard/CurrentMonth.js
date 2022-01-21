@@ -39,6 +39,7 @@ export default function CurrentMonth({ limit, link }) {
           link={link}
           limit={limit}
           users={users}
+          showPercent={true}
           title={"Month of " + month[new Date().getMonth()]}
         ></UserTable>
       )}
