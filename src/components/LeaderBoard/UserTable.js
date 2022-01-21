@@ -18,6 +18,7 @@ export default function UserTable(props) {
   const { users } = props;
   const { limit } = props;
   const { link } = props;
+  const { showPercent } = props;
   return (
     <>
       <Title>{title || "Users"}</Title>
@@ -29,7 +30,11 @@ export default function UserTable(props) {
           ></UserTableInsideFull>
         ) : (
           // show rand and handle to everyone else
-          <UserTableInside users={users} limit={limit}></UserTableInside>
+          <UserTableInside
+            users={users}
+            showPercent={showPercent}
+            limit={limit}
+          ></UserTableInside>
         )}
       </Table>
       {link && (
