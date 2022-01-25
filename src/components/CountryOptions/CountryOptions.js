@@ -22,10 +22,11 @@ export default function CountryOptions(props) {
   //   setCountry(event.target.value);
   // };
 
-  const countrySelection = supportedPayoutCountries.map((cntry) => (
-    <MenuItem value={cntry}>{regionNames?.of(cntry) || cntry}</MenuItem>
-  ));
-
+  const countrySelection = supportedPayoutCountries
+    .map((cntry) => (
+      <MenuItem value={cntry}>{regionNames?.of(cntry) || cntry}</MenuItem>
+    ))
+    .sort((a, b) => (a.props.children < b.props.children ? -1 : 1));
   return (
     <FormControl
       style={{

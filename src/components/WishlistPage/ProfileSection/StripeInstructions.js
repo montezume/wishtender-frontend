@@ -149,6 +149,7 @@ export default withRouter(function StripeInstructions(props) {
                 return sendConfirmationEmail();
               }
               const link = await getLink();
+              if (!link) return;
               return (window.location.href = link);
             }}
             endIcon={<ArrowForwardIos color="primary"></ArrowForwardIos>}
