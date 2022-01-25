@@ -123,7 +123,7 @@ function fourPointExplanation() {
               alt="no judgement icon"
             />
           </div>
-          <h3>Non-Judgemental</h3>
+          <h3>Non-Judgmental</h3>
           <p>
             WishTender is built to help you no matter what content you create.
           </p>

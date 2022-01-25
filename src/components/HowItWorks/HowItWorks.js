@@ -89,7 +89,7 @@ export default function HowItWorks(props) {
         <InstructionCard
           classes={classes}
           step="Step 3: Add your link to your Twitter/Linktree/Other"
-          body="Share you wishlist link with your fans. When a fan purchases an
+          body="Share your wishlist link with your fans. When a fan purchases an
           item off your wishlist, you get the cash to purchase the item. You can send a picture
           'thank you' note within the app."
           imageSrc="images/link.png"
