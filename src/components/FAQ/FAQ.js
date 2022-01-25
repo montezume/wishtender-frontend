@@ -202,39 +202,58 @@ export default function FAQ(props) {
           account/debit card in these <strong>countries</strong>:
         </Typography>{" "}
         <ul>
+          <li>Argentina</li>
           <li>Australia</li>
           <li>Austria</li>
           <li>Belgium</li>
+          <li>Bolivia</li>
           <li>Bulgaria</li>
           <li>Canada</li>
+          <li>Chile</li>
+          <li>Colombia</li>
+          <li>Costa Rica</li>
+          <li>Croatia</li>
           <li>Cyprus</li>
-          <li>Czechia</li>
+          <li>Czech Republic</li>
           <li>Denmark</li>
+          <li>Dominican Republic</li>
+          <li>Egypt</li>
           <li>Estonia</li>
           <li>Finland</li>
           <li>France</li>
           <li>Germany</li>
           <li>Greece</li>
-          <li>Hong Kong SAR China</li>
+          <li>Hong Kong</li>
+          <li>Hungary</li>
+          <li>Iceland</li>
+          {/* <li>India</li> not yet */}
           <li>Ireland</li>
+          <li>Israel</li>
           <li>Italy</li>
           <li>Latvia</li>
+          <li>Liechtenstein</li>
           <li>Lithuania</li>
           <li>Luxembourg</li>
           <li>Malta</li>
+          <li>Mexico</li>
           <li>Netherlands</li>
           <li>New Zealand</li>
           <li>Norway</li>
+          <li>Paraguay</li>
+          <li>Peru</li>
           <li>Poland</li>
           <li>Portugal</li>
-          <li>Romania,Singapore</li>
+          <li>Romania</li>
+          <li>Singapore</li>
           <li>Slovakia</li>
           <li>Slovenia</li>
           <li>Spain</li>
           <li>Sweden</li>
           <li>Switzerland</li>
+          <li>Thailand</li>
+          <li>Trinidad And Tobago</li>
           <li>United Kingdom</li>
-          <li>United States</li>
+          <li>Uruguay</li>
         </ul>{" "}
         <Typography>
           <strong>Gift-givers</strong> can convert wishlists to any of these{" "}
@@ -242,36 +261,50 @@ export default function FAQ(props) {
           choice:{" "}
         </Typography>
         <ul>
-          <li>United States dollar</li>
-          <li>Australian dollar</li> <li>Brazilian real</li>{" "}
+          <li>Argentine peso</li>
+          <li>Australian dollar</li>
+          <li>Boliviano</li>
+          <li>Brazilian real</li>
           <li>Bulgarian lev</li>
-          <li>Canadian dollar</li> <li>Chinese yuan</li> <li>Croatian kuna</li>
+          <li>Canadian dollar</li>
+          <li>Chilean peso</li>
+          <li>Chinese yuan</li>
+          <li>Colombian peso</li>
+          <li>Costa Rican colon</li>
+          <li>Croatian kuna</li>
           <li>Czech koruna</li>
           <li>Danish krone</li>
+          <li>Dominican peso</li>
+          <li>Egyptian pound</li>
           <li>Euro</li>
-          <li>Hungarian forint</li>
           <li>Hong Kong dollar</li>
+          <li>Hungarian forint</li>
           <li>Icelandic króna</li>
           <li>Indian rupee</li>
-          <li>Israeli new shekel</li>
           <li>Indonesian rupiah</li>
+          <li>Israeli new shekel</li>
           <li>Japanese yen</li>
           <li>Malaysian ringgit</li>
           <li>Mexican peso</li>
           <li>New Zealand dollar</li>
           <li>Norwegian krone</li>
-          <li>Polish złoty</li>
+          <li>Paraguayan guaraní</li>
+          <li>Peruvian nuevo sol</li>
           <li>Philippine peso</li>
+          <li>Polish złoty</li>
           <li>Pound sterling</li>
-          <li>Russian ruble</li>
           <li>Romanian new leu</li>
-          <li>Swedish krona/kronor</li>
-          <li>South Korean won</li>
-          <li>South African rand</li>
+          <li>Russian rouble</li>
           <li>Singapore dollar</li>
+          <li>South African rand</li>
+          <li>South Korean won</li>
+          <li>Swedish krona/kronor</li>
           <li>Swiss franc</li>
-          <li>Turkish lira</li>
           <li>Thai baht</li>
+          <li>Trinidad and Tobago dollar</li>
+          <li>Turkish lira</li>
+          <li>United States dollar</li>
+          <li>Uruguayan peso</li>
         </ul>
         <h2>Why are the countries different for wishers and gifters?</h2>
         <Typography>
