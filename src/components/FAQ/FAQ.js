@@ -253,6 +253,7 @@ export default function FAQ(props) {
           <li>Thailand</li>
           <li>Trinidad And Tobago</li>
           <li>United Kingdom</li>
+          <li>United States</li>
           <li>Uruguay</li>
         </ul>{" "}
         <Typography>

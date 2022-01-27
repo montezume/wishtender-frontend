@@ -31,7 +31,9 @@ import { fetchPostJson } from "../../scripts/fetchHelper";
 import DisplayPrice from "../common/DisplayPrice";
 import DisplayPrice2 from "../common/DisplayPrice2";
 
-const TenderInfoInputs = ({ cart, register, control }) => {
+const TenderInfoInputs = (props) => {
+  const { cart, register, errors, control } = props;
+
   const { ref: fromLineRef, ...fromLineReg } = register("fromLine", {
     maxLength: {
       value: 60,
@@ -46,6 +48,12 @@ const TenderInfoInputs = ({ cart, register, control }) => {
     },
   });
   const { ref: privateRef, ...privateReg } = register("private");
+  const { ref: agreedToTACRef, ...agreedToTACReg } = register("agreedToTAC", {
+    validate: (value) => {
+      console.log(value);
+      return value || "You must accept the Terms and Conditions to purchase.";
+    },
+  });
 
   return (
     <>
@@ -70,7 +78,7 @@ const TenderInfoInputs = ({ cart, register, control }) => {
       </FormControl>
       <FormControl variant="outlined">
         <InputLabel htmlFor="email">
-          Email <span style={{ color: "#b9b9b9" }}>Private</span>
+          Email* <span style={{ color: "#b9b9b9" }}>Private</span>
         </InputLabel>
         <OutlinedInput
           {...emailReg}
@@ -91,8 +99,13 @@ const TenderInfoInputs = ({ cart, register, control }) => {
             </InputAdornment>
           }
         ></OutlinedInput>
+        {errors.email ? (
+          <FormHelperText error>{errors.email.message}</FormHelperText>
+        ) : (
+          <FormHelperText>Required</FormHelperText>
+        )}
       </FormControl>{" "}
-      <FormControl required component="fieldset">
+      <FormControl required>
         <FormControlLabel
           control={
             <Controller
@@ -103,7 +116,7 @@ const TenderInfoInputs = ({ cart, register, control }) => {
               render={(props) => (
                 <Checkbox
                   {...props}
-                  checked={props.field.value}
+                  checked={props.field.value || false}
                   onChange={(e) => {
                     props.field.onChange(e.target.checked);
                   }}
@@ -119,6 +132,42 @@ const TenderInfoInputs = ({ cart, register, control }) => {
           you check this or not, your email and personal information will always
           be private.
         </FormHelperText>
+      </FormControl>
+      <FormControl required>
+        <FormControlLabel
+          control={
+            <Controller
+              {...agreedToTACReg}
+              inputRef={agreedToTACRef}
+              name="agreedToTAC"
+              control={control}
+              render={(props) => (
+                <Checkbox
+                  {...props}
+                  checked={props.field.value || false}
+                  onChange={(e) => {
+                    props.field.onChange(e.target.checked);
+                  }}
+                />
+              )}
+            />
+          }
+          label={
+            <>
+              I agree to the{" "}
+              <a target="_blank" href="files/terms-1-26-22.pdf">
+                Terms and Conditions
+              </a>{" "}
+              and{" "}
+              <a target="_blank" href="files/privacy-9-1-21.pdf">
+                Privacy Policy
+              </a>
+            </>
+          }
+        />
+        {errors.agreedToTAC && (
+          <FormHelperText error>{errors.agreedToTAC.message}</FormHelperText>
+        )}
       </FormControl>
     </>
   );
@@ -146,6 +195,7 @@ export default function AliasCart({ cart, exchangeRates }) {
           },
           alias: cart.alias._id,
           noteToWisher: data.message,
+          agreedToTAC: data.agreedToTAC,
           private: data.private || false,
         },
       },
@@ -277,6 +327,7 @@ export default function AliasCart({ cart, exchangeRates }) {
                   {smallScreen ? (
                     <TenderInfoInputs
                       register={register}
+                      errors={errors}
                       cart={cart}
                       control={control}
                     />
@@ -286,6 +337,7 @@ export default function AliasCart({ cart, exchangeRates }) {
                       style={{ gap: "1em", flexWrap: "wrap" }}
                     >
                       <TenderInfoInputs
+                        errors={errors}
                         register={register}
                         cart={cart}
                         control={control}
