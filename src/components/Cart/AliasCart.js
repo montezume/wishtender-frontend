@@ -185,8 +185,14 @@ export default function AliasCart({ cart, exchangeRates }) {
   const checkoutCart = (data) => {
     // create stripe session and get session id
     // redirect to session in the callback
-    fetchPostJson(
-      {
+    const headers = new Headers();
+    // headers.append("CSRF-Token", user.csrfToken);
+    headers.append("Content-Type", "application/json");
+    fetch(process.env.REACT_APP_BASE_URL + "/api/checkout", {
+      method: "POST",
+      credentials: "include",
+      headers,
+      body: JSON.stringify({
         alias: cart.alias._id,
         order: {
           buyerInfo: {
@@ -198,12 +204,30 @@ export default function AliasCart({ cart, exchangeRates }) {
           agreedToTAC: data.agreedToTAC,
           private: data.private || false,
         },
-      },
-      process.env.REACT_APP_BASE_URL + "/api/checkout",
-      (data) => {
-        goToCheckout(data.checkoutSessionId);
-      }
-    );
+      }),
+    })
+      .then(async (res) => {
+        if (res.status >= 500 && res.status < 600) {
+          const text = await res.text();
+          alert(text);
+        }
+        const json = await res.json();
+
+        if (res.status >= 400 && res.status < 500) {
+          if (json.errors) {
+            alert(json.errors.map((msg) => msg.msg).join(" "));
+          } else {
+            alert(json.message);
+          }
+        }
+
+        if (res.status >= 200 && res.status < 300) {
+          goToCheckout(json.checkoutSessionId);
+        }
+      })
+      .catch((err) => {
+        alert("Please report error: " + err);
+      });
   };
   const goToCheckout = (sessionId) => {
     /* Handle any errors returns from Checkout  */
