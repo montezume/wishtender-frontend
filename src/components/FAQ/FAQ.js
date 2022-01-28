@@ -196,6 +196,37 @@ export default function FAQ(props) {
           video, <a href="https://calendly.com/dashiell/20min">book a chat</a>{" "}
           or request an instant audio chat through the chat support.
         </Typography>
+        <h2>What images are prohibited from putting on my wishlist?</h2>
+        <Typography>
+          Scantily clad 😉 pictures are fine but no overt nudity. We are trying
+          to keep this site classified as a non-adult-content site in order to
+          provide you with lower fees. We welcome SW's but this decision is
+          ultimately to help you get tips and gifts from fans without getting
+          the high fees you may experience on other adult content sites.
+        </Typography>
+        <h2>What gifts are prohibited from putting on my wishlist?</h2>
+        <Typography>
+          You can put any item or custom gift on your wishlist. But you cannot
+          list your services, nor gifts that promise any service or goods in
+          exchange for the gift. If you want a gift for a service you provided,
+          you can list a tip or gift and ask your client privately to buy that
+          gift or tip for that service.
+        </Typography>
+        <Typography>
+          We don't allow listing services because, as a wishlist site, we cannot
+          be responsible for ensuring the guarantee of any services, goods, nor
+          exchanges. No overt nudity is allowed in the images for the items.
+          This allows us to keep our fees low for you and your fans. As
+          mentioned above, we welcome SW's but this decision is ultimately to
+          help you get tips and gifts from fans without getting the high fees
+          you may experience on other adult content sites.
+        </Typography>
+        <h3>Prohibited:</h3>
+        <ul>
+          <li>Services</li>
+          <li>Gifts that promise a good or service in exchange for the gift</li>
+          <li>Gifts that have nudity in the pictures</li>
+        </ul>
         <h2>In what countries does WishTender work?</h2>
         <Typography>
           <strong>Wishlist owners</strong> can create a wishlist with a bank
