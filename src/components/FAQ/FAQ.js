@@ -201,8 +201,8 @@ export default function FAQ(props) {
           Scantily clad 😉 pictures are fine but no overt nudity. We are trying
           to keep this site classified as a non-adult-content site in order to
           provide you with lower fees. We welcome SW's but this decision is
-          ultimately to help you get tips and gifts from fans without getting
-          the high fees you may experience on other adult content sites.
+          ultimately to help you get gifts from fans without getting the high
+          fees you may experience on adult content sites.
         </Typography>
         <h2>What gifts are prohibited from putting on my wishlist?</h2>
         <Typography>
@@ -218,8 +218,8 @@ export default function FAQ(props) {
           exchanges. No overt nudity is allowed in the images for the items.
           This allows us to keep our fees low for you and your fans. As
           mentioned above, we welcome SW's but this decision is ultimately to
-          help you get tips and gifts from fans without getting the high fees
-          you may experience on other adult content sites.
+          help you get gifts from fans without getting the high fees you may
+          experience on adult content sites.
         </Typography>
         <h3>Prohibited:</h3>
         <ul>
