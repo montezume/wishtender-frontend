@@ -170,25 +170,25 @@ function App(props) {
           headers,
         }).then(async (res) => {
           return;
-          if (res.status === 204) return;
+          // if (res.status === 204) return;
 
-          if (res.status === 200) {
-            const json = await res.json();
-            const topRankNotification = json.filter(
-              (r) => r?.code?.slice(0, 3) === "top"
-            )[0];
-            if (topRankNotification) {
-              const message = topRankNotification.message;
-              const rank =
-                topRankNotification.code.match(/(?<=top_)(.*)(?=_)/g)[0];
+          // if (res.status === 200) {
+          //   const json = await res.json();
+          //   const topRankNotification = json.filter(
+          //     (r) => r?.code?.slice(0, 3) === "top"
+          //   )[0];
+          //   if (topRankNotification) {
+          //     const message = topRankNotification.message;
+          //     const rank =
+          //       topRankNotification.code.match(/(?<=top_)(.*)(?=_)/g)[0];
 
-              setRankNotification({
-                id: topRankNotification._id,
-                rank,
-                message,
-              });
-            }
-          }
+          //     setRankNotification({
+          //       id: topRankNotification._id,
+          //       rank,
+          //       message,
+          //     });
+          //   }
+          // }
         });
       })();
     }
