@@ -159,41 +159,42 @@ function App(props) {
   }, [getCartNotifications, user]);
 
   // handle notifications
-  useEffect(() => {
-    if (user !== undefined) {
-      (async () => {
-        const headers = new Headers();
-        headers.append("Content-Type", "application/json");
-        fetch(process.env.REACT_APP_BASE_URL + "/api/notifications/new", {
-          credentials: "include",
-          method: "GET",
-          headers,
-        }).then(async (res) => {
-          if (res.status === 204) return;
+  // useEffect(() => {
+  // if (user !== undefined) {
+  //   (async () => {
+  //     const headers = new Headers();
+  //     headers.append("Content-Type", "application/json");
+  //     fetch(process.env.REACT_APP_BASE_URL + "/api/notifications/new", {
+  //       credentials: "include",
+  //       method: "GET",
+  //       headers,
+  //     }).then(async (res) => {
+  //       return;
+  //       if (res.status === 204) return;
 
-          if (res.status === 200) {
-            const json = await res.json();
-            const topRankNotification = json.filter(
-              (r) => r?.code?.slice(0, 3) === "top"
-            )[0];
-            if (topRankNotification) {
-              const message = topRankNotification.message;
+  //       if (res.status === 200) {
+  //   const json = await res.json();
+  //   const topRankNotification = json.filter(
+  //     (r) => r?.code?.slice(0, 3) === "top"
+  //   )[0];
+  //   if (topRankNotification) {
+  //     const message = topRankNotification.message;
 
-              // no positive look behind in safari
-              // const rank =
-              //   topRankNotification.code.match(/(?<=top_)(.*)(?=_)/g)[0];
-              const rank = topRankNotification?.code?.split("_")[1];
-              setRankNotification({
-                id: topRankNotification._id,
-                rank,
-                message,
-              });
-            }
-          }
-        });
-      })();
-    }
-  }, [user]);
+  //     // no positive look behind in safari
+  //     // const rank =
+  //     //   topRankNotification.code.match(/(?<=top_)(.*)(?=_)/g)[0];
+  //     const rank = topRankNotification?.code?.split("_")[1];
+  //     setRankNotification({
+  //       id: topRankNotification._id,
+  //       rank,
+  //       message,
+  //     });
+  //   }
+  // }
+  //     });
+  //   })();
+  // }
+  // }, [user]);
 
   // affiliate or other queries from link
   // useEffect(() => {
