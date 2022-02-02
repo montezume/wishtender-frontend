@@ -169,6 +169,7 @@ function App(props) {
           method: "GET",
           headers,
         }).then(async (res) => {
+          return;
           if (res.status === 204) return;
 
           if (res.status === 200) {
