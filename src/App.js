@@ -60,6 +60,7 @@ import LeaderBoard from "./components/LeaderBoard/LeaderBoard";
 import CurrentMonthAll from "./components/LeaderBoard/CurrentMonthAll";
 import Twenty21All from "./components/LeaderBoard/Twenty21All";
 import Last30All from "./components/LeaderBoard/Last30All";
+import TopWisherAlert from "./components/TopWisherAlert/TopWisherAlert";
 
 function removeURLParameter(url, parameter) {
   //prefer to use l.search if you have a location/link object
@@ -86,6 +87,7 @@ function App(props) {
   const { getCurrencyCookie, setCurrencyCookie, setCurrencyCookieAndContext } =
     useContext(CurrencyContext);
 
+  const [rankNotification, setRankNotification] = useState();
   const [user, setUser] = useState();
   const [cart, setCart] = useState();
   const [cartNotifications, setCartNotifications] = useState();
@@ -155,6 +157,41 @@ function App(props) {
       })();
     }
   }, [getCartNotifications, user]);
+
+  // handle notifications
+  useEffect(() => {
+    if (user !== undefined) {
+      (async () => {
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        fetch(process.env.REACT_APP_BASE_URL + "/api/notifications/new", {
+          credentials: "include",
+          method: "GET",
+          headers,
+        }).then(async (res) => {
+          if (res.status === 204) return;
+
+          if (res.status === 200) {
+            const json = await res.json();
+            const topRankNotification = json.filter(
+              (r) => r?.code?.slice(0, 3) === "top"
+            )[0];
+            if (topRankNotification) {
+              const message = topRankNotification.message;
+              const rank =
+                topRankNotification.code.match(/(?<=top_)(.*)(?=_)/g)[0];
+
+              setRankNotification({
+                id: topRankNotification._id,
+                rank,
+                message,
+              });
+            }
+          }
+        });
+      })();
+    }
+  }, [user]);
 
   // affiliate or other queries from link
   // useEffect(() => {
@@ -486,6 +523,15 @@ function App(props) {
                             />
                           )}
 
+                          {rankNotification && (
+                            <TopWisherAlert
+                              rank={rankNotification.rank}
+                              message={rankNotification.message}
+                              id={rankNotification.id}
+                              handle={user.aliases[0].handle}
+                              setRankNotification={setRankNotification}
+                            ></TopWisherAlert>
+                          )}
                           <div
                             style={{
                               minHeight: "calc(100vh - 72px)",
