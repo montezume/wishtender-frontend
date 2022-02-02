@@ -169,26 +169,27 @@ function App(props) {
           method: "GET",
           headers,
         }).then(async (res) => {
-          return;
-          // if (res.status === 204) return;
+          if (res.status === 204) return;
 
-          // if (res.status === 200) {
-          //   const json = await res.json();
-          //   const topRankNotification = json.filter(
-          //     (r) => r?.code?.slice(0, 3) === "top"
-          //   )[0];
-          //   if (topRankNotification) {
-          //     const message = topRankNotification.message;
-          //     const rank =
-          //       topRankNotification.code.match(/(?<=top_)(.*)(?=_)/g)[0];
+          if (res.status === 200) {
+            const json = await res.json();
+            const topRankNotification = json.filter(
+              (r) => r?.code?.slice(0, 3) === "top"
+            )[0];
+            if (topRankNotification) {
+              const message = topRankNotification.message;
 
-          //     setRankNotification({
-          //       id: topRankNotification._id,
-          //       rank,
-          //       message,
-          //     });
-          //   }
-          // }
+              // no positive look behind in safari
+              // const rank =
+              //   topRankNotification.code.match(/(?<=top_)(.*)(?=_)/g)[0];
+              const rank = topRankNotification?.code?.split("_")[1];
+              setRankNotification({
+                id: topRankNotification._id,
+                rank,
+                message,
+              });
+            }
+          }
         });
       })();
     }
