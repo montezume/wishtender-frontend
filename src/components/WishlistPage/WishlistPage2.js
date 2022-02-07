@@ -26,7 +26,11 @@ function WishlistPage(props) {
   const { getWishlistAndParse, getWishlist } = useContext(WishlistContext);
   const [customGetWishlistAndParse, setCustomGetWishlistAndParse] =
     useState(null);
-  const { currency: clientCurrency, setCurrency } = useContext(CurrencyContext);
+  const {
+    currency: clientCurrency,
+    setCurrency,
+    setCurrencyCookieAndContext,
+  } = useContext(CurrencyContext);
 
   const { setIsCurrentUsersProfile, isCurrentUsersProfile } =
     useContext(RouteContext);
@@ -41,14 +45,30 @@ function WishlistPage(props) {
     customGetWishlistAndParse,
   };
   useTraceUpdate(WishlistPage.name, props, states);
-
+  // ------two places theres exchange?base. handle whappens f clientCurrency is null
   useEffect(() => {
     if (alias && alias.currency && clientCurrency !== "noConversion") {
       fetch(
-        `${process.env.REACT_APP_BASE_URL}/api/exchange?base=${alias.currency}&symbols=${clientCurrency}`
+        `${process.env.REACT_APP_BASE_URL}/api/exchange?base=${
+          alias.currency
+        }&symbols=${"MlP"}`
+        // `${process.env.REACT_APP_BASE_URL}/api/exchange?base=${alias.currency}&symbols=${clientCurrency}`
       )
         .then(async (response) => {
+          if (response.status === 500) {
+            const message = await response.text();
+            setCurrencyCookieAndContext("noConversion", setCurrency);
+            return alert(
+              message +
+                " Currency conversion turned off. Contact us in the support chat if you need help."
+            );
+          }
           let res = await response.json();
+          if (response.status === 400) {
+            setCurrencyCookieAndContext("noConversion", setCurrency);
+            return alert(res.message);
+          }
+
           setConvertRate(res.rate);
         })
         .catch((r) => {
@@ -92,12 +112,27 @@ function WishlistPage(props) {
             // if we DO need conversion rate and there isn't one, get it
             if (!convertRate) {
               const response = await fetch(
-                `${process.env.REACT_APP_BASE_URL}/api/exchange?base=${alias.currency}&symbols=${clientCurrency}`
+                `${process.env.REACT_APP_BASE_URL}/api/exchange?base=${
+                  alias.currency
+                }&symbols=${"MlP"}`
+                // `${process.env.REACT_APP_BASE_URL}/api/exchange?base=${alias.currency}&symbols=${clientCurrency}`
               ).catch((r) => {
                 console.log(r);
               });
-
+              if (response.status === 500) {
+                const message = await response.text();
+                setCurrencyCookieAndContext("noConversion", setCurrency);
+                return alert(
+                  message +
+                    " Currency conversion turned off. Contact us in the support chat if you need help."
+                );
+              }
               let res = await response.json();
+              if (response.status === 400) {
+                setCurrencyCookieAndContext("noConversion", setCurrency);
+                return alert(res.message);
+              }
+
               setConvertRate(res.rate);
             }
             parseConvertWishlistPrices(
