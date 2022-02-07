@@ -51,7 +51,7 @@ function WishlistPage(props) {
       fetch(
         `${process.env.REACT_APP_BASE_URL}/api/exchange?base=${
           alias.currency
-        }&symbols=${"MlP"}`
+        }&symbols=${null}`
         // `${process.env.REACT_APP_BASE_URL}/api/exchange?base=${alias.currency}&symbols=${clientCurrency}`
       )
         .then(async (response) => {
@@ -114,7 +114,7 @@ function WishlistPage(props) {
               const response = await fetch(
                 `${process.env.REACT_APP_BASE_URL}/api/exchange?base=${
                   alias.currency
-                }&symbols=${"MlP"}`
+                }&symbols=${null}`
                 // `${process.env.REACT_APP_BASE_URL}/api/exchange?base=${alias.currency}&symbols=${clientCurrency}`
               ).catch((r) => {
                 console.log(r);
