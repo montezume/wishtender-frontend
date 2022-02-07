@@ -46,7 +46,7 @@ export default function AllCarts() {
     if (!exchangeRates) {
       const fetchData = async () => {
         const response = await fetch(
-          `${process.env.REACT_APP_BASE_URL}/api/exchange/all?base=${"MlP"}`
+          `${process.env.REACT_APP_BASE_URL}/api/exchange/all?base=${null}`
           // `${process.env.REACT_APP_BASE_URL}/api/exchange/all?base=${clientCurrency}`
         );
 
@@ -74,7 +74,7 @@ export default function AllCarts() {
     const fetchData = async () => {
       const response = await fetch(
         `${process.env.REACT_APP_BASE_URL}/api/exchange/all?base=${
-          clientCurrency === "noConversion" ? "USD" : "MlP"
+          clientCurrency === "noConversion" ? "USD" : null
         }`
         // `${process.env.REACT_APP_BASE_URL}/api/exchange/all?base=${
         //   clientCurrency === "noConversion" ? "USD" : clientCurrency
