@@ -12,7 +12,7 @@ module.exports = function (app) {
       target:
         // not true if environment variables have booleans...
         process.env.BACKENDLOCAL === "true" || process.env.BACKENDLOCAL
-          ? "http://localhost:8000"
+          ? "http://localhost:4000"
           : "https://api.wishtender.com/",
       changeOrigin: true,
     })
