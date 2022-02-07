@@ -15,7 +15,11 @@ export default function AllCarts() {
     setCartNotifications,
     cartNotificationsFromCart,
   } = useContext(CartContext);
-  const { currency: clientCurrency } = useContext(CurrencyContext);
+  const {
+    currency: clientCurrency,
+    setCurrencyCookieAndContext,
+    setCurrency,
+  } = useContext(CurrencyContext);
   const localeContext = useContext(LocaleContext);
 
   useEffect(() => {
@@ -42,11 +46,24 @@ export default function AllCarts() {
     if (!exchangeRates) {
       const fetchData = async () => {
         const response = await fetch(
-          `${process.env.REACT_APP_BASE_URL}/api/exchange/all?base=${clientCurrency}`
+          `${process.env.REACT_APP_BASE_URL}/api/exchange/all?base=${"MlP"}`
+          // `${process.env.REACT_APP_BASE_URL}/api/exchange/all?base=${clientCurrency}`
         );
 
-        const rates = await response.json();
-        setExchangeRates(rates.rates);
+        if (response.status === 500) {
+          const message = await response.text();
+          setCurrencyCookieAndContext("noConversion", setCurrency);
+          return alert(
+            message +
+              " Currency conversion turned off. Contact us in the support chat if you need help."
+          );
+        }
+        let res = await response.json();
+        if (response.status === 400) {
+          setCurrencyCookieAndContext("noConversion", setCurrency);
+          return alert(res.message);
+        }
+        setExchangeRates(res.rates);
       };
 
       fetchData();
@@ -57,12 +74,26 @@ export default function AllCarts() {
     const fetchData = async () => {
       const response = await fetch(
         `${process.env.REACT_APP_BASE_URL}/api/exchange/all?base=${
-          clientCurrency === "noConversion" ? "USD" : clientCurrency
+          clientCurrency === "noConversion" ? "USD" : "MlP"
         }`
+        // `${process.env.REACT_APP_BASE_URL}/api/exchange/all?base=${
+        //   clientCurrency === "noConversion" ? "USD" : clientCurrency
+        // }`
       );
-
-      const rates = await response.json();
-      setExchangeRates(rates.rates);
+      if (response.status === 500) {
+        const message = await response.text();
+        setCurrencyCookieAndContext("noConversion", setCurrency);
+        return alert(
+          message +
+            " Currency conversion turned off. Contact us in the support chat if you need help."
+        );
+      }
+      let res = await response.json();
+      if (response.status === 400) {
+        setCurrencyCookieAndContext("noConversion", setCurrency);
+        return alert(res.message);
+      }
+      setExchangeRates(res.rates);
     };
 
     fetchData();
