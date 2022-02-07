@@ -23,11 +23,16 @@ export const CartContext = createContext({
       credentials: "include",
     })
       .then(async (res) => {
-        cart = await res.json();
-        if (!Object.keys(cart).length || !Object.keys(cart.aliasCarts).length)
-          return;
-        parseCartPrices(cart, clientCurrency, localeContext, exchangeRates);
-        console.log(cart);
+        if (res.status === 500) {
+          const message = await res.text();
+          alert(message);
+        } else {
+          cart = await res.json();
+          if (!Object.keys(cart).length || !Object.keys(cart.aliasCarts).length)
+            return;
+          parseCartPrices(cart, clientCurrency, localeContext, exchangeRates);
+          console.log(cart);
+        }
       })
       .catch((err) => {
         console.log(cart ? "couldn't parse cart" : "couldn't get cart");
@@ -45,8 +50,13 @@ export const CartContext = createContext({
       credentials: "include",
     })
       .then(async (res) => {
-        cart = await res.json();
-        numInCart = cartNotificationsFromCart(cart);
+        if (res.status === 500) {
+          const message = await res.text();
+          alert(message);
+        } else {
+          cart = await res.json();
+          numInCart = cartNotificationsFromCart(cart);
+        }
       })
 
       .catch((err) => {

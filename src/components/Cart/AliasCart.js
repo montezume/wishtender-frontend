@@ -209,7 +209,7 @@ export default function AliasCart({ cart, exchangeRates }) {
       .then(async (res) => {
         if (res.status >= 500 && res.status < 600) {
           const text = await res.text();
-          alert(text);
+          return alert(text);
         }
         const json = await res.json();
 
