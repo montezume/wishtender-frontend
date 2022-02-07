@@ -19,6 +19,9 @@ export default function AllCarts() {
   const localeContext = useContext(LocaleContext);
 
   useEffect(() => {
+    alert(process.env.REACT_APP_BASE_URL);
+  }, []);
+  useEffect(() => {
     //set useRates
 
     if (clientCurrency === null) return undefined;
