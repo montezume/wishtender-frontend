@@ -78,6 +78,7 @@ export default function AllCarts() {
       );
 
       setCart(newCart);
+      if (newCart == null) return;
       setCartNotifications(cartNotificationsFromCart(newCart));
     })();
   }, [
