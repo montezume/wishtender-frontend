@@ -49,10 +49,7 @@ function WishlistPage(props) {
   useEffect(() => {
     if (alias && alias.currency && clientCurrency !== "noConversion") {
       fetch(
-        `${process.env.REACT_APP_BASE_URL}/api/exchange?base=${
-          alias.currency
-        }&symbols=${null}`
-        // `${process.env.REACT_APP_BASE_URL}/api/exchange?base=${alias.currency}&symbols=${clientCurrency}`
+        `${process.env.REACT_APP_BASE_URL}/api/exchange?base=${alias.currency}&symbols=${clientCurrency}`
       )
         .then(async (response) => {
           if (response.status === 500) {
@@ -112,10 +109,7 @@ function WishlistPage(props) {
             // if we DO need conversion rate and there isn't one, get it
             if (!convertRate) {
               const response = await fetch(
-                `${process.env.REACT_APP_BASE_URL}/api/exchange?base=${
-                  alias.currency
-                }&symbols=${null}`
-                // `${process.env.REACT_APP_BASE_URL}/api/exchange?base=${alias.currency}&symbols=${clientCurrency}`
+                `${process.env.REACT_APP_BASE_URL}/api/exchange?base=${alias.currency}&symbols=${clientCurrency}`
               ).catch((r) => {
                 console.log(r);
               });
