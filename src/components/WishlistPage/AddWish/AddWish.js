@@ -16,11 +16,12 @@ import ResponsiveDialogTitleSection from "../../common/StyledDialog/TopSections/
 
 const useStyles = makeStyles((theme) => {
   return {
+    border: { minHeight: "6px" },
     progressError: {
       "& .MuiLinearProgress-bar": { backgroundColor: theme.palette.error.main },
     },
     progressSuccess: {
-      "& .MuiLinearProgress-bar": { backgroundColor: "greenyellow" },
+      "& .MuiLinearProgress-bar": { backgroundColor: "#3fd600" }, // lime green
     },
   };
 });
@@ -30,14 +31,14 @@ function StyledProgressBar(props) {
 
   return (
     <LinearProgress
-      className={
+      className={`${classes.border}  ${
         status === "error"
           ? classes.progressError
           : status === "success"
           ? classes.progressSuccess
           : ""
-      }
-      color={status === "loading" ? "secondary" : "primary"}
+      }`}
+      color="primary"
       variant={status === "loading" ? "indeterminate" : "determinate"}
       value={100}
     />
@@ -91,9 +92,11 @@ function AddWish1(props) {
       .then(async (res) => {
         if (res.status >= 400 && res.status < 500) {
           const json = await res.json();
+          setStatus("error");
           alert(json.message);
         } else if (res.status >= 500 && res.status < 600) {
           const msg = await res.text();
+          setStatus("error");
           alert(msg);
         } else {
           const info = await res.json();
@@ -190,7 +193,6 @@ function AddWish1(props) {
         }}
       >
         {status && <StyledProgressBar status={status} />}
-
         <ResponsiveDialogTitleSection
           onClose={() => {
             clearProduct();
