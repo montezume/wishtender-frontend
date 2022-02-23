@@ -56,7 +56,7 @@ export default function CategoryEdit(props) {
   //   </MenuItem>
   // ));
   const handleDelete = (e) => {
-    const category = e.currentTarget.parentElement.id.split("-")[2];
+    const category = e.currentTarget.parentElement.id.slice(14); // id ex: 'chip-category-fave clothes'
 
     const index = props.itemCategories.indexOf(category);
     const newCategories = [
