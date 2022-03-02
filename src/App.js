@@ -183,9 +183,28 @@ function App(props) {
               // const rank =
               //   topRankNotification.code.match(/(?<=top_)(.*)(?=_)/g)[0];
               const rank = topRankNotification?.code?.split("_")[1];
+              const months = [
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December",
+              ];
+              const month =
+                months[
+                  topRankNotification?.code?.split("_")[2].split("-")[0] - 1
+                ];
               setRankNotification({
                 id: topRankNotification._id,
                 rank,
+                month,
                 message,
               });
             }
@@ -529,6 +548,7 @@ function App(props) {
                             <TopWisherAlert
                               rank={rankNotification.rank}
                               message={rankNotification.message}
+                              month={rankNotification.month}
                               id={rankNotification.id}
                               handle={user.aliases[0].handle}
                               setRankNotification={setRankNotification}

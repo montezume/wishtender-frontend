@@ -6,9 +6,9 @@ import { Button } from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import ResponsiveDialogTitleSectionWhite from "../common/StyledDialog/TopSections/ResponsiveTopTitleSectionWhite/ResponsiveDialogCloseAndTitleSectionWhite";
 import { UserContext } from "../../contexts/UserContext";
-const tweetIntent = (handle, rank) => {
+const tweetIntent = (handle, rank, month) => {
   window.open(
-    `https://twitter.com/intent/tweet?text=I%20was%20the%20%23${rank}%20top%20wisher%20on%20WishTender%20in%20all%20of%20February.%20%0a%0a%F0%9F%A5%B3%F0%9F%A5%B3%F0%9F%A5%B3%0a%0aCheck%20out%20my%20wishlist%20here%3A%20https%3A//www.wishtender.com/${handle}%20via%20%40wishtender`,
+    `https://twitter.com/intent/tweet?text=I%20was%20the%20%23${rank}%20top%20wisher%20on%20WishTender%20in%20all%20of%20${month}.%20%0a%0a%F0%9F%A5%B3%F0%9F%A5%B3%F0%9F%A5%B3%0a%0aCheck%20out%20my%20wishlist%20here%3A%20https%3A//www.wishtender.com/${handle}%20via%20%40wishtender`,
     "popup",
     "width=600,height=600"
   );
@@ -17,6 +17,7 @@ const tweetIntent = (handle, rank) => {
 export default function TopWisherAlert({
   message,
   rank,
+  month,
   id,
   setRankNotification,
 }) {
@@ -126,7 +127,7 @@ export default function TopWisherAlert({
                 endIcon={<TwitterIcon />}
                 onClick={(e) => {
                   e.stopPropagation();
-                  tweetIntent(handle, rank);
+                  tweetIntent(handle, rank, month);
                 }}
               >
                 Share
