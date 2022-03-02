@@ -7,7 +7,6 @@ import DisplayPrice from "../common/DisplayPrice";
 import DisplayPrice2 from "../common/DisplayPrice2";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import { Button, Box, Tabs, Tab } from "@material-ui/core";
-import html2canvas from "html2canvas"; // this is an edited version found here
 import { WishlistContext } from "../../contexts/WishlistContext";
 import { makeStyles } from "@material-ui/core/styles";
 import { useParams } from "react-router-dom";
