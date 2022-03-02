@@ -81,8 +81,33 @@ function WishlistPage(props) {
     // if (!clientCurrency) {
     //   setCurrencyNeeded(true);
     // }
+    (async () => {
+      await fetch(`${handleRoute}${aliasPath.toLowerCase()}`, {
+        credentials: "include",
+      })
+        .then(async (res) => {
+          if (res.status >= 500 && res.status < 600) {
+            const text = await res.text();
+            return alert(text);
+          }
+          const json = await res.json();
 
-    fetchGet(`${handleRoute}${aliasPath.toLowerCase()}`, async (alias) => {
+          if (res.status >= 400 && res.status < 500) {
+            if (json.errors) {
+              alert(json.errors.map((msg) => msg.msg).join(" "));
+            } else {
+              alert(json.message);
+            }
+          }
+
+          successCallBack(json);
+        })
+        .catch((err) => {
+          alert("Error: ,", err);
+        });
+    })();
+
+    const successCallBack = async (alias) => {
       const wl = alias.wishlists[0];
       setIsCurrentUsersProfile(
         currentUser?.aliases.includes(alias?._id) || false
@@ -141,7 +166,7 @@ function WishlistPage(props) {
       }
 
       setAlias(alias);
-    });
+    };
   }, [
     aliasPath,
     clientCurrency,
