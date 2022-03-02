@@ -8,7 +8,7 @@ import ResponsiveDialogTitleSectionWhite from "../common/StyledDialog/TopSection
 import { UserContext } from "../../contexts/UserContext";
 const tweetIntent = (handle, rank) => {
   window.open(
-    `https://twitter.com/intent/tweet?text=I%20was%20the%20%23${rank}%20top%20wisher%20on%20WishTender%20in%20all%20of%20January.%20%0a%0a%F0%9F%A5%B3%F0%9F%A5%B3%F0%9F%A5%B3%0a%0aCheck%20out%20my%20wishlist%20here%3A%20https%3A//www.wishtender.com/${handle}%20via%20%40wishtender`,
+    `https://twitter.com/intent/tweet?text=I%20was%20the%20%23${rank}%20top%20wisher%20on%20WishTender%20in%20all%20of%20February.%20%0a%0a%F0%9F%A5%B3%F0%9F%A5%B3%F0%9F%A5%B3%0a%0aCheck%20out%20my%20wishlist%20here%3A%20https%3A//www.wishtender.com/${handle}%20via%20%40wishtender`,
     "popup",
     "width=600,height=600"
   );
