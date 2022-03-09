@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Box, Link, Container, Typography } from "@material-ui/core";
+import { Button, Box, Link, Container, Typography } from "@mui/material";
 
 export default function CheckOutSuccess() {
   const params = new URLSearchParams(window.location.search);

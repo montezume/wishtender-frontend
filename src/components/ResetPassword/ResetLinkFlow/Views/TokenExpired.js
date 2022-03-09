@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Typography, Container, Link } from "@material-ui/core";
+import { Typography, Container, Link } from "@mui/material";
 import ProgressButton from "../../../common/ProgressButton";
 
 export default function TokenExpired(props) {

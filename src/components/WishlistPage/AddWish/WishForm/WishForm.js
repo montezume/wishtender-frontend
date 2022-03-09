@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Button, Box, TextField, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { Button, Box, TextField, Typography } from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
 import ChooseImage from "../ChooseImage";
 import PriceInput from "../../PriceInput";
 import { CurrencyContext } from "../../../../contexts/CurrencyContext";
@@ -46,7 +46,7 @@ export default function WishForm(props) {
         fontWeight: 900,
         color: "white",
         borderRadius: 0,
-        [theme.breakpoints.down(450)]: {
+        [theme.breakpoints.down(undefined)]: {
           position: "fixed",
           left: "0",
           bottom: 0,

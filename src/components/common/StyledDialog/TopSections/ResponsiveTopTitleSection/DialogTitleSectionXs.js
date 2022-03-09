@@ -1,10 +1,10 @@
 import React from "react";
 
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
-import { Typography, DialogTitle } from "@material-ui/core";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import makeStyles from "@material-ui/core/styles/makeStyles";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import { Typography, DialogTitle } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import makeStyles from "@mui/styles/makeStyles";
 const useStyles = makeStyles((theme) => ({
   title_xs: {
     position: "relative",
@@ -12,16 +12,10 @@ const useStyles = makeStyles((theme) => ({
     padding: "0",
     left: 0,
     display: "flex",
-    justifyContent: "flex-end",
-    alignContent: "center",
     width: "100%",
-    height: "4em",
-    "& h2.MuiTypography-root": {
-      width: "100%",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-    },
+    height: "2.8em",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 
   closeButton_xs: { color: "white" },
@@ -37,6 +31,7 @@ export default function DialogTitleSectionXs(props) {
         aria-label="close"
         className={classes.closeButton_xs}
         onClick={props.onClose}
+        size="large"
       >
         <ArrowBackIcon color="primary" />
       </IconButton>
@@ -48,6 +43,7 @@ export default function DialogTitleSectionXs(props) {
         aria-label="close"
         className={classes.closeButton_xs}
         onClick={props.onClose}
+        size="large"
       >
         <CloseIcon color="primary" />
       </IconButton>

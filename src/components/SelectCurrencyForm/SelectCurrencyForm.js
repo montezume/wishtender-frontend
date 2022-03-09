@@ -12,9 +12,9 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-} from "@material-ui/core";
+} from "@mui/material";
 import currenciesArray from "./currenciesMenuArray";
-import { FormControl, Select } from "@material-ui/core";
+import { FormControl, Select } from "@mui/material";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
 import ResponsiveForm from "../common/StyledDialog/ResponsiveForm/ResponsiveForm";
 import ResponsiveFormButton from "../common/StyledDialog/ResponsiveForm/ResponsiveFormButton";

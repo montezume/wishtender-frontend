@@ -10,7 +10,7 @@ const styles = (theme) => {
       position: "relative",
     },
     "set-up-container": {
-      padding: theme.spacing("4"),
+      padding: theme.spacing(4),
     },
     "set-up-container_xs": {
       borderRadius: 0,

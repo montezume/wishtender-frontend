@@ -1,8 +1,8 @@
 import React from "react";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
 
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 
 function heroSection() {
   return (

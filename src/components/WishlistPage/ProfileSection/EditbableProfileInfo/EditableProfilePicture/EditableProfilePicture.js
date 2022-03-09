@@ -1,5 +1,5 @@
 import React from "react";
-import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
+import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import "./EditableProfilePicture.css";
 import "../../ProfilePicture/ProfilePicture.js";
 import ProfilePicture from "../../ProfilePicture/ProfilePicture";

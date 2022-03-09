@@ -1,14 +1,15 @@
 import React, { useState, useRef } from "react";
-import Input from "@material-ui/core/Input";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import InputLabel from "@material-ui/core/InputLabel";
-import Container from "@material-ui/core/Container";
-import FormControl from "@material-ui/core/FormControl";
-import CloseIcon from "@material-ui/icons/Close";
-import { Button, Typography, IconButton, Dialog, Box } from "@material-ui/core";
-import MuiDialogTitle from "@material-ui/core/DialogTitle";
+import Input from "@mui/material/Input";
+import FormHelperText from "@mui/material/FormHelperText";
+import InputLabel from "@mui/material/InputLabel";
+import Container from "@mui/material/Container";
+import FormControl from "@mui/material/FormControl";
+import CloseIcon from "@mui/icons-material/Close";
+import { Button, Typography, IconButton, Dialog, Box } from "@mui/material";
+import MuiDialogTitle from "@mui/material/DialogTitle";
 import { useForm } from "react-hook-form";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import makeStyles from "@mui/styles/makeStyles";
+import withStyles from "@mui/styles/withStyles";
 import useScreenSize from "../../../../../hooks/useScreenSize";
 import ResponsiveDialogCloseAndTitleSection from "../../../../common/StyledDialog/TopSections/ResponsiveTopTitleSection/ResponsiveDialogCloseAndTitleSection";
 import themeStyles from "../../../../../themeStyles";
@@ -143,6 +144,7 @@ export default function UpdateProfileForm(props) {
             }}
           >
             <FormControl
+              variant="standard"
               style={{ marginBottom: "25px" }}
               error={
                 errors.handle && !(errors.handle.type === "required")
@@ -188,6 +190,7 @@ export default function UpdateProfileForm(props) {
               />
             </FormControl>
             <FormControl
+              variant="standard"
               error={
                 errors.wishlistName &&
                 !(errors.wishlistName.type === "required")
@@ -218,7 +221,9 @@ export default function UpdateProfileForm(props) {
                 {errors.wishlistName?.message || " "}
               </FormHelperText>
             </FormControl>
+
             <FormControl
+              variant="standard"
               error={
                 errors.aliasName && !(errors.aliasName.type === "required")
                   ? true

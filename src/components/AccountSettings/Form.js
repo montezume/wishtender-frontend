@@ -6,7 +6,7 @@ import {
   Typography,
   FormControl,
   FormHelperText,
-} from "@material-ui/core";
+} from "@mui/material";
 
 /**
  * Renders a <WishForm /> component

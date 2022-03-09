@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
-import IconButton from '@material-ui/core/IconButton';
-import { makeStyles } from '@material-ui/core/styles';
+import IconButton from '@mui/material/IconButton';
+import makeStyles from '@mui/styles/makeStyles';
 const color = require('sc-color');
 
 const useStyles = makeStyles((theme) => {

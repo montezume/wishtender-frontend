@@ -8,7 +8,7 @@ import {
   MenuItem,
   Button,
   Menu,
-} from "@material-ui/core";
+} from "@mui/material";
 import CreateNewCategory from "./CreateNewCategory";
 
 export default function CategoryEdit(props) {

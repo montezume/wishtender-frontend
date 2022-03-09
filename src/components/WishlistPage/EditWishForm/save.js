@@ -8,7 +8,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
-} from "@material-ui/core";
+} from "@mui/material";
 
 export default function CategoryEdit(props) {
   const [openNew, setOpenNew] = useState(null);

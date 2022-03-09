@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
-import { Box, Button, Typography, Container } from "@material-ui/core";
+import { Box, Button, Typography, Container } from "@mui/material";
 import { UserContext } from "../../../contexts/UserContext";
 import { withRouter } from "react-router";
 

@@ -1,9 +1,9 @@
 import React from "react";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
 function getSteps() {
   return ["Set Up Account Info", "Set Up Wishlist", "Connect Bank Account"];

@@ -1,14 +1,14 @@
 import React, { forwardRef, useState, useEffect, useContext } from "react";
-import Grid from "@material-ui/core/Grid";
+import Grid from "@mui/material/Grid";
 import WishItem from "./WishItem";
-import { Button, Container, Typography } from "@material-ui/core";
+import { Button, Container, Typography } from "@mui/material";
 import AddWish from "./AddWish/AddWish";
 import StyledDialog from "../common/StyledDialog/StyledDialog";
 import EditWishForm from "./EditWishForm/EditWishForm";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
 import useTraceUpdate from "../../scripts/useTraceUpdate";
 import AddToCart from "./AddToCart/AddToCart";
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from '@mui/styles/withStyles';
 import useCustomStyles from "../../themeStyles";
 import { WishlistContext } from "../../contexts/WishlistContext";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
@@ -125,7 +125,7 @@ const styles = (theme) => ({
     alignItems: "center",
     padding: "0 2%",
 
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down('sm')]: {
       display: "block",
     },
   },
@@ -133,16 +133,16 @@ const styles = (theme) => ({
     [theme.breakpoints.down("xl")]: {
       width: "10vw",
     },
-    [theme.breakpoints.down("lg")]: {
+    [theme.breakpoints.down('xl')]: {
       width: "15vw",
     },
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down('lg')]: {
       width: "22vw",
     },
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down('md')]: {
       width: "28vw",
     },
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down('sm')]: {
       width: "-webkit-fill-available",
       marginLeft: 0,
       marginRight: 0,

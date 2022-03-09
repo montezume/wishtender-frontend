@@ -9,8 +9,8 @@ import {
   Tooltip,
   InputAdornment,
   TextField,
-} from "@material-ui/core";
-import HelpIcon from "@material-ui/icons/Help";
+} from "@mui/material";
+import HelpIcon from "@mui/icons-material/Help";
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -75,6 +75,7 @@ export default function PriceInputs(props) {
     <FormControl variant="outlined" error={props.error ? true : false}>
       <InputLabel htmlFor="price">Price</InputLabel>
       <OutlinedInput
+        label="Price"
         inputProps={{
           decimalPlaces: props.decimalPlaces,
           register: props.register,
@@ -96,7 +97,6 @@ export default function PriceInputs(props) {
         startAdornment={
           <InputAdornment position="start">{props.symbol}</InputAdornment>
         }
-        labelWidth={38}
       />
       <FormHelperText id="price-helper-text">
         {props.error ||

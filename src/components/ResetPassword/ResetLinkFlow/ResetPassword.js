@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Box } from "@material-ui/core";
+import { Box } from "@mui/material";
 import ResetPasswordForm from "./Views/ResetPasswordForm";
 import TokenExpired from "./Views/TokenExpired";
 import BadLink from "./Views/BadLink";

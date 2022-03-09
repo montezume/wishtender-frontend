@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./EditableProfileInfo.css";
 import EditableProfilePicture from "./EditableProfilePicture/EditableProfilePicture";
-import IconButton from "@material-ui/core/IconButton";
-import EditIcon from "@material-ui/icons/Edit";
+import IconButton from "@mui/material/IconButton";
+import EditIcon from "@mui/icons-material/Edit";
 import UpdateMessageForm from "./UpdateMessageForm/UpdateMessageForm";
 
 function EditIconButton(props) {

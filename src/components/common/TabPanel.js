@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography } from "@material-ui/core";
+import { Box, Typography } from "@mui/material";
 
 export default function TabPanel(props) {
   const { children, selectedTab, tab, ...other } = props;
@@ -13,7 +13,7 @@ export default function TabPanel(props) {
       {...other}
     >
       {selectedTab === tab && (
-        <Box sx={{ p: 3 }}>
+        <Box>
           <Typography>{children}</Typography>
         </Box>
       )}

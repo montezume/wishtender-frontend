@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
 import StyledDialog from "../common/StyledDialog/StyledDialog";
 import confettiFireWorks from "./confettiFireWorks";
-import StarBorderIcon from "@material-ui/icons/StarBorder";
-import { Button } from "@material-ui/core";
-import TwitterIcon from "@material-ui/icons/Twitter";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
+import { Button } from "@mui/material";
+import TwitterIcon from "@mui/icons-material/Twitter";
 import ResponsiveDialogTitleSectionWhite from "../common/StyledDialog/TopSections/ResponsiveTopTitleSectionWhite/ResponsiveDialogCloseAndTitleSectionWhite";
 import { UserContext } from "../../contexts/UserContext";
 const tweetIntent = (handle, rank, month) => {

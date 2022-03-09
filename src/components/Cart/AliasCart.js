@@ -19,8 +19,8 @@ import {
   OutlinedInput,
   InputLabel,
   FormControl,
-} from "@material-ui/core";
-import HelpIcon from "@material-ui/icons/Help";
+} from "@mui/material";
+import HelpIcon from "@mui/icons-material/Help";
 
 import { useForm, Controller } from "react-hook-form";
 import React, { useState } from "react";
@@ -342,7 +342,7 @@ export default function AliasCart({ cart, exchangeRates }) {
                     }}
                     inputRef={messageRef}
                     multiline
-                    rows={10}
+                    rows={8}
                     variant="filled"
                     helperText={`This size gift allows you ${messageLength} characters. ${
                       messageLength - message.length

@@ -4,7 +4,7 @@ import { CartContext } from "../../contexts/CartContext";
 import { LocaleContext } from "../../contexts/LocaleContext";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
 import EmptyCart from "./EmptyCart";
-import { Box, Typography } from "@material-ui/core";
+import { Box, Typography } from "@mui/material";
 export default function AllCarts() {
   const [useRates, setUseRates] = useState(null);
   const [exchangeRates, setExchangeRates] = useState(null);

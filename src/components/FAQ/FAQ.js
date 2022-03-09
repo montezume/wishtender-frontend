@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
-import { Container, Link, makeStyles, Typography } from "@material-ui/core";
+import { Container, Link, Typography } from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
 import { matches } from "lodash";
 const useStyles = makeStyles((theme) => {
   const highlightQuestion = { borderLeftColor: "#A5D8FF", color: "#007FFF" };

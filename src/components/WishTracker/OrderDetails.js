@@ -1,15 +1,15 @@
 import React, { useContext, useState } from "react";
 
 import ReplyToTender from "./ReplyToTender";
-import HelpIcon from "@material-ui/icons/Help";
+import HelpIcon from "@mui/icons-material/Help";
 import theme from "../../theme";
-import Table from "@material-ui/core/Table";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
 import GiftSm from "./GiftSm";
 import Gift from "./Gift";
-import TwitterIcon from "@material-ui/icons/Twitter";
+import TwitterIcon from "@mui/icons-material/Twitter";
 
 import {
   Box,
@@ -19,7 +19,7 @@ import {
   TableContainer,
   Collapse,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 const tweetIntent = (gifter, handle, price, qty) => {
   window.open(
     `https://twitter.com/intent/tweet?text=${

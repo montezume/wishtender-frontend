@@ -1,20 +1,21 @@
 import React, { useContext } from "react";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
-import MenuItem from "@material-ui/core/MenuItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import Typography from "@material-ui/core/Typography";
-import BorderColorRoundedIcon from "@material-ui/icons/BorderColorRounded";
-import AccountBoxIcon from "@material-ui/icons/AccountBox";
-import ListItemText from "@material-ui/core/ListItemText";
+import withStyles from '@mui/styles/withStyles';
+import makeStyles from '@mui/styles/makeStyles';
+import MenuItem from "@mui/material/MenuItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Typography from "@mui/material/Typography";
+import BorderColorRoundedIcon from "@mui/icons-material/BorderColorRounded";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import ListItemText from "@mui/material/ListItemText";
 import AppBar from "../AppBar/AppBar";
-import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
-import CloseIcon from "@material-ui/icons/Close";
-import IconButton from "@material-ui/core/IconButton";
-import SettingsIcon from "@material-ui/icons/Settings";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
+import SettingsIcon from "@mui/icons-material/Settings";
 import "./Menu.css";
 import { UserContext } from "../../../contexts/UserContext";
 import theme from "../../../theme";
-import { Button } from "@material-ui/core";
+import { Button } from "@mui/material";
 import useCustomStyles from "../../../themeStyles";
 import { Link } from "react-router-dom";
 import LogoutButton from "../LogoutButton/LogoutButton";
@@ -93,11 +94,7 @@ export default function Menu(props) {
               className="flex"
               style={{ height: buttonHeight, width: buttonWidth }}
             >
-              <IconButton
-                edge="start"
-                onClick={handleClick}
-                className={classes.close}
-              >
+              <IconButton edge="start" onClick={handleClick} className={classes.close} size="large">
                 <CloseIcon />
               </IconButton>
             </div>

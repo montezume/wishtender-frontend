@@ -1,11 +1,11 @@
 import React, { forwardRef, useState, useEffect, useContext } from "react";
-import Grid from "@material-ui/core/Grid";
+import Grid from "@mui/material/Grid";
 import WishItem from "./WishItem1";
 import { Route, withRouter } from "react-router-dom";
-import FileCopy from "@material-ui/icons/FileCopy";
+import FileCopy from "@mui/icons-material/FileCopy";
 //
-import TuneIcon from "@material-ui/icons/Tune";
-import Snackbar from "@material-ui/core/Snackbar";
+import TuneIcon from "@mui/icons-material/Tune";
+import Snackbar from "@mui/material/Snackbar";
 
 import {
   Button,
@@ -16,14 +16,14 @@ import {
   Menu,
   MenuItem,
   Tooltip,
-} from "@material-ui/core";
+} from "@mui/material";
 import AddWish from "./AddWish/AddWish";
 import StyledDialog from "../common/StyledDialog/StyledDialog";
 import EditWishForm from "./EditWishForm/EditWishForm";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
 import useTraceUpdate from "../../scripts/useTraceUpdate";
 import AddToCart from "./AddToCart/AddToCart";
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from "@mui/styles/withStyles";
 import useCustomStyles from "../../themeStyles";
 import { WishlistContext } from "../../contexts/WishlistContext";
 
@@ -107,7 +107,7 @@ const styles = (theme) => ({
     // flexDirection: "row",
     padding: "0 2%",
 
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down("sm")]: {
       display: "block",
     },
   },
@@ -115,16 +115,16 @@ const styles = (theme) => ({
     [theme.breakpoints.down("xl")]: {
       width: "10vw",
     },
-    [theme.breakpoints.down("lg")]: {
+    [theme.breakpoints.down("xl")]: {
       width: "15vw",
     },
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("lg")]: {
       width: "22vw",
     },
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       width: "28vw",
     },
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down("sm")]: {
       width: "-webkit-fill-available",
       marginLeft: 0,
       marginRight: 0,
@@ -296,7 +296,6 @@ const Wishlist = withRouter((props) => {
               lg={2}
               xl={1}
               container
-              spacing={2}
             >
               <div
                 style={{ width: "100%" }}
@@ -379,9 +378,9 @@ const Wishlist = withRouter((props) => {
                 sm={4}
                 md={3}
                 lg={2}
-                xl={1}
+                xl={2}
                 container
-                spacing={2}
+                // spacing={2} check mobile
               >
                 <div
                   style={{ width: "100%" }}

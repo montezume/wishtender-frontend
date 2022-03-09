@@ -1,13 +1,8 @@
 import { useForm } from "react-hook-form";
 import React, { useState } from "react";
 import StyledDialog from "../common/StyledDialog/StyledDialog";
-import {
-  makeStyles,
-  Button,
-  TextField,
-  Box,
-  useTheme,
-} from "@material-ui/core";
+import { Button, TextField, Box, useTheme } from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
 import useScreenSize from "../../hooks/useScreenSize";
 import themeStyles from "../../themeStyles";
 import ResponsiveDialogTitleSection from "../common/StyledDialog/TopSections/ResponsiveTopTitleSection/ResponsiveDialogCloseAndTitleSection";

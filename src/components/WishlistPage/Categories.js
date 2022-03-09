@@ -6,10 +6,10 @@ import {
   Menu,
   MenuItem,
   // IconButton,
-} from "@material-ui/core";
+} from "@mui/material";
 // import StyledDialog from "../common/StyledDialog/StyledDialog";
 
-// import DeleteForever from "@material-ui/icons/DeleteForever";
+// import DeleteForever from "@mui/icons-material/DeleteForever";
 
 export default function Categories(props) {
   const [anchorEl, setAnchorEl] = useState(null);

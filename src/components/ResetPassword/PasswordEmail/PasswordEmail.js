@@ -1,5 +1,6 @@
-import { Container, Box, Button, Typography } from "@material-ui/core";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
+import { Container, Box, Button, Typography } from "@mui/material";
+import withStyles from '@mui/styles/withStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import styles from "./styles";
 import React from "react";
 import useScreenSize from "../../../hooks/useScreenSize";

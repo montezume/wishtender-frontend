@@ -1,10 +1,10 @@
 import React from "react";
 
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
-import { Typography, DialogTitle } from "@material-ui/core";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import makeStyles from "@material-ui/core/styles/makeStyles";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import { Typography, DialogTitle } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import makeStyles from '@mui/styles/makeStyles';
 const useStyles = makeStyles((theme) => ({
   title_xs: {
     position: "relative",
@@ -36,7 +36,7 @@ export default function DialogTitleSectionXs(props) {
         aria-label="close"
         className={classes.closeButton_xs}
         onClick={props.onClose}
-      >
+        size="large">
         <ArrowBackIcon color="contrast" />
       </IconButton>
 
@@ -51,7 +51,7 @@ export default function DialogTitleSectionXs(props) {
         aria-label="close"
         className={classes.closeButton_xs}
         onClick={props.onClose}
-      >
+        size="large">
         <CloseIcon color="contrast" />
       </IconButton>
     </DialogTitle>

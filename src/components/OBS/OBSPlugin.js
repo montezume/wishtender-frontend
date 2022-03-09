@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import confetti from "canvas-confetti";
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from '@mui/styles/makeStyles';
 
 import theme from "../../theme";
-import { Badge, Typography } from "@material-ui/core";
+import { Badge, Typography } from "@mui/material";
 
 function usePrevious(value) {
   const ref = useRef();
