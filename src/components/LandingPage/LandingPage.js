@@ -1,11 +1,11 @@
 import React from "react";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
 import useStyles from "../../themeStyles";
 import { Link } from "react-router-dom";
 
-// import { withStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+// import { withStyles } from "@mui/material/styles";
+import Button from "@mui/material/Button";
 
 const CallToAction = (props) => (
   <>
@@ -153,7 +153,7 @@ function LandingPage(props) {
       {heroSection({ classes, ...props })}
       {fourPointExplanation()}
       <Grid container spacing={3} className="large_explanation">
-        <Grid item xs={12} m={6}>
+        <Grid item xs={12}>
           <h2>
             The safest and most flexible universal wishlist for public
             personalities.
@@ -167,7 +167,9 @@ function LandingPage(props) {
             step of the way.
           </p>
         </Grid>
-        <CallToAction classes={classes} {...props} />
+        <Grid item xs={12}>
+          <CallToAction classes={classes} {...props} />
+        </Grid>
       </Grid>
     </div>
   );

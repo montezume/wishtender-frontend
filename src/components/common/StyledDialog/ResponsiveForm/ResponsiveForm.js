@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Container, Typography, Button } from "@material-ui/core";
+import { Box, Container, Typography, Button } from "@mui/material";
 import theme from "../../../../theme";
 import useScreenSize from "../../../../hooks/useScreenSize";
 import ResponsiveDialogTitleSection from "../TopSections/ResponsiveTopTitleSection/ResponsiveDialogCloseAndTitleSection";

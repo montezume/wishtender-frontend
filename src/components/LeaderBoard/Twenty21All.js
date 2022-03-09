@@ -1,6 +1,6 @@
 import React from "react";
 import Twenty21CalenderYear from "./Twenty21CalenderYear";
-import { Container, Paper, Grid } from "@material-ui/core";
+import { Container, Paper, Grid } from "@mui/material";
 import useStyles from "./styles";
 
 export default function Twenty21All() {

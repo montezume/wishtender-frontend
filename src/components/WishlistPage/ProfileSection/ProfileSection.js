@@ -10,8 +10,8 @@ import { fetchPatchImage, fetchPatchJson } from "../../../scripts/fetchHelper";
 import { Redirect } from "react-router-dom";
 import ActivateAccount from "./ActivateAccount";
 import { withRouter } from "react-router";
-import { Button } from "@material-ui/core";
-import Twitter from "@material-ui/icons/Twitter";
+import { Button } from "@mui/material";
+import Twitter from "@mui/icons-material/Twitter";
 const handleRoute = "/api/aliases?handle_lowercased=";
 /**
  * Renders a <ProfileSection /> component

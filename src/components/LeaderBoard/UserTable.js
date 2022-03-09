@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
+import makeStyles from '@mui/styles/makeStyles';
+import Table from "@mui/material/Table";
 import { UserContext } from "../../contexts/UserContext";
 import Title from "../common/TableTitle";
 import UserTableInside from "./UserTableInside";
 import UserTableInsideFull from "./UserTableInsideFull";
-import Link from "@material-ui/core/Link";
+import Link from "@mui/material/Link";
 const useStyles = makeStyles((theme) => ({
   seeMore: {
     marginTop: theme.spacing(3),

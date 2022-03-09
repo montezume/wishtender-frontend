@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import StyledDialog from "../../common/StyledDialog/StyledDialog";
-import { Button, Input, TextField } from "@material-ui/core";
+import { Button, Input, TextField } from "@mui/material";
 export default function CreateNewCategory(props) {
   const memoDisableEnterForm = useCallback((event) => {
     let keycode = event.key;

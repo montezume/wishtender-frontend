@@ -7,14 +7,15 @@ import theme from "../../../theme";
 import { withRouter } from "react-router";
 
 import themeStyles from "../../../themeStyles";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import RedeemIcon from "@material-ui/icons/Redeem";
-import ListAltIcon from "@material-ui/icons/ListAlt";
-import Badge from "@material-ui/core/Badge";
-import Tooltip from "@material-ui/core/Tooltip";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import RedeemIcon from "@mui/icons-material/Redeem";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import Badge from "@mui/material/Badge";
+import Tooltip from "@mui/material/Tooltip";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { withStyles, makeStyles } from "@material-ui/core";
+import withStyles from '@mui/styles/withStyles';
+import makeStyles from '@mui/styles/makeStyles';
 const useStyles = makeStyles((theme) => ({
   tab: { minWidth: theme.spacing(8) },
 }));

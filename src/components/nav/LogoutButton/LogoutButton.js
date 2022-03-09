@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
-import Button from "@material-ui/core/Button";
-import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import Button from "@mui/material/Button";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import { UserContext } from "../../../contexts/UserContext";
 import { CurrencyContext } from "../../../contexts/CurrencyContext";
 

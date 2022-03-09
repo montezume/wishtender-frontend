@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Paper, Grid } from "@material-ui/core";
+import { Container, Paper, Grid } from "@mui/material";
 import Last30 from "./Last30";
 import useStyles from "./styles";
 

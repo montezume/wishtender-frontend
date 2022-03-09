@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Redirect } from "react-router-dom";
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from '@mui/styles/withStyles';
 import themeStyles from "../../../themeStyles";
 import styles from "./styles";
 import theme from "../../../theme";
@@ -15,7 +15,7 @@ import {
   Paper,
   TextField,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import useScreenSize from "../../../hooks/useScreenSize";
 
 export default withStyles(styles)(function SignUp(props) {

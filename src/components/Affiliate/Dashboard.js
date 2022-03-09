@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { displayPriceFromUnit } from "../../scripts/helpers";
-import Card from "@material-ui/core/Card";
-import { TextField, IconButton, Typography } from "@material-ui/core";
-import FileCopy from "@material-ui/icons/FileCopy";
-import { SettingsRemoteOutlined } from "@material-ui/icons";
+import Card from "@mui/material/Card";
+import { TextField, IconButton, Typography } from "@mui/material";
+import FileCopy from "@mui/icons-material/FileCopy";
+import { SettingsRemoteOutlined } from "@mui/icons-material";
 
 export default function Dashboard() {
   const [total, setTotal] = useState();
@@ -145,7 +145,7 @@ export default function Dashboard() {
               >
                 {generateAffiliateLink(url, user.affiliateCode)}
               </Typography>
-              <IconButton onClick={() => copy("affiliate-link")}>
+              <IconButton onClick={() => copy("affiliate-link")} size="large">
                 <FileCopy />
               </IconButton>
             </div>

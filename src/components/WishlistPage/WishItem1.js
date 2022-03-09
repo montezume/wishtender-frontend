@@ -1,15 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
+import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
 import DisplayPrice from "../common/DisplayPrice";
 import DisplayPrice2 from "../common/DisplayPrice2";
-import TwitterIcon from "@material-ui/icons/Twitter";
-import { Button, Box, Tabs, Tab } from "@material-ui/core";
-import html2canvas from "html2canvas"; // this is an edited version found here
+import TwitterIcon from "@mui/icons-material/Twitter";
+import { Button, Box, Tabs, Tab } from "@mui/material";
 import { WishlistContext } from "../../contexts/WishlistContext";
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from '@mui/styles/makeStyles';
 import { useParams } from "react-router-dom";
 
 const styles = makeStyles({

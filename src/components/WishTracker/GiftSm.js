@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
-import Button from "@material-ui/core/Button";
-import OpenInNewIcon from "@material-ui/icons/OpenInNew";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import Button from "@mui/material/Button";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
-import { makeStyles } from "@material-ui/core/styles";
-import { Box, Tooltip } from "@material-ui/core";
+import makeStyles from '@mui/styles/makeStyles';
+import { Box, Tooltip } from "@mui/material";
 import RemoveWish from "./RemoveWish";
 
 const useStyles = makeStyles((theme) => {

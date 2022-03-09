@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Collapse from "@material-ui/core/Collapse";
+import Collapse from "@mui/material/Collapse";
 import { parsedCookies } from "../../scripts/helpers";
 
 export default function Dashboard() {

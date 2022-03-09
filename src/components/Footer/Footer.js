@@ -1,7 +1,8 @@
-import { makeStyles, Tooltip } from "@material-ui/core";
+import { Tooltip } from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
 import React from "react";
-import TwitterIcon from "@material-ui/icons/Twitter";
-import InstagramIcon from "@material-ui/icons/Instagram";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import InstagramIcon from "@mui/icons-material/Instagram";
 
 const useStyles = makeStyles((theme) => {
   return {

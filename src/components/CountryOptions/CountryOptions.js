@@ -7,7 +7,7 @@ import "@formatjs/intl-locale/polyfill";
 import "@formatjs/intl-displaynames/polyfill";
 import "@formatjs/intl-displaynames/locale-data/en";
 
-import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
 
@@ -29,6 +29,7 @@ export default function CountryOptions(props) {
     .sort((a, b) => (a.props.children < b.props.children ? -1 : 1));
   return (
     <FormControl
+      variant="standard"
       style={{
         minWidth: 220,
         width: 220,

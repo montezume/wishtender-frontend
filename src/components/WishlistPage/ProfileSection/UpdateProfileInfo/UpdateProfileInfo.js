@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 import StyledDialog from "../../../common/StyledDialog/StyledDialog";
 import UpdateProfileForm from "./UpdateProfileForm/UpdateProfileForm";
 import globalStyles from "../../../../themeStyles";
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from '@mui/styles/withStyles';
 
 const styles = (theme) => ({
   margin: { margin: theme.spacing(0.5) },

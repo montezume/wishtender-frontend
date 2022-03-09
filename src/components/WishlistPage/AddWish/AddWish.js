@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
 import { UserContext } from "../../../contexts/UserContext";
 import TabPanel from "../../common/TabPanel";
-import { Button, LinearProgress, Tab, Tabs } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { Button, LinearProgress, Tab, Tabs } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import theme from "../../../theme";
 import Search from "./Search.js";
 import filterOutSmallImages from "./filterImages";
@@ -11,7 +11,7 @@ import WishFormManual from "./WishForm/WishFormManual";
 import useScreenSize from "../../../hooks/useScreenSize";
 import "./AddWish.css";
 import StyledDialog from "../../common/StyledDialog/StyledDialog";
-import { Box } from "@material-ui/core";
+import { Box } from "@mui/material";
 import ResponsiveDialogTitleSection from "../../common/StyledDialog/TopSections/ResponsiveTopTitleSection/ResponsiveDialogCloseAndTitleSection.js";
 
 const useStyles = makeStyles((theme) => {

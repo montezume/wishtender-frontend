@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import TextField from "@material-ui/core/TextField";
+import TextField from "@mui/material/TextField";
 import {
   getImage,
   base64StringtoFile,
@@ -11,13 +11,13 @@ import {
   IconButton,
   Tooltip,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import { fetchPatchJson } from "../../scripts/fetchHelper";
 import { useForm } from "react-hook-form";
 import ProgressButton from "../common/ProgressButton";
 import themeStyles from "../../themeStyles";
-import { makeStyles } from "@material-ui/core/styles";
-import ImageIcon from "@material-ui/icons/Image";
+import makeStyles from '@mui/styles/makeStyles';
+import ImageIcon from "@mui/icons-material/Image";
 import FileInputWrapper from "../common/FileInputWrapper/FileInputWrapper";
 
 export default function ReplyToTender(props) {

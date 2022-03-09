@@ -1,4 +1,4 @@
-import makeStyles from "@material-ui/core/makeStyles";
+import makeStyles from "@mui/material/makeStyles";
 const childStyles = makeStyles((theme) => ({
   closeButtonV1: {
     position: "absolute",

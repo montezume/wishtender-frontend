@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { fetchDelete } from "../../scripts/fetchHelper";
-import { Tooltip } from "@material-ui/core";
+import { Tooltip } from "@mui/material";
 import { WishlistContext } from "../../contexts/WishlistContext";
 import { UserContext } from "../../contexts/UserContext";
 

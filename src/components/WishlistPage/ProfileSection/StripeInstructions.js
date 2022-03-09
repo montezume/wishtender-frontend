@@ -1,16 +1,16 @@
 import React, { useEffect, useState, useContext } from "react";
-import FileCopyIcon from "@material-ui/icons/FileCopy";
-import { Button, Tooltip, Typography } from "@material-ui/core";
-import FileCopy from "@material-ui/icons/FileCopy";
-import { useTheme } from "@material-ui/core/styles";
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
-import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import FileCopyIcon from "@mui/icons-material/FileCopy";
+import { Button, Tooltip, Typography } from "@mui/material";
+import FileCopy from "@mui/icons-material/FileCopy";
+import { useTheme } from "@mui/material/styles";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { UserContext } from "../../../contexts/UserContext";
 import theme from "../../../theme";
-import ArrowForwardIos from "@material-ui/icons/ArrowForwardIos";
+import ArrowForwardIos from "@mui/icons-material/ArrowForwardIos";
 import { withRouter } from "react-router";
-// import OpenInNewIcon from "@material-ui/icons/OpenInNew";
-import Snackbar from "@material-ui/core/Snackbar";
+// import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import Snackbar from "@mui/material/Snackbar";
 
 export default withRouter(function StripeInstructions(props) {
   const [open, setOpen] = useState(false);

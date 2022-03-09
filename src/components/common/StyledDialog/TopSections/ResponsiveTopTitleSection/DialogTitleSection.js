@@ -1,12 +1,13 @@
 import React from "react";
 
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
-import { Typography, DialogTitle, Box } from "@material-ui/core";
-import makeStyles from "@material-ui/core/styles/makeStyles";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import { Typography, DialogTitle, Box } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 const useStyles = makeStyles((theme) => ({
   title: {
     padding: "0 0 40px 0",
+
     "& h2.MuiTypography-root": {
       width: "100%",
       display: "flex",
@@ -34,6 +35,7 @@ export default function DialogTitleSection(props) {
           aria-label="close"
           className={classes.closeButton}
           onClick={props.onClose}
+          size="large"
         >
           <CloseIcon color="primary" />
         </IconButton>

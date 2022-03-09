@@ -8,8 +8,8 @@ import {
   Box,
   TextField,
   Typography,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+} from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
 import ChooseImage from "./../ChooseImage";
 import SelectCropUpdateImage from "./../../ProfileSection/SelectCropUpdateImage/SelectCropUpdateImage";
 
@@ -56,7 +56,7 @@ export default function WishFormManual(props) {
         fontWeight: 900,
         color: "white",
         borderRadius: 0,
-        [theme.breakpoints.down(450)]: {
+        [theme.breakpoints.down(undefined)]: {
           position: "fixed",
           left: "0",
           bottom: 0,

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import IconButton from '@material-ui/core/IconButton';
-import DirectionsIcon from '@material-ui/icons/Directions';
+import makeStyles from '@mui/styles/makeStyles';
+import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
+import DirectionsIcon from '@mui/icons-material/Directions';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,7 +37,7 @@ export default function Search(props) {
             type="submit"
             color="primary"
             aria-label="directions"
-          >
+            size="large">
             <DirectionsIcon />
           </IconButton>
         </div>

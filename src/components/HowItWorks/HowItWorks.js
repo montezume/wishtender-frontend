@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import Tabs from "@material-ui/core/Tabs";
+import Tabs from "@mui/material/Tabs";
 import TabPanel from "../common/TabPanel";
-import Tab from "@material-ui/core/Tab";
-import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import { makeStyles } from "@material-ui/core/styles";
+import Tab from "@mui/material/Tab";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import makeStyles from '@mui/styles/makeStyles';
 const useStyles = makeStyles((theme) => {
   return {
     how_it_works: {

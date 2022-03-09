@@ -1,4 +1,4 @@
-import { Button, Container, Typography } from "@material-ui/core";
+import { Button, Container, Typography } from "@mui/material";
 import React, { useContext } from "react";
 import { withRouter } from "react-router";
 import { UserContext } from "../../../../contexts/UserContext";

@@ -4,7 +4,7 @@ import {
   FormHelperText,
   FormControl,
   Checkbox,
-} from "@material-ui/core";
+} from "@mui/material";
 import { Controller } from "react-hook-form";
 
 export default function AutoDeleteInput({ register, control, defaultValue }) {

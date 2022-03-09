@@ -3,9 +3,9 @@ import theme from "../../theme";
 
 import { UserContext } from "../../contexts/UserContext";
 import openGift from "./openGift";
-import { withStyles } from "@material-ui/core/styles";
-import DownIcon from "@material-ui/icons/KeyboardArrowDown";
-import UpIcon from "@material-ui/icons/KeyboardArrowUp";
+import withStyles from '@mui/styles/withStyles';
+import DownIcon from "@mui/icons-material/KeyboardArrowDown";
+import UpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { NotificationContext } from "../../contexts/NotificationContext";
 
 import {
@@ -14,7 +14,7 @@ import {
   ListItemText,
   IconButton,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import OrderDetails from "./OrderDetails";
 
 const styles = (theme) => ({

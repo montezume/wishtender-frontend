@@ -40,7 +40,8 @@ import WishTracker from "./components/WishTracker/WishTracker.js";
 import ConfirmationEmail from "./components/Onboard/ConfirmationEmail/ConfirmationEmail";
 import ConfirmEmail from "./components/Onboard/ConfirmEmail/ConfirmEmail";
 
-import { ThemeProvider } from "@material-ui/styles";
+// import { ThemeProvider, StyledEngineProvider } from "@mui/styles";
+import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
 import WishlistPage from "./components/WishlistPage/WishlistPage2";
 
 // import AddWish from "./components/wishlistpage/addwish1/AddWish.js";
@@ -51,7 +52,7 @@ import theme from "./theme";
 import CheckOutSuccess from "./components/CheckOutSuccess/CheckOutSuccess";
 // import WishForm from "./components/wishlistpage/AddWish/WishForm/WishForm";
 import ConnectSuccess from "./components/ConnectSuccess/ConnectSucess";
-import { CssBaseline, Snackbar } from "@material-ui/core";
+import { CssBaseline, Snackbar } from "@mui/material";
 import ForgotPassword from "./components/ResetPassword/ForgotPassword";
 import SendResetPassword from "./components/ResetPassword/SendResetPassword";
 import ResetPassword from "./components/ResetPassword/ResetLinkFlow/ResetPassword";
@@ -473,124 +474,131 @@ function App(props) {
   );
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <div className="App">
-        <Router>
-          {/* <Switch> */}
-          {/* needs to render differently if not accessed from redirect */}
-          {user !== undefined && (
-            <LocaleContext.Provider
-              value={cookies.locale ? JSON.parse(cookies.locale).locale : "en"}
-            >
-              <CountryContext.Provider
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <div className="App">
+          <Router>
+            {/* <Switch> */}
+            {/* needs to render differently if not accessed from redirect */}
+            {user !== undefined && (
+              <LocaleContext.Provider
                 value={
-                  cookies.locale ? JSON.parse(cookies.locale).countryCode : "US"
+                  cookies.locale ? JSON.parse(cookies.locale).locale : "en"
                 }
               >
-                <CurrencyContext.Provider
-                  value={{
-                    currency,
-                    currencyList,
-                    setCurrency,
-                    getCurrencyCookie,
-                    setCurrencyCookie,
-                    setCurrencyCookieAndContext,
-                  }}
+                <CountryContext.Provider
+                  value={
+                    cookies.locale
+                      ? JSON.parse(cookies.locale).countryCode
+                      : "US"
+                  }
                 >
-                  <UserContext.Provider value={{ user, setUser, getUser }}>
-                    <NotificationContext.Provider
-                      value={{
-                        notifications,
-                        setNotifications,
-                        getNotifications,
-                      }}
-                    >
-                      <CartContext.Provider
+                  <CurrencyContext.Provider
+                    value={{
+                      currency,
+                      currencyList,
+                      setCurrency,
+                      getCurrencyCookie,
+                      setCurrencyCookie,
+                      setCurrencyCookieAndContext,
+                    }}
+                  >
+                    <UserContext.Provider value={{ user, setUser, getUser }}>
+                      <NotificationContext.Provider
                         value={{
-                          cart,
-                          setCart,
-                          getCartNotifications,
-                          getCart,
-                          cartNotificationsFromCart,
-                          cartNotifications,
-                          setCartNotifications,
+                          notifications,
+                          setNotifications,
+                          getNotifications,
                         }}
                       >
-                        <RouteContext.Provider
+                        <CartContext.Provider
                           value={{
-                            isCurrentUsersProfile,
-                            setIsCurrentUsersProfile,
-                            allRoutes: routesArray,
+                            cart,
+                            setCart,
+                            getCartNotifications,
+                            getCart,
+                            cartNotificationsFromCart,
+                            cartNotifications,
+                            setCartNotifications,
                           }}
                         >
-                          {currency && (
-                            <Snackbar
-                              style={{ top: "80px" }}
-                              anchorOrigin={{
-                                vertical: "top",
-                                horizontal: "right",
-                              }}
-                              open={showCurrencySnackBar}
-                              onClose={() => {
-                                setShowCurrencySnackBar(false);
-                              }}
-                              message={
-                                currency === "noConversion"
-                                  ? "Your currency wasn't detected."
-                                  : "Your currency was detected as " + currency
-                              }
-                              autoHideDuration={3500}
-                            />
-                          )}
-
-                          {rankNotification && (
-                            <TopWisherAlert
-                              rank={rankNotification.rank}
-                              message={rankNotification.message}
-                              month={rankNotification.month}
-                              id={rankNotification.id}
-                              handle={user.aliases[0].handle}
-                              setRankNotification={setRankNotification}
-                            ></TopWisherAlert>
-                          )}
-                          <div
-                            style={{
-                              minHeight: "calc(100vh - 72px)",
-                              position: "relative",
-
-                              // start too low without this???
-                              // border: ".2px solid #9990",
-                              // height: "100%",
+                          <RouteContext.Provider
+                            value={{
+                              isCurrentUsersProfile,
+                              setIsCurrentUsersProfile,
+                              allRoutes: routesArray,
                             }}
                           >
-                            <Switch>
-                              <Route exact path="/stream/:alias">
-                                <OBSPlugin />
-                              </Route>
-                              {/* <Route path="/" exact>
-                            <LandingPageMenu />
-                          </Route> */}
+                            {currency && (
+                              <Snackbar
+                                style={{ top: "80px" }}
+                                anchorOrigin={{
+                                  vertical: "top",
+                                  horizontal: "right",
+                                }}
+                                open={showCurrencySnackBar}
+                                onClose={() => {
+                                  setShowCurrencySnackBar(false);
+                                }}
+                                message={
+                                  currency === "noConversion"
+                                    ? "Your currency wasn't detected."
+                                    : "Your currency was detected as " +
+                                      currency
+                                }
+                                autoHideDuration={3500}
+                              />
+                            )}
 
-                              <Route path="/">
-                                <Menu />
-                              </Route>
-                            </Switch>
-                            {SwitchRoutes}
-                          </div>
-                          <Footer></Footer>
-                        </RouteContext.Provider>
-                      </CartContext.Provider>
-                    </NotificationContext.Provider>
-                  </UserContext.Provider>
-                </CurrencyContext.Provider>
-              </CountryContext.Provider>
-            </LocaleContext.Provider>
-          )}
-          {/* </Switch> */}
-        </Router>
-      </div>
-    </ThemeProvider>
+                            {rankNotification && (
+                              <TopWisherAlert
+                                rank={rankNotification.rank}
+                                message={rankNotification.message}
+                                month={rankNotification.month}
+                                id={rankNotification.id}
+                                handle={user.aliases[0].handle}
+                                setRankNotification={setRankNotification}
+                              ></TopWisherAlert>
+                            )}
+                            <div
+                              style={{
+                                minHeight: "calc(100vh - 72px)",
+                                position: "relative",
+
+                                // start too low without this???
+                                // border: ".2px solid #9990",
+                                // height: "100%",
+                              }}
+                            >
+                              <Switch>
+                                <Route exact path="/stream/:alias">
+                                  <OBSPlugin />
+                                </Route>
+                                {/* <Route path="/" exact>
+                              <LandingPageMenu />
+                            </Route> */}
+
+                                <Route path="/">
+                                  <Menu />
+                                </Route>
+                              </Switch>
+                              {SwitchRoutes}
+                            </div>
+                            <Footer></Footer>
+                          </RouteContext.Provider>
+                        </CartContext.Provider>
+                      </NotificationContext.Provider>
+                    </UserContext.Provider>
+                  </CurrencyContext.Provider>
+                </CountryContext.Provider>
+              </LocaleContext.Provider>
+            )}
+            {/* </Switch> */}
+          </Router>
+        </div>
+      </ThemeProvider>
+    </StyledEngineProvider>
   );
 }
 
