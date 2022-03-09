@@ -2,9 +2,9 @@ import React, { useState, useContext } from "react";
 import useSmallScreen from "../../hooks/useSmallScreen";
 import { UserContext } from "../../contexts/UserContext";
 import { withRouter } from "react-router";
-import SendIcon from "@material-ui/icons/Send";
+import SendIcon from "@mui/icons-material/Send";
 
-import { Paper, Container, Box, Typography } from "@material-ui/core";
+import { Paper, Container, Box, Typography } from "@mui/material";
 
 import { useForm } from "react-hook-form";
 import PasswordEmail from "./PasswordEmail/PasswordEmail";
@@ -48,8 +48,13 @@ export default withRouter(function SendResetPassword(props) {
         minHeight: "inherit",
         backgroundSize: "cover",
       }}
-      height="100%"
+      height="20%"
       alignItems="center"
+      // sx={{
+      //   display: "flex",
+      //   height: "100%",
+      //   alignItems: "center",
+      // }}
     >
       <Container
         maxWidth={"xs"}
@@ -67,7 +72,9 @@ export default withRouter(function SendResetPassword(props) {
                 flexDirection: "column",
                 justifyContent: "center",
               }
-            : { padding: "30px" }
+            : {
+                padding: "30px",
+              }
         }
       >
         {view === "send" && (

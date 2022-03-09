@@ -1,4 +1,4 @@
-import { Button, Tooltip } from "@material-ui/core";
+import { Button, Tooltip } from "@mui/material";
 import React, { useContext, useState } from "react";
 import { CurrencyContext } from "../../contexts/CurrencyContext";
 import PopUpMenu from "../common/PopUpMenu/PopUpMenu";

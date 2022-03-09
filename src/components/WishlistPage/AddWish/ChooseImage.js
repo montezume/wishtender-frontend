@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import IconButton from "@material-ui/core/IconButton";
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import IconButton from "@mui/material/IconButton";
 import "./ProductImages.css";
-import { Typography } from "@material-ui/core";
+import { Typography } from "@mui/material";
 import EasyCrop from "../../common/Crop/ReactEasyCrop/EasyCrop";
-import { useTheme } from "@material-ui/core/styles";
+import { useTheme } from "@mui/material/styles";
 
 /**
  * Renders a <ChooseImage /> component
@@ -79,14 +79,14 @@ function ChooseImage(props) {
             onClick={() => {
               move(-1);
             }}
-          >
+            size="large">
             <NavigateBeforeIcon />
           </IconButton>
           <IconButton
             onClick={() => {
               move(1);
             }}
-          >
+            size="large">
             <NavigateNextIcon />
           </IconButton>
         </div>

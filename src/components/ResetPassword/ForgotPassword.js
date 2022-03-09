@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import useSmallScreen from "../../hooks/useSmallScreen";
 import { withRouter } from "react-router";
-import SendIcon from "@material-ui/icons/Send";
+import SendIcon from "@mui/icons-material/Send";
 
 import {
   TextField,
@@ -9,7 +9,7 @@ import {
   Container,
   Box,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import { useForm } from "react-hook-form";
 import PasswordEmail from "./PasswordEmail/PasswordEmail";

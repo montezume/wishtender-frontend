@@ -1,18 +1,17 @@
 import React, { cloneElement } from "react";
-import Dialog from "@material-ui/core/Dialog";
-import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import Container from "@material-ui/core/Container";
+import Dialog from "@mui/material/Dialog";
+import MuiDialogTitle from "@mui/material/DialogTitle";
+import Container from "@mui/material/Container";
 
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
-import { makeStyles } from "@material-ui/core/styles";
-import { Box, Typography } from "@material-ui/core";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import makeStyles from "@mui/styles/makeStyles";
+import { Box, Typography } from "@mui/material";
 
 const containerStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     [theme.breakpoints.down("450")]: {
-      //center
       display: "flex",
       flexDirection: "column",
       height: "100%",
@@ -50,7 +49,6 @@ export default function StyledDialog(props) {
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
             background: props.background_xs,
-
             width: "100%",
             maxHeight: "none",
             height: "100%",
@@ -59,6 +57,7 @@ export default function StyledDialog(props) {
             maxWidth: "none",
             borderRadius: "0",
             // "& .MuiContainer-root": { padding: 0 },
+            // "& .MuiBox-root": { border: "3px solid pink" },
           },
         },
       },
@@ -82,7 +81,6 @@ export default function StyledDialog(props) {
       <Dialog
         scroll="body"
         open={props.open}
-        onClick={props.onClick || null}
         onClose={props.onClose} // when you click on the side
         aria-label={props.ariaLabel || "dialog"}
         className={dialogClasses.root}

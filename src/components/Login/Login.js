@@ -10,7 +10,7 @@ import {
   Container,
   Box,
   Button,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import { useForm } from "react-hook-form";
 import { Redirect } from "react-router-dom";

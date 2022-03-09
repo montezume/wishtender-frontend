@@ -60,7 +60,7 @@ a {
 
 .large_explanation.MuiGrid-spacing-xs-3 {
   width: auto;
-  margin: 0;
+  /* margin: 0; */
 }
 @media only screen and (min-width: 600px) {
   .large_explanation p,
@@ -180,7 +180,7 @@ a {
   padding: 3%;
 }
 .wishtender_4point_explanation .point {
-  margin: 0 2%;
+  margin: 0 4%;
   /* height: 100%; */
   padding: 4% 6%;
   text-align: center;
@@ -197,10 +197,10 @@ a {
   font-size: 0.9rem;
 }
 
-.wishtender_4point_explanation.MuiGrid-spacing-xs-3 {
-  margin: 0;
-  width: 100%;
-}
+/* .wishtender_4point_explanation.MuiGrid-spacing-xs-3 { */
+/* margin: 0; */
+/* width: 100%; */
+/* } */
 
 @media only screen and (min-width: 450px) {
   .wishtender_4point_explanation .point .icon img {

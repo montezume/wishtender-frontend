@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-import { Button, Box, Container, Typography } from "@material-ui/core";
+import { Button, Box, Container, Typography } from "@mui/material";
 import { Redirect } from "react-router-dom"; // a comment (can be deleted)
 import { UserContext } from "../../contexts/UserContext";
 

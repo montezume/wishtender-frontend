@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { CartContext } from "../../../contexts/CartContext";
-import { Box, Button, Typography } from "@material-ui/core";
+import { Box, Button, Typography } from "@mui/material";
 import { fetchPatchJson } from "../../../scripts/fetchHelper";
 import { Redirect } from "react-router-dom";
 import StyledDialog from "../../common/StyledDialog/StyledDialog";
@@ -36,12 +36,6 @@ export default function AddToCart(props) {
     );
   };
   return (
-    // <StyledDialog1
-    //   background="url(/images/background_bow_confetti-sm_optimized.png)"
-    //   background_xs="url(/images/background_bow_confetti_xs_optimized.png)"
-    //   onClose={props.onClose}
-    //   open={props.open}
-    // >
     <StyledDialog
       background="url(/images/background_bow_confetti-sm_optimized.png)"
       background_xs="url(/images/background_bow_confetti_xs_optimized.png)"

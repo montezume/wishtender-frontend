@@ -1,6 +1,6 @@
 import React from "react";
 import CoverImage from "../CoverImage/CoverImage";
-import PhotoSizeSelectActual from "@material-ui/icons/PhotoSizeSelectActual";
+import PhotoSizeSelectActual from "@mui/icons-material/PhotoSizeSelectActual";
 import "./EditableCoverImage.css";
 import SelectCropUpdateImage from "../SelectCropUpdateImage/SelectCropUpdateImage";
 import StyledIconButton from "../../../common/StyledIconButton/StyledIconButton";

@@ -3,7 +3,7 @@ import useSmallScreen from "../../../../hooks/useSmallScreen";
 import { useForm } from "react-hook-form";
 import { UserContext } from "../../../../contexts/UserContext";
 
-import { TextField, Paper, Container, Typography } from "@material-ui/core";
+import { TextField, Paper, Container, Typography } from "@mui/material";
 import ProgressButton from "../../../common/ProgressButton";
 export default function ResetPasswordForm(props) {
   const { setView } = props;

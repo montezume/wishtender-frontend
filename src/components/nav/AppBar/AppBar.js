@@ -1,27 +1,27 @@
 import React, { useState, useContext, useEffect } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from '@mui/styles/withStyles';
 import { Link, withRouter } from "react-router-dom";
-import AccountIcon from "@material-ui/icons/AccountBox";
+import AccountIcon from "@mui/icons-material/AccountBox";
 import PopUpMenu from "../../common/PopUpMenu/PopUpMenu";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { UserContext } from "../../../contexts/UserContext";
 import LogoutButton from "../LogoutButton/LogoutButton";
 import SignupButton from "../SignupButton/SignupButton";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCartOutlined";
-import Tooltip from "@material-ui/core/Tooltip";
-import Badge from "@material-ui/core/Badge";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCartOutlined";
+import Tooltip from "@mui/material/Tooltip";
+import Badge from "@mui/material/Badge";
 import { CartContext } from "../../../contexts/CartContext";
-import StarBorderIcon from "@material-ui/icons/StarBorder";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
 // app bar
-import Toolbar from "@material-ui/core/Toolbar";
-import AppBar from "@material-ui/core/AppBar";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
+import Toolbar from "@mui/material/Toolbar";
+import AppBar from "@mui/material/AppBar";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
 import AccountTabs from "../AccountTabs/AccountTabs";
 import "./AppBar.css";
 import useCustomStyles from "../../../themeStyles";
-import { MenuItem } from "@material-ui/core";
+import { MenuItem } from "@mui/material";
 import CurrenciesMenu from "../CurrenciesMenu";
 
 const styles = (theme) => ({
@@ -80,7 +80,7 @@ function BackToTop(props) {
   }, []);
   const classes = useCustomStyles(props);
   const ShoppingCartButton = (
-    <IconButton component={Link} to="/cart" color="primary">
+    <IconButton component={Link} to="/cart" color="primary" size="large">
       <Badge badgeContent={cartNotifications} color="error">
         <ShoppingCartIcon></ShoppingCartIcon>
       </Badge>
@@ -98,7 +98,7 @@ function BackToTop(props) {
               className={classes.menuButton}
               color="inherit"
               aria-label="menu"
-            >
+              size="large">
               <MenuIcon />
             </IconButton>
           )}
@@ -150,7 +150,7 @@ function BackToTop(props) {
               className={classes.doubleIconButton}
               href="/leaderboard"
               aria-label="leaderboard"
-            >
+              size="large">
               <StarBorderIcon />
             </IconButton>
           </Tooltip>
@@ -188,7 +188,7 @@ function BackToTop(props) {
                       className={classes.doubleIconButton}
                       onClick={toggleAccountMenu}
                       aria-label="logout"
-                    >
+                      size="large">
                       <AccountIcon />
                       <ExpandMoreIcon />
                     </IconButton>

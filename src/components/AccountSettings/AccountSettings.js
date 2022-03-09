@@ -5,12 +5,12 @@ import {
   Link,
   LinearProgress,
   Box,
-} from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
+} from "@mui/material";
+import withStyles from "@mui/styles/withStyles";
 import React, { useState, useContext, useEffect } from "react";
-import ArrowRightIcon from "@material-ui/icons/ArrowRight";
-import ListItemText from "@material-ui/core/ListItemText";
-import MenuItem from "@material-ui/core/MenuItem";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import ListItemText from "@mui/material/ListItemText";
+import MenuItem from "@mui/material/MenuItem";
 import { fetchDelete } from "../../scripts/fetchHelper";
 import { UserContext } from "../../contexts/UserContext";
 import SendResetPassword from "../ResetPassword/SendResetPassword.js";
@@ -18,7 +18,7 @@ import StyledDialog from "../common/StyledDialog/StyledDialog";
 import { withRouter } from "react-router";
 import UpdateEmail from "./UpdateEmail";
 import DeleteAccount from "./DeleteAccount";
-import Switch from "@material-ui/core/Switch";
+import Switch from "@mui/material/Switch";
 const paymentLink = `${process.env.REACT_APP_BASE_URL}/api/stripe/login?from=account-settings`;
 
 const EnableLeaderboard = ({ setLoading }) => {
@@ -77,7 +77,7 @@ export default withRouter(function AccountSettings(props) {
   const paymentMenuItem = user.stripeAccountInfo?.activated ? (
     <StyledMenuItem
       href={paymentLink}
-      style={{ borderBottom: "1px solid #e6e6e6" }}
+      style={{ borderBottom: "1px solid #e6e6e6", color: "#02bff2" }}
       component={Link}
       color="primary"
     >
@@ -89,7 +89,7 @@ export default withRouter(function AccountSettings(props) {
       onClick={() =>
         alert("You need to activate payments from the wishlist page first.")
       }
-      style={{ borderBottom: "1px solid #e6e6e6" }}
+      style={{ borderBottom: "1px solid #e6e6e6", color: "#02bff2" }}
       component={Link}
       color="primary"
     >

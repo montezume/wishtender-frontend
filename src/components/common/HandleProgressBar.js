@@ -1,8 +1,12 @@
 import React from "react";
-import { FormHelperText, LinearProgress } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { FormHelperText, LinearProgress } from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 const useStyles = makeStyles((theme) => {
   return {
+    formHelperText: {
+      marginLeft: 0,
+      marginRight: 0,
+    },
     progressError: {
       "& .MuiLinearProgress-bar": { backgroundColor: theme.palette.error.main },
     },
@@ -15,7 +19,7 @@ export default function HandleProgressBar(props) {
   const { handleStatus, errors, handle } = props;
   const classes = useStyles(props);
   return (
-    <FormHelperText id="handle-helper-text">
+    <FormHelperText className={classes.formHelperText} id="handle-helper-text">
       <LinearProgress
         className={
           handleStatus === "unavailable"

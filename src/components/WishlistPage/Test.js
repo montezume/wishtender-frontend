@@ -11,8 +11,8 @@ import {
   FormControl,
   FormHelperText,
   Box,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+} from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
 import PriceInput from "./PriceInput";
 import { fetchPatchMulti, fetchDelete } from "../../scripts/fetchHelper";
 import StyledDialog from "../common/StyledDialog/StyledDialog";

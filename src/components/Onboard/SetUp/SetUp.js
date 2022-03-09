@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 import { UserContext } from "../../../contexts/UserContext";
 import CountryOptions from "../../CountryOptions/CountryOptions";
 import themeStyles from "../../../themeStyles";
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from '@mui/styles/withStyles';
 import useScreenSize from "../../../hooks/useScreenSize";
 
 import styles from "./styles";
@@ -16,7 +16,7 @@ import {
   Paper,
   TextField,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import HandleProgressBar from "../../common/HandleProgressBar";
 
 export default withStyles(styles)(function Login(props) {

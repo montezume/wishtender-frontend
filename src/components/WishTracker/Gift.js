@@ -1,6 +1,6 @@
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
-import Button from "@material-ui/core/Button";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import Button from "@mui/material/Button";
 import RemoveWish from "./RemoveWish";
 
 const Gift = ({ orderId, gift }) => {

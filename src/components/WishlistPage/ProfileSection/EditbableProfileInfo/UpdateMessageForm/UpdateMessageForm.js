@@ -1,10 +1,10 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { makeStyles } from "@material-ui/core/styles";
-import { TextField } from "@material-ui/core";
-import CheckIcon from "@material-ui/icons/Check";
-import IconButton from "@material-ui/core/IconButton";
-import FormHelperText from "@material-ui/core/FormHelperText";
+import makeStyles from '@mui/styles/makeStyles';
+import { TextField } from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
+import IconButton from "@mui/material/IconButton";
+import FormHelperText from "@mui/material/FormHelperText";
 
 const useStyles = makeStyles({
   root: {

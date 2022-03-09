@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@mui/styles";
 export default makeStyles((theme) => ({
   background: {
     background: "linear-gradient(45deg, rgb(2 214 242), #ffe0577a)",

@@ -1,5 +1,5 @@
 import React from "react";
-import { MenuItem, Typography } from "@material-ui/core";
+import { MenuItem, Typography } from "@mui/material";
 
 export default function currenciesMenuItemArray(options) {
   let currencySelection = options.currencies.map((cur, i) => (

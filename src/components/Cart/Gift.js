@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
-import Button from "@material-ui/core/Button";
-import { Box, IconButton } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import AddIcon from "@material-ui/icons/AddBox";
-import RemoveIcon from "@material-ui/icons/RemoveCircle";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import Button from "@mui/material/Button";
+import { Box, IconButton } from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
+import AddIcon from "@mui/icons-material/AddBox";
+import RemoveIcon from "@mui/icons-material/RemoveCircle";
 import theme from "../../theme";
 import { fetchPatchJson } from "../../scripts/fetchHelper";
 import { CartContext } from "../../contexts/CartContext";

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Cropper from "react-easy-crop";
-import Slider from "@material-ui/core/Slider";
+import Slider from "@mui/material/Slider";
 import "./EasyCrop.css";
 
 /**

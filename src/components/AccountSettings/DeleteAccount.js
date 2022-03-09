@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import React, { useState } from "react";
-import { TextField, Box, useTheme } from "@material-ui/core";
+import { TextField, Box, useTheme } from "@mui/material";
 import useScreenSize from "../../hooks/useScreenSize";
 import themeStyles from "../../themeStyles";
 import ResponsiveDialogTitleSection from "../common/StyledDialog/TopSections/ResponsiveTopTitleSection/ResponsiveDialogCloseAndTitleSection";

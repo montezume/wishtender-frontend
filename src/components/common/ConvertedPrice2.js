@@ -1,7 +1,7 @@
 import React from "react";
-import Tooltip from "@material-ui/core/Tooltip";
-import { makeStyles } from "@material-ui/core/styles";
-import Help from "@material-ui/icons/Help";
+import Tooltip from "@mui/material/Tooltip";
+import makeStyles from '@mui/styles/makeStyles';
+import Help from "@mui/icons-material/Help";
 
 const useStyles = makeStyles((theme) => {
   return {

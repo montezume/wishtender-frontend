@@ -1,9 +1,9 @@
-import { Box, Button } from "@material-ui/core";
+import { Box, Button } from "@mui/material";
 import React from "react";
 import { withRouter } from "react-router";
 
-import AnnouncementIcon from "@material-ui/icons/Announcement";
-import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import AnnouncementIcon from "@mui/icons-material/Announcement";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import useScreenSize from "../../../hooks/useScreenSize";
 export default withRouter(function ActivateAccount(props) {
   const screenSize = useScreenSize({

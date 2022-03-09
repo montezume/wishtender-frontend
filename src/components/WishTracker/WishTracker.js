@@ -5,7 +5,7 @@ import { UserContext } from "../../contexts/UserContext";
 import DisplayOrder from "./DisplayOrder";
 import { parseOrderPrices } from "../../scripts/helpers";
 import { LocaleContext } from "../../contexts/LocaleContext";
-import Paper from "@material-ui/core/Paper";
+import Paper from "@mui/material/Paper";
 import {
   Box,
   ListSubheader,
@@ -13,8 +13,8 @@ import {
   Container,
   List,
   Typography,
-} from "@material-ui/core";
-import RightIcon from "@material-ui/icons/KeyboardArrowRight";
+} from "@mui/material";
+import RightIcon from "@mui/icons-material/KeyboardArrowRight";
 import useSmallScreen from "../../hooks/useSmallScreen";
 
 function WishTracker(props) {

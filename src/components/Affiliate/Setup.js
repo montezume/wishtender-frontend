@@ -1,14 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { withRouter } from "react-router";
-import Card from "@material-ui/core/Card";
+import Card from "@mui/material/Card";
 import {
   TextField,
   Typography,
   FormHelperText,
   FormControl,
   Button,
-} from "@material-ui/core";
+} from "@mui/material";
 import { useForm } from "react-hook-form";
 
 export default withRouter(function Affiliate(props) {

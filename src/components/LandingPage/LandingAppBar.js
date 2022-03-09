@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import useScrollTrigger from "@material-ui/core/useScrollTrigger";
-import Fab from "@material-ui/core/Fab";
-import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-import Zoom from "@material-ui/core/Zoom";
+import makeStyles from '@mui/styles/makeStyles';
+import CssBaseline from "@mui/material/CssBaseline";
+import useScrollTrigger from "@mui/material/useScrollTrigger";
+import Fab from "@mui/material/Fab";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import Zoom from "@mui/material/Zoom";
 
 // app bar
-import Toolbar from "@material-ui/core/Toolbar";
-import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import AppBar from "@mui/material/AppBar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
