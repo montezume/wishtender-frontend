@@ -104,6 +104,9 @@ function WishlistPage(props) {
         credentials: "include",
       })
         .then(async (res) => {
+          if (204) {
+            return alert("User not found.");
+          }
           if (res.status >= 500 && res.status < 600) {
             const text = await res.text();
             return alert(text);
@@ -121,7 +124,7 @@ function WishlistPage(props) {
           successCallBack(json);
         })
         .catch((err) => {
-          alert("Error: ,", err);
+          alert("Error:", err.message);
         });
     })();
 
