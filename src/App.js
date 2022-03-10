@@ -29,8 +29,8 @@ import LandingPage from "./components/LandingPage/LandingPage";
 import Dashboard from "./components/Dashboard/Dashboard";
 import OBSPlugin from "./components/OBS/OBSPlugin";
 import UserActivity from "./components/UserActivity/UserActivity";
-import AffiliateDashboard from "./components/Affiliate/Dashboard";
-import AffiliateSetup from "./components/Affiliate/Setup";
+// import ReferralDashboard from "./components/Referral/Dashboard";
+// import ReferralSetup from "./components/Referral/Setup";
 import Footer from "./components/Footer/Footer";
 import ThankYou from "./components/LandingPage/ThankYou";
 import Menu from "./components/nav/Menu/Menu.js";
@@ -148,7 +148,6 @@ function App(props) {
     setCurrencyCookieAndContext,
     user,
   ]);
-
   // set cart
   useEffect(() => {
     if (user !== undefined) {
@@ -215,28 +214,42 @@ function App(props) {
     }
   }, [user]);
 
-  // affiliate or other queries from link
-  // useEffect(() => {
-  //   const params = new URLSearchParams(window.location.search);
-  //   (async () => {
-  //     // if (parsedCookies().ref) {
-  //     //   // check if valid ref then return
-  //     // }
-  //     const affiliateCode = params.get("ref");
-  //     if (affiliateCode) {
-  //       const baseUrl = process.env.REACT_APP_BASE_URL;
-  //       const cookie = `ref=${affiliateCode}; max-age=${3600 * 24 * 30}${
-  //         baseUrl === "https://api.wishtender.com" ||
-  //         baseUrl === "https://api-staging.wishtender.com"
-  //           ? "; domain=wishtender.com"
-  //           : ""
-  //       }`;
-  //       document.cookie = cookie;
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
 
-  //       window.location.href = removeURLParameter(window.location.href, "ref");
-  //     }
-  //   })();
-  // }, [props.history]);
+    const makeCookie = (key, value, seconds, baseUrl) => {
+      const cookie = `${key}=${value}; max-age=${seconds}${
+        baseUrl === "https://api.wishtender.com" ||
+        baseUrl === "https://api-staging.wishtender.com"
+          ? "; domain=wishtender.com"
+          : ""
+      }`;
+      document.cookie = cookie;
+      const newCookies = parsedCookies();
+      setCookies(newCookies);
+    };
+    const referralCode = params.get("ref");
+
+    if (referralCode) {
+      const url = new URL(window.location);
+      const signup = url.pathname === "/sign-up";
+      const cookies = parsedCookies();
+
+      if ((cookies.directedSignup || cookies.recentRef) && !signup) {
+        return; // an directed signup reference or recent reference can't be overwritten except by a direct signup
+      }
+
+      const baseUrl = process.env.REACT_APP_BASE_URL;
+
+      if (signup) {
+        makeCookie("directedSignup", referralCode, 60 * 60, baseUrl);
+      }
+      makeCookie("ref", referralCode, 60 * 60 * 24 * 30, baseUrl);
+      makeCookie("recentRef", referralCode, 60 * 60 * 24 * 3, baseUrl);
+      makeCookie("directedSignup", referralCode, 60 * 60, baseUrl);
+      window.location.href = removeURLParameter(window.location.href, "ref");
+    }
+  });
 
   useEffect(() => {
     // user user settings
@@ -419,14 +432,14 @@ function App(props) {
           return <Twenty21All />;
         }}
       />
-      <Route
+      {/* <Route
         exact
-        path="/affiliate"
+        path="/referral"
         render={(props) => {
           return (
             <>
-              {user && (user.admin || user.affiliateCode) ? (
-                <AffiliateDashboard />
+              {user && (user.admin || user.referralInfo) ? (
+                <ReferralDashboard />
               ) : (
                 "Not authorized"
               )}
@@ -436,19 +449,19 @@ function App(props) {
       />
       <Route
         exact
-        path="/affiliate/setup"
+        path="/referral/setup"
         render={(props) => {
           return (
             <>
-              {user && (user.admin || user.affiliateCode) ? (
-                <AffiliateSetup />
+              {user && (user.admin || user.referralInfo) ? (
+                <ReferralSetup />
               ) : (
                 "Not authorized"
               )}
             </>
           );
         }}
-      />
+      /> */}
       <Route path="/confirmation-email">
         <ConfirmationEmail />
       </Route>
