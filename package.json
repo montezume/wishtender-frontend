@@ -22,7 +22,6 @@
     "@welldone-software/why-did-you-render": "^6.0.5",
     "array-move": "^3.0.1",
     "canvas-confetti": "^1.4.0",
-    "cheerio": "^1.0.0-rc.10",
     "country-data": "0.0.31",
     "deep-diff": "^1.0.2",
     "http-proxy-middleware": "^1.1.0",
