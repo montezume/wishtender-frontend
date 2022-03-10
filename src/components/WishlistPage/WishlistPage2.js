@@ -104,7 +104,7 @@ function WishlistPage(props) {
         credentials: "include",
       })
         .then(async (res) => {
-          if (204) {
+          if (res.status === 204) {
             return alert("User not found.");
           }
           if (res.status >= 500 && res.status < 600) {
