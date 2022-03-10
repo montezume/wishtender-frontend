@@ -45,7 +45,25 @@ function WishlistPage(props) {
     customGetWishlistAndParse,
   };
   useTraceUpdate(WishlistPage.name, props, states);
-  // ------two places theres exchange?base. handle whappens f clientCurrency is null
+
+  // // referral or other queries from link
+  // useEffect(() => {
+  //   // check if ref cookie expires in 27 days ( allow 3 day no overwrite)
+  //   if (!alias?.referrerCode) return;
+
+  //   const referralCode = alias.referrerCode;
+  //   if (referralCode) {
+  //     const baseUrl = process.env.REACT_APP_BASE_URL;
+  //     const cookie = `ref=${referralCode}; max-age=${3600 * 24 * 30}${
+  //       baseUrl === "https://api.wishtender.com" ||
+  //       baseUrl === "https://api-staging.wishtender.com"
+  //         ? "; domain=wishtender.com"
+  //         : ""
+  //     }`;
+  //     document.cookie = cookie;
+  //   }
+  // }, [alias]);
+
   useEffect(() => {
     if (alias && alias.currency && clientCurrency !== "noConversion") {
       fetch(

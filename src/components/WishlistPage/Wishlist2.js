@@ -294,7 +294,7 @@ const Wishlist = withRouter((props) => {
               sm={4}
               md={3}
               lg={2}
-              xl={1}
+              xl={2}
               container
             >
               <div
