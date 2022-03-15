@@ -49,7 +49,7 @@ export default withRouter(function CommunityNotice(props) {
 
   return (
     <>
-      <StyledDialog disableBackdropClick open={true} onClose={onClose}>
+      <StyledDialog open={true} onClose={onClose}>
         <ResponsiveDialogTitleSection onClose={onClose}>
           Notice
         </ResponsiveDialogTitleSection>
