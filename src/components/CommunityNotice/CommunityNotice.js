@@ -4,7 +4,6 @@ import { Button } from "@mui/material";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import ResponsiveDialogTitleSection from "../common/StyledDialog/TopSections/ResponsiveTopTitleSection/ResponsiveDialogCloseAndTitleSection";
 import { withRouter } from "react-router";
-var parse = require("html-react-parser");
 
 export default withRouter(function CommunityNotice(props) {
   const { message, id, setCommunityNotice } = props;
