@@ -12,7 +12,7 @@ export default withRouter(function CommunityNotice(props) {
   const [okToMark, setOkToMark] = useState();
   const onClose = async (e, reason) => {
     if (reason && reason === "backdropClick")
-      return alert("Please read and click 'Got it!'");
+      return alert("Please click 'Got it!' at the end of the notice.");
     if (!marked && okToMark) {
       markSeen();
     }
