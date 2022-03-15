@@ -24,6 +24,7 @@
     "canvas-confetti": "^1.4.0",
     "country-data": "0.0.31",
     "deep-diff": "^1.0.2",
+    "html-react-parser": "^1.4.8",
     "http-proxy-middleware": "^1.1.0",
     "lodash": "^4.17.20",
     "react": "^17.0.1",
