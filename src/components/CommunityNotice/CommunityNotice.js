@@ -4,6 +4,7 @@ import { Button } from "@mui/material";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import ResponsiveDialogTitleSection from "../common/StyledDialog/TopSections/ResponsiveTopTitleSection/ResponsiveDialogCloseAndTitleSection";
 import { withRouter } from "react-router";
+var parse = require("html-react-parser");
 
 export default withRouter(function CommunityNotice(props) {
   const { message, id, setCommunityNotice } = props;
@@ -65,6 +66,7 @@ export default withRouter(function CommunityNotice(props) {
           <PriorityHighIcon
             style={{ color: "#ecb700", fontSize: "4em" }}
           ></PriorityHighIcon>
+          {parse(message)}
           <div
             style={{
               display: "flex",
