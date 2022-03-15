@@ -62,6 +62,7 @@ import CurrentMonthAll from "./components/LeaderBoard/CurrentMonthAll";
 import Twenty21All from "./components/LeaderBoard/Twenty21All";
 import Last30All from "./components/LeaderBoard/Last30All";
 import TopWisherAlert from "./components/TopWisherAlert/TopWisherAlert";
+import CommunityNotice from "./components/CommunityNotice/CommunityNotice";
 
 function removeURLParameter(url, parameter) {
   //prefer to use l.search if you have a location/link object
@@ -89,6 +90,7 @@ function App(props) {
     useContext(CurrencyContext);
 
   const [rankNotification, setRankNotification] = useState();
+  const [communityNotice, setCommunityNotice] = useState();
   const [user, setUser] = useState();
   const [cart, setCart] = useState();
   const [cartNotifications, setCartNotifications] = useState();
@@ -164,6 +166,22 @@ function App(props) {
       (async () => {
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
+        if (user?.wishlists[0]) {
+          fetch(process.env.REACT_APP_BASE_URL + "/api/notifications/notices", {
+            credentials: "include",
+            method: "GET",
+            headers,
+          })
+            .then(async (res) => {
+              if (res.status === 204) return;
+              const json = await res.json();
+              setCommunityNotice(json[0]);
+            })
+            .catch((err) => {
+              alert("Error: " + err.message);
+            });
+        }
+
         fetch(process.env.REACT_APP_BASE_URL + "/api/notifications/new", {
           credentials: "include",
           method: "GET",
@@ -563,7 +581,6 @@ function App(props) {
                                 autoHideDuration={3500}
                               />
                             )}
-
                             {rankNotification && (
                               <TopWisherAlert
                                 rank={rankNotification.rank}
@@ -573,6 +590,13 @@ function App(props) {
                                 handle={user.aliases[0].handle}
                                 setRankNotification={setRankNotification}
                               ></TopWisherAlert>
+                            )}
+                            {communityNotice && (
+                              <CommunityNotice
+                                message={communityNotice.message}
+                                id={communityNotice._id}
+                                setCommunityNotice={setCommunityNotice}
+                              ></CommunityNotice>
                             )}
                             <div
                               style={{
