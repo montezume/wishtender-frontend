@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { Container, Link, Typography } from "@mui/material";
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from "@mui/styles/makeStyles";
 import { matches } from "lodash";
 const useStyles = makeStyles((theme) => {
   const highlightQuestion = { borderLeftColor: "#A5D8FF", color: "#007FFF" };
@@ -226,8 +226,41 @@ export default function FAQ(props) {
         <ul>
           <li>Services</li>
           <li>Gifts that promise a good or service in exchange for the gift</li>
-          <li>Gifts that have nudity in the pictures</li>
+          <li>Gifts that have nudity in the item image</li>
         </ul>
+        <h3>Allowed But Take Caution</h3>
+        <p>
+          These items are <u>allowed for now, but</u> it may be beneficial to be
+          subtle in your wording about them.
+        </p>
+        <ul>
+          <li>Weed/drug related funds</li>
+          <li>Sex toys</li>
+          <li>Items with the word tribute</li>
+        </ul>
+        <p>
+          These items are in a grey area. Our payment processor prohibits the
+          sale of the sex toys and drugs, but gifts on WishTenter are a
+          donation, not a sale.
+        </p>
+        <p>
+          Additionally, our payment processor doesn't explicitly prohibit
+          "tributes", but other payment processors do not like this word.
+        </p>
+        <p>
+          So until further notice, you can use these words. But our payment
+          processor is a huge company. What one person deems ok, another may
+          not. So if you want to be extra carful change "dildo" to "body
+          massager", "weed" to "herb", "tribute" to "tip" or "appreciation" etc.
+          The item name gets sent to our payment processor, the images do not.
+          But in rare circumstances our payment processor may contact you to ask
+          you to share your wishlist with them. In which case, you may want to
+          be cautious of the images you use. You can always update the images.
+        </p>
+        <p>
+          All of this may change as we add more payment options that keep our
+          fees low while allowing our users to post more freely.
+        </p>
         <h2>In what countries does WishTender work?</h2>
         <Typography>
           <strong>Wishlist owners</strong> can create a wishlist with a bank
