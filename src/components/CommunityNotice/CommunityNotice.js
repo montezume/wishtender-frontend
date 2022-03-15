@@ -65,7 +65,6 @@ export default withRouter(function CommunityNotice(props) {
           <PriorityHighIcon
             style={{ color: "#ecb700", fontSize: "4em" }}
           ></PriorityHighIcon>
-          {parse(message)}
           <div
             style={{
               display: "flex",
