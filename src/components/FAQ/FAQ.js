@@ -406,8 +406,8 @@ export default function FAQ(props) {
             Dashiell Rose Bark-Huss
           </a>
           , a former nude model turned software developer. We are putting our
-          reputation on line to keep ourselves accountable to delivering a solid
-          product.
+          reputation on the line to keep ourselves accountable to delivering a
+          solid product.
         </Typography>
         <h2>How is WishTender sex worker friendly if it uses Stripe?</h2>
         <Typography>
