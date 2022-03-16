@@ -197,7 +197,7 @@ export default function FAQ(props) {
           video, <a href="https://calendly.com/dashiell/20min">book a chat</a>{" "}
           or request an instant audio chat through the chat support.
         </Typography>
-        <h2>What images are prohibited from putting on my wishlist?</h2>
+        <h2>What images are prohibited from my wishlist?</h2>
         <Typography>
           Scantily clad 😉 pictures are fine but no overt nudity. We are trying
           to keep this site classified as a non-adult-content site in order to
@@ -205,17 +205,17 @@ export default function FAQ(props) {
           ensure you can continue to get gifts from fans without the high fees
           you may experience on adult content sites.
         </Typography>
-        <h2>What gifts are prohibited from putting on my wishlist?</h2>
+        <h2>What gifts are prohibited from my wishlist?</h2>
         <Typography>
-          You can put any item or custom gift on your wishlist. But you cannot
-          list your services, nor gifts that promise any service or goods in
-          exchange for the gift.
+          You can put any legal item or custom gift on your wishlist. But you
+          cannot list your services, nor gifts that promise any service or goods
+          in exchange for the gift.
         </Typography>
         <Typography>
-          We don't allow listing services because, as a wishlist site, we cannot
-          be responsible for ensuring the guarantee of any services, goods, nor
-          exchanges. No overt nudity is allowed in the images for the items.
-          This allows us to keep our fees low for you and your fans. As
+          We don't allow users to list services because, as a wishlist site, we
+          cannot be responsible for ensuring the guarantee of any services,
+          goods, nor exchanges. No overt nudity is allowed in the images for the
+          items. This allows us to keep our fees low for you and your fans. As
           mentioned above, we warmly welcome SW's and we want to ensure you can
           continue to get gifts from fans without the high fees you may
           experience on adult content sites.
