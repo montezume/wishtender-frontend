@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { Container, Link, Typography } from "@mui/material";
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from "@mui/styles/makeStyles";
 import { matches } from "lodash";
 const useStyles = makeStyles((theme) => {
   const highlightQuestion = { borderLeftColor: "#A5D8FF", color: "#007FFF" };
@@ -178,9 +178,9 @@ export default function FAQ(props) {
             experiences with wishlists.
           </li>
           <li>
-            <strong>Send us a testimony.</strong> We're collecting testimonies
-            to help build trust. Send a testimony to support@wishtender.com or
-            in the support chat box.
+            <strong>Send us a testimonial.</strong> We're collecting
+            testimonials to help build trust. Send a testimonial to
+            support@wishtender.com or in the support chat box.
           </li>
           <li>
             <strong>Review us on TrustPilot.</strong> To help build trust,{" "}
@@ -197,37 +197,57 @@ export default function FAQ(props) {
           video, <a href="https://calendly.com/dashiell/20min">book a chat</a>{" "}
           or request an instant audio chat through the chat support.
         </Typography>
-        <h2>What images are prohibited from putting on my wishlist?</h2>
+        <h2>What images are prohibited from my wishlist?</h2>
         <Typography>
           Scantily clad 😉 pictures are fine but no overt nudity. We are trying
           to keep this site classified as a non-adult-content site in order to
-          provide you with lower fees. We welcome SW's but this decision is
-          ultimately to help you get gifts from fans without getting the high
-          fees you may experience on adult content sites.
+          provide you with lower fees. We warmly welcome SW's and we want to
+          ensure you can continue to get gifts from fans without the high fees
+          you may experience on adult content sites.
         </Typography>
-        <h2>What gifts are prohibited from putting on my wishlist?</h2>
+        <h2>What gifts are prohibited from my wishlist?</h2>
         <Typography>
-          You can put any item or custom gift on your wishlist. But you cannot
-          list your services, nor gifts that promise any service or goods in
-          exchange for the gift. If you want a gift for a service you provided,
-          you can list a tip or gift and ask your client privately to buy that
-          gift or tip for that service.
+          You can put any legal item or custom gift on your wishlist. But you
+          cannot list your services, nor gifts that promise any service or goods
+          in exchange for the gift.
         </Typography>
         <Typography>
-          We don't allow listing services because, as a wishlist site, we cannot
-          be responsible for ensuring the guarantee of any services, goods, nor
-          exchanges. No overt nudity is allowed in the images for the items.
-          This allows us to keep our fees low for you and your fans. As
-          mentioned above, we welcome SW's but this decision is ultimately to
-          help you get gifts from fans without getting the high fees you may
+          We don't allow users to list services because, as a wishlist site, we
+          cannot be responsible for ensuring the guarantee of any services,
+          goods, nor exchanges. No overt nudity is allowed in the images for the
+          items. This allows us to keep our fees low for you and your fans. As
+          mentioned above, we warmly welcome SW's and we want to ensure you can
+          continue to get gifts from fans without the high fees you may
           experience on adult content sites.
         </Typography>
-        <h3>Prohibited:</h3>
+        <br></br>
+        <h3>Prohibited</h3>
         <ul>
-          <li>Services</li>
-          <li>Gifts that promise a good or service in exchange for the gift</li>
-          <li>Gifts that have nudity in the pictures</li>
+          <li>
+            <b>Selling your services or goods on your wishlist</b>
+          </li>
+          <li>
+            <b>Gifts that promise a good or service in exchange for the gift</b>
+          </li>
+          <li>
+            <b>Gifts that have nudity in the item image</b>
+          </li>
         </ul>
+        <p>
+          The reason we prohibit listing services is WishTender could be held
+          responsible to ensure the delivery of your service and we aren't
+          equipped for that responsibility.
+        </p>
+        <br></br>
+        <p>
+          Our goal at WishTender is to empower all users to confidently use our
+          platform no matter their outside interests or professions. In order to
+          do that, we're doing our best to provide accurate guidance on how to
+          use our platform successfully. These measures keep our fees low for
+          everyone and enable you to be in good standing with our current
+          payment processor.
+        </p>
+        <p>If you have any questions about an item just ask.</p>
         <h2>In what countries does WishTender work?</h2>
         <Typography>
           <strong>Wishlist owners</strong> can create a wishlist with a bank
@@ -386,8 +406,8 @@ export default function FAQ(props) {
             Dashiell Rose Bark-Huss
           </a>
           , a former nude model turned software developer. We are putting our
-          reputation on line to keep ourselves accountable to delivering a solid
-          product.
+          reputation on the line to keep ourselves accountable to delivering a
+          solid product.
         </Typography>
         <h2>How is WishTender sex worker friendly if it uses Stripe?</h2>
         <Typography>
