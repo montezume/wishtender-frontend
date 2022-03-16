@@ -260,7 +260,7 @@ export default function FAQ(props) {
           <p>
             <em> Why a grey area? </em>
             Our payment processor prohibits the sale of the sex toys and drugs,
-            but gifts on WishTenter are a donation, not a sale.
+            but gifts on WishTender are a donation, not a sale.
           </p>
           <li>
             <b>Items with the word tribute</b>
