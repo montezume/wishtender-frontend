@@ -178,9 +178,9 @@ export default function FAQ(props) {
             experiences with wishlists.
           </li>
           <li>
-            <strong>Send us a testimony.</strong> We're collecting testimonies
-            to help build trust. Send a testimony to support@wishtender.com or
-            in the support chat box.
+            <strong>Send us a testimonial.</strong> We're collecting
+            testimonials to help build trust. Send a testimonial to
+            support@wishtender.com or in the support chat box.
           </li>
           <li>
             <strong>Review us on TrustPilot.</strong> To help build trust,{" "}
@@ -222,44 +222,90 @@ export default function FAQ(props) {
           help you get gifts from fans without getting the high fees you may
           experience on adult content sites.
         </Typography>
-        <h3>Prohibited:</h3>
+        <br></br>
+        <h3>Prohibited*</h3>
         <ul>
-          <li>Services</li>
-          <li>Gifts that promise a good or service in exchange for the gift</li>
-          <li>Gifts that have nudity in the item image</li>
+          <li>
+            <b>Selling your services or goods on your wishlist*</b>
+          </li>
+          <li>
+            <b>
+              Gifts that promise a good or service in exchange for the gift*
+            </b>
+          </li>
+          <li>
+            <b>Gifts that have nudity in the item image</b>
+          </li>
         </ul>
+        <p>
+          *If you want a client to tip you for a service, create a wishlist item
+          for the tip and, outside of WishTender, direct your client to fund the
+          WishTender gift as a tip. Reason being, if you list the service on
+          WishTender, we could be held responsible to ensure the delivery of
+          your service and we aren't equipped for that responsibility.
+        </p>
+        <br></br>
         <h3>Allowed But Take Caution</h3>
         <p>
-          These items are <u>allowed for now, but</u> it may be beneficial to be
-          subtle in your wording about them.
+          These items are allowed for now, but it may benefit you to be subtle
+          in your wording about them. These items are in a grey area.
         </p>
         <ul>
-          <li>Weed/drug related funds</li>
-          <li>Sex toys</li>
-          <li>Items with the word tribute</li>
+          <li>
+            <b>Weed/drug related funds</b>
+          </li>
+          <li>
+            <b>Sex toys</b>
+          </li>
+          <p>
+            <em> Why a grey area? </em>
+            Our payment processor prohibits the sale of the sex toys and drugs,
+            but gifts on WishTenter are a donation, not a sale.
+          </p>
+          <li>
+            <b>Items with the word tribute</b>
+          </li>
+          <p>
+            <em> Why a grey area? </em>
+            Our payment processor doesn't explicitly prohibit "tributes" and
+            they have never reached out to us or any user to say this is
+            prohibited. But other payment processors do not like this word.
+          </p>
+          <li>
+            <b>
+              Items with the word “tax” and “unblock fee” or items generally
+              using “fee”
+            </b>
+          </li>
+          <p>
+            <em> Why a grey area? </em>
+            These imply a service might be exchanged.
+          </p>
         </ul>
         <p>
-          These items are in a grey area. Our payment processor prohibits the
-          sale of the sex toys and drugs, but gifts on WishTenter are a
-          donation, not a sale.
+          Until further notice, you can use these words. But our payment
+          processor is a huge company. What one employee deems ok, another may
+          not. So if you want to be extra carful, change "dildo" to "body
+          massager", "weed" to "herb", "tribute" to "tip" or "appreciation",
+          "tax" or "fee" to "tip" etc.
         </p>
         <p>
-          Additionally, our payment processor doesn't explicitly prohibit
-          "tributes", but other payment processors do not like this word.
-        </p>
-        <p>
-          So until further notice, you can use these words. But our payment
-          processor is a huge company. What one person deems ok, another may
-          not. So if you want to be extra carful change "dildo" to "body
-          massager", "weed" to "herb", "tribute" to "tip" or "appreciation" etc.
           The item name gets sent to our payment processor, the images do not.
           But in rare circumstances our payment processor may contact you to ask
           you to share your wishlist with them. In which case, you may want to
-          be cautious of the images you use. You can always update the images.
+          be cautious of the images you share. You can always update the images.
+        </p>
+        <h3>Why Guidelines?</h3>
+        <p>
+          These guidelines may loosen as we add more payment options that allow
+          users to post more freely.
         </p>
         <p>
-          All of this may change as we add more payment options that keep our
-          fees low while allowing our users to post more freely.
+          Our goal at WishTender is to empower all users to confidently use our
+          platform no matter their outside interests or professions. In order to
+          do that, we provide guidance on how to use our platform successfully.
+          These measures keep our fees low for everyone and enable you to be in
+          good standing with our current payment processor.
         </p>
         <h2>In what countries does WishTender work?</h2>
         <Typography>
