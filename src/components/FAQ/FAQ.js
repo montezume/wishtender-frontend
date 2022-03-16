@@ -207,15 +207,15 @@ export default function FAQ(props) {
         </Typography>
         <h2>What gifts are prohibited from my wishlist?</h2>
         <Typography>
-          You can put any item or custom gift on your wishlist. But you cannot
-          list your services, nor gifts that promise any service or goods in
-          exchange for the gift.
+          You can put any legal item or custom gift on your wishlist. But you
+          cannot list your services, nor gifts that promise any service or goods
+          in exchange for the gift.
         </Typography>
         <Typography>
-          We don't allow listing services because, as a wishlist site, we cannot
-          be responsible for ensuring the guarantee of any services, goods, nor
-          exchanges. No overt nudity is allowed in the images for the items.
-          This allows us to keep our fees low for you and your fans. As
+          We don't allow users to list services because, as a wishlist site, we
+          cannot be responsible for ensuring the guarantee of any services,
+          goods, nor exchanges. No overt nudity is allowed in the images for the
+          items. This allows us to keep our fees low for you and your fans. As
           mentioned above, we warmly welcome SW's and we want to ensure you can
           continue to get gifts from fans without the high fees you may
           experience on adult content sites.
