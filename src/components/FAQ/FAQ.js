@@ -209,9 +209,7 @@ export default function FAQ(props) {
         <Typography>
           You can put any item or custom gift on your wishlist. But you cannot
           list your services, nor gifts that promise any service or goods in
-          exchange for the gift. If you want a gift for a service you provided,
-          you can list a tip or gift and ask your client privately to buy that
-          gift or tip for that service.
+          exchange for the gift.
         </Typography>
         <Typography>
           We don't allow listing services because, as a wishlist site, we cannot
@@ -244,9 +242,10 @@ export default function FAQ(props) {
         <p>
           Our goal at WishTender is to empower all users to confidently use our
           platform no matter their outside interests or professions. In order to
-          do that, we provide guidance on how to use our platform successfully.
-          These measures keep our fees low for everyone and enable you to be in
-          good standing with our current payment processor.
+          do that, we're doing our best to provide accurate guidance on how to
+          use our platform successfully. These measures keep our fees low for
+          everyone and enable you to be in good standing with our current
+          payment processor.
         </p>
         <p>If you have any questions about an item just ask.</p>
         <h2>In what countries does WishTender work?</h2>
