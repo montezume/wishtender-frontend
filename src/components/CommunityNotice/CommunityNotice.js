@@ -72,6 +72,8 @@ export default withRouter(function CommunityNotice(props) {
               display: "flex",
               justifyContent: "flex-end",
               gap: "1em",
+
+              paddingBottom: "10em",
             }}
           >
             <Button
