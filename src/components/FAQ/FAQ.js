@@ -201,9 +201,9 @@ export default function FAQ(props) {
         <Typography>
           Scantily clad 😉 pictures are fine but no overt nudity. We are trying
           to keep this site classified as a non-adult-content site in order to
-          provide you with lower fees. We welcome SW's but this decision is
-          ultimately to help you get gifts from fans without getting the high
-          fees you may experience on adult content sites.
+          provide you with lower fees. We warmly welcome SW's and we want to
+          ensure you can continue to get gifts from fans without the high fees
+          you may experience on adult content sites.
         </Typography>
         <h2>What gifts are prohibited from putting on my wishlist?</h2>
         <Typography>
@@ -218,88 +218,29 @@ export default function FAQ(props) {
           be responsible for ensuring the guarantee of any services, goods, nor
           exchanges. No overt nudity is allowed in the images for the items.
           This allows us to keep our fees low for you and your fans. As
-          mentioned above, we welcome SW's but this decision is ultimately to
-          help you get gifts from fans without getting the high fees you may
+          mentioned above, we warmly welcome SW's and we want to ensure you can
+          continue to get gifts from fans without the high fees you may
           experience on adult content sites.
         </Typography>
         <br></br>
-        <h3>Prohibited*</h3>
+        <h3>Prohibited</h3>
         <ul>
           <li>
-            <b>Selling your services or goods on your wishlist*</b>
+            <b>Selling your services or goods on your wishlist</b>
           </li>
           <li>
-            <b>
-              Gifts that promise a good or service in exchange for the gift*
-            </b>
+            <b>Gifts that promise a good or service in exchange for the gift</b>
           </li>
           <li>
             <b>Gifts that have nudity in the item image</b>
           </li>
         </ul>
         <p>
-          *If you want a client to tip you for a service, create a wishlist item
-          for the tip and, outside of WishTender, direct your client to fund the
-          WishTender gift as a tip. Reason being, if you list the service on
-          WishTender, we could be held responsible to ensure the delivery of
-          your service and we aren't equipped for that responsibility.
+          The reason we prohibit listing services is WishTender could be held
+          responsible to ensure the delivery of your service and we aren't
+          equipped for that responsibility.
         </p>
         <br></br>
-        <h3>Allowed But Take Caution</h3>
-        <p>
-          These items are allowed for now, but it may benefit you to be subtle
-          in your wording about them. These items are in a grey area.
-        </p>
-        <ul>
-          <li>
-            <b>Weed/drug related funds</b>
-          </li>
-          <li>
-            <b>Sex toys</b>
-          </li>
-          <p>
-            <em> Why a grey area? </em>
-            Our payment processor prohibits the sale of the sex toys and drugs,
-            but gifts on WishTender are a donation, not a sale.
-          </p>
-          <li>
-            <b>Items with the word tribute</b>
-          </li>
-          <p>
-            <em> Why a grey area? </em>
-            Our payment processor doesn't explicitly prohibit "tributes" and
-            they have never reached out to us or any user to say this is
-            prohibited. But other payment processors do not like this word.
-          </p>
-          <li>
-            <b>
-              Items with the word “tax” and “unblock fee” or items generally
-              using “fee”
-            </b>
-          </li>
-          <p>
-            <em> Why a grey area? </em>
-            These imply a service might be exchanged.
-          </p>
-        </ul>
-        <p>
-          Until further notice, you can use these words. But our payment
-          processor is a huge company. What one employee deems ok, another may
-          not. So if you want to be extra carful, change "dildo" to "body
-          massager", "weed" to "herb", "tribute" to "tip" or "appreciation",
-          "tax" or "fee" to "tip" etc.
-        </p>
-        <p>
-          The item name gets sent to our payment processor, the images do not.
-          But in rare circumstances our payment processor may contact you to ask
-          you to share your wishlist with them. In which case, you may want to
-          be cautious of the images you share. You can always update the images.
-        </p>
-        <h3>Why Guidelines?</h3>
-        <p>
-          These guidelines may loosen as we add more payment options that allow
-          users to post more freely.
-        </p>
         <p>
           Our goal at WishTender is to empower all users to confidently use our
           platform no matter their outside interests or professions. In order to
@@ -307,6 +248,7 @@ export default function FAQ(props) {
           These measures keep our fees low for everyone and enable you to be in
           good standing with our current payment processor.
         </p>
+        <p>If you have any questions about an item just ask.</p>
         <h2>In what countries does WishTender work?</h2>
         <Typography>
           <strong>Wishlist owners</strong> can create a wishlist with a bank
