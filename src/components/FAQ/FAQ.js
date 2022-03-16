@@ -197,7 +197,7 @@ export default function FAQ(props) {
           video, <a href="https://calendly.com/dashiell/20min">book a chat</a>{" "}
           or request an instant audio chat through the chat support.
         </Typography>
-        <h2>What images are prohibited from putting on my wishlist?</h2>
+        <h2>What images are prohibited from my wishlist?</h2>
         <Typography>
           Scantily clad 😉 pictures are fine but no overt nudity. We are trying
           to keep this site classified as a non-adult-content site in order to
@@ -205,7 +205,7 @@ export default function FAQ(props) {
           ensure you can continue to get gifts from fans without the high fees
           you may experience on adult content sites.
         </Typography>
-        <h2>What gifts are prohibited from putting on my wishlist?</h2>
+        <h2>What gifts are prohibited from my wishlist?</h2>
         <Typography>
           You can put any item or custom gift on your wishlist. But you cannot
           list your services, nor gifts that promise any service or goods in
