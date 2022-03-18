@@ -11,12 +11,12 @@ import {
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 
-export default withRouter(function Affiliate(props) {
+export default withRouter(function Referral(props) {
   const { user, getUser, setUser } = useContext(UserContext);
 
   useEffect(() => {
-    if (user.affiliateCode) props.history.push("/affiliate");
-  }, [props.history, user.affiliateCode]);
+    if (user.referralCode) props.history.push("/referral");
+  }, [props.history, user.referralCode]);
   const {
     register,
     handleSubmit,
@@ -26,7 +26,9 @@ export default withRouter(function Affiliate(props) {
   const onSubmit = (data) => {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
-    fetch(process.env.REACT_APP_BASE_URL + "/api/affiliates", {
+    headers.append("CSRF-Token", user.csrfToken);
+
+    fetch(process.env.REACT_APP_BASE_URL + "/api/referrers", {
       credentials: "include",
       method: "PATCH",
       body: JSON.stringify(data),
@@ -35,18 +37,21 @@ export default withRouter(function Affiliate(props) {
       .then(async (response) => {
         if (response.status === 500) {
           let responseText = await response.text();
-          throw new Error(responseText);
+          return alert(responseText);
         }
         if (response.status >= 400 && response.status < 500) {
-          const res = response.json();
-          throw new Error(res.message);
+          const res = await response.json();
+          return alert(res.message);
         }
+        // because a change was made to user, we need to update it
         const user = await getUser();
         setUser(user);
-        props.history.push("/affiliate");
+        props.history.push("/referral");
       })
 
-      .catch((err) => alert("Something went wrong: " + err));
+      .catch((err) => {
+        alert("Something went wrong: " + err);
+      });
   };
 
   const { ref: codeRef, ...codeReg } = register("code", {
@@ -80,7 +85,7 @@ export default withRouter(function Affiliate(props) {
           background: "#0000000a",
         }}
       >
-        <Typography variant="h4"> Affiliate Dashboard</Typography>
+        <Typography variant="h4"> Referral Dashboard</Typography>
       </div>
       <div style={{ maxWidth: "40rem", width: "100%", padding: "0 2rem" }}>
         <div style={{ width: "100%" }}>
@@ -92,7 +97,7 @@ export default withRouter(function Affiliate(props) {
             variant="outlined"
           >
             <Typography variant="h6" color="textSecondary" gutterBottom>
-              Choose your affiliate code
+              Choose your referral code
             </Typography>
 
             <div
@@ -118,19 +123,19 @@ export default withRouter(function Affiliate(props) {
                   <TextField
                     {...codeReg}
                     inputRef={codeRef}
-                    label="Affiliate Code"
+                    label="Referral Code"
                     variant="outlined"
                     gutterBottom
                     error={errors.code && errors.code.message}
                     helperText={errors.code && errors.code.message}
                   />
                   <FormHelperText>
-                    The code used to add on to your affiliate link.
+                    The code used to add on to your referral link.
                     <br /> Example: https://www.wishtender.com/?ref=<b>dash</b>
                   </FormHelperText>
                 </FormControl>
                 <Button variant="contained" color="primary" type="submit">
-                  Set Affiliate Code
+                  Set Referral Code
                 </Button>
               </form>
             </div>

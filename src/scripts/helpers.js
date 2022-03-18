@@ -365,8 +365,10 @@ const getSymbol = (currency) => {
 };
 
 const isValidPrice = (value, decimalPlaces) => {
-  const correctDecimalPlaces =
-    value.split(/([,||.])/g).reverse()[0].length === decimalPlaces;
+  const decimalSplit = value.split(/([,||.])/g);
+  const actualDecimalPlaces =
+    decimalSplit.length === 1 ? 0 : decimalSplit.reverse()[0].length;
+  const correctDecimalPlaces = actualDecimalPlaces === decimalPlaces;
   const commasNumbersPeriods =
     /^(0|[1-9][0-9]{0,2}(?:(,[0-9]{3})*|[0-9]*))(\.[0-9]+){0,1}$/.test(value) ||
     /^(0|[1-9][0-9]{0,2}(?:(.[0-9]{3})*|[0-9]*))(,[0-9]+){0,1}$/.test(value);

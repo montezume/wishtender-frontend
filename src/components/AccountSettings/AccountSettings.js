@@ -37,7 +37,8 @@ const EnableLeaderboard = ({ setLoading }) => {
             method: "PATCH",
             credentials: "include",
             headers,
-            body: JSON.stringify({ publicizeStats: !user.publicizeStats }),
+            body: JSON.stringify({ updatedAt: Date.now() }),
+            // body: JSON.stringify({ publicizeStats: !user.publicizeStats }),
           }).then(async (res) => {
             if (res.status >= 400 && res.status < 500) {
               const json = await res.json();
