@@ -1,10 +1,38 @@
 import React, { useEffect, useState } from "react";
 import Collapse from "@mui/material/Collapse";
 
-export default function Dashboard() {
-  const [users, setUsers] = useState(null);
-  const [activity, setActivity] = useState({});
+import MostActiveTable from "./MostActiveTable";
+import tstData from "./testData";
+import { Paper } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    padding: theme.spacing(2),
+    display: "flex",
+    overflow: "auto",
+    flexDirection: "column",
+  },
+}));
+export default function Dashboard() {
+  const testData = tstData;
+  const [users, setUsers] = useState(null);
+  const classes = useStyles();
+  const [activity, setActivity] = useState({});
+  // const [activity2, setActivity2] = useState({});
+
+  // useEffect(() => {
+  //   (async () => {
+  //     await fetch(`${process.env.REACT_APP_BASE_URL}/api/users`, {
+  //       credentials: "include",
+  //     })
+  //       .then(async (res) => {
+  //         const json = await res.json();
+  //         setUsers(json);
+  //       })
+  //       .catch((err) => {});
+  //   })();
+  // }, []);
   useEffect(() => {
     (async () => {
       await fetch(`${process.env.REACT_APP_BASE_URL}/api/users`, {
@@ -12,6 +40,7 @@ export default function Dashboard() {
       })
         .then(async (res) => {
           const json = await res.json();
+          // setUsers(testData);
           setUsers(json);
         })
         .catch((err) => {});
@@ -19,7 +48,7 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
-    if (users) {
+    if (users && !activity.recentlyActive) {
       const beginningOfDay = (day) => {
         const date = new Date(Date.now() - day * 24 * 3600 * 1000);
         date.setHours(0, 0, 0, 0);
@@ -52,8 +81,9 @@ export default function Dashboard() {
         }
         return weeklyCheckPastWeek;
       };
+      const userCopy = [...users];
 
-      const latest = users.map((user) => {
+      const latest = userCopy.map((user) => {
         let lastActivity;
         let last7;
         let last31;
@@ -77,6 +107,7 @@ export default function Dashboard() {
       });
 
       const recentlyActive = latest
+        .filter((p) => p.lastActivity !== undefined)
         .sort((a, b) => b.lastActivity - a.lastActivity)
         .filter((user) => user.lastActivity);
       const mostDailyCheckinsPastWeek = latest
@@ -89,32 +120,52 @@ export default function Dashboard() {
       const activeLastHour = recentlyActive.filter(
         (u) => u.lastActivity > Date.now() - 1 * 3600 * 1000
       );
-      const activitiesCopy = activity;
+      const activitiesCopy = { ...activity };
+      activitiesCopy.updated = true;
       activitiesCopy.activeLastHour = activeLastHour;
+      activitiesCopy.recentlyActive = recentlyActive.slice(0, 20);
+      activitiesCopy.mostDailyCheckins = {
+        pastWeek: {
+          top: mostDailyCheckinsPastWeek.slice(0, 20),
+
+          total: mostDailyCheckinsPastWeek.length,
+        },
+        pastMonth: {
+          top: mostDailyCheckinsPastMonth.slice(0, 20),
+          total: mostDailyCheckinsPastMonth.length,
+        },
+      };
+
       setActivity(activitiesCopy);
     }
   }, [activity, users]);
 
-  const signedUpEmail = (wisher) =>
-    `mailto:${
-      wisher.email
-    }?subject=${wisher.aliases[0]?.aliasName.trim()}+saw+you+created+a+wishlist-+Just+checking+in&body=Hey+${wisher.aliases[0]?.aliasName.trim()}%2C+this+is+Dash%2C+the+founder+of+WishTender.%0D%0A%0D%0AI+saw+you+created+a+wishlist.+Thanks+for+joining.+Let+me+know+if+you+need+anything.%0D%0A%0D%0AIf+you+want+live+help%2C+or+a+walk+through%2C+schedule+a+chat+here%3A++++%3Ca+href%3D%22https%3A%2F%2Fcalendly.com%2Fdashiell%2F20min%22+target%3D%22_blank%22%3E++++++++calendly%0D%0A++++%3C%2Fa%3E%0D%0A%0D%0ADashiell+Rose+Bark-Huss%0D%0AFounder+WishTender%0D%0Amy+twitter%0D%0A%3Ca+href%3D%22https%3A%2F%2Ftwitter.com%2FDashBarkHuss%22+target%3D%22_blank%22%3Emy+twitter%3C%2Fa%3E+`;
-  const copy = (id) => {
-    var r = document.createRange();
-    r.selectNode(document.getElementById(id));
-    window.getSelection().removeAllRanges();
-    window.getSelection().addRange(r);
-    document.execCommand("copy");
-    window.getSelection().removeAllRanges();
-  };
-
   return (
     <>
-      {users && activity && (
-        <div>
-          {activity.activeLastHour.length} user{activity.activeLastHour.length}{" "}
-          active in the last hour
-        </div>
+      {activity && activity.recentlyActive && (
+        <>
+          <Paper className={classes.paper}>
+            <MostActiveTable
+              title="Last Hour"
+              userActivity={activity.activeLastHour}
+            ></MostActiveTable>
+          </Paper>
+          <MostActiveTable
+            title="Most Recent"
+            userActivity={activity.recentlyActive}
+          ></MostActiveTable>
+          <MostActiveTable
+            title="Most Daily Checkins Past Week"
+            userActivity={activity.mostDailyCheckins.pastWeek.top.slice(0, 20)}
+          ></MostActiveTable>
+          <MostActiveTable
+            title="Most Daily Checkins Past Month"
+            userActivity={activity.mostDailyCheckins.pastMonth.top.slice(0, 20)}
+          ></MostActiveTable>
+
+          <div> {activity.mostDailyCheckins.pastWeek.total} past week</div>
+          <div> {activity.mostDailyCheckins.pastMonth.total} past month</div>
+        </>
       )}
     </>
   );
