@@ -9,7 +9,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from "@mui/styles/makeStyles";
 import ChooseImage from "./../ChooseImage";
 import SelectCropUpdateImage from "./../../ProfileSection/SelectCropUpdateImage/SelectCropUpdateImage";
 

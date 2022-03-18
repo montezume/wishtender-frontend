@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Redirect } from "react-router-dom";
 import withStyles from '@mui/styles/withStyles';
@@ -35,6 +35,30 @@ export default withStyles(styles)(function SignUp(props) {
     },
     useStandard: false,
   });
+
+  // referral or other queries from link
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    // if (parsedCookies().ref) {
+    //   // check if valid ref then return
+    // }
+
+    // if alias route and alias is referer
+    const referralCode = params.get("ref");
+    console.log(referralCode);
+    // if (referralCode) {
+    //   const baseUrl = process.env.REACT_APP_BASE_URL;
+    //   const cookie = `directRef=${referralCode}; max-age=${3600}${
+    //     baseUrl === "https://api.wishtender.com" ||
+    //     baseUrl === "https://api-staging.wishtender.com"
+    //       ? "; domain=wishtender.com"
+    //       : ""
+    //   }`;
+    //   document.cookie = cookie;
+
+    //   window.location.href = removeURLParameter(window.location.href, "ref");
+    // }
+  }, [props.history]);
 
   const onSubmit = (data) => {
     const headers = new Headers();
