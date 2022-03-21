@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import Collapse from "@mui/material/Collapse";
 
 import MostActiveTable from "./MostActiveTable";
-import tstData from "./testData";
 import { Paper } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+// import tstData from "./testData";
+const tstData = [];
 
 const useStyles = makeStyles((theme) => ({
   paper: {
