@@ -1,68 +1,104 @@
 import React, { useEffect, useState } from "react";
 import Collapse from "@mui/material/Collapse";
-import { parsedCookies } from "../../scripts/helpers";
+import { Button } from "@mui/material";
 
 export default function Dashboard() {
   const [users, setUsers] = useState(null);
+
+  const [usersInfo, setUsersInfo] = useState(null);
+  // pagination users
+  const [pageUsersNext, setPageUsersNext] = useState(1);
+  const [pageUsersGoNext, setPageUsersGoNext] = useState(true);
+
+  // pagination Orders
+  const [pageOrdersNext, setPageOrdersNext] = useState(1);
+  const [pageOrdersGoNext, setPageOrdersGoNext] = useState(true);
+
+  const [orders, setOrders] = useState(null);
+  const [orderInfo, setOrderInfo] = useState(null);
   const [openOrders, setOpenOrders] = useState(null);
   const [openIds, setOpenIds] = useState(null);
   const [filterActivated, setFilterActivated] = useState(null);
-  const [sort, setSort] = useState("date");
   useEffect(() => {
     (async () => {
-      await fetch(`${process.env.REACT_APP_BASE_URL}/api/users`, {
+      if (!pageUsersGoNext) return;
+
+      await fetch(
+        `${process.env.REACT_APP_BASE_URL}/api/users?page=${pageUsersNext}&limit=15`,
+        {
+          credentials: "include",
+        }
+      )
+        .then(async (res) => {
+          const json = await res.json();
+          if (!users) {
+            setUsers(json.result);
+          } else {
+            setUsers([...users, ...json.result]);
+          }
+          setPageUsersNext(json.next.page);
+          setPageUsersGoNext(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })();
+  }, [pageUsersGoNext]);
+
+  useEffect(() => {
+    (async () => {
+      if (!pageOrdersGoNext) return;
+      await fetch(
+        `${process.env.REACT_APP_BASE_URL}/api/orders?page=${pageOrdersNext}&limit=15`,
+        {
+          credentials: "include",
+        }
+      )
+        .then(async (res) => {
+          const json = await res.json();
+          if (!orders) {
+            setOrders(json.result);
+          } else {
+            setOrders([...orders, ...json.result]);
+          }
+          setPageOrdersNext(json.next.page);
+          setPageOrdersGoNext(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })();
+  }, [pageOrdersGoNext]);
+
+  useEffect(() => {
+    (async () => {
+      await fetch(`${process.env.REACT_APP_BASE_URL}/api/orders/info`, {
         credentials: "include",
       })
         .then(async (res) => {
           const json = await res.json();
-          setUsers(json);
+          setOrderInfo(json);
         })
-        .catch((err) => {});
+        .catch((err) => {
+          console.log(err);
+        });
+    })();
+  }, []);
+  useEffect(() => {
+    (async () => {
+      await fetch(`${process.env.REACT_APP_BASE_URL}/api/users/info`, {
+        credentials: "include",
+      })
+        .then(async (res) => {
+          const json = await res.json();
+          setUsersInfo(json);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     })();
   }, []);
 
-  const getActivityLevel = (hourlies) => {
-    // not really correct. If there are 7 hourly checkins in one day it will say 1/day I think
-    hourlies = [...hourlies.map((hour) => new Date(hour), new Date())];
-    const milis = hourlies
-      .reduce((a, c, i, arr) => {
-        if (i === arr.length - 1) {
-          return a;
-        }
-        return [...a, arr[i + 1] - c];
-      }, [])
-      .reduce(function (avg, value, _, { length }) {
-        return avg + value / length;
-      }, 0);
-
-    const daily = 86400000;
-
-    const weekly = daily * 7;
-
-    const monthly = daily * 30;
-
-    const biweekly = (daily * 7) / 2;
-
-    const bimonthly = (daily * 30) / 2;
-
-    let activityLevel;
-
-    if (milis <= daily) {
-      activityLevel = "daily";
-    } else if (milis <= biweekly) {
-      activityLevel = "biweekly";
-    } else if (milis <= weekly) {
-      activityLevel = "weekly";
-    } else if (milis <= bimonthly) {
-      activityLevel = "bimonthly";
-    } else if (milis <= monthly) {
-      activityLevel = "monthly";
-    } else {
-      activityLevel = "less than 1/month";
-    }
-
-    return activityLevel;
-  };
   const signedUpEmail = (wisher) =>
     `mailto:${
       wisher.email
@@ -73,10 +109,11 @@ export default function Dashboard() {
     `mailto:${
       gifter.email
     }?subject=${gifter.fromLine.trim()}%2C+saw+you+bought+a+gift&body=Hey+${gifter.fromLine.trim()}%2C+this+is+Dash+the+Founder+of+WishTender.+I+saw+you+bought+a+gift+for+${wisher.aliases[0].aliasName.trim()}.+Thanks+for+using+WishTender.%0D%0A%0D%0AHow+are+you+finding+WishTender+so+far%3F+Did+the+gift+giving+experience+go+ok%3F%0D%0A%0D%0AWe%27re+a+new+company+and+looking+to+improve.+%0D%0A%0D%0ADashiell+Rose+Bark-Huss%0D%0AFounder+WishTender%0D%0A%3Ca+href%3D%22https%3A%2F%2Ftwitter.com%2FDashBarkHuss%22+target%3D%22_blank%22%3Emy+twitter%3C%2Fa%3E+`;
-  const firstEmailToWisher = (wisher) =>
-    `mailto:${
+  const firstEmailToWisher = (wisher) => {
+    return `mailto:${
       wisher.email
     }?subject=${wisher.aliases[0].aliasName.trim()}%2C+saw+you+got+a+gift&body=Hey+${wisher.aliases[0].aliasName.trim()}%2C+this+is+Dash+the+founder+of+WishTender.+I+saw+you+got+a+gift.%0D%0A%0D%0AHow+are+you+finding+WishTender+so+far%3F+Did+the+gift+receiving+experience+go+ok%3F%0D%0A%0D%0AWe%27re+a+new+company+and+looking+to+improve.%0D%0A%0D%0ADashiell+Rose+Bark-Huss%0D%0AFounder+WishTender%0D%0A%3Ca+href%3D%22https%3A%2F%2Ftwitter.com%2FDashBarkHuss%22+target%3D%22_blank%22%3Emy+twitter%3C%2Fa%3E`;
+  };
   const copy = (id) => {
     var r = document.createRange();
     r.selectNode(document.getElementById(id));
@@ -88,89 +125,32 @@ export default function Dashboard() {
 
   return (
     <>
-      {users && (
+      {users && usersInfo && (
         <div>
-          <h3>{users && users.length} Users </h3>
+          <h3>{users && usersInfo.usersTotal} users </h3>
           <h3>
-            {users && users.reduce((a, c) => c.orders?.length + a || a, 0)}{" "}
-            Orders{" "}
-            {(() => {
-              const orders = users.reduce(
-                (a, c) => (c.orders?.length ? [...c.orders, ...a] : a),
-                []
-              );
-              let items = 0;
-              orders.forEach((order) => {
-                items += Object.keys(order.cart.items).length;
-              });
-              return `items: ${items}`;
-            })()}
-            {(() => {
-              const orders = users.reduce(
-                (a, c) => (c.orders?.length ? [...c.orders, ...a] : a),
-                []
-              );
-              let moneyUSD = 0;
-              orders.forEach((order) => {
-                if (order.cashFlow.toConnect.from.currency !== "USD")
-                  alert(
-                    "not adding gift price in usd, error front end line 99 Dashboard.js"
-                  );
-                moneyUSD += order.cashFlow.toConnect.from.amount;
-              });
-              return (
-                <p>
-                  total money in gifts, not including fee: ${moneyUSD} pennies
-                </p>
-              );
-            })()}
-            {(() => {
-              const orders = users.reduce(
-                (a, c) => (c.orders?.length ? [...c.orders, ...a] : a),
-                []
-              );
-              let feesUSD = 0;
-              orders.forEach((order) => {
-                if (order.cashFlow.toConnect.from.currency !== "USD")
-                  alert(
-                    "not adding gift price in usd, error front end line 99 Dashboard.js"
-                  );
-                feesUSD +=
-                  order.cashFlow.toPlatform.amount -
-                  order.cashFlow.toConnect.from.amount;
-              });
-              return <p>Gross fees: ${feesUSD} pennies</p>;
-            })()}
+            {orderInfo && <p>{orderInfo.totalOrders} orders</p>}
+            {orderInfo && <p>{orderInfo.totalItems} items</p>}
+            {orderInfo && (
+              <p>
+                total money in gifts, not including fee: $
+                {orderInfo.totalGiftCash} pennies
+              </p>
+            )}
+            {orderInfo && <p>Gross fees: ${orderInfo.feesUSD} pennies</p>}
           </h3>
           <button onClick={() => setOpenOrders(!openOrders)}>
             {openOrders ? "hide" : "show"} orders
           </button>
           <Collapse in={openOrders} timeout="auto" unmountOnExit>
-            <p>
-              price is in smallest units (pennies if usd){" "}
-              <button onClick={() => setSort(!sort)}>
-                order by {sort ? "user" : "newest"}
-              </button>
-            </p>
+            <p>price is in smallest units (pennies if usd) </p>
 
-            {(() => {
-              const orders = users.reduce(
-                (a, c) => (c.orders?.length ? [...c.orders, ...a] : a),
-                []
-              );
-              return orders
-                .sort(
-                  sort
-                    ? (order, setOrder) =>
-                        order.paidOn < setOrder.paidOn ? 1 : -1
-                    : () => null
-                )
-                .map((order) => {
+            {orders &&
+              (() => {
+                return orders.map((order) => {
                   let items = Object.keys(order.cart.items);
                   let alias = order.cart.alias.handle;
-                  const wisherUser = users.find(
-                    (user) => user?.aliases[0]?._id === order.alias
-                  );
+                  const wisherUser = order.user;
                   return items.map((id) => {
                     const item = order.cart.items[id].item;
                     return (
@@ -183,7 +163,17 @@ export default function Dashboard() {
                         }}
                       >
                         <p>_id: {order._id}</p>
-                        to: <a href={"/" + alias}>{alias}</a>
+                        to:{" "}
+                        {!wisherUser.deleted ? (
+                          <a href={"/" + alias}>{alias}</a>
+                        ) : (
+                          <span style={{ color: "grey" }}>
+                            User Deleted:{" "}
+                            <a style={{ color: "grey" }} href={"/" + alias}>
+                              {alias}
+                            </a>
+                          </span>
+                        )}
                         <p>from: {order.buyerInfo.fromLine}</p>
                         <p id={`order-gifter-email-${order._id}`}>
                           {order.buyerInfo.email}
@@ -203,27 +193,45 @@ export default function Dashboard() {
                             First Email to wisher
                           </a>
                         </p>
-                        <p>
-                          <a
-                            target="_blank"
-                            href={firstEmailToGifter(
-                              order.buyerInfo,
-                              wisherUser
-                            )}
-                          >
-                            First Email to gifter
-                          </a>
-                        </p>
-                        <p id={`order-wisher-email-${order._id}`}>
-                          {wisherUser.email}
-                          <button
-                            onClick={() =>
-                              copy("order-wisher-email-" + order._id)
-                            }
-                          >
-                            copy wisher
-                          </button>
-                        </p>
+                        {!wisherUser.deleted ? (
+                          <>
+                            <p>
+                              <a
+                                target="_blank"
+                                href={firstEmailToGifter(
+                                  order.buyerInfo,
+                                  wisherUser
+                                )}
+                              >
+                                First Email to gifter
+                              </a>
+                            </p>
+                            <p id={`order-wisher-email-${order._id}`}>
+                              {wisherUser.email}
+                              <button
+                                onClick={() =>
+                                  copy("order-wisher-email-" + order._id)
+                                }
+                              >
+                                copy wisher
+                              </button>
+                            </p>
+                          </>
+                        ) : (
+                          <span style={{ color: "grey" }}>
+                            Wisher Account Deleted
+                            <p id={`order-wisher-email-${order._id}`}>
+                              {wisherUser.email}
+                              <button
+                                onClick={() =>
+                                  copy("order-wisher-email-" + order._id)
+                                }
+                              >
+                                copy wisher
+                              </button>
+                            </p>
+                          </span>
+                        )}
                         <p>Note from wisher: {order.noteToWisher.message}</p>
                         {order.noteToTender.map((noteToTender) => {
                           return (
@@ -265,7 +273,19 @@ export default function Dashboard() {
                     );
                   });
                 });
-            })()}
+              })()}
+            <br />
+            <Button
+              onClick={() => {
+                if (pageOrdersGoNext) return;
+                setPageOrdersGoNext(true);
+              }}
+            >
+              Load More Orders
+            </Button>
+            <button onClick={() => setOpenOrders(!openOrders)}>
+              {openOrders ? "hide" : "show"} orders
+            </button>
           </Collapse>
           <button onClick={() => setFilterActivated(!filterActivated)}>
             {filterActivated ? "show all" : "show only activated"}
@@ -373,7 +393,7 @@ export default function Dashboard() {
                             copy
                           </button>
                         </div>
-                        <div>orders: {user.orders?.length}</div>{" "}
+                        <div>orders: {user.orders}</div>{" "}
                         <div>
                           last hour active:{" "}
                           {(() => {
@@ -431,6 +451,14 @@ export default function Dashboard() {
                   );
                 })}
           </div>
+          <Button
+            onClick={() => {
+              if (pageUsersGoNext) return;
+              setPageUsersGoNext(true);
+            }}
+          >
+            Load More Users
+          </Button>
         </div>
       )}
     </>
