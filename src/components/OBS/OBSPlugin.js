@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import confetti from "canvas-confetti";
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from "@mui/styles/makeStyles";
 
 import theme from "../../theme";
 import { Badge, Typography } from "@mui/material";
@@ -329,6 +329,12 @@ export default function OBSPlugin(props) {
       (!previousItems && giftBaskets.length) ||
       giftBaskets.length > previousItems.length
     ) {
+      var audio = new Audio(
+        "https://freesound.org/data/previews/446/446111_758593-lq.mp3"
+      );
+      //can't locate mp3, where is this pointing to?
+      // var audio = new Audio("new_gift.wav");
+      audio.play();
       // if it got bigger?
       confetti({
         //   zIndex: 9000,
