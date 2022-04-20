@@ -18,7 +18,7 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from "@mui/styles/makeStyles";
 import PriceInput from "../PriceInput";
 import { fetchPatchMulti, fetchDelete } from "../../../scripts/fetchHelper";
 import StyledDialog from "../../common/StyledDialog/StyledDialog";
@@ -106,7 +106,7 @@ export default function EditWishForm(props) {
       ) {
         delete data[value];
       } else if (value === "repeatPurchases" && data[value] === undefined) {
-        data[value] = false;
+        delete data[value];
       }
     });
     if (data.price)
@@ -192,154 +192,156 @@ export default function EditWishForm(props) {
       return valid || `${value} is not a valid price.`;
     },
   });
-  return <>
-    {/* <DialogClose onClose={props.onClose} /> */}
-    <ResponsiveDialogTitleSection onClose={props.onClose}>
-      Edit Wish
-    </ResponsiveDialogTitleSection>
-    <Box
-      display="flex"
-      flexDirection="column"
-      style={{ height: "100%", maxWidth: "500px" }}
-    >
-      <form
-        id="edit-wish-form"
-        autoComplete="off"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          flexDirection: "column",
-          height: "100%",
-          justifyContent: "space-between",
-          textAlign: "center",
-          paddingBottom: screenSize === "sm" && theme.spacing(2),
-        }}
-        onSubmit={handleSubmit(onSubmit)}
+  return (
+    <>
+      {/* <DialogClose onClose={props.onClose} /> */}
+      <ResponsiveDialogTitleSection onClose={props.onClose}>
+        Edit Wish
+      </ResponsiveDialogTitleSection>
+      <Box
+        display="flex"
+        flexDirection="column"
+        style={{ height: "100%", maxWidth: "500px" }}
       >
-        <div className={classes.root}>
-          <Container>
-            <img
-              src={
-                // should we URL.revokeObjectURL();?
+        <form
+          id="edit-wish-form"
+          autoComplete="off"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+            height: "100%",
+            justifyContent: "space-between",
+            textAlign: "center",
+            paddingBottom: screenSize === "sm" && theme.spacing(2),
+          }}
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div className={classes.root}>
+            <Container>
+              <img
+                src={
+                  // should we URL.revokeObjectURL();?
 
-                imageFile
-                  ? URL.createObjectURL(imageFile)
-                  : props.info.itemImage
-              }
-              style={{ width: "161px" }}
-              alt="product"
-            />
-
-            <SelectCropUpdateImage
-              label={"Item Image"}
-              aspect={1}
-              cropShape="rect"
-              finalImageDimensions={{ width: 300, height: 300 }}
-              handleUpdateImage={handleImageUpdate}
-            >
-              <p style={{ textDecoration: "underline", fontSize: ".8em" }}>
-                Upload Custom Photo
-              </p>
-            </SelectCropUpdateImage>
-          </Container>
-          <Typography>Edit Wish Info</Typography>
-          <FormControl error={errors.itemName ? true : false}>
-            <TextField
-              {...itemNameReg}
-              inputRef={itemNameRef}
-              name="itemName"
-              variant="outlined"
-              value={itemName}
-              label="Product Name"
-              onChange={(e) => {
-                setItemName(e.target.value);
-              }}
-            />
-            <FormHelperText>{errors.itemName?.message}</FormHelperText>
-          </FormControl>
-
-          <PriceInput
-            price={price}
-            setPrice={setPrice}
-            onChange={(price) => {
-              setPrice(price);
-            }}
-            register={priceReg}
-            inputRef={priceRef}
-            error={errors.price?.message}
-            symbol={currencyInfo(props.info.currency).symbol}
-            decimalPlaces={currencyInfo(props.info.currency).decimalPlaces}
-          ></PriceInput>
-
-          <CategoryEdit
-            // control={control}
-            // name="categories"
-            // label="Add Category"
-            register={categoriesReg}
-            inputRef={categoriesRef}
-            // labelId="categories-edit-label"
-            // id="categories-edit"
-            itemCategories={categories}
-            setItemCategories={setCategories}
-            wishlistCategories={props.categories}
-          />
-
-          <Grid container justifyContent="flex-end">
-            <StyledDialog
-              open={deleteWarningVisible}
-              onClose={() => setDeleteWarningVisible(false)}
-            >
-              <p>Are you sure you want to delete this wish?</p>
-              <Button onClick={() => setDeleteWarningVisible(false)}>
-                No
-              </Button>
-              <Button
-                onClick={() => {
-                  setDeleteWarningVisible(false);
-                  deleteWish();
-                }}
-              >
-                Yes
-              </Button>
-            </StyledDialog>
-            {/* <FormControl error={errors.itemName ? true : false}> */}
-            {repeatPurchases !== "" && (
-              <AutoDeleteInput
-                register={register}
-                control={control}
-                defaultValue={
-                  repeatPurchases !== undefined ? repeatPurchases : true
+                  imageFile
+                    ? URL.createObjectURL(imageFile)
+                    : props.info.itemImage
                 }
+                style={{ width: "161px" }}
+                alt="product"
               />
-            )}
 
+              <SelectCropUpdateImage
+                label={"Item Image"}
+                aspect={1}
+                cropShape="rect"
+                finalImageDimensions={{ width: 300, height: 300 }}
+                handleUpdateImage={handleImageUpdate}
+              >
+                <p style={{ textDecoration: "underline", fontSize: ".8em" }}>
+                  Upload Custom Photo
+                </p>
+              </SelectCropUpdateImage>
+            </Container>
+            <Typography>Edit Wish Info</Typography>
+            <FormControl error={errors.itemName ? true : false}>
+              <TextField
+                {...itemNameReg}
+                inputRef={itemNameRef}
+                name="itemName"
+                variant="outlined"
+                value={itemName}
+                label="Product Name"
+                onChange={(e) => {
+                  setItemName(e.target.value);
+                }}
+              />
+              <FormHelperText>{errors.itemName?.message}</FormHelperText>
+            </FormControl>
+
+            <PriceInput
+              price={price}
+              setPrice={setPrice}
+              onChange={(price) => {
+                setPrice(price);
+              }}
+              register={priceReg}
+              inputRef={priceRef}
+              error={errors.price?.message}
+              symbol={currencyInfo(props.info.currency).symbol}
+              decimalPlaces={currencyInfo(props.info.currency).decimalPlaces}
+            ></PriceInput>
+
+            <CategoryEdit
+              // control={control}
+              // name="categories"
+              // label="Add Category"
+              register={categoriesReg}
+              inputRef={categoriesRef}
+              // labelId="categories-edit-label"
+              // id="categories-edit"
+              itemCategories={categories}
+              setItemCategories={setCategories}
+              wishlistCategories={props.categories}
+            />
+
+            <Grid container justifyContent="flex-end">
+              <StyledDialog
+                open={deleteWarningVisible}
+                onClose={() => setDeleteWarningVisible(false)}
+              >
+                <p>Are you sure you want to delete this wish?</p>
+                <Button onClick={() => setDeleteWarningVisible(false)}>
+                  No
+                </Button>
+                <Button
+                  onClick={() => {
+                    setDeleteWarningVisible(false);
+                    deleteWish();
+                  }}
+                >
+                  Yes
+                </Button>
+              </StyledDialog>
+              {/* <FormControl error={errors.itemName ? true : false}> */}
+              {repeatPurchases !== "" && (
+                <AutoDeleteInput
+                  register={register}
+                  control={control}
+                  defaultValue={
+                    repeatPurchases !== undefined ? repeatPurchases : true
+                  }
+                />
+              )}
+
+              <Button
+                size="small"
+                onClick={() => setDeleteWarningVisible(true)}
+              >
+                Delete Wish
+              </Button>
+            </Grid>
+          </div>
+          <div style={{ width: "100%" }}>
             <Button
-              size="small"
-              onClick={() => setDeleteWarningVisible(true)}
+              id="submit_dialog"
+              disableElevation={true}
+              // className={props.classes && props.classes.submit_xs}
+              variant="contained"
+              color="primary"
+              size="large"
+              type="submit"
+              className={
+                screenSize === "xs"
+                  ? themeClasses.dialogSubmitMobile
+                  : themeClasses.dialogSubmit
+              }
             >
-              Delete Wish
+              Update
             </Button>
-          </Grid>
-        </div>
-        <div style={{ width: "100%" }}>
-          <Button
-            id="submit_dialog"
-            disableElevation={true}
-            // className={props.classes && props.classes.submit_xs}
-            variant="contained"
-            color="primary"
-            size="large"
-            type="submit"
-            className={
-              screenSize === "xs"
-                ? themeClasses.dialogSubmitMobile
-                : themeClasses.dialogSubmit
-            }
-          >
-            Update
-          </Button>
-        </div>
-      </form>
-    </Box>
-  </>;
+          </div>
+        </form>
+      </Box>
+    </>
+  );
 }
