@@ -438,7 +438,7 @@ export default function OBSPlugin(props) {
           </div>
         ))}
       <div className={classes.wishlistLink}>
-        <Typography color="textSecondary">Buy me a gift at</Typography>{" "}
+        <Typography color="textSecondary">You can buy me a gift at</Typography>{" "}
         wishtender.com/<b>{aliasPath}</b>
       </div>
     </div>
