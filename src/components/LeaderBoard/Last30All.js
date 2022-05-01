@@ -11,7 +11,7 @@ export default function Last30All() {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-              <Last30 limit={null} />
+              <Last30 limit={100} />
             </Paper>
           </Grid>
         </Grid>
