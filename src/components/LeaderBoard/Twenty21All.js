@@ -11,7 +11,7 @@ export default function Twenty21All() {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-              <Twenty21CalenderYear limit={null} link={null} />
+              <Twenty21CalenderYear limit={100} link={null} />
             </Paper>
           </Grid>
         </Grid>

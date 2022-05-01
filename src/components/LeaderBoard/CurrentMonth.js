@@ -25,7 +25,7 @@ export default function CurrentMonth({ limit, link }) {
   useEffect(() => {
     const month = getMonthStartEnd();
     fetch(
-      `${process.env.REACT_APP_BASE_URL}/api/orders/mostProfitableUsers?start=${month.start}&end=${month.end}`,
+      `${process.env.REACT_APP_BASE_URL}/api/orders/mostProfitableUsers?start=${month.start}&end=${month.end}&limit=${limit}`,
       { credentials: "include" }
     ).then(async (res) => {
       const data = await res.json();
@@ -34,7 +34,7 @@ export default function CurrentMonth({ limit, link }) {
   }, []);
   return (
     <>
-      {users && (
+      {users ? (
         <UserTable
           link={link}
           limit={limit}
@@ -42,6 +42,8 @@ export default function CurrentMonth({ limit, link }) {
           showPercent={true}
           title={"Month of " + month[new Date().getMonth()]}
         ></UserTable>
+      ) : (
+        "loading " + month[new Date().getMonth()] + " leaderboard..."
       )}
     </>
   );

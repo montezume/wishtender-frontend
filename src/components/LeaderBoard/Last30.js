@@ -19,7 +19,7 @@ export default function Last30({ limit, link }) {
   useEffect(() => {
     const month = getLastStartEnd(30);
     fetch(
-      `${process.env.REACT_APP_BASE_URL}/api/orders/mostProfitableUsers?start=${month.start}&end=${month.end}`,
+      `${process.env.REACT_APP_BASE_URL}/api/orders/mostProfitableUsers?start=${month.start}&end=${month.end}&limit=${limit}`,
       { credentials: "include" }
     ).then(async (res) => {
       const data = await res.json();
@@ -28,7 +28,7 @@ export default function Last30({ limit, link }) {
   }, []);
   return (
     <>
-      {users && (
+      {users ? (
         <UserTable
           limit={limit}
           showPercent={true}
@@ -36,6 +36,8 @@ export default function Last30({ limit, link }) {
           users={users}
           title={"Last 30 Days "}
         ></UserTable>
+      ) : (
+        "loading..."
       )}
     </>
   );

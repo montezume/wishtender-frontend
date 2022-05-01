@@ -11,7 +11,7 @@ export default function Twenty21CalenderYear({ limit, link }) {
   useEffect(() => {
     const year = getYearStartEnd(2021);
     fetch(
-      `${process.env.REACT_APP_BASE_URL}/api/orders/mostProfitableUsers?start=${year.start}&end=${year.end}`,
+      `${process.env.REACT_APP_BASE_URL}/api/orders/mostProfitableUsers?start=${year.start}&end=${year.end}&limit=${limit}`,
       { credentials: "include" }
     ).then(async (res) => {
       const data = await res.json();
@@ -20,13 +20,15 @@ export default function Twenty21CalenderYear({ limit, link }) {
   }, []);
   return (
     <>
-      {users && (
+      {users ? (
         <UserTable
           limit={limit}
           users={users}
           title={"2021"}
           link={link}
         ></UserTable>
+      ) : (
+        "loading..."
       )}
     </>
   );

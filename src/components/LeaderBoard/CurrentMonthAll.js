@@ -11,7 +11,7 @@ export default function CurrentMonthAll() {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-              <CurrentMonth limit={null} />
+              <CurrentMonth limit={100} />
             </Paper>
           </Grid>
         </Grid>
