@@ -448,7 +448,6 @@ a {
   }
 
   .hero_section {
-    background-size: 80%;
     display: flex;
     align-items: center;
 
@@ -456,6 +455,7 @@ a {
       no-repeat;
     background-size: 70%;
     background-position: 40vw center;
+    height: 55vw;
   }
   /* .hero_section {
     height: 38vw;
