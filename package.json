@@ -26,6 +26,7 @@
     "deep-diff": "^1.0.2",
     "html-react-parser": "^1.4.8",
     "http-proxy-middleware": "^1.1.0",
+    "ityped": "^1.0.3",
     "lodash": "^4.17.20",
     "react": "^17.0.1",
     "react-archer": "^3.2.1",
