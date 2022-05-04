@@ -60,7 +60,6 @@ a {
 
 .large_explanation.MuiGrid-spacing-xs-3 {
   width: auto;
-  /* margin: 0; */
 }
 @media only screen and (min-width: 600px) {
   .large_explanation p,
@@ -173,9 +172,23 @@ a {
 }
 
 /* 4 point explanation */
+.wishtender_4point_explanation_container {
+  color: #444;
+  padding: 3vw;
+  padding-bottom: 14vw;
+  background: linear-gradient(0deg, #f2f3f5, #ffffff);
+}
+.wishtender_4point_explanation_container_inner {
+  background: linear-gradient(
+    141.8deg,
+    #faf3cf 15.7%,
+    #cdf2fd 55.9%,
+    #e0dcfb 109.22%
+  );
+  border-radius: 30px;
+}
 
 .wishtender_4point_explanation {
-  background: #f7f7f7;
   position: relative;
   padding: 3%;
 }
@@ -226,12 +239,78 @@ a {
   }
 }
 
+/* new bullet point section 5-2022 --------------------------------- */
+
+.bullet_points {
+  background: white;
+  padding: 10vw 3vw;
+}
+.bullet_points h6 {
+  font-size: 3vw;
+}
+.bullet_points_container {
+  background: linear-gradient(
+    141.8deg,
+    rgb(235, 247, 241) 15.7%,
+    rgb(226, 242, 253) 55.9%,
+    rgb(246, 251, 198) 109.22%
+  );
+  border-radius: 30px;
+  padding: 3%;
+  justify-content: space-around;
+  align-items: center;
+  display: flex;
+  flex-direction: column-reverse;
+}
+.bullet_points ul {
+  padding-left: 0;
+  padding: 0 1vw;
+  column-count: 1;
+  list-style-type: none;
+  font-size: 5vw;
+}
+.bullet_points img {
+  width: 100%;
+}
+@media only screen and (min-width: 450px) {
+  .bullet_points ul {
+    column-count: 2;
+
+    font-size: 2.6vw;
+  }
+  .bullet_points h6 {
+    font-size: 2vw;
+  }
+  .bullet_points {
+    padding: 10vw 3vw;
+  }
+}
+@media only screen and (min-width: 600px) {
+  .bullet_points {
+    padding: 5vw 3vw;
+  }
+  .bullet_points ul {
+    column-count: 1;
+  }
+  .bullet_points_container {
+    flex-direction: row;
+  }
+  .bullet_points img {
+    width: 40%;
+  }
+  .bullet_points h6 {
+    font-size: 1.8vw;
+  }
+}
 /* hero section --------------------------------- */
 .hero_section_container {
-  background: rgb(189, 201, 194);
+  background: #fff;
+  /* padding-top: 80px; */
+}
+.bullet_points {
+  color: #444444;
 }
 .hero_section .bullet_points {
-  list-style-type: none;
   font-size: 4.4vw;
 }
 .hero_section {
@@ -239,11 +318,11 @@ a {
   overflow: hidden;
   z-index: 900;
   height: 170vw;
-  background: url("./images/3-panel-mockup-vertical-web-optimized.png") bottom
-    center no-repeat;
-  /* background: url("./images/happy-woman-holding-package_2.jpg") bottom center * /
-    no-repeat; */
+  background: url("./images/hero_0522_blue_optimized.png") bottom center
+    no-repeat;
+
   background-size: 100%;
+  background-position: center 20vw;
 }
 
 /* .hero_section button,
@@ -261,7 +340,11 @@ a {
   background-color: #03b0e0;
 } */
 .hero_section .text {
+  text-align: center;
+  color: #444444;
+
   position: relative;
+  top: 80vw;
   padding: 6%;
   /* text-align: center; */
   /* background: #afefffd6; */
@@ -272,7 +355,7 @@ a {
   letter-spacing: 0.45vw;
 }
 .hero_section .text h3 {
-  font-size: 4vw;
+  font-size: 3.6vw;
   letter-spacing: 0.4vw;
 }
 
@@ -299,10 +382,7 @@ a {
     overflow: hidden;
     z-index: 900; */
     height: 150vw;
-    /* background: url("./images/3-panel-mockup-vertical.png") bottom center
-      no-repeat;
-    /* background: url("./images/happy-woman-holding-package_2.jpg") bottom center * /
-      no-repeat; */
+
     /* background-size: 100%; */
   }
 }
@@ -318,12 +398,11 @@ a {
     font-size: 3vw;
   }
   .hero_section {
+    display: flex;
+    align-items: center;
     height: 66vw;
-    background: url("./images/3-panel-short-horizantal-web-optimized.png")
-      bottom center no-repeat;
-
-    /* background: url("./images/happy-woman-holding-package_2.jpg"); */
-    background-size: 100%;
+    background-size: 60%;
+    background-position: 50vw center;
   }
 
   .hero_section button:hover,
@@ -331,13 +410,15 @@ a {
     background-color: #03b0e0;
   }
   .hero_section .text {
+    top: auto;
+
     position: relative;
     padding: 5%;
     background: none;
     text-align: left;
   }
   .hero_section .text h2 {
-    font-size: 6vw;
+    font-size: 5vw;
     letter-spacing: 0vw;
   }
   .hero_section .text h3 {
@@ -361,13 +442,20 @@ a {
     list-style-type: none;
     font-size: 2.2vw;
   }
-  .hero_section {
-    height: 45vw;
-    background: url("./images/3-panel-mockup-web-optimized.png") bottom center
-      no-repeat;
+  .hero_section ul.bullet_points {
+    list-style-type: none;
+    font-size: 2.2vw;
+  }
 
-    /* background: url("./images/happy-woman-holding-package_2.jpg"); */
-    background-size: 100%;
+  .hero_section {
+    background-size: 80%;
+    display: flex;
+    align-items: center;
+
+    background: url("./images/hero_0522_blue_optimized.png") bottom center
+      no-repeat;
+    background-size: 70%;
+    background-position: 40vw center;
   }
   /* .hero_section {
     height: 38vw;
@@ -383,7 +471,6 @@ a {
   .hero_section .text h3 {
     font-size: 1.8vw;
     letter-spacing: 0.1vw;
-    margin-bottom: 0;
   }
   .hero_section .triangle {
     display: block;
