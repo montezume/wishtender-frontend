@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Box, TextField, Typography } from "@mui/material";
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from "@mui/styles/makeStyles";
 import ChooseImage from "../ChooseImage";
 import PriceInput from "../../PriceInput";
+import CategoryEdit from "../../EditWishForm/CategoryEdit";
 import { CurrencyContext } from "../../../../contexts/CurrencyContext";
 import {
   isValidPrice,
@@ -23,6 +24,8 @@ import AutoDeleteInput from "./AutoDeleteInput";
  * @param  props.images
  **/
 export default function WishForm(props) {
+  const [categories, setCategories] = useState("");
+
   const screenSize = useScreenSize({
     breakpoints: { xs: 0, sm: 450 },
     useStandard: false,
@@ -67,9 +70,6 @@ export default function WishForm(props) {
     setName(props.info && props.info.title);
     setPrice(props.info && props.info.price);
   }, [props.info]);
-  // useEffect(() => {
-  //   console.log(price);
-  // }, [price]);
 
   const {
     register,
@@ -84,13 +84,16 @@ export default function WishForm(props) {
     setValue("itemName", name, { shouldValidate: true });
     if (price !== "") setValue("price", price, { shouldValidate: true });
   }, [name, price, setValue]);
+  useEffect(() => {
+    if (categories !== "")
+      setValue("categories", categories, { shouldValidate: true });
+  }, [categories, setValue]);
   const onSubmit = (data) => {
     //send data to backend post wish item
     data.price = toSmallestUnit(data.price, clientCurrency);
     data.imageCrop = crop;
     props.onSubmit(data);
   };
-  // console.log("props.price, ", props.info.price);
   const { ref: itemNameRef, itemNameReg } = register("itemName");
   const { ref: priceRef, ...priceReg } = register("price", {
     validate: (value) => {
@@ -107,6 +110,7 @@ export default function WishForm(props) {
       return valid || `${value} is not a valid price.`;
     },
   });
+  const { ref: categoriesRef, ...categoriesReg } = register("categories");
   return (
     <form
       style={props.disabled ? { opacity: ".3", pointerEvents: "none" } : {}}
@@ -146,6 +150,14 @@ export default function WishForm(props) {
           symbol={currencyInfo(clientCurrency).symbol}
           decimalPlaces={currencyInfo(clientCurrency).decimalPlaces}
         ></PriceInput>
+
+        <CategoryEdit
+          register={categoriesReg}
+          inputRef={categoriesRef}
+          itemCategories={categories}
+          setItemCategories={setCategories}
+          wishlistCategories={props.categories}
+        />
         <AutoDeleteInput register={register} control={control} />
       </Box>
       <Button
