@@ -20,19 +20,15 @@ export default function CategoryEdit(props) {
   const [wishlistCategories, setWishlistCategories] = useState(null);
   const [itemCategories, setItemCategories] = useState(null);
   const [select, setSelect] = useState(null);
-  // this isn't actually doing anything
-  // const handleChange = (event) => {
-  //   setCountry(event.target.value);
-  // };
+
   useEffect(() => {
     setWishlistCategories(props.wishlistCategories);
-    // setItemCategories(props.itemCategories);
   }, [props.itemCategories, props.wishlistCategories]);
 
   const handleChange = (event) => {
-    if (itemCategories?.indexOf(event.target.attributes.value.value) >= 0)
-      return;
-    // setItemCategories([...itemCategories, event.target.attributes.value.value]);
+    const yesItemContainsCategory =
+      itemCategories?.indexOf(event.target.attributes.value.value) >= 0;
+    if (yesItemContainsCategory) return;
     props.setItemCategories([
       ...props.itemCategories,
       event.target.attributes.value.value,
@@ -50,11 +46,7 @@ export default function CategoryEdit(props) {
       </MenuItem>
     );
   });
-  // const categoriesMenu = wishlistCategories?.map((cat) => (
-  //   <MenuItem onClick={handleChange} value={cat}>
-  //     {cat}
-  //   </MenuItem>
-  // ));
+
   const handleDelete = (e) => {
     const category = e.currentTarget.parentElement.id.slice(14); // id ex: 'chip-category-fave clothes'
 

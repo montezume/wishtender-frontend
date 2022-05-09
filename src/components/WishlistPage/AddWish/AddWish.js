@@ -129,12 +129,15 @@ function AddWish1(props) {
     headers.append("CSRF-Token", user.csrfToken);
     if (selectedTab === "manual") {
       const fd = new FormData();
+      // When undefined is set in form data, it's set as a string so we need to set it to false
       if (data.repeatPurchases === undefined) {
         data.repeatPurchases = false;
       }
+      if (data.categories === undefined) {
+        data.categories = "";
+      }
       const dataArray = Object.entries(data);
       dataArray.forEach((datum) => {
-        if (datum[0] === "categories") return;
         fd.append(datum[0], datum[1]);
       });
       fetchOptions.headers = headers;
@@ -245,6 +248,7 @@ function AddWish1(props) {
             </Box>
 
             <WishForm
+              categories={props.categories}
               classes={classes}
               disabled={!retrieved}
               info={productInfo}
@@ -256,6 +260,7 @@ function AddWish1(props) {
         <TabPanel selectedTab={selectedTab} tab={"manual"}>
           <Box className={classes.container}>
             <WishFormManual
+              categories={props.categories}
               classes={classes}
               info={productInfo}
               images={filteredImages}

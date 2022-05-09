@@ -611,6 +611,7 @@ const Wishlist = withRouter((props) => {
             {props.isAuth && (
               <div className="wrapper add_a_wish">
                 <AddWish
+                  categories={wishlist.categories}
                   open={addWishVisible}
                   onClose={() => {
                     setAddWishVisible(false);

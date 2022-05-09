@@ -12,6 +12,7 @@ import {
 import makeStyles from "@mui/styles/makeStyles";
 import ChooseImage from "./../ChooseImage";
 import SelectCropUpdateImage from "./../../ProfileSection/SelectCropUpdateImage/SelectCropUpdateImage";
+import CategoryEdit from "../../EditWishForm/CategoryEdit";
 
 import PriceInput from "../../PriceInput";
 import { CurrencyContext } from "../../../../contexts/CurrencyContext";
@@ -33,6 +34,8 @@ import AutoDeleteInput from "./AutoDeleteInput";
  * @param  props.images
  **/
 export default function WishFormManual(props) {
+  const [categories, setCategories] = useState("");
+
   const screenSize = useScreenSize({
     breakpoints: { xs: 0, sm: 450 },
     useStandard: false,
@@ -84,9 +87,6 @@ export default function WishFormManual(props) {
     setName(props.info && props.info.title);
     setPrice(props.info && props.info.price);
   }, [props.info]);
-  // useEffect(() => {
-  //   console.log(price);
-  // }, [price]);
 
   const {
     register,
@@ -101,6 +101,10 @@ export default function WishFormManual(props) {
     setValue("itemName", name, { shouldValidate: true });
     if (price !== "") setValue("price", price, { shouldValidate: true });
   }, [name, price, setValue, url]);
+  useEffect(() => {
+    if (categories !== "")
+      setValue("categories", categories, { shouldValidate: true });
+  }, [categories, setValue]);
   const onSubmit = (data) => {
     if (data.url === null || data.url === "") {
       delete data.url;
@@ -140,6 +144,7 @@ export default function WishFormManual(props) {
       return valid || `${value} is not a valid price.`;
     },
   });
+  const { ref: categoriesRef, ...categoriesReg } = register("categories");
   const handleImageUpdate = (img) => {
     setImageFile(img);
   };
@@ -233,6 +238,13 @@ export default function WishFormManual(props) {
             </p>
           </SelectCropUpdateImage>
         </Container>
+        <CategoryEdit
+          register={categoriesReg}
+          inputRef={categoriesRef}
+          itemCategories={categories}
+          setItemCategories={setCategories}
+          wishlistCategories={props.categories}
+        />
         <AutoDeleteInput register={register} control={control} />
       </Box>
       <Button
