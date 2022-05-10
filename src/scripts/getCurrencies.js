@@ -5,5 +5,5 @@ const countryData = require("country-data");
  */
 module.exports = (countryCode) => {
   //   const p = countryData;
-  return countryData.countries[countryCode].currencies;
+  return countryData?.countries[countryCode]?.currencies;
 };

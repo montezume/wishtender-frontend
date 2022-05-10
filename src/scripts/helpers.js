@@ -232,6 +232,7 @@ const chooseCurrency = (locale) => {
 };
 const getCurrencyList = (locale) => {
   let matchingCurrencies = locale ? getCurrencies(locale?.countryCode) : [];
+  if (!matchingCurrencies) matchingCurrencies = [];
   const ratesApiCurrencies = [
     "ARS",
     "AUD",
