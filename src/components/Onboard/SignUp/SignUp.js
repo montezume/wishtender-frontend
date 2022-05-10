@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Redirect } from "react-router-dom";
-import withStyles from '@mui/styles/withStyles';
+import withStyles from "@mui/styles/withStyles";
 import themeStyles from "../../../themeStyles";
 import styles from "./styles";
 import theme from "../../../theme";
@@ -23,6 +23,7 @@ export default withStyles(styles)(function SignUp(props) {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
   const [success, setSuccess] = useState(null);
@@ -155,6 +156,11 @@ export default withStyles(styles)(function SignUp(props) {
               name="email"
               {...emailReg}
               inputRef={emailRef}
+              onChange={(e) => {
+                setValue("email", e.currentTarget.value.trim(), {
+                  shouldValidate: true,
+                });
+              }}
             />
             {errors.email && <p>{errors.email.message}</p>}
 
