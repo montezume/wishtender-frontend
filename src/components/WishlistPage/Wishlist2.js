@@ -133,15 +133,7 @@ const styles = (theme) => ({
 });
 
 const Wishlist = withRouter((props) => {
-  function isTouchDevice() {
-    return (
-      "ontouchstart" in window ||
-      navigator.maxTouchPoints > 0 ||
-      navigator.msMaxTouchPoints > 0
-    );
-  }
   const [activeId, setActiveId] = useState(null);
-  const touch = isTouchDevice();
 
   const params = new URLSearchParams(window.location.search);
   const customClasses = useCustomStyles(props);
@@ -769,7 +761,7 @@ const Wishlist = withRouter((props) => {
         )}
       </ArcherContainer>
 
-      {!touch && props.isAuth ? (
+      {props.isAuth ? (
         <DndContext
           // sensors={sensors}
           // collisionDetection={closestCenter}
@@ -805,7 +797,7 @@ const Wishlist = withRouter((props) => {
             setActiveId(null);
           }}
         >
-          <Grid container spacing={2}>
+          <Grid container style={{ touchAction: "none" }} spacing={2}>
             <SortableContext
               items={orderedItems}
               strategy={rectSortingStrategy}
