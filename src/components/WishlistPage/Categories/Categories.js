@@ -7,6 +7,7 @@ import {
   MenuItem,
   // IconButton,
 } from "@mui/material";
+import EditableCategoryMenuItemInside from "./EditableCategoryMenuItem";
 // import StyledDialog from "../common/StyledDialog/StyledDialog";
 
 // import DeleteForever from "@mui/icons-material/DeleteForever";
@@ -59,55 +60,43 @@ export default function Categories(props) {
 
         {props.categories.sort().map((cat) => (
           <MenuItem>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  onChange={(e) => {
-                    if (props.showCategories.includes("All")) {
-                      props.setShowCategories([cat]);
-                    } else if (
-                      e.target.checked ||
-                      props.showCategories.includes("All")
-                    ) {
-                      props.setShowCategories([...props.showCategories, cat]);
-                    } else if (
-                      !e.target.checked ||
-                      !props.showCategories.length
-                    ) {
-                      props.setShowCategories([...props.showCategories, "All"]);
-                    } else {
-                      const index = props.showCategories.indexOf(cat);
-                      let newCategories = [
-                        ...props.showCategories.slice(0, index),
-                        ...props.showCategories.slice(index + 1),
-                      ];
-                      const indexOfAll = newCategories.indexOf("All");
-                      newCategories = [
-                        ...newCategories.slice(0, indexOfAll),
-                        ...newCategories.slice(indexOfAll + 1),
-                      ];
-                      props.setShowCategories(newCategories);
-                    }
-                  }}
-                  checked={
-                    props.showCategories.includes(cat) &&
-                    !props.showCategories.includes("All")
-                  }
-                />
+            {/* <FormControlLabel
+              control={ */}
+            <Checkbox
+              onChange={(e) => {
+                if (props.showCategories.includes("All")) {
+                  props.setShowCategories([cat]);
+                } else if (
+                  e.target.checked ||
+                  props.showCategories.includes("All")
+                ) {
+                  props.setShowCategories([...props.showCategories, cat]);
+                } else if (!e.target.checked || !props.showCategories.length) {
+                  props.setShowCategories([...props.showCategories, "All"]);
+                } else {
+                  const index = props.showCategories.indexOf(cat);
+                  let newCategories = [
+                    ...props.showCategories.slice(0, index),
+                    ...props.showCategories.slice(index + 1),
+                  ];
+                  const indexOfAll = newCategories.indexOf("All");
+                  newCategories = [
+                    ...newCategories.slice(0, indexOfAll),
+                    ...newCategories.slice(indexOfAll + 1),
+                  ];
+                  props.setShowCategories(newCategories);
+                }
+              }}
+              checked={
+                props.showCategories.includes(cat) &&
+                !props.showCategories.includes("All")
               }
-              label={cat}
             />
-            {/* {editOn && (
-              <IconButton
-                onClick={(e) => {
-                  console.log(e);
-                  setOpenDelete(e.currentTarget.id.slice(24));
-                }}
-                id={"delete-category-forever-" + cat}
-              >
-                <DeleteForever />
-              </IconButton>
-            )} */}
+            {props.isAuth ? (
+              <EditableCategoryMenuItemInside category={cat} />
+            ) : (
+              cat
+            )}
           </MenuItem>
         ))}
         {!props.categories.length && props.isAuth && (

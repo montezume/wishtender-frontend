@@ -50,7 +50,7 @@ import { CSS } from "@dnd-kit/utilities";
 
 import { ArcherContainer, ArcherElement } from "react-archer";
 import theme from "../../theme";
-import Categories from "./Categories";
+import Categories from "./Categories/Categories";
 
 const styles = (theme) => ({
   animatedBounce: {
