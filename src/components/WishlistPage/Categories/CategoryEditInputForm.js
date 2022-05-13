@@ -49,6 +49,7 @@ export default function CategoryEditInputForm({
   };
 
   const handleUpdateCategory = async (category, updatedCategory) => {
+    if (category === updatedCategory) return;
     setRequestStatus("processing");
     const headers = new Headers();
     headers.append("CSRF-Token", user.csrfToken);
