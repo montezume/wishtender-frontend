@@ -769,7 +769,7 @@ const Wishlist = withRouter((props) => {
         )}
       </ArcherContainer>
 
-      {!touch ? (
+      {!touch && props.isAuth ? (
         <DndContext
           // sensors={sensors}
           // collisionDetection={closestCenter}
