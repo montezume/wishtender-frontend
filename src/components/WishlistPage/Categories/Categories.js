@@ -66,25 +66,12 @@ export default function Categories(props) {
               onChange={(e) => {
                 if (props.showCategories.includes("All")) {
                   props.setShowCategories([cat]);
-                } else if (
-                  e.target.checked ||
-                  props.showCategories.includes("All")
-                ) {
+                } else if (e.target.checked) {
                   props.setShowCategories([...props.showCategories, cat]);
-                } else if (!e.target.checked || !props.showCategories.length) {
-                  props.setShowCategories([...props.showCategories, "All"]);
                 } else {
-                  const index = props.showCategories.indexOf(cat);
-                  let newCategories = [
-                    ...props.showCategories.slice(0, index),
-                    ...props.showCategories.slice(index + 1),
-                  ];
-                  const indexOfAll = newCategories.indexOf("All");
-                  newCategories = [
-                    ...newCategories.slice(0, indexOfAll),
-                    ...newCategories.slice(indexOfAll + 1),
-                  ];
-                  props.setShowCategories(newCategories);
+                  props.setShowCategories([
+                    ...props.showCategories.filter((c) => c !== cat),
+                  ]);
                 }
               }}
               checked={
