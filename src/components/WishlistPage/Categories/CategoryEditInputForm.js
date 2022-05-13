@@ -64,11 +64,13 @@ export default function CategoryEditInputForm({
     })
       .then(async (res) => {
         if (res.status >= 500 && res.status < 600) {
+          setRequestStatus("loaded");
           const text = await res.text();
           return alert(text);
         }
 
         if (res.status >= 400 && res.status < 500) {
+          setRequestStatus("loaded");
           const json = await res.json();
           if (json.errors) {
             alert(json.errors.map((msg) => msg.msg).join(" "));
