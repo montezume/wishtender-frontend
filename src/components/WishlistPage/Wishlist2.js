@@ -797,7 +797,7 @@ const Wishlist = withRouter((props) => {
             setActiveId(null);
           }}
         >
-          <Grid container style={{ touchAction: "none" }} spacing={2}>
+          <Grid container spacing={2}>
             <SortableContext
               items={orderedItems}
               strategy={rectSortingStrategy}
@@ -805,6 +805,7 @@ const Wishlist = withRouter((props) => {
               {orderedItems.map((item, index) => {
                 return (
                   <MySortableItem
+                    style={{ touchAction: "none" }}
                     id={item.id}
                     isAuth={props.isAuth}
                     key={index}
