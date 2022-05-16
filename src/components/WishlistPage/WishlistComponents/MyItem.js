@@ -2,7 +2,16 @@ import React, { forwardRef, useState, useEffect, useContext } from "react";
 import Grid from "@mui/material/Grid";
 import WishItem from "../WishItem1";
 export default forwardRef(function MyItem(
-  { showCategories, setSelectWish, item, id, isAuth, ...props },
+  {
+    showCategories,
+    setSelectWish,
+    item,
+    id,
+    isAuth,
+    listeners,
+    draggable,
+    ...props
+  },
   ref
 ) {
   return (
@@ -34,6 +43,8 @@ export default forwardRef(function MyItem(
           >
             <div style={{ width: "100%" }} onClick={() => setSelectWish(item)}>
               <WishItem
+                listeners={listeners}
+                draggable={draggable}
                 itemName={item.itemName}
                 isAuth={isAuth}
                 id={item._id}

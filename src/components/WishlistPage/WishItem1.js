@@ -8,15 +8,38 @@ import DisplayPrice2 from "../common/DisplayPrice2";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import { Button, Box, Tabs, Tab } from "@mui/material";
 import { WishlistContext } from "../../contexts/WishlistContext";
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from "@mui/styles/makeStyles";
 import { useParams } from "react-router-dom";
-
+import DragHandleIcon from "@mui/icons-material/DragHandle";
+import { ClassNames } from "@emotion/react";
 const styles = makeStyles({
   linkButton: {
     "&:hover": {
       cursor: "pointer",
     },
   },
+  grabbable: {
+    cursor: "move" /* fallback if grab cursor is unsupported */,
+    cursor: "grab",
+    cursor: "-moz-grab",
+    cursor: "-webkit-grab",
+    "&:active": {
+      cursor: "grabbing",
+      cursor: "-moz-grabbing",
+      cursor: "-webkit-grabbing",
+    },
+  },
+  dragHandle: {
+    position: "absolute",
+    zIndex: "99",
+    background: "#00000010",
+    borderBottomLeftRadius: "6px",
+    color: "white",
+    right: "0px",
+    display: "flex",
+  },
+
+  /* (Optional) Apply a "closed-hand" cursor during drag operation. */
 });
 const tweetIntent = (id, handle) => {
   window.open(
@@ -26,14 +49,25 @@ const tweetIntent = (id, handle) => {
   );
 };
 
-export default function MediaCard(props) {
+export default function MediaCard({ listeners, draggable, ...props }) {
   let { alias: aliasPath } = useParams();
-
   const { wishlist } = useContext(WishlistContext);
-
+  const classes = styles(props);
   return (
     <Card className="wish_item">
       <CardActionArea>
+        {draggable && props.isAuth && (
+          // drag handle
+          <div
+            className={classes.grabbable + " " + classes.dragHandle}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            {...listeners}
+          >
+            <DragHandleIcon />
+          </div>
+        )}
         <div
           className="imageItem"
           style={{

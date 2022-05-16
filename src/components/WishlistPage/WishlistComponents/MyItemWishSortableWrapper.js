@@ -50,7 +50,8 @@ export default function MyItemWithSortableWrapper({
       ref={setNodeRef}
       style={style}
       // {...attributes}
-      {...listeners}
+      draggable={true}
+      listeners={listeners}
       id={id}
     />
   );
