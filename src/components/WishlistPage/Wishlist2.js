@@ -3,10 +3,8 @@ import Grid from "@mui/material/Grid";
 import WishItem from "./WishItem1";
 import { Route, withRouter } from "react-router-dom";
 import FileCopy from "@mui/icons-material/FileCopy";
-import MyItem from "./WishlistComponents/MyItem";
-import MyItemWithSortableWrapper from "./WishlistComponents/MyItemWishSortableWrapper";
 import Snackbar from "@mui/material/Snackbar";
-import WishGridSortable from "./WishlistComponents/WishGridSortable";
+import WishGridDraggable from "./WishlistComponents/WishGridDraggable";
 import {
   Button,
   Chip,
@@ -30,23 +28,6 @@ import { WishlistContext } from "../../contexts/WishlistContext";
 // import arrayMove from "array-move";
 // import "./styles.css";
 // import { css } from "@emotion/react";
-import {
-  closestCenter,
-  DndContext,
-  // KeyboardSensor,
-  // PointerSensor,
-  useSensor,
-  useSensors,
-  DragOverlay,
-} from "@dnd-kit/core";
-import {
-  rectSortingStrategy,
-  sortableKeyboardCoordinates,
-  SortableContext,
-  useSortable,
-  arrayMove,
-} from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 
 import { ArcherContainer, ArcherElement } from "react-archer";
 import theme from "../../theme";
@@ -57,15 +38,7 @@ import styles from "./styles";
 import OrderItemsMenu from "./WishlistComponents/OrderItemsMenu";
 
 const Wishlist = withRouter((props) => {
-  function isTouchDevice() {
-    return (
-      "ontouchstart" in window ||
-      navigator.maxTouchPoints > 0 ||
-      navigator.msMaxTouchPoints > 0
-    );
-  }
   const [activeId, setActiveId] = useState(null);
-  const touch = isTouchDevice();
 
   const params = new URLSearchParams(window.location.search);
   const customClasses = useCustomStyles(props);
@@ -519,7 +492,7 @@ const Wishlist = withRouter((props) => {
       </ArcherContainer>
 
       {props.isAuth ? (
-        <WishGridSortable
+        <WishGridDraggable
           items={items}
           setItems={setItems}
           getWishlistAndParseWithArgs={getWishlistAndParseWithArgs}
@@ -527,6 +500,7 @@ const Wishlist = withRouter((props) => {
           wishlist={wishlist}
           setActiveId={setActiveId}
           orderedItems={orderedItems}
+          setOrderedItems={setOrderedItems}
           setSelectWish={setSelectWish}
           isAuth={props.isAuth}
           activeId={activeId}

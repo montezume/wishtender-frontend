@@ -41,40 +41,27 @@ const styles = makeStyles({
 
   /* (Optional) Apply a "closed-hand" cursor during drag operation. */
 });
-const tweetIntent = (id, handle) => {
-  window.open(
-    `https://twitter.com/intent/tweet?text=I%20just%20added%20a%20new%20item%20to%20my%20wishlist.%20%0a%0aBuy%20it%20for%20me%20here%3A%20https%3A//www.wishtender.com/${handle}%3Fitem%3D${id}%20via%20@WishTender%20`,
-    "popup",
-    "width=600,height=600"
-  );
-};
 
-export default function MediaCard({ listeners, draggable, ...props }) {
-  let { alias: aliasPath } = useParams();
-  const { wishlist } = useContext(WishlistContext);
-  const classes = styles(props);
+export default function WishItemOverlay({ itemName, imageUrl, price, isAuth }) {
+  const classes = styles();
   return (
     <Card className="wish_item">
       <CardActionArea>
-        {draggable && props.isAuth && (
-          // drag handle
-          <div
-            style={{
-              touchAction: "none",
-              userSelect: "none",
-              MozUserSelect: "none",
-              WebkitUserSelect: "none",
-            }}
-            //
-            className={classes.grabbable + " " + classes.dragHandle}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-            {...listeners}
-          >
-            <DragHandleIcon />
-          </div>
-        )}
+        <div
+          style={{
+            touchAction: "none",
+            userSelect: "none",
+            MozUserSelect: "none",
+            WebkitUserSelect: "none",
+          }}
+          //
+          className={classes.grabbable + " " + classes.dragHandle}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <DragHandleIcon />
+        </div>
         <div
           className="imageItem"
           style={{
@@ -85,10 +72,10 @@ export default function MediaCard({ listeners, draggable, ...props }) {
           }}
         >
           <img
-            draggable={false}
             pointerEvents="none"
-            alt={props.itemName}
-            src={props.imageUrl}
+            draggable={false}
+            alt={itemName}
+            src={imageUrl}
             style={{
               position: "absolute",
               width: "100%",
@@ -99,37 +86,22 @@ export default function MediaCard({ listeners, draggable, ...props }) {
         </div>
         <CardContent>
           <Typography gutterBottom component="h2" color="textSecondary">
-            {props.itemName}
-            {/* {`${props.itemName.slice(0, 50)}${
-              props.itemName.length > 40 ? "..." : ""
-            }`} */}
+            {`${itemName.slice(0, 50)}${itemName.length > 40 ? "..." : ""}`}
           </Typography>
           <Typography color="textPrimary" className="price">
-            <DisplayPrice2 priceObject={props.price} type="" />
+            <DisplayPrice2 priceObject={price} type="" />
           </Typography>
         </CardContent>
-        {props.isAuth && (
+        {isAuth && (
           <Button
             style={{ float: "right" }}
             color="primary"
             endIcon={<TwitterIcon />}
-            onClick={(e) => {
-              e.stopPropagation();
-              tweetIntent(props.id, aliasPath);
-            }}
           >
             Share
           </Button>
         )}
       </CardActionArea>
-      <div
-        id={`share-card-${props.id}`}
-        style={{
-          position: "absolute",
-          zIndex: 900,
-          display: "none",
-        }}
-      ></div>
     </Card>
   );
 }
