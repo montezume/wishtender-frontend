@@ -1,20 +1,11 @@
-import React, { forwardRef, useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Grid from "@mui/material/Grid";
 import WishItem from "./WishItem1";
 import { Route, withRouter } from "react-router-dom";
 import FileCopy from "@mui/icons-material/FileCopy";
 import Snackbar from "@mui/material/Snackbar";
 import WishGridDraggable from "./WishlistComponents/WishGridDraggable";
-import {
-  Button,
-  Chip,
-  Container,
-  Typography,
-  IconButton,
-  Menu,
-  MenuItem,
-  Tooltip,
-} from "@mui/material";
+import { Button, Chip, Typography } from "@mui/material";
 import AddWish from "./AddWish/AddWish";
 import StyledDialog from "../common/StyledDialog/StyledDialog";
 import EditWishForm from "./EditWishForm/EditWishForm";
@@ -43,8 +34,7 @@ const Wishlist = withRouter((props) => {
   const params = new URLSearchParams(window.location.search);
   const customClasses = useCustomStyles(props);
   // const [updateOrder, setUpdateOrder] = useState(false);
-  const { setWishlist, wishlist, getWishlistAndParseWithArgs } =
-    useContext(WishlistContext);
+  const { wishlist } = useContext(WishlistContext);
   const [items, setItems] = useState(
     wishlist.wishlistItems.map((item, i) => {
       item.id = i + 1;
@@ -495,9 +485,6 @@ const Wishlist = withRouter((props) => {
         <WishGridDraggable
           items={items}
           setItems={setItems}
-          getWishlistAndParseWithArgs={getWishlistAndParseWithArgs}
-          setWishlist={setWishlist}
-          wishlist={wishlist}
           setActiveId={setActiveId}
           orderedItems={orderedItems}
           setOrderedItems={setOrderedItems}

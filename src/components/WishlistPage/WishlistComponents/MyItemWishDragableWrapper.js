@@ -6,8 +6,15 @@ export default function MyItemWithDraggableWrapper({
   id,
   item,
   setSelectWish,
+  sortItemsIsNotDefault,
+  notAllCategoriesShowing,
   showCategories,
+  showToTop,
+  showToBottom,
   isAuth,
+  items,
+  setOrderedItems,
+  setItems,
   lastDragEndTime,
 }) {
   const {
@@ -25,11 +32,18 @@ export default function MyItemWithDraggableWrapper({
 
   return (
     <MyItem
+      showToTop={showToTop}
+      showToBottom={showToBottom}
       setSelectWish={setSelectWish}
       showCategories={showCategories}
+      notAllCategoriesShowing={notAllCategoriesShowing}
+      sortItemsIsNotDefault={sortItemsIsNotDefault}
       isAuth={isAuth}
       item={item}
-      ref={setNodeRef}
+      setItems={setItems}
+      items={items}
+      setOrderedItems={setOrderedItems}
+      ref={sortItemsIsNotDefault || notAllCategoriesShowing ? null : setNodeRef}
       style={style}
       currentlyDragging={isDragging}
       lastDragEndTime={lastDragEndTime}

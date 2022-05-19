@@ -1,17 +1,24 @@
-import React, { forwardRef, useState, useEffect, useContext } from "react";
+import React, { forwardRef } from "react";
 import Grid from "@mui/material/Grid";
 import WishItem from "../WishItem1";
 export default forwardRef(function MyItem(
   {
     showCategories,
     setSelectWish,
+    showToTop,
+    showToBottom,
     item,
     id,
     isAuth,
+    sortItemsIsNotDefault,
     currentlyDragging,
     lastDragEndTime,
     listeners,
     draggable,
+    items,
+    setItems,
+    setOrderedItems,
+    notAllCategoriesShowing,
     ...props
   },
   ref
@@ -54,11 +61,18 @@ export default forwardRef(function MyItem(
               }}
             >
               <WishItem
+                sortItemsIsNotDefault={sortItemsIsNotDefault}
+                notAllCategoriesShowing={notAllCategoriesShowing}
                 listeners={listeners}
                 draggable={draggable}
                 itemName={item.itemName}
+                items={items}
+                setItems={setItems}
+                setOrderedItems={setOrderedItems}
                 isAuth={isAuth}
                 id={item._id}
+                showToBottom={showToBottom}
+                showToTop={showToTop}
                 price={item.price}
                 imageUrl={item.itemImage}
                 currency={item.currency}

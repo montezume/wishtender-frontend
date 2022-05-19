@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   rectSortingStrategy,
   sortableKeyboardCoordinates,
   SortableContext,
-  arrayMove,
 } from "@dnd-kit/sortable";
+import { WishlistContext } from "../../../contexts/WishlistContext";
+import { changeWishlistOrder } from "./wishlistHelpers";
 import Grid from "@mui/material/Grid";
 import MyItemWithSortableWrapper from "./MyItemWishDragableWrapper";
 import {
@@ -16,14 +17,11 @@ import {
   useSensors,
   DragOverlay,
 } from "@dnd-kit/core";
-import { display } from "@mui/system";
 import WishItemOverlay from "../WishItemOverlay";
+import { Snackbar } from "@mui/material";
 export default function WishGridDraggable({
   items,
   setItems,
-  getWishlistAndParseWithArgs,
-  setWishlist,
-  wishlist,
   setActiveId,
   orderedItems,
   setOrderedItems,
@@ -33,8 +31,8 @@ export default function WishGridDraggable({
   showCategories,
 }) {
   const [lastDragEndTime, setLastDragEndTime] = useState(null);
-
-  const getElement = (id) => {
+  const wishlistContext = useContext(WishlistContext);
+  const getItemCardElement = (id) => {
     const item = orderedItems[id - 1];
     const itemElement = document.getElementById("item-card-" + item._id);
     return itemElement;
@@ -45,69 +43,69 @@ export default function WishGridDraggable({
       coordinateGetter: sortableKeyboardCoordinates,
     })
   );
+
+  const applyDraggingStyles = (id) => {
+    document.body.style.userSelect = "none";
+    document.body.style.webkitUserSelect = "none";
+    document.body.style.mozUserSelect = "none";
+    const item = getItemCardElement(id);
+    item.style.zIndex = +item.style.zIndex + 1000;
+  };
+  const removeDraggingStyles = (id) => {
+    document.body.style.userSelect = "";
+    document.body.style.webkitUserSelect = "";
+    document.body.style.mozUserSelect = undefined;
+
+    const item = getItemCardElement(id);
+    item.style.zIndex = +item.style.zIndex - 1000;
+  };
+  const sortItemsIsNotDefault = (items, orderedItems) => {
+    const wishlistIdString = items.map((i) => i._id).join();
+    const currentIdString = orderedItems.map((i) => i._id).join();
+    return wishlistIdString !== currentIdString;
+  };
+
   return (
     <DndContext
       sensors={sensors}
       collisionDetection={closestCenter}
       onDragStart={({ active, over }) => {
         setActiveId(active.id);
-
-        const item = getElement(active.id);
-        document.body.style.userSelect = "none";
-        document.body.style.webkitUserSelect = "none";
-        document.body.style.mozUserSelect = "none";
-        item.style.zIndex = +item.style.zIndex + 1000;
+        applyDraggingStyles(active.id);
       }}
       onDragEnd={async ({ active, over }) => {
         setLastDragEndTime(Date.now());
         setActiveId(null);
-        const item = getElement(active.id);
-        document.body.style.userSelect = "";
-        document.body.style.webkitUserSelect = "";
-        document.body.style.mozUserSelect = undefined;
+        removeDraggingStyles(active.id);
 
-        item.style.zIndex = +item.style.zIndex - 1000;
+        if (!over) return null;
 
-        const wishlistHasBeenReordered = () => {
-          const wishlistIdString = items.map((i) => i._id).join();
-          const currentIdString = orderedItems.map((i) => i._id).join();
-          return wishlistIdString !== currentIdString;
-        };
-        if (wishlistHasBeenReordered()) {
+        if (sortItemsIsNotDefault(items, orderedItems)) {
           alert("Set 'Sort Items' to 'Default' to organize your wishlist.");
           return;
         }
-        if (!over) return null;
-        if (active.id === over.id) return null;
-        const oldIndex = items.map((item) => item.id).indexOf(active.id);
-        const newIndex = items.map((item) => item.id).indexOf(over.id);
-        const newItems = arrayMove(items, oldIndex, newIndex);
-
-        setItems(newItems);
-        setOrderedItems(newItems);
-
-        // items state wasn't always updating in time
-        const headers = new Headers();
-        headers.append("Content-Type", "application/json");
-        await fetch(
-          `${process.env.REACT_APP_BASE_URL}/api/wishlists/${wishlist._id}`,
-          {
-            credentials: "include",
-            method: "PATCH",
-            body: JSON.stringify({
-              wishlistItems: newItems.map((i) => i._id),
-            }),
-            headers,
-          }
-        )
-          .then(async (res) => {
-            const newWl = await getWishlistAndParseWithArgs();
-            setWishlist(newWl);
-          })
-          .catch((err) => alert(err));
-        setActiveId(null);
+        await changeWishlistOrder(
+          active,
+          over.id,
+          items,
+          setItems,
+          setOrderedItems,
+          wishlistContext
+        );
       }}
     >
+      {wishlistContext.moveSucceeded && (
+        <Snackbar
+          open={!!wishlistContext.moveSucceeded}
+          onClose={() => {
+            wishlistContext.setMoveSucceeded(null);
+          }}
+          message={`Item moved ${
+            wishlistContext.moveSucceeded === "toTop" ? "to top." : "to bottom."
+          }`}
+          autoHideDuration={3000}
+        />
+      )}
       <Grid container spacing={2}>
         <SortableContext
           // handle
@@ -115,12 +113,29 @@ export default function WishGridDraggable({
           items={orderedItems}
           strategy={rectSortingStrategy}
         >
-          {orderedItems.map((item, index) => {
+          {orderedItems.map((item, index, arr) => {
             return (
               <MyItemWithSortableWrapper
+                items={items}
+                setItems={setItems}
+                setOrderedItems={setOrderedItems}
                 setSelectWish={setSelectWish}
+                sortItemsIsNotDefault={sortItemsIsNotDefault(
+                  items,
+                  orderedItems
+                )}
+                notAllCategoriesShowing={!showCategories?.includes("All")}
                 showCategories={showCategories}
-                // style={{ touchAction: "none" }}
+                showToTop={
+                  !showCategories?.includes("All")
+                    ? false
+                    : index + 1 < 3 && arr.length > 7
+                }
+                showToBottom={
+                  !showCategories?.includes("All")
+                    ? false
+                    : index + 1 > arr.length - 2 && arr.length > 7
+                }
                 id={item.id}
                 isAuth={isAuth}
                 key={index}
