@@ -3,6 +3,8 @@ import { fetchGet } from "../scripts/fetchHelper";
 import { parseWishlistPrices } from "../scripts/helpers";
 
 export const WishlistContext = createContext({
+  moveSucceeded: null,
+  setMoveSucceeded: () => {},
   wishlist: null,
   setWishlist: () => {},
   getWishlistAndParseWithArgs: () => {},

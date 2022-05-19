@@ -18,6 +18,7 @@ const handleRoute =
   process.env.REACT_APP_BASE_URL + "/api/aliases?handle_lowercased=";
 function WishlistPage(props) {
   const [alias, setAlias] = useState(null);
+  const [moveSucceeded, setMoveSucceeded] = useState(null);
   const [convertRate, setConvertRate] = useState(null);
   const [wishlist, setWishlist] = useState(null);
   const [refreshWishlist, setRefreshWishlist] = useState(null);
@@ -220,6 +221,8 @@ function WishlistPage(props) {
   return (
     <WishlistContext.Provider
       value={{
+        moveSucceeded,
+        setMoveSucceeded,
         setWishlist,
         wishlist,
         getWishlistAndParseWithArgs: customGetWishlistAndParse?.function,
