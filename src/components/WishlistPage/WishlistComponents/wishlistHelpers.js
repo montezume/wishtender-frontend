@@ -36,4 +36,21 @@ const changeWishlistOrder = async (
     .catch((err) => alert(err));
 };
 
-export { changeWishlistOrder };
+const isFavorite = (item) =>
+  item.categories?.find(
+    (it) =>
+      it === "Favorite" ||
+      it === "favorite" ||
+      it === "Favorites" ||
+      it === "favorite" ||
+      it === "Faves" ||
+      it === "faves" ||
+      it === "Fave" ||
+      it === "fave" ||
+      it === "Fav" ||
+      it === "fav" ||
+      it === "Favs" ||
+      it === "favs"
+  );
+
+export { changeWishlistOrder, isFavorite };
