@@ -15,7 +15,7 @@ import AddToCart from "./AddToCart/AddToCart";
 import withStyles from "@mui/styles/withStyles";
 import useCustomStyles from "../../themeStyles";
 import { WishlistContext } from "../../contexts/WishlistContext";
-
+import { isFavorite } from "./WishlistComponents/wishlistHelpers";
 // import arrayMove from "array-move";
 // import "./styles.css";
 // import { css } from "@emotion/react";
@@ -199,6 +199,7 @@ const Wishlist = withRouter((props) => {
                     isAuth={true}
                     price={item.price}
                     id={item._id}
+                    favorite={isFavorite(item)}
                     imageUrl={item.itemImage}
                     currency={item.currency}
                   />

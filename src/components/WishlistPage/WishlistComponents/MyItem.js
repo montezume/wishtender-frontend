@@ -1,6 +1,7 @@
 import React, { forwardRef } from "react";
 import Grid from "@mui/material/Grid";
 import WishItem from "../WishItem1";
+import { isFavorite } from "./wishlistHelpers";
 export default forwardRef(function MyItem(
   {
     showCategories,
@@ -70,6 +71,7 @@ export default forwardRef(function MyItem(
                 setItems={setItems}
                 setOrderedItems={setOrderedItems}
                 isAuth={isAuth}
+                favorite={isFavorite(item)}
                 id={item._id}
                 showToBottom={showToBottom}
                 showToTop={showToTop}

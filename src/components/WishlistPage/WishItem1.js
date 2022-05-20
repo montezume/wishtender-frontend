@@ -12,59 +12,100 @@ import { useParams } from "react-router-dom";
 import DragHandleIcon from "@mui/icons-material/DragHandle";
 
 import { changeWishlistOrder } from "./WishlistComponents/wishlistHelpers";
-const styles = makeStyles({
-  linkButton: {
-    "&:hover": {
-      cursor: "pointer",
+const styles = makeStyles((theme) => {
+  return {
+    linkButton: {
+      "&:hover": {
+        cursor: "pointer",
+      },
     },
-  },
-  grabbable: {
-    cursor: "move" /* fallback if grab cursor is unsupported */,
-    cursor: "grab",
-    cursor: "-moz-grab",
-    cursor: "-webkit-grab",
-    "&:active": {
-      cursor: "grabbing",
-      cursor: "-moz-grabbing",
-      cursor: "-webkit-grabbing",
+    grabbable: {
+      cursor: "move" /* fallback if grab cursor is unsupported */,
+      cursor: "grab",
+      cursor: "-moz-grab",
+      cursor: "-webkit-grab",
+      "&:active": {
+        cursor: "grabbing",
+        cursor: "-moz-grabbing",
+        cursor: "-webkit-grabbing",
+      },
     },
-  },
-  dragHandle: {
-    position: "absolute",
-    zIndex: "99",
-    background: "#00000010",
-    borderBottomLeftRadius: "6px",
-    color: "white",
-    right: "0px",
-    display: "flex",
-  },
-  toBottomButton: {
-    // display: "inline",
-    position: "relative",
-    zIndex: "99",
-    background: "#00000010",
-    color: "white",
-    right: "0px",
-    borderBottomRightRadius: "6px",
-    // display: "flex",
-  },
-  toTopButton: {
-    borderBottomRightRadius: "6px",
-    // display: "inline",
-    position: "relative",
-    zIndex: "99",
-    background: "#00000010",
-    color: "white",
-    left: "0px",
-    // display: "flex",
-  },
-  topBottomControls: {
-    display: "flex",
-    position: "absolute",
-  },
-
-  /* (Optional) Apply a "closed-hand" cursor during drag operation. */
+    dragHandle: {
+      position: "absolute",
+      zIndex: "99",
+      background: "#00000010",
+      borderBottomLeftRadius: "6px",
+      color: "white",
+      right: "0px",
+      display: "flex",
+    },
+    toBottomButton: {
+      // display: "inline",
+      position: "relative",
+      zIndex: "99",
+      background: "#00000010",
+      color: "white",
+      right: "0px",
+      borderBottomRightRadius: "6px",
+      // display: "flex",
+    },
+    toTopButton: {
+      borderBottomRightRadius: "6px",
+      // display: "inline",
+      position: "relative",
+      zIndex: "99",
+      background: "#00000010",
+      color: "white",
+      left: "0px",
+      // display: "flex",
+    },
+    topBottomControls: {
+      display: "flex",
+      position: "absolute",
+    },
+    giftLabelContainer: {
+      zIndex: "300",
+      position: "absolute",
+      top: 0,
+      left: 0,
+      display: "block",
+      padding: "10px 0",
+      lineHeight: 0,
+      textAlign: "left",
+    },
+    giftLabel: {
+      color: "#fff",
+      backgroundColor: "#03abd8",
+      width: "70px",
+      height: "20px",
+      lineHeight: "20px",
+      display: "block",
+      position: "relative",
+      textTransform: "uppercase",
+      fontSize: "10px",
+      padding: "0 2px 0 5px",
+      borderRadius: 0,
+      margin: "0 0 5px",
+      letterSpacing: ".8px",
+      textAlign: "center",
+      fontWeight: "800",
+      "&::after": {
+        borderTopColor: "#03abd8",
+        width: 0,
+        height: 0,
+        display: "block",
+        position: "absolute",
+        content: '""',
+        top: 0,
+        left: "100%",
+        borderColor: "rgba(0,0,0,0)",
+        borderStyle: "solid",
+        borderWidth: "20px 10px 0 0",
+      },
+    },
+  };
 });
+
 const tweetIntent = (id, handle) => {
   window.open(
     `https://twitter.com/intent/tweet?text=I%20just%20added%20a%20new%20item%20to%20my%20wishlist.%20%0a%0aBuy%20it%20for%20me%20here%3A%20https%3A//www.wishtender.com/${handle}%3Fitem%3D${id}%20via%20@WishTender%20`,
@@ -76,6 +117,7 @@ const tweetIntent = (id, handle) => {
 export default function WishItem({
   listeners,
   draggable,
+  favorite,
   sortItemsIsNotDefault,
   showToBottom,
   showToTop,
@@ -213,6 +255,17 @@ export default function WishItem({
             </div>
             {dragHandle}
           </>
+        )}
+
+        {favorite && (
+          <div
+            style={draggable && props.isAuth ? { paddingTop: "30px" } : {}}
+            class={classes.giftLabelContainer}
+          >
+            <div>
+              <span className={classes.giftLabel}>Favorite</span>
+            </div>
+          </div>
         )}
 
         <div
