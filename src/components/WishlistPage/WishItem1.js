@@ -259,7 +259,11 @@ export default function WishItem({
 
         {favorite && (
           <div
-            style={draggable && props.isAuth ? { paddingTop: "30px" } : {}}
+            style={
+              draggable && props.isAuth && (showToTop || showToBottom)
+                ? { paddingTop: "30px" }
+                : {}
+            }
             class={classes.giftLabelContainer}
           >
             <div>
