@@ -1,5 +1,5 @@
 import { Tooltip } from "@mui/material";
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from "@mui/styles/makeStyles";
 import React from "react";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -47,7 +47,7 @@ export default function Footer() {
       </div>
       <div className={classes.footer_section}>
         <h2>Info</h2>
-        <a target="_blank" href="files/terms-1-26-22.pdf">
+        <a target="_blank" href="files/terms-5-20-22.pdf">
           Terms and Conditions
         </a>
         <a target="_blank" href="files/privacy-9-1-21.pdf">
