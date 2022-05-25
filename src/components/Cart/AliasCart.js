@@ -155,7 +155,7 @@ const TenderInfoInputs = (props) => {
           label={
             <>
               I agree to the{" "}
-              <a target="_blank" href="files/terms-5-20-22.pdf">
+              <a target="_blank" href="files/terms.pdf">
                 Terms and Conditions
               </a>{" "}
               and{" "}
