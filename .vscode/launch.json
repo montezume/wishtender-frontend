@@ -23,7 +23,7 @@
       "type": "pwa-chrome",
       "request": "launch",
       "name": "Launch vscode mobile",
-      "url": "http://10.0.2.2:3000",
+      "url": "http://10.0.1.85:3000",
 
       "webRoot": "${workspaceFolder}"
     },
