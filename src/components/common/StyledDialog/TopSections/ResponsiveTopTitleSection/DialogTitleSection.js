@@ -31,14 +31,16 @@ export default function DialogTitleSection(props) {
   return (
     <>
       <div className={classes.title}>
-        <IconButton
-          aria-label="close"
-          className={classes.closeButton}
-          onClick={props.onClose}
-          size="large"
-        >
-          <CloseIcon color="primary" />
-        </IconButton>
+        {props.onClose && (
+          <IconButton
+            aria-label="close"
+            className={classes.closeButton}
+            onClick={props.onClose}
+            size="large"
+          >
+            <CloseIcon color="primary" />
+          </IconButton>
+        )}
       </div>
 
       <Box display="flex" justifyContent="center">

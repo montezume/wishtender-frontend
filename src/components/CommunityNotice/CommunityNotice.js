@@ -50,9 +50,7 @@ export default withRouter(function CommunityNotice(props) {
   return (
     <>
       <StyledDialog open={true} onClose={onClose}>
-        <ResponsiveDialogTitleSection onClose={onClose}>
-          Notice
-        </ResponsiveDialogTitleSection>
+        <ResponsiveDialogTitleSection>Notice</ResponsiveDialogTitleSection>
         <div
           style={{
             height: "100%",
