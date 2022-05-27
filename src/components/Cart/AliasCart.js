@@ -51,7 +51,7 @@ const TenderInfoInputs = (props) => {
   const { ref: agreedToTACRef, ...agreedToTACReg } = register("agreedToTAC", {
     validate: (value) => {
       console.log(value);
-      return value || "You must accept the Terms and Conditions to purchase.";
+      return value || "You must accept the Terms of Service to purchase.";
     },
   });
 
@@ -155,8 +155,8 @@ const TenderInfoInputs = (props) => {
           label={
             <>
               I agree to the{" "}
-              <a target="_blank" href="files/terms.pdf">
-                Terms and Conditions
+              <a target="_blank" href="files/WishTender_Terms_of_Service.pdf">
+                Terms of Service
               </a>{" "}
               and{" "}
               <a target="_blank" href="files/privacy-9-1-21.pdf">
