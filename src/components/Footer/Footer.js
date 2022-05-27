@@ -47,8 +47,8 @@ export default function Footer() {
       </div>
       <div className={classes.footer_section}>
         <h2>Info</h2>
-        <a target="_blank" href="files/terms.pdf">
-          Terms and Conditions
+        <a target="_blank" href="files/WishTender_Terms_of_Service.pdf">
+          Terms of Service
         </a>
         <a target="_blank" href="files/privacy-9-1-21.pdf">
           Privacy Policy
