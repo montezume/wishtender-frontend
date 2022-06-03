@@ -507,7 +507,8 @@ function App(props) {
       1
     )[0]
   );
-
+  const displayNotice =
+    window.location.pathname !== "/community-notices" && communityNotice;
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
@@ -595,7 +596,8 @@ function App(props) {
                                 setRankNotification={setRankNotification}
                               ></TopWisherAlert>
                             )}
-                            {communityNotice && (
+
+                            {displayNotice && (
                               <CommunityNotice
                                 message={communityNotice.message}
                                 id={communityNotice._id}
