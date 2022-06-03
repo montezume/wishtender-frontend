@@ -74,24 +74,33 @@ export default withRouter(function CommunityNotice(props) {
               paddingBottom: "10em",
             }}
           >
-            <Button
-              style={{ marginTop: "3em" }}
-              variant="outlined"
-              onClick={(e) => {
-                props.history.push("/faq");
+            <div
+              style={{
+                marginTop: "3em",
+                gap: "1em",
+                display: "flex",
+                alignItems: "center",
               }}
             >
-              Read in the FAQ
-            </Button>
-            <Button
-              variant="contained"
-              style={{ marginTop: "3em" }}
-              onClick={(e) => {
-                onClose();
-              }}
-            >
-              Got it!
-            </Button>
+              <Button
+                style={{
+                  fontWeight: "bolder",
+                  textTransform: "uppercase",
+                }}
+                target="_blank"
+                href="/community-notices"
+              >
+                Open in new tab to read later
+              </Button>
+              <Button
+                variant="contained"
+                onClick={(e) => {
+                  onClose();
+                }}
+              >
+                Got it!
+              </Button>
+            </div>
           </div>
         </div>
       </StyledDialog>

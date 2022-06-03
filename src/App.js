@@ -63,6 +63,7 @@ import Twenty21All from "./components/LeaderBoard/Twenty21All";
 import Last30All from "./components/LeaderBoard/Last30All";
 import TopWisherAlert from "./components/TopWisherAlert/TopWisherAlert";
 import CommunityNotice from "./components/CommunityNotice/CommunityNotice";
+import CommunityNoticePage from "./components/CommunityNotice/CommunityNoticePage";
 
 function removeURLParameter(url, parameter) {
   //prefer to use l.search if you have a location/link object
@@ -489,6 +490,9 @@ function App(props) {
       <Route path="/account-settings">
         <AccountSettings />
       </Route>
+      <Route path="/community-notices">
+        <CommunityNoticePage />
+      </Route>
       <Route path="/:alias" exact>
         <WishlistPage />
       </Route>
@@ -503,7 +507,8 @@ function App(props) {
       1
     )[0]
   );
-
+  const displayNotice =
+    window.location.pathname !== "/community-notices" && communityNotice;
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
@@ -591,7 +596,8 @@ function App(props) {
                                 setRankNotification={setRankNotification}
                               ></TopWisherAlert>
                             )}
-                            {communityNotice && (
+
+                            {displayNotice && (
                               <CommunityNotice
                                 message={communityNotice.message}
                                 id={communityNotice._id}
