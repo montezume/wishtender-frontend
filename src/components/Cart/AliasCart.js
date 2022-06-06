@@ -30,6 +30,7 @@ import Gift from "./Gift";
 import { fetchPostJson } from "../../scripts/fetchHelper";
 import DisplayPrice from "../common/DisplayPrice";
 import DisplayPrice2 from "../common/DisplayPrice2";
+import AgreeToTerms from "../common/AgreeToTerms/AgreeToTerms";
 
 const TenderInfoInputs = (props) => {
   const { cart, register, errors, control } = props;
@@ -48,12 +49,6 @@ const TenderInfoInputs = (props) => {
     },
   });
   const { ref: privateRef, ...privateReg } = register("private");
-  const { ref: agreedToTACRef, ...agreedToTACReg } = register("agreedToTAC", {
-    validate: (value) => {
-      console.log(value);
-      return value || "You must accept the Terms of Service to purchase.";
-    },
-  });
 
   return (
     <>
@@ -133,42 +128,7 @@ const TenderInfoInputs = (props) => {
           be private.
         </FormHelperText>
       </FormControl>
-      <FormControl required>
-        <FormControlLabel
-          control={
-            <Controller
-              {...agreedToTACReg}
-              inputRef={agreedToTACRef}
-              name="agreedToTAC"
-              control={control}
-              render={(props) => (
-                <Checkbox
-                  {...props}
-                  checked={props.field.value || false}
-                  onChange={(e) => {
-                    props.field.onChange(e.target.checked);
-                  }}
-                />
-              )}
-            />
-          }
-          label={
-            <>
-              I agree to the{" "}
-              <a target="_blank" href="files/WishTender_Terms_of_Service.pdf">
-                Terms of Service
-              </a>{" "}
-              and{" "}
-              <a target="_blank" href="files/privacy-9-1-21.pdf">
-                Privacy Policy
-              </a>
-            </>
-          }
-        />
-        {errors.agreedToTAC && (
-          <FormHelperText error>{errors.agreedToTAC.message}</FormHelperText>
-        )}
-      </FormControl>
+      <AgreeToTerms register={register} control={control} errors={errors} />
     </>
   );
 };
@@ -201,7 +161,7 @@ export default function AliasCart({ cart, exchangeRates }) {
           },
           alias: cart.alias._id,
           noteToWisher: data.message,
-          agreedToTAC: data.agreedToTAC,
+          agreedToTAC: data.agreedToTerms,
           private: data.private || false,
         },
       }),

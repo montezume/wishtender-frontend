@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Redirect } from "react-router-dom";
 import withStyles from "@mui/styles/withStyles";
 import themeStyles from "../../../themeStyles";
 import styles from "./styles";
 import theme from "../../../theme";
+import { UserContext } from "../../../contexts/UserContext";
 
 import SecondPanel from "./SecondPanel";
 import {
@@ -17,14 +18,17 @@ import {
   Typography,
 } from "@mui/material";
 import useScreenSize from "../../../hooks/useScreenSize";
+import AgreeToTerms from "../../common/AgreeToTerms/AgreeToTerms";
 
 export default withStyles(styles)(function SignUp(props) {
+  const { getUser, setUser } = useContext(UserContext);
   const classes = themeStyles(props);
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
+    control,
   } = useForm();
   const [success, setSuccess] = useState(null);
   const [email, setEmail] = useState(null);
@@ -75,10 +79,17 @@ export default withStyles(styles)(function SignUp(props) {
           let responseText = await response.text();
           throw new Error(responseText);
         }
-        return response.json();
-      })
-      .then((json) => {
+        const json = await response.json();
+        if (response.status >= 400 && response.status < 500) {
+          if (json.errors) {
+            alert(json.errors.map((msg) => msg.msg).join(" "));
+          } else {
+            alert(json.message);
+          }
+          return;
+        }
         if (json) {
+          setUser(await getUser());
           setEmail(data.email);
           setSuccess(true);
         }
@@ -173,7 +184,13 @@ export default withStyles(styles)(function SignUp(props) {
               inputRef={passwordRef}
             />
             {errors.password && <p>{errors.password.message}</p>}
-
+            <AgreeToTerms
+              register={register}
+              control={control}
+              errors={errors}
+              linkStyle={{ color: "white", fontWeight: "bolder" }}
+              errorStyle={{ color: "white" }}
+            />
             <Button
               color="primary"
               className={classes.gradient + " " + classes.button}

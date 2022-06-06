@@ -64,6 +64,7 @@ import Last30All from "./components/LeaderBoard/Last30All";
 import TopWisherAlert from "./components/TopWisherAlert/TopWisherAlert";
 import CommunityNotice from "./components/CommunityNotice/CommunityNotice";
 import CommunityNoticePage from "./components/CommunityNotice/CommunityNoticePage";
+import AgreeToTermsNotice from "./components/AgreeToTermsNotice/AgreeToTermsNotice";
 
 function removeURLParameter(url, parameter) {
   //prefer to use l.search if you have a location/link object
@@ -101,6 +102,7 @@ function App(props) {
   const [currency, setCurrency] = useState(null);
 
   const [cookies, setCookies] = useState(parsedCookies());
+  const displayAgreeToTermsNotice = user && !user.agreedToTermsDate;
   // const [exchangeRates, setExchangeRates] = useState();
   const [localeCookies, setLocaleCookies] = useState(cookies);
   const [currencyList, setCurrencyList] = useState(
@@ -604,6 +606,11 @@ function App(props) {
                                 setCommunityNotice={setCommunityNotice}
                               ></CommunityNotice>
                             )}
+
+                            {displayAgreeToTermsNotice && (
+                              <AgreeToTermsNotice />
+                            )}
+
                             <div
                               style={{
                                 minHeight: "calc(100vh - 72px)",
