@@ -3,6 +3,7 @@ import makeStyles from "@mui/styles/makeStyles";
 import React from "react";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import links from "../common/AgreeToTerms/termsAndPrivacyLinks";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -47,10 +48,10 @@ export default function Footer() {
       </div>
       <div className={classes.footer_section}>
         <h2>Info</h2>
-        <a target="_blank" href="files/WishTender_Terms_of_Service.pdf">
+        <a target="_blank" href={links.termsLink}>
           Terms of Service
         </a>
-        <a target="_blank" href="files/privacy-9-1-21.pdf">
+        <a target="_blank" href={links.privacyPolicyLink}>
           Privacy Policy
         </a>
         <a href="/how-it-works">How it works</a>
