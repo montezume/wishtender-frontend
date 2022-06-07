@@ -1,6 +1,6 @@
 import { Container, Button, Typography } from "@mui/material";
-import withStyles from '@mui/styles/withStyles';
-import makeStyles from '@mui/styles/makeStyles';
+import withStyles from "@mui/styles/withStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import styles from "./styles";
 import React, { useState, useContext, useEffect } from "react";
 import useScreenSize from "../../../hooks/useScreenSize";
@@ -60,7 +60,7 @@ export default withRouter(
         })();
       };
       if (!user) {
-        (async () => setUser(await getUser))();
+        (async () => setUser(await getUser()))();
       }
       if (user && user.confirmed) {
         goToNext();
