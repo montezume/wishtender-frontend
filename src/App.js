@@ -65,6 +65,7 @@ import TopWisherAlert from "./components/TopWisherAlert/TopWisherAlert";
 import CommunityNotice from "./components/CommunityNotice/CommunityNotice";
 import CommunityNoticePage from "./components/CommunityNotice/CommunityNoticePage";
 import AgreeToTermsNotice from "./components/AgreeToTermsNotice/AgreeToTermsNotice";
+import SuspiciousUsers from "./components/Dashboard/SuspiciousUsers";
 
 function removeURLParameter(url, parameter) {
   //prefer to use l.search if you have a location/link object
@@ -414,9 +415,17 @@ function App(props) {
         }}
       />
       <Route
+        exact
         path="/admin"
         render={(props) => {
           return <>{user.admin ? <Dashboard /> : "Not authorized"}</>;
+        }}
+      />
+      <Route
+        exact
+        path="/admin/suspicious"
+        render={(props) => {
+          return <>{user.admin ? <SuspiciousUsers /> : "Not authorized"}</>;
         }}
       />
       <Route
