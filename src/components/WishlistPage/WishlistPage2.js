@@ -213,7 +213,7 @@ function WishlistPage(props) {
   }, [refreshWishlist]); // do we need both of these? why not just set alias.wishlists when the wishlist is updated
 
   const showWishlist =
-    (alias && alias.activated) ||
+    (alias && alias.activated && !alias.frozen) ||
     currentUser?.admin ||
     (alias &&
       currentUser?.aliases.includes(alias._id) &&
@@ -243,6 +243,25 @@ function WishlistPage(props) {
             isAuth={currentUser?.aliases.includes(alias?._id) || false}
             info={alias}
           />
+        )}
+        {alias && alias.frozen && (
+          <div style={{ margin: "1em" }}>
+            <h2>
+              This account is <span style={{ color: "red" }}> frozen </span>{" "}
+            </h2>
+            {!currentUser?.aliases.includes(alias?._id) ? (
+              <div>
+                If you want to buy a gift for this user, please have them reach
+                out to us so we can unfreeze their account.
+              </div>
+            ) : (
+              <div>
+                We've been trying to contact you and haven't heard back. Please
+                reach out to us in the customer support chat or at
+                support@wishtender.com so we can unfreeze your account.
+              </div>
+            )}
+          </div>
         )}
         {alias &&
           !alias.activated &&
