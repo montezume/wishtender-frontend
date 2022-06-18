@@ -19,9 +19,7 @@ const useStyles = makeStyles((theme) => ({
   rankDisplay: { ...flexCenter, gap: "0.5em" },
 }));
 
-const numSkeleton = 10;
-
-export default function UserTableInsideSkeleton({ showPercent, ...props }) {
+export default function UserTableInsideSkeleton({ showPercent, limit }) {
   const classes = useStyles();
 
   return (
@@ -34,7 +32,7 @@ export default function UserTableInsideSkeleton({ showPercent, ...props }) {
         </TableRow>
       </TableHead>
       <TableBody>
-        {[...Array(numSkeleton)].map((_element, i) => (
+        {[...Array(limit)].map((_element, i) => (
           <TableRow key={`${i}-leader-skeleton`}>
             <TableCell>
               <div className={classes.rankDisplay}>

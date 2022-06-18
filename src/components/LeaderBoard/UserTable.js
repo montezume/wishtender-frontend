@@ -56,7 +56,7 @@ const UserTableConsumer = ({
   showPercent,
 }) => {
   if (isLoading) {
-    return <UserTableInsideSkeleton showPercent={!isAdmin} />;
+    return <UserTableInsideSkeleton showPercent={!isAdmin} limit={limit} />;
   }
   if (isAdmin) {
     return <UserTableInsideFull users={users} limit={limit} />;
