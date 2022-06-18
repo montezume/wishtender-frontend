@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import withStyles from "@mui/styles/withStyles";
+import withStyles from '@mui/styles/withStyles';
 import { Link, withRouter } from "react-router-dom";
 import AccountIcon from "@mui/icons-material/AccountBox";
 import PopUpMenu from "../../common/PopUpMenu/PopUpMenu";
@@ -98,8 +98,7 @@ function BackToTop(props) {
               className={classes.menuButton}
               color="inherit"
               aria-label="menu"
-              size="large"
-            >
+              size="large">
               <MenuIcon />
             </IconButton>
           )}
@@ -151,8 +150,7 @@ function BackToTop(props) {
               className={classes.doubleIconButton}
               href="/leaderboard"
               aria-label="leaderboard"
-              size="large"
-            >
+              size="large">
               <StarBorderIcon />
             </IconButton>
           </Tooltip>
@@ -190,8 +188,7 @@ function BackToTop(props) {
                       className={classes.doubleIconButton}
                       onClick={toggleAccountMenu}
                       aria-label="logout"
-                      size="large"
-                    >
+                      size="large">
                       <AccountIcon />
                       <ExpandMoreIcon />
                     </IconButton>
