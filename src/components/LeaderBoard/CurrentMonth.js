@@ -33,8 +33,6 @@ export default function CurrentMonth({ limit, link }) {
     });
   }, []);
 
-  // console.log("userTable");
-
   return (
     <UserTable
       isLoading={!users}
