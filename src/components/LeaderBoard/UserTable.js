@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from "@mui/styles/makeStyles";
 import Table from "@mui/material/Table";
 import { UserContext } from "../../contexts/UserContext";
 import Title from "../common/TableTitle";
 import UserTableInside from "./UserTableInside";
+import UserTableInsideSkeleton from "./UserTableInsideSkeleton";
 import UserTableInsideFull from "./UserTableInsideFull";
 import Link from "@mui/material/Link";
 const useStyles = makeStyles((theme) => ({
@@ -11,31 +12,30 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
 }));
-export default function UserTable(props) {
+export default function UserTable({
+  title,
+  users,
+  limit,
+  link,
+  showPercent,
+  isLoading,
+}) {
   const classes = useStyles();
   const { user } = useContext(UserContext);
-  const { title } = props;
-  const { users } = props;
-  const { limit } = props;
-  const { link } = props;
-  const { showPercent } = props;
+
+  const isAdmin = user?.admin;
+
   return (
     <>
       <Title>{title || "Users"}</Title>
       <Table size="small">
-        {user?.admin ? ( // only show certain table info to admins
-          <UserTableInsideFull
-            users={users}
-            limit={limit}
-          ></UserTableInsideFull>
-        ) : (
-          // show rand and handle to everyone else
-          <UserTableInside
-            users={users}
-            showPercent={showPercent}
-            limit={limit}
-          ></UserTableInside>
-        )}
+        <UserTableConsumer
+          isLoading={isLoading}
+          isAdmin={isAdmin}
+          users={users}
+          limit={limit}
+          showPercent={showPercent}
+        />
       </Table>
       {link && (
         <div className={classes.seeMore}>
@@ -47,3 +47,22 @@ export default function UserTable(props) {
     </>
   );
 }
+
+const UserTableConsumer = ({
+  isAdmin,
+  isLoading,
+  users,
+  limit,
+  showPercent,
+}) => {
+  if (isLoading) {
+    return <UserTableInsideSkeleton showPercent={!isAdmin} />;
+  }
+  if (isAdmin) {
+    return <UserTableInsideFull users={users} limit={limit} />;
+  }
+
+  return (
+    <UserTableInside users={users} showPercent={showPercent} limit={limit} />
+  );
+};

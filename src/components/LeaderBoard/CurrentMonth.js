@@ -32,19 +32,17 @@ export default function CurrentMonth({ limit, link }) {
       setUsers(data);
     });
   }, []);
+
+  // console.log("userTable");
+
   return (
-    <>
-      {users ? (
-        <UserTable
-          link={link}
-          limit={limit}
-          users={users}
-          showPercent={true}
-          title={"Month of " + month[new Date().getMonth()]}
-        ></UserTable>
-      ) : (
-        "loading " + month[new Date().getMonth()] + " leaderboard..."
-      )}
-    </>
+    <UserTable
+      isLoading={!users}
+      link={link}
+      limit={limit}
+      users={users}
+      showPercent={true}
+      title={"Month of " + month[new Date().getMonth()]}
+    />
   );
 }

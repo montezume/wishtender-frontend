@@ -8,6 +8,7 @@ const getYearStartEnd = (year) => {
 };
 export default function Twenty21CalenderYear({ limit, link }) {
   const [users, setUsers] = useState();
+
   useEffect(() => {
     const year = getYearStartEnd(2021);
     fetch(
@@ -19,17 +20,12 @@ export default function Twenty21CalenderYear({ limit, link }) {
     });
   }, []);
   return (
-    <>
-      {users ? (
-        <UserTable
-          limit={limit}
-          users={users}
-          title={"2021"}
-          link={link}
-        ></UserTable>
-      ) : (
-        "loading..."
-      )}
-    </>
+    <UserTable
+      limit={limit}
+      users={users}
+      isLoading={!users}
+      title={"2021"}
+      link={link}
+    />
   );
 }

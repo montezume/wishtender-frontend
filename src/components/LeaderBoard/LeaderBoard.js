@@ -10,6 +10,7 @@ import useStyles from "./styles";
 
 export default function LeaderBoard() {
   const { user } = useContext(UserContext);
+
   const [show2021, setShow2021] = useState(false);
   const [show30, setShow30] = useState(false);
   const classes = useStyles();
