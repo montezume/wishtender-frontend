@@ -15,6 +15,9 @@ module.exports = function (app) {
           ? "http://localhost:4000"
           : "https://api.wishtender.com/",
       changeOrigin: true,
+      headers: {
+        Origin: "https://www.wishtender.com",
+      },
     })
   );
 };
